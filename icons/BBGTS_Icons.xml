@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<GameInfo>
+  <IconTextureAtlases>
+	<Row Name="ICON_ATLAS_BBGTS_GAMEMODE" IconSize="44" IconsPerRow="1" IconsPerColumn="1" Filename="BBGTS_44.dds"/>
+  </IconTextureAtlases>
+  
+	<IconDefinitions>
+		<Row Name="ICON_BBGTS_GAMEMODE" Atlas="ICON_ATLAS_BBGTS_GAMEMODE" Index="0"/>
+	</IconDefinitions>
+
+</GameInfo>

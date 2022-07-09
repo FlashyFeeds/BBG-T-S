@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Standard Building block below 
+      
+        <Replace Tag="" language="en">
+            <Text> </Text>>
+        </Replace>
+      
+-->
+
+<GameData>
+    <LocalizedText>
+        <Replace Tag="LOC_BBGTS_GAMEMODE_NAME" language="en">
+            <Text>[COLOR_Civ6Red]BBG: Tests and Suggestions[ENDCOLOR] </Text>>
+        </Replace>
+        <Replace Tag="LOC_BBGTS_GAMEMODE_DESCRIPTION" language="en">
+            <Text> Enables currently present alpha tests and suggestions</Text>>
+        </Replace>
+        <Replace Tag="LOC_BBGTS_DEBUG_LUA_NAME" language="en">
+            <Text> [COLOR_Civ6Red]Debug Lua Scripts[ENDCOLOR]</Text>>
+        </Replace>        
+        <Replace Tag="LOC_BBGTS_DEBUG_LUA_DESC" language="en">
+            <Text> Allows Debugging Lua scripts in a standardised way</Text>>
+        </Replace>
+        <Replace Tag="LOC_BBGTS_BUGFIX1_NAME" language="en">
+            <Text> BugFix1</Text>>
+        </Replace>
+        <Replace Tag="LOC_BBGTS_BUGFIX1_DESC" language="en">
+            <Text> BugFix1 Description</Text>>
+        </Replace>
+        <Replace Tag="LOC_BBGTS_SUGGESTION1_NAME" language="en">
+            <Text> Suggestion1</Text>>
+        </Replace>
+        <Replace Tag="LOC_BBGTS_SUGGESTION1_DESC" language="en">
+            <Text> Suggestion1 Description</Text>>
+        </Replace>
+    </LocalizedText>
+</GameData>
