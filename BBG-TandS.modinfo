@@ -13,7 +13,7 @@ Check in Configurat</Teaser>
   </Properties>
   <Dependencies>
     <Mod id="4873eb62-8ccc-4574-b784-dda455e74e68" title="Expansion: Gathering Storm" />
-    <Mod id="cb84075d-5007-4207-b662-c35a5f7be240" title="Better Balanced Game 4.8.0" />
+    <Mod id="cb84075d-5007-4207-b662-c35a5f7be240" title="Better Balanced Game 4.8.0" version="4080"/>
   </Dependencies>
   <FrontEndActions>
     <UpdateDatabase id="bbgts_updateconfig">
