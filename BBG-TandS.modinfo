@@ -70,6 +70,30 @@
 			</ConfigurationValueMatches>
 		</Criteria>
 
+		<Criteria id="BBGTS_GoldenGateFix_Expansion2">
+			<ConfigurationValueMatches>
+				<Group>Game</Group>
+				<ConfigurationId>BBGTS_GOLDENGATE_FIX</ConfigurationId>
+				<Value>1</Value>
+			</ConfigurationValueMatches>
+		</Criteria>
+
+		<Criteria id="BBGTS_ReligionModifierFix_Expansion2">
+			<ConfigurationValueMatches>
+				<Group>Game</Group>
+				<ConfigurationId>BBGTS_RELIGION_MODIFIER_FIX</ConfigurationId>
+				<Value>1</Value>
+			</ConfigurationValueMatches>
+		</Criteria>
+		
+		<Criteria id="BBGTS_MonkSuggestionFix_Expansion2">
+			<ConfigurationValueMatches>
+				<Group>Game</Group>
+				<ConfigurationId>BBGTS_RELIGION_MODIFIER_FIX</ConfigurationId>
+				<Value>1</Value>
+			</ConfigurationValueMatches>
+		</Criteria>			
+
 	</ActionCriteria>
 	<FrontEndActions>
 		<UpdateDatabase id="bbgts_updateconfig">
@@ -110,9 +134,32 @@
                 <LoadOrder>35000</LoadOrder>
             </Properties>
 			<Criteria>BBGTS_MonkFix_Expansion2</Criteria>
-			<File>sql/BugFix1.sql</File>
+			<File>sql/MonkFix.sql</File>
         </UpdateDatabase>
 
+        <UpdateDatabase id="BBGTS_GoldenGateFix_Data">
+            <Properties>
+                <LoadOrder>35000</LoadOrder>
+            </Properties>
+			<Criteria>BBGTS_GoldenGateFix_Expansion2</Criteria>
+			<File>sql/GoldenGateFix.sql</File>
+        </UpdateDatabase>
+
+        <UpdateDatabase id="BBGTS_ReligionModifierFix_Data">
+            <Properties>
+                <LoadOrder>35000</LoadOrder>
+            </Properties>
+			<Criteria>BBGTS_ReligionModifierFix_Expansion2</Criteria>
+			<File>sql/ReligionModifierFix.sql</File>
+        </UpdateDatabase>
+
+        <UpdateDatabase id="BBGTS_MonkSuggestionFix_Data">
+            <Properties>
+                <LoadOrder>35000</LoadOrder>
+            </Properties>
+			<Criteria>BBGTS_MonkSuggestionFix_Expansion2</Criteria>
+			<File>sql/MonkSuggestions.sql</File>
+        </UpdateDatabase>
         <!--Conditional sql added like so
 		<UpdateDatabase id="BBGTS_BugFix1_Data">
             		<Properties>

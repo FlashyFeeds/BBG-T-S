@@ -16,11 +16,13 @@ INSERT INTO Parameters(ParameterId, Name, Description, Domain, DefaultValue, Con
     --('BBGTS_BugFix1', 'LOC_BBGTS_BUGFIX1_NAME', 'LOC_BBGTS_BUGFIX1_DESC', 'bool', '1', 'Game', 'BBGTS_BUGFIX1', 'AdvancedOptions', '1', '1', '20020');
 
 INSERT INTO Parameters(ParameterId, Name, Description, Domain, DefaultValue, ConfigurationGroup, ConfigurationId, GroupId, Visible, SupportsSinglePlayer, SortIndex) VALUES
-    ('BBGTS_MonkFix', 'LOC_BBGTS_MONK_FIX_NAME', 'LOC_BBGTS_MONK_FIX_DESC', 'bool', '1', 'Game', 'BBGTS_MONK_FIX', 'AdvancedOptions', '1', '1', '20030');
+    ('BBGTS_MonkFix', 'LOC_BBGTS_MONK_FIX_NAME', 'LOC_BBGTS_MONK_FIX_DESC', 'bool', '1', 'Game', 'BBGTS_MONK_FIX', 'AdvancedOptions', '1', '1', '20030'),
+    ('BBGTS_GoldenGateFix', 'LOC_BBGTS_GOLDENGATE_FIX_NAME', 'LOC_BBGTS_GOLDENGATE_FIX_DESC', 'bool', '1', 'Game', 'BBGTS_GOLDENGATE_FIX', 'AdvancedOptions', '1', '1', '20030'),
+    ('BBGTS_ReligionModifierFix', 'LOC_BBGTS_RELIGION_MODIFIER_FIX_NAME', 'LOC_BBGTS_RELIGION_MODIFIER_FIX_DESC', 'bool', '1', 'Game', 'BBGTS_RELIGION_MODIFIER_FIX', 'AdvancedOptions', '1', '1', '20030');
 --Insert your Suggestions Here, sort order 30000+
 --Insert your Suggestions Here, sort order 30000+
 INSERT INTO Parameters(ParameterId, Name, Description, Domain, DefaultValue, ConfigurationGroup, ConfigurationId, GroupId, Visible, SupportsSinglePlayer, SortIndex) VALUES
-    ('BBGTS_Suggestion1', 'LOC_BBGTS_SUGGESTION1_NAME', 'LOC_BBGTS_SUGGESTION1_DESC', 'bool', '1', 'Game', 'BBGTS_SUGGESTION1', 'AdvancedOptions', '1', '1', '30000');
+    ('BBGTS_MonkSuggestion', 'LOC_BBGTS_MONK_SUGGESTION_NAME', 'LOC_BBGTS_MONK_SUGGESTION_DESC', 'bool', '1', 'Game', 'BBGTS_MONK_SUGGESTION', 'AdvancedOptions', '1', '1', '30000');
 
 --Hide Options Unless BBGTS is active, Just copy any existing line and replace parameter ID with your Suggestion Name 
     --Like So:
@@ -28,4 +30,7 @@ INSERT INTO Parameters(ParameterId, Name, Description, Domain, DefaultValue, Con
     --('BBGTS_Suggestion1', 'Game', 'BBGTS_GAMEMODE', 'Equals', '1');
 
 INSERT INTO ParameterCriteria(ParameterId, ConfigurationGroup, ConfigurationId, Operator, ConfigurationValue) VALUES
-    ('BBGTS_MonkFix', 'Game', 'BBGTS_GAMEMODE', 'Equals', '1');
+    ('BBGTS_MonkFix', 'Game', 'BBGTS_GAMEMODE', 'Equals', '1'),
+    ('BBGTS_GoldenGateFix', 'Game', 'BBGTS_GAMEMODE', 'Equals', '1'),
+    ('BBGTS_ReligionModifierFix', 'Game', 'BBGTS_GAMEMODE', 'Equals', '1'),
+    ('BBGTS_MonkSuggestion', 'Game', 'BBGTS_GAMEMODE', 'Equals', '1');

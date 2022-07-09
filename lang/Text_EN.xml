@@ -36,10 +36,28 @@
         </Replace>
         -->
         <Replace Tag="LOC_BBGTS_MONK_FIX_NAME" language="en">
-            <Text>[COLOR_Civ6Red]Warrior Monk Fix[ENDCOLOR] </Text>>
+            <Text>[COLOR_Civ6Red]FIX: Warrior Monk[ENDCOLOR] </Text>>
         </Replace>
         <Replace Tag="LOC_BBGTS_MONK_FIX_DESC" language="en">
             <Text>[COLOR_Civ6Red]Warrior Monk:[ENDCOLOR] [NEWLINE]ADDED: Gains all the combat bonuses, that mele and anticav get. Correctly interracts with Generals, Exp, Cards, Governments, Ram, Towers, Akkad.[NEWLINE]REMOVED: BBG wallbreaker ability. [NEWLINE][COLOR_Civ6Red]NIHANG:[ENDCOLOR] Works with Generals, Rams and Towers </Text>
+        </Replace>
+        <Replace Tag="LOC_BBGTS_GOLDENGATE_FIX_NAME" language="en">
+            <Text>[COLOR_Civ6Red]FIX: Golden Gate Bridge[ENDCOLOR]</Text>>
+        </Replace>
+        <Replace Tag="LOC_BBGTS_GOLDENGATE_FIX_DESC" language="en">
+            <Text>Fixed Base Game Bug: Where GoldenGate is impassible through cliff.</Text>>
+        </Replace>
+        <Replace Tag="LOC_BBGTS_RELIGION_MODIFIER_FIX_NAME" language="en">
+            <Text>[COLOR_Civ6Red]FIX: Religion Belief Modifiers[ENDCOLOR]</Text>>
+        </Replace>
+        <Replace Tag="LOC_BBGTS_RELIGION_MODIFIER_FIX_DESC" language="en">
+            <Text>Fixed Base Game Bug: Where Monk Culture Bombs work on only Founder. Make Holly Water Follow same logic as Defender/Crusade </Text>>
+        </Replace>
+        <Replace Tag="LOC_BBGTS_MONK_SUGGESTION_NAME" language="en">
+            <Text>[COLOR_Civ6Red]Suggestions: Monk Rework[ENDCOLOR]</Text>>
+        </Replace>
+        <Replace Tag="LOC_BBGTS_MONK_SUGGESTION_DESC" language="en">
+            <Text>Suggestions:[NEWLINE]Monk Gets Scaling Combat Str. and Cost(+1CS/10Faith Cost per each civic up to end of industrial civics.[NEWLINE]Monk +10 nerfed to +7, Monk+15 nerfed to +10 </Text>>
         </Replace>
     </LocalizedText>
 </GameData>
