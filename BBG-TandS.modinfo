@@ -1,9 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Mod id="348ab73e-1699-409b-aab1-f5e4567f7f78" version="1000">
   <Properties>
-    <Name>BBG-T-and-S version 1.0.0</Name>
-    <Description>Contains Your Implemented suggestions for upcoming BBG betas for testing and grounded discussion purposes.
-Check in Configurations Desired Options For Testing.</Description>
+    <Name>LOC_BBGTS_TITLE</Name>
+    <Description>LOC_BBGTS_DESCRIPTION</Description>
     <Created>1657375165</Created>
     <Teaser>Contains Your Implemented suggestions for upcoming BBG betas for testing and grounded discussion purposes.
 Check in Configurat</Teaser>
@@ -15,6 +14,15 @@ Check in Configurat</Teaser>
     <Mod id="4873eb62-8ccc-4574-b784-dda455e74e68" title="Expansion: Gathering Storm" />
     <Mod id="cb84075d-5007-4207-b662-c35a5f7be240" title="Better Balanced Game 4.8.0" version="4080"/>
   </Dependencies>
+  <ActionCriteria>
+		<Criteria id="Anonymous_Mode_Expansion2">
+			<ConfigurationValueMatches>
+				<Group>Game</Group>
+				<ConfigurationId>GAMEMODE_ANONYMOUS</ConfigurationId>
+				<Value>1</Value>
+			</ConfigurationValueMatches>
+		</Criteria>
+  </ActionCriteria>
   <FrontEndActions>
     <UpdateDatabase id="bbgts_updateconfig">
       <File>config/config.sql</File>
