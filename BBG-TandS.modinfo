@@ -108,12 +108,14 @@
 	</InGameActions>		
 	<Files>
 		<File>config/config.sql</File>
+		<File>lang/Text_EN.xml</File>
+		<File>icons/BBGTS_Icons.xml</File>
+		<File>icons/BBGTS_44.dds</File>
+		<File>icons/BBGTS_Portrait.dds</File>
+		<File>icons/BBGTS_Icon.dds</File>
 		<File>sql/BugFix1.sql</File>
 		<File>sql/Suggestion1.sql</File>
 		<File>lua/BugFix1.lua</File>
-		<File>lua/Suggestion1.lua</File>
-		<File>lang/Text_EN.xml</File>
-		<File>icons/BBGTS_Portrait.dds</File>
-		<File>icons/BBGTS_Icon.dds</File>
+		<File>lua/Suggestion1.lua</File>	
 	</Files>
 </Mod>
