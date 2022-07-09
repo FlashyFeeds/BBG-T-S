@@ -4,7 +4,7 @@
 --------------------------------------------------------------
 --Creates BBGTS gamemode and default options
 INSERT INTO GameModeItems('GameModeType', 'Name', 'Description', 'Portrait', 'Background', 'Icon', 'SortIndex') VALUES
-        ('BBGTS_GAMEMODE', 'LOC_BBGTS_GAMEMODE_NAME', 'LOC_BBGTS_GAMEMODE_DESCRIPTION', 'BBGTS_Portrait.dds', 'BBGTS.dds', 'ICON_BBGTS_GAMEMODE', '-10');
+        ('BBGTS_GAMEMODE', 'LOC_BBGTS_GAMEMODE_NAME', 'LOC_BBGTS_GAMEMODE_DESCRIPTION', 'BBGTS_Portrait.dds', 'BBGTS_Background.dds', 'ICON_BBGTS_GAMEMODE', '-10');
 
 INSERT INTO Parameters(ParameterId, Name, Description, Domain, DefaultValue, ConfigurationGroup, ConfigurationId, GroupId, Visible, SupportsSinglePlayer, SortIndex) VALUES
     ('BBGTS_GameMode', 'LOC_BBGTS_GAMEMODE_NAME', 'LOC_BBGTS_GAMEMODE_DESCRIPTION', 'bool', '0', 'Game', 'BBGTS_GAMEMODE', 'GameModes', '1', '1', '-10'),
