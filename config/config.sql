@@ -11,8 +11,13 @@ INSERT INTO Parameters(ParameterId, Name, Description, Domain, DefaultValue, Con
     ('BBGTS_DebugLua', 'LOC_BBGTS_DEBUG_LUA_NAME', 'LOC_BBGTS_DEBUG_LUA_DESC', 'bool', '1', 'Game', 'BBGTS_DEBUG_LUA', 'AdvancedOptions','1', '1', '20010');
 
 --Insert your Bug Fixes Here, sort order between 20020 and 30000
+--ExampleCommentedOutBelow
+--INSERT INTO Parameters(ParameterId, Name, Description, Domain, DefaultValue, ConfigurationGroup, ConfigurationId, GroupId, Visible, SupportsSinglePlayer, SortIndex) VALUES
+    --('BBGTS_BugFix1', 'LOC_BBGTS_BUGFIX1_NAME', 'LOC_BBGTS_BUGFIX1_DESC', 'bool', '1', 'Game', 'BBGTS_BUGFIX1', 'AdvancedOptions', '1', '1', '20020');
+
 INSERT INTO Parameters(ParameterId, Name, Description, Domain, DefaultValue, ConfigurationGroup, ConfigurationId, GroupId, Visible, SupportsSinglePlayer, SortIndex) VALUES
-    ('BBGTS_BugFix1', 'LOC_BBGTS_BUGFIX1_NAME', 'LOC_BBGTS_BUGFIX1_DESC', 'bool', '1', 'Game', 'BBGTS_BUGFIX1', 'AdvancedOptions', '1', '1', '20020');
+    ('BBGTS_MonkFix', 'LOC_BBGTS_MONK_FIX_NAME', 'LOC_BBGTS_MONK_FIX_DESC', 'bool', '1', 'Game', 'BBGTS_MONK_FIX', 'AdvancedOptions', '1', '1', '20030');
+--Insert your Suggestions Here, sort order 30000+
 --Insert your Suggestions Here, sort order 30000+
 INSERT INTO Parameters(ParameterId, Name, Description, Domain, DefaultValue, ConfigurationGroup, ConfigurationId, GroupId, Visible, SupportsSinglePlayer, SortIndex) VALUES
     ('BBGTS_Suggestion1', 'LOC_BBGTS_SUGGESTION1_NAME', 'LOC_BBGTS_SUGGESTION1_DESC', 'bool', '1', 'Game', 'BBGTS_SUGGESTION1', 'AdvancedOptions', '1', '1', '30000');
@@ -21,3 +26,4 @@ INSERT INTO Parameters(ParameterId, Name, Description, Domain, DefaultValue, Con
 INSERT INTO ParameterCriteria(ParameterId, ConfigurationGroup, ConfigurationId, Operator, ConfigurationValue) VALUES
     ('BBGTS_BugFix1', 'Game', 'BBGTS_GAMEMODE', 'Equals', '1'),
     ('BBGTS_Suggestion1', 'Game', 'BBGTS_GAMEMODE', 'Equals', '1');
+    ()
