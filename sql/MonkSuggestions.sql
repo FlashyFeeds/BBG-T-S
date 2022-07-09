@@ -1,7 +1,7 @@
 INSERT OR IGNORE INTO Requirements(RequirementId, RequirementType) Values
 	('BBG_REQUIRES_MONK', 'REQUIREMENT_UNIT_TAG_MATCHES');
 
-INSERT OR IGNORE RequirementArguments(RequirementId, Name , Value) Values
+INSERT OR IGNORE INTO RequirementArguments(RequirementId, Name , Value) Values
 	('BBG_REQUIRES_MONK', 'Tag', 'CLASS_WARRIOR_MONK');
 
 INSERT INTO RequirementSets(RequirementSetId, RequirementSetType) Values
