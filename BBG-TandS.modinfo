@@ -14,10 +14,12 @@
 			<en_US>BBGTS 1.0.0</en_US>
 			<fr_FR>BBGTS 1.0.0</fr_FR>
 		</Text>
+		
 		<Text id="LOC_MPH_TEASER">
 			<en_US>GameMode for Dev&Test Live BBG</en_US>
             		<fr_FR>GameMode for Dev&Test Live BBG</fr_FR>
 		</Text>
+		
 		<Text id="LOC_MPH_DESCRIPTION">
 			<en_US>Allows to test additions to BBG Live separately or in cluster by checking the desired Advanced Options. Submit your ideas with implementations on Discord Channel</en_US>
 			<fr_FR>Allows to test additions to BBG Live separately or in cluster by checking the desired Advanced Options. Submit your ideas with implementations on Discord Channel</fr_FR>
@@ -40,6 +42,7 @@
 				<Value>1</Value>
 			</ConfigurationValueMatches>
 		</Criteria>
+		
 		<Criteria id="BBGTS_BugFix1_Expansion2">
 			<ConfigurationValueMatches>
 				<Group>Game</Group>
@@ -47,6 +50,7 @@
 				<Value>1</Value>
 			</ConfigurationValueMatches>
 		</Criteria>
+		
 		<Criteria id="BBGTS_Suggestion1_Expansion2">
 			<ConfigurationValueMatches>
 				<Group>Game</Group>
@@ -59,27 +63,48 @@
 		<UpdateDatabase id="bbgts_updateconfig">
 			<File>config/config.sql</File>
 		</UpdateDatabase>
+		
 		<UpdateText id="BBGTS_TEXTS">
 			<File>lang/Text_EN.xml</File>
 		</UpdateText>
+		
+		<UpdateIcons id="BBGTS_Icons FrontEnd">
+			<File>icons/BBGTS_Icons.xml</File>
+		</UpdateIcons>
+		
+		<ImportFiles id="FrontEnd_Arts_Icons_Import">
+			<Items>
+				<File>icons/BBGTS_Portrait.dds</File>
+				<File>icons/BBGTS_Icon.dds</File>
+			</Items>
+		</ImportFiles>
 	</FrontEndActions>
-	<UpdateIcons id="BBGTS_Icons FrontEnd">
-		<File>icons/BBGTS_Icons.xml</File>
-	</UpdateIcons>
-	<ImportFiles id="FrontEnd_Arts_Icons_Import">
-		<Items>
-			<File>icons/BBGTS_Portrait.dds</File>
-			<File>icons/BBGTS_Icon.dds</File>
-		</Items>
-	</ImportFiles>
-	<AddGameplayScripts id="BBGTS_BugFix1_Script">
-		<Criteria>BBGTS_BugFix1_Expansion2<Criteria>
-		<File>lua/BugFix1.lua</File>
-	</AddGameplayScripts>
-	<AddGameplayScripts id="BBGTS_Suggestion1_Script">
-		<Criteria>BBGTS_Suggestion1_Expansion2<Criteria>
-		<File>lua/Suggestion1.lua</File>
-	</AddGameplayScripts>
+	<InGameActions>
+		<AddGameplayScripts id="BBGTS_BugFix1_Script">
+			<Criteria>BBGTS_BugFix1_Expansion2<Criteria>
+			<File>lua/BugFix1.lua</File>
+		</AddGameplayScripts>
+		
+		<AddGameplayScripts id="BBGTS_Suggestion1_Script">
+			<Criteria>BBGTS_Suggestion1_Expansion2<Criteria>
+			<File>lua/Suggestion1.lua</File>
+		</AddGameplayScripts>
+		
+		<UpdateDatabase id="BBGTS_BugFix1_Data">
+            		<Properties>
+                		<LoadOrder>35000</LoadOrder>
+            		</Properties>
+			<Criteria>BBGTS_BugFix1_Expansion2</Criteria>
+			<File>sql/BugFix1.sql</File>
+        	</UpdateDatabase>
+		<UpdateDatabase id="BBGTS_Suggestion1_Data">
+            		<Properties>
+                		<LoadOrder>35000</LoadOrder>
+            		</Properties>
+			<Criteria>BBGTS_Suggestion1_Expansion2</Criteria>
+			<File>sql/Suggestion1.sql</File>
+        	</UpdateDatabase>				
+	</InGameActions>		
 	<Files>
 		<File>config/config.sql</File>
 		<File>sql/BugFix1.sql</File>
