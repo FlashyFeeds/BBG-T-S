@@ -82,12 +82,12 @@
 	</FrontEndActions>
 	<InGameActions>
 		<AddGameplayScripts id="BBGTS_BugFix1_Script">
-			<Criteria>BBGTS_BugFix1_Expansion2<Criteria>
+			<Criteria>BBGTS_BugFix1_Expansion2</Criteria>
 			<File>lua/BugFix1.lua</File>
 		</AddGameplayScripts>
 		
 		<AddGameplayScripts id="BBGTS_Suggestion1_Script">
-			<Criteria>BBGTS_Suggestion1_Expansion2<Criteria>
+			<Criteria>BBGTS_Suggestion1_Expansion2</Criteria>
 			<File>lua/Suggestion1.lua</File>
 		</AddGameplayScripts>
 		
