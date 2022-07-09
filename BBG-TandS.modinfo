@@ -75,6 +75,7 @@
 		<ImportFiles id="FrontEnd_Arts_Icons_Import">
 			<Items>
 				<File>icons/BBGTS_Portrait.dds</File>
+				<File>icons/BBGTS_44.dds</File>
 				<File>icons/BBGTS_Icon.dds</File>
 			</Items>
 		</ImportFiles>
