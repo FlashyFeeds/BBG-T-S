@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Mod id="348ab73e-1699-409b-aab1-f5e4567f7f78" version="1000">
+<Mod id="348ab73e-1699-409b-aab1-f5e4567f7f78" version="100">
 	<Properties>
 		<Name>LOC_BBGTS_TITLE</Name>
 		<Description>LOC_BBGTS_DESCRIPTION</Description>
