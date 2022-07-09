@@ -89,7 +89,7 @@
 		<Criteria id="BBGTS_MonkSuggestionFix_Expansion2">
 			<ConfigurationValueMatches>
 				<Group>Game</Group>
-				<ConfigurationId>BBGTS_RELIGION_MODIFIER_FIX</ConfigurationId>
+				<ConfigurationId>BBGTS_MONK_SUGGESTION</ConfigurationId>
 				<Value>1</Value>
 			</ConfigurationValueMatches>
 		</Criteria>			
