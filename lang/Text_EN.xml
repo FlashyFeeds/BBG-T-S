@@ -21,6 +21,7 @@
         <Replace Tag="LOC_BBGTS_DEBUG_LUA_DESC" language="en">
             <Text> Allows Debugging Lua scripts in a standardised way</Text>>
         </Replace>
+        <!--
         <Replace Tag="LOC_BBGTS_BUGFIX1_NAME" language="en">
             <Text> BugFix1</Text>>
         </Replace>
@@ -32,6 +33,13 @@
         </Replace>
         <Replace Tag="LOC_BBGTS_SUGGESTION1_DESC" language="en">
             <Text> Suggestion1 Description</Text>>
+        </Replace>
+        -->
+        <Replace Tag="LOC_BBGTS_MONK_FIX_NAME" language="en">
+            <Text>[COLOR_Civ6Red]Warrior Monk Fix[ENDCOLOR] </Text>>
+        </Replace>
+        <Replace Tag="LOC_BBGTS_MONK_FIX_DESC" language="en">
+            <Text>[COLOR_Civ6Red]Warrior Monk:[ENDCOLOR] [NEWLINE]ADDED: Gains all the combat bonuses, that mele and anticav get. Correctly interracts with Generals, Exp, Cards, Governments, Ram, Towers, Akkad.[NEWLINE]REMOVED: BBG wallbreaker ability. [NEWLINE][COLOR_Civ6Red]NIHANG:[ENDCOLOR] Works with Generals, Rams and Towers </Text>
         </Replace>
     </LocalizedText>
 </GameData>

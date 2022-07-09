@@ -23,7 +23,9 @@ INSERT INTO Parameters(ParameterId, Name, Description, Domain, DefaultValue, Con
     ('BBGTS_Suggestion1', 'LOC_BBGTS_SUGGESTION1_NAME', 'LOC_BBGTS_SUGGESTION1_DESC', 'bool', '1', 'Game', 'BBGTS_SUGGESTION1', 'AdvancedOptions', '1', '1', '30000');
 
 --Hide Options Unless BBGTS is active, Just copy any existing line and replace parameter ID with your Suggestion Name 
+    --Like So:
+    --('BBGTS_BugFix1', 'Game', 'BBGTS_GAMEMODE', 'Equals', '1'),
+    --('BBGTS_Suggestion1', 'Game', 'BBGTS_GAMEMODE', 'Equals', '1');
+
 INSERT INTO ParameterCriteria(ParameterId, ConfigurationGroup, ConfigurationId, Operator, ConfigurationValue) VALUES
-    ('BBGTS_BugFix1', 'Game', 'BBGTS_GAMEMODE', 'Equals', '1'),
-    ('BBGTS_Suggestion1', 'Game', 'BBGTS_GAMEMODE', 'Equals', '1');
-    ()
+    ('BBGTS_MonkFix', 'Game', 'BBGTS_GAMEMODE', 'Equals', '1');

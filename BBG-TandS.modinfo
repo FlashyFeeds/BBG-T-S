@@ -15,12 +15,12 @@
 			<fr_FR>BBGTS 1.0.0</fr_FR>
 		</Text>
 		
-		<Text id="LOC_MPH_TEASER">
+		<Text id="LOC_BBGTS_TEASER">
 			<en_US>GameMode for DevAndTest Live BBG</en_US>
             		<fr_FR>GameMode for DevAndTest Live BBG</fr_FR>
 		</Text>
 		
-		<Text id="LOC_MPH_DESCRIPTION">
+		<Text id="LOC_BBGTS_DESCRIPTION">
 			<en_US>Allows to test additions to BBG Live separately or in cluster by checking the desired Advanced Options. Submit your ideas with implementations on Discord Channel</en_US>
 			<fr_FR>Allows to test additions to BBG Live separately or in cluster by checking the desired Advanced Options. Submit your ideas with implementations on Discord Channel</fr_FR>
 		</Text>
@@ -42,7 +42,10 @@
 				<Value>1</Value>
 			</ConfigurationValueMatches>
 		</Criteria>
+		<!--
 		
+		This is how you add criteria
+
 		<Criteria id="BBGTS_BugFix1_Expansion2">
 			<ConfigurationValueMatches>
 				<Group>Game</Group>
@@ -57,7 +60,16 @@
 				<ConfigurationId>BBGTS_SUGGESTION1</ConfigurationId>
 				<Value>1</Value>
 			</ConfigurationValueMatches>
-		</Criteria>		
+		</Criteria>
+		-->
+		<Criteria id="BBGTS_MonkFix_Expansion2">
+			<ConfigurationValueMatches>
+				<Group>Game</Group>
+				<ConfigurationId>BBGTS_MONK_FIX</ConfigurationId>
+				<Value>1</Value>
+			</ConfigurationValueMatches>
+		</Criteria>
+
 	</ActionCriteria>
 	<FrontEndActions>
 		<UpdateDatabase id="bbgts_updateconfig">
@@ -81,6 +93,8 @@
 		</ImportFiles>
 	</FrontEndActions>
 	<InGameActions>
+		<!--Conditional lua added like so
+
 		<AddGameplayScripts id="BBGTS_BugFix1_Script">
 			<Criteria>BBGTS_BugFix1_Expansion2</Criteria>
 			<File>lua/BugFix1.lua</File>
@@ -90,21 +104,31 @@
 			<Criteria>BBGTS_Suggestion1_Expansion2</Criteria>
 			<File>lua/Suggestion1.lua</File>
 		</AddGameplayScripts>
-		
+		-->
+		<UpdateDatabase id="BBGTS_MonkFix_Data">
+            <Properties>
+                <LoadOrder>35000</LoadOrder>
+            </Properties>
+			<Criteria>BBGTS_MonkFix_Expansion2</Criteria>
+			<File>sql/BugFix1.sql</File>
+        </UpdateDatabase>
+
+        <!--Conditional sql added like so
 		<UpdateDatabase id="BBGTS_BugFix1_Data">
             		<Properties>
                 		<LoadOrder>35000</LoadOrder>
             		</Properties>
 			<Criteria>BBGTS_BugFix1_Expansion2</Criteria>
 			<File>sql/BugFix1.sql</File>
-        	</UpdateDatabase>
+        </UpdateDatabase>
 		<UpdateDatabase id="BBGTS_Suggestion1_Data">
             		<Properties>
                 		<LoadOrder>35000</LoadOrder>
             		</Properties>
 			<Criteria>BBGTS_Suggestion1_Expansion2</Criteria>
 			<File>sql/Suggestion1.sql</File>
-        	</UpdateDatabase>				
+        </UpdateDatabase>
+        -->				
 	</InGameActions>		
 	<Files>
 		<File>config/config.sql</File>
@@ -116,6 +140,7 @@
 		<File>sql/BugFix1.sql</File>
 		<File>sql/Suggestion1.sql</File>
 		<File>lua/BugFix1.lua</File>
-		<File>lua/Suggestion1.lua</File>	
+		<File>lua/Suggestion1.lua</File>
+		<File>sql/MonkFix.sql</File>	
 	</Files>
 </Mod>
