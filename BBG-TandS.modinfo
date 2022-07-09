@@ -155,7 +155,7 @@
 
         <UpdateDatabase id="BBGTS_MonkSuggestionFix_Data">
             <Properties>
-                <LoadOrder>35000</LoadOrder>
+                <LoadOrder>38000</LoadOrder>
             </Properties>
 			<Criteria>BBGTS_MonkSuggestionFix_Expansion2</Criteria>
 			<File>sql/MonkSuggestions.sql</File>

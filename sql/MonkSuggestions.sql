@@ -27,7 +27,7 @@ INSERT INTO ModifierArguments(ModifierId, Name, Value)
 	FROM Civics WHERE EraType IN ('ERA_ANCIENT','ERA_CLASSICAL', 'ERA_MEDIEVAL', 'ERA_RENAISSANCE', 'ERA_INDUSTRIAL');
 
 INSERT INTO CivicModifiers(CivicType, ModifierId)
-	SELECT Civics.CivicType, 'BBG_MODIFIER_MONKS_CS_' || Civics.CivicType
+	SELECT Civics.CivicType, 'BBG_ABILITY_MODIFIER_MONKS_' || Civics.CivicType
 	FROM Civics WHERE EraType IN ('ERA_ANCIENT','ERA_CLASSICAL', 'ERA_MEDIEVAL', 'ERA_RENAISSANCE', 'ERA_INDUSTRIAL');
 
 --DELETE UNIQUE TEMPLES requirements
