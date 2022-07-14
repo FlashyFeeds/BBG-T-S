@@ -16,7 +16,7 @@
             <Text> Enables currently present alpha tests and suggestions</Text>>
         </Replace>
         <Replace Tag="LOC_BBGTS_DEBUG_LUA_NAME" language="en">
-            <Text> [COLOR_Civ6Red]Debug Lua Scripts[ENDCOLOR]</Text>>
+            <Text> [COLOR_Civ6Yellow]Debug Lua Scripts[ENDCOLOR]</Text>>
         </Replace>        
         <Replace Tag="LOC_BBGTS_DEBUG_LUA_DESC" language="en">
             <Text> Allows Debugging Lua scripts in a standardised way</Text>>
@@ -54,7 +54,7 @@
             <Text>Fixed Base Game Bug: Where Monk Culture Bombs work on only Founder. Make Holly Water Follow same logic as Defender/Crusade </Text>>
         </Replace>
         <Replace Tag="LOC_BBGTS_MONK_SUGGESTION_NAME" language="en">
-            <Text>[COLOR_Civ6Red]Suggestions: Monk Rework[ENDCOLOR]</Text>>
+            <Text>[COLOR_Civ6LightBlue]Suggestions: Monk Rework[ENDCOLOR]</Text>>
         </Replace>
         <Replace Tag="LOC_BBGTS_MONK_SUGGESTION_DESC" language="en">
             <Text>Suggestions:[NEWLINE]Monk Gets Scaling Combat Str. and Cost(+1CS/10Faith Cost per each civic up to end of industrial civics.[NEWLINE]Monk +10 nerfed to +7, Monk+15 nerfed to +10 </Text>>

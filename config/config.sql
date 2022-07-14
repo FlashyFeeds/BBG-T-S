@@ -17,12 +17,12 @@ INSERT INTO Parameters(ParameterId, Name, Description, Domain, DefaultValue, Con
 
 INSERT INTO Parameters(ParameterId, Name, Description, Domain, DefaultValue, ConfigurationGroup, ConfigurationId, GroupId, Visible, SupportsSinglePlayer, SortIndex) VALUES
     ('BBGTS_MonkFix', 'LOC_BBGTS_MONK_FIX_NAME', 'LOC_BBGTS_MONK_FIX_DESC', 'bool', '1', 'Game', 'BBGTS_MONK_FIX', 'AdvancedOptions', '1', '1', '20030'),
-    ('BBGTS_GoldenGateFix', 'LOC_BBGTS_GOLDENGATE_FIX_NAME', 'LOC_BBGTS_GOLDENGATE_FIX_DESC', 'bool', '1', 'Game', 'BBGTS_GOLDENGATE_FIX', 'AdvancedOptions', '1', '1', '20030'),
-    ('BBGTS_ReligionModifierFix', 'LOC_BBGTS_RELIGION_MODIFIER_FIX_NAME', 'LOC_BBGTS_RELIGION_MODIFIER_FIX_DESC', 'bool', '1', 'Game', 'BBGTS_RELIGION_MODIFIER_FIX', 'AdvancedOptions', '1', '1', '20030');
+    ('BBGTS_GoldenGateFix', 'LOC_BBGTS_GOLDENGATE_FIX_NAME', 'LOC_BBGTS_GOLDENGATE_FIX_DESC', 'bool', '1', 'Game', 'BBGTS_GOLDENGATE_FIX', 'AdvancedOptions', '1', '1', '20040'),
+    ('BBGTS_ReligionModifierFix', 'LOC_BBGTS_RELIGION_MODIFIER_FIX_NAME', 'LOC_BBGTS_RELIGION_MODIFIER_FIX_DESC', 'bool', '1', 'Game', 'BBGTS_RELIGION_MODIFIER_FIX', 'AdvancedOptions', '1', '1', '20050');
 --Insert your Suggestions Here, sort order 30000+
 --Insert your Suggestions Here, sort order 30000+
 INSERT INTO Parameters(ParameterId, Name, Description, Domain, DefaultValue, ConfigurationGroup, ConfigurationId, GroupId, Visible, SupportsSinglePlayer, SortIndex) VALUES
-    ('BBGTS_MonkSuggestion', 'LOC_BBGTS_MONK_SUGGESTION_NAME', 'LOC_BBGTS_MONK_SUGGESTION_DESC', 'bool', '1', 'Game', 'BBGTS_MONK_SUGGESTION', 'AdvancedOptions', '1', '1', '30000');
+    ('BBGTS_MonkSuggestions', 'LOC_BBGTS_MONK_SUGGESTION_NAME', 'LOC_BBGTS_MONK_SUGGESTION_DESC', 'bool', '1', 'Game', 'BBGTS_MONK_SUGGESTION', 'AdvancedOptions', '1', '1', '30000');
 
 --Hide Options Unless BBGTS is active, Just copy any existing line and replace parameter ID with your Suggestion Name 
     --Like So:
@@ -33,4 +33,4 @@ INSERT INTO ParameterCriteria(ParameterId, ConfigurationGroup, ConfigurationId, 
     ('BBGTS_MonkFix', 'Game', 'BBGTS_GAMEMODE', 'Equals', '1'),
     ('BBGTS_GoldenGateFix', 'Game', 'BBGTS_GAMEMODE', 'Equals', '1'),
     ('BBGTS_ReligionModifierFix', 'Game', 'BBGTS_GAMEMODE', 'Equals', '1'),
-    ('BBGTS_MonkSuggestion', 'Game', 'BBGTS_GAMEMODE', 'Equals', '1');
+    ('BBGTS_MonkSuggestions', 'Game', 'BBGTS_GAMEMODE', 'Equals', '1');

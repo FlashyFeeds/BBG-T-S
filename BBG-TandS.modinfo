@@ -86,7 +86,7 @@
 			</ConfigurationValueMatches>
 		</Criteria>
 		
-		<Criteria id="BBGTS_MonkSuggestionFix_Expansion2">
+		<Criteria id="BBGTS_MonkSuggestions_Expansion2">
 			<ConfigurationValueMatches>
 				<Group>Game</Group>
 				<ConfigurationId>BBGTS_MONK_SUGGESTION</ConfigurationId>
@@ -139,7 +139,7 @@
 
         <UpdateDatabase id="BBGTS_GoldenGateFix_Data">
             <Properties>
-                <LoadOrder>35000</LoadOrder>
+                <LoadOrder>35010</LoadOrder>
             </Properties>
 			<Criteria>BBGTS_GoldenGateFix_Expansion2</Criteria>
 			<File>sql/GoldenGateFix.sql</File>
@@ -147,17 +147,17 @@
 
         <UpdateDatabase id="BBGTS_ReligionModifierFix_Data">
             <Properties>
-                <LoadOrder>35000</LoadOrder>
+                <LoadOrder>35020</LoadOrder>
             </Properties>
 			<Criteria>BBGTS_ReligionModifierFix_Expansion2</Criteria>
 			<File>sql/ReligionModifierFix.sql</File>
         </UpdateDatabase>
 
-        <UpdateDatabase id="BBGTS_MonkSuggestionFix_Data">
+        <UpdateDatabase id="BBGTS_MonkSuggestions_Data">
             <Properties>
                 <LoadOrder>38000</LoadOrder>
             </Properties>
-			<Criteria>BBGTS_MonkSuggestionFix_Expansion2</Criteria>
+			<Criteria>BBGTS_MonkSuggestions_Expansion2</Criteria>
 			<File>sql/MonkSuggestions.sql</File>
         </UpdateDatabase>
         <!--Conditional sql added like so
@@ -188,6 +188,9 @@
 		<File>sql/Suggestion1.sql</File>
 		<File>lua/BugFix1.lua</File>
 		<File>lua/Suggestion1.lua</File>
-		<File>sql/MonkFix.sql</File>	
+		<File>sql/MonkFix.sql</File>
+		<File>sql/MonkSuggestions.sql</File>
+		<File>sql/ReligionModifierFix.sql</File>
+		<File>sql/GoldenGateFix.sql</File>	
 	</Files>
 </Mod>
