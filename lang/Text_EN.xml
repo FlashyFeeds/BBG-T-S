@@ -10,16 +10,16 @@
 <GameData>
     <LocalizedText>
         <Replace Tag="LOC_BBGTS_GAMEMODE_NAME" language="en">
-            <Text>[COLOR_Civ6Red]BBG: Tests and Suggestions[ENDCOLOR] </Text>>
+            <Text>[COLOR_Civ6Red]BBG: Tests and Suggestions[ENDCOLOR] </Text>
         </Replace>
         <Replace Tag="LOC_BBGTS_GAMEMODE_DESCRIPTION" language="en">
-            <Text> Enables currently present alpha tests and suggestions</Text>>
+            <Text> Enables currently present alpha tests and suggestions</Text>
         </Replace>
         <Replace Tag="LOC_BBGTS_DEBUG_LUA_NAME" language="en">
-            <Text><font color = "#ffb23c">>Debug Lua Scripts</font></Text>>
+            <Text>[COLOR_Grey]Debug Lua Scripts[ENDCOLOR]</Text>
         </Replace>        
         <Replace Tag="LOC_BBGTS_DEBUG_LUA_DESC" language="en">
-            <Text> Allows Debugging Lua scripts in a standardised way</Text>>
+            <Text> Allows Debugging Lua scripts in a standardised way</Text>
         </Replace>
         <!--
         <Replace Tag="LOC_BBGTS_BUGFIX1_NAME" language="en">
@@ -36,28 +36,28 @@
         </Replace>
         -->
         <Replace Tag="LOC_BBGTS_MONK_FIX_NAME" language="en">
-            <Text>[COLOR_Civ6Red]FIX: Warrior Monk[ENDCOLOR] </Text>>
+            <Text>[COLOR_Civ6Red]FIX: Warrior Monk[ENDCOLOR] </Text>
         </Replace>
         <Replace Tag="LOC_BBGTS_MONK_FIX_DESC" language="en">
             <Text>[COLOR_Civ6Red]Warrior Monk:[ENDCOLOR] [NEWLINE]ADDED: Gains all the combat bonuses, that mele and anticav get. Correctly interracts with Generals, Exp, Cards, Governments, Ram, Towers, Akkad.[NEWLINE]REMOVED: BBG wallbreaker ability. [NEWLINE][COLOR_Civ6Red]NIHANG:[ENDCOLOR] Works with Generals, Rams and Towers </Text>
         </Replace>
         <Replace Tag="LOC_BBGTS_GOLDENGATE_FIX_NAME" language="en">
-            <Text>[COLOR_Civ6Red]FIX: Golden Gate Bridge[ENDCOLOR]</Text>>
+            <Text>[COLOR_Civ6Red]FIX: Golden Gate Bridge[ENDCOLOR]</Text>
         </Replace>
         <Replace Tag="LOC_BBGTS_GOLDENGATE_FIX_DESC" language="en">
             <Text>Fixed Base Game Bug: Where GoldenGate is impassible through cliff.</Text>>
         </Replace>
         <Replace Tag="LOC_BBGTS_RELIGION_MODIFIER_FIX_NAME" language="en">
-            <Text>[COLOR_Civ6Red]FIX: Religion Belief Modifiers[ENDCOLOR]</Text>>
+            <Text>[COLOR_Civ6Red]FIX: Religion Belief Modifiers[ENDCOLOR]</Text>
         </Replace>
         <Replace Tag="LOC_BBGTS_RELIGION_MODIFIER_FIX_DESC" language="en">
-            <Text>Fixed Base Game Bug: Where Monk Culture Bombs work on only Founder. Make Holly Water Follow same logic as Defender/Crusade </Text>>
+            <Text>Fixed Base Game Bug: Where Monk Culture Bombs work on only Founder.[NEWLINE]BBG: Make Holly Water Follow same logic as Defender/Crusade on implementation level</Text>
         </Replace>
         <Replace Tag="LOC_BBGTS_MONK_SUGGESTION_NAME" language="en">
-            <Text><font color="#74a3f3">Suggestions: Monk Rework</font></Text>>
+            <Text>[COLOR_LIGHTBLUE]Suggestion: Monk Rework[ENDCOLOR]</Text>
         </Replace>
         <Replace Tag="LOC_BBGTS_MONK_SUGGESTION_DESC" language="en">
-            <Text>Suggestions:[NEWLINE]Monk Gets Scaling Combat Str. and Cost(+1CS/10Faith Cost per each civic up to end of industrial civics.[NEWLINE]Monk +10 nerfed to +7, Monk+15 nerfed to +10 </Text>>
+            <Text>Suggestions:[NEWLINE]Monk Gets Scaling Combat Str. and Cost(+1CS/approx10Faith Cost per each civic up to end of industrial civics.[NEWLINE]Monk +10 nerfed to +7, Monk+15 nerfed to +10 </Text>
         </Replace>
     </LocalizedText>
 </GameData>
