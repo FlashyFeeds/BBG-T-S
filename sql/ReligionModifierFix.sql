@@ -1,6 +1,6 @@
 --Fixed BUG: Culture Bombs worked only for founders and not for followers.
-UPDATE Modifiers SET SubjectRequirementSetId = NULL WHERE ModifierId = 'WARRIOR_MONKS_CULTURE_BOMB_TRIGGER_HOLY_SITE';
-UPDATE Modifiers SET SubjectRequirementSetId = 'CITY_FOLLOWS_RELIGION_REQUIREMENTS' WHERE ModifierId = 'WARRIOR_MONKS_CULTURE_BOMB_TRIGGER_HOLY_SITE_MODIFIER';
+UPDATE Modifiers SET SubjectRequirementSetId = 'CITY_FOLLOWS_RELIGION_REQUIREMENTS' AND ModifierType = 'MODIFIER_ALL_CITIES_ATTACH_MODIFIER' WHERE ModifierId = 'WARRIOR_MONKS_CULTURE_BOMB_TRIGGER_HOLY_SITE';
+UPDATE Modifiers SET SubjectRequirementSetId = NULL WHERE ModifierId = 'WARRIOR_MONKS_CULTURE_BOMB_TRIGGER_HOLY_SITE_MODIFIER';
 
 --Fixed Holly Waters, so it follows the same logic as Defender/Crusade
 UPDATE Modifiers Set ModifierType = 'MODIFIER_ALL_UNITS_ATTACH_MODIFIER' WHERE ModifierId = 'HOLY_WATERS_HEALING';
