@@ -19,7 +19,7 @@
             <Text>[COLOR_Grey]Debug Lua Scripts[ENDCOLOR]</Text>
         </Replace>        
         <Replace Tag="LOC_BBGTS_DEBUG_LUA_DESC" language="en">
-            <Text> Allows Debugging Lua scripts in a standardised way</Text>
+            <Text> Allows Debugging Lua scripts in a standardised way. TO ADD SUPPORT OF THIS LATER</Text>
         </Replace>
         <!--
         <Replace Tag="LOC_BBGTS_BUGFIX1_NAME" language="en">
@@ -35,17 +35,17 @@
             <Text> Suggestion1 Description</Text>>
         </Replace>
         -->
-        <Replace Tag="LOC_BBGTS_MONK_FIX_NAME" language="en">
-            <Text>[COLOR_Civ6Red]FIX: Warrior Monk[ENDCOLOR] </Text>
+        <Replace Tag="LOC_BBGTS_KONGO_FIX_NAME" language="en">
+            <Text>[COLOR_Civ6Red]FIX: Mvemba Religious Convert Ability[ENDCOLOR] </Text>
         </Replace>
-        <Replace Tag="LOC_BBGTS_MONK_FIX_DESC" language="en">
-            <Text>[COLOR_Civ6Red]Warrior Monk:[ENDCOLOR] [NEWLINE]ADDED: Gains all the combat bonuses, that mele and anticav get. Correctly interracts with Generals, Exp, Cards, Governments, Ram, Towers, Akkad.[NEWLINE]REMOVED: BBG wallbreaker ability. [NEWLINE][COLOR_Civ6Red]NIHANG:[ENDCOLOR] Works with Generals, Rams and Towers </Text>
+        <Replace Tag="LOC_BBGTS_KONGO_FIX_DESC" language="en">
+            <Text>[COLOR_Civ6Red]Mvemba(Kongo) Religious Convert Ability:[ENDCOLOR] [NEWLINE]Fixed: Should work as in the descriptopm</Text>
         </Replace>
-        <Replace Tag="LOC_BBGTS_GOLDENGATE_FIX_NAME" language="en">
-            <Text>[COLOR_Civ6Red]FIX: Golden Gate Bridge[ENDCOLOR]</Text>
+        <Replace Tag="LOC_BBGTS_FREEINQ_FIX_NAME" language="en">
+            <Text>[COLOR_Civ6Red]FIX: Free Inquiry[ENDCOLOR]</Text>
         </Replace>
-        <Replace Tag="LOC_BBGTS_GOLDENGATE_FIX_DESC" language="en">
-            <Text>Fixed Base Game Bug: Where GoldenGate is impassible through cliff.</Text>>
+        <Replace Tag="LOC_BBGTS_FREEINQ_FIX_DESC" language="en">
+            <Text>Fixed BBG Game Bug: Since Babylon was reworked by BBG to not receive free inquiry boost to eureka, it stopped working for all civs. Should now work for all except babylon.</Text>>
         </Replace>
         <Replace Tag="LOC_BBGTS_RELIGION_MODIFIER_FIX_NAME" language="en">
             <Text>[COLOR_Civ6Red]FIX: Religion Belief Modifiers[ENDCOLOR]</Text>
@@ -53,11 +53,23 @@
         <Replace Tag="LOC_BBGTS_RELIGION_MODIFIER_FIX_DESC" language="en">
             <Text>Fixed Base Game Bug: Where Monk Culture Bombs work on only Founder.[NEWLINE]BBG: Make Holly Water Follow same logic as Defender/Crusade on implementation level</Text>
         </Replace>
-        <Replace Tag="LOC_BBGTS_MONK_SUGGESTION_NAME" language="en">
-            <Text>[COLOR_LIGHTBLUE]Suggestion: Monk Rework[ENDCOLOR]</Text>
+        <Replace Tag="LOC_BBGTS_REMOVE_MONK_SCALING_FIX_NAME" language="en">
+            <Text>[COLOR_Civ6Red]Fix: Monk Scaling CS Removed[ENDCOLOR]</Text>
         </Replace>
-        <Replace Tag="LOC_BBGTS_MONK_SUGGESTION_DESC" language="en">
-            <Text>Suggestions:[NEWLINE]Monk Gets Scaling Combat Str. and Cost(+1CS/approx10Faith Cost per each civic up to end of industrial civics.[NEWLINE]Monk +10 nerfed to +7, Monk+15 nerfed to +10 </Text>
+        <Replace Tag="LOC_BBGTS_REMOVE_MONK_SCALING_FIX_DESC" language="en">
+            <Text>Test:[NEWLINE]Monk Scaling Reverted to investigate Desyncs in BBG5+MPH+BSM</Text>
+        </Replace>
+        <Replace Tag="LOC_BBGTS_ETHEMENANKI_SUGGESTION_NAME" language="en">
+            <Text>[COLOR_LIGHTBLUE]Suggestion(5.2): Ethemenanki Marsh Wonder Yields[ENDCOLOR]</Text>
+        </Replace>
+        <Replace Tag="LOC_BBGTS_ETHEMENANKI_SUGGESTION_DESC" language="en">
+            <Text>Suggestions for 5.2:[NEWLINE]Ethemenanki provides it's respective bonus yields to marsh wonders. One of the interractions to test for upcomming natural wonder rework.</Text>
+        </Replace>
+        <Replace Tag="LOC_BBGTS_BBCC_SUGGESTION_NAME" language="en">
+            <Text>[COLOR_LIGHTBLUE]Suggestion(5.2): Better Balanced Capitals => Less RNG[ENDCOLOR]</Text>
+        </Replace>
+        <Replace Tag="LOC_BBGTS_BBCC_SUGGESTION_DESC" language="en">
+            <Text>Suggestion for 5.2:[NEWLINE]All Capital Cities are guaranteed 3f1p on flat tiles and 2f2p on hill tiles.[NEWLINE]Rest of the yields is calculated according to standard firaxis formula for each yield:[NEWLINE]YIELD=MAX(BETWEEN GUARANTEED_YIELD AND TILE_YIELD-REMOVABLE_FEATURE_YIELD)[NEWLINE]Less RNG on the Capital Settle</Text>
         </Replace>
     </LocalizedText>
 </GameData>

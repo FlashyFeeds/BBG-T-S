@@ -6,7 +6,7 @@
 		<Created>1657375165</Created>
 		<Teaser>LOC_BBGTS_TEASER</Teaser>
     		<Authors>FlashyFeeds</Authors>
-    		<SpecialThanks>ZhenjaMax, iElden, BBG community</SpecialThanks>
+    		<SpecialThanks>ZhenjaMax, BBG community</SpecialThanks>
 		<CompatibleVersions>1.2,2.0</CompatibleVersions>
 	</Properties>
 	<LocalizedText>
@@ -32,7 +32,7 @@
 	-->
 	<Dependencies>
 		<Mod id="4873eb62-8ccc-4574-b784-dda455e74e68" title="Expansion: Gathering Storm" />
-		<Mod id="cb84075d-5007-4207-b662-c35a5f7be240" title="Better Balanced Game 4.8.0" version="4080"/>
+		<Mod id="cb84075d-5007-4207-b662-c35a5f7be260" title="Better Balanced Game 5.0.1" version="5001"/>
 	</Dependencies>
 	<ActionCriteria>
 		<Criteria id="BBGTS_Mode_Expansion2">
@@ -62,18 +62,18 @@
 			</ConfigurationValueMatches>
 		</Criteria>
 		-->
-		<Criteria id="BBGTS_MonkFix_Expansion2">
+		<Criteria id="BBGTS_KongoFounderBeliefFix_Expansion2">
 			<ConfigurationValueMatches>
 				<Group>Game</Group>
-				<ConfigurationId>BBGTS_MONK_FIX</ConfigurationId>
+				<ConfigurationId>BBGTS_KONGO_FIX</ConfigurationId>
 				<Value>1</Value>
 			</ConfigurationValueMatches>
 		</Criteria>
 
-		<Criteria id="BBGTS_GoldenGateFix_Expansion2">
+		<Criteria id="BBGTS_FreeInqBuxFix_Expansion2">
 			<ConfigurationValueMatches>
 				<Group>Game</Group>
-				<ConfigurationId>BBGTS_GOLDENGATE_FIX</ConfigurationId>
+				<ConfigurationId>BBGTS_FREEINQ_FIX</ConfigurationId>
 				<Value>1</Value>
 			</ConfigurationValueMatches>
 		</Criteria>
@@ -86,13 +86,29 @@
 			</ConfigurationValueMatches>
 		</Criteria>
 		
-		<Criteria id="BBGTS_MonkSuggestions_Expansion2">
+		<Criteria id="BBGTS_RemoveMonkScaling_Expansion2">
 			<ConfigurationValueMatches>
 				<Group>Game</Group>
-				<ConfigurationId>BBGTS_MONK_SUGGESTION</ConfigurationId>
+				<ConfigurationId>BBGTS_REMOVE_MONK_SCALING_FIX</ConfigurationId>
 				<Value>1</Value>
 			</ConfigurationValueMatches>
-		</Criteria>			
+		</Criteria>
+
+		<Criteria id="BBGTS_EthemenankiSuggestion_Expansion2">
+			<ConfigurationValueMatches>
+				<Group>Game</Group>
+				<ConfigurationId>BBGTS_ETHEMENANKI_SUGGESTION</ConfigurationId>
+				<Value>1</Value>
+			</ConfigurationValueMatches>
+		</Criteria>
+
+		<Criteria id="BBGTS_BBCCSuggestion_Expansion2">
+			<ConfigurationValueMatches>
+				<Group>Game</Group>
+				<ConfigurationId>BBGTS_BBCC_SUGGESTION</ConfigurationId>
+				<Value>1</Value>
+			</ConfigurationValueMatches>
+		</Criteria>
 
 	</ActionCriteria>
 	<FrontEndActions>
@@ -129,36 +145,60 @@
 			<File>lua/Suggestion1.lua</File>
 		</AddGameplayScripts>
 		-->
-		<UpdateDatabase id="BBGTS_MonkFix_Data">
-            <Properties>
-                <LoadOrder>35000</LoadOrder>
-            </Properties>
-			<Criteria>BBGTS_MonkFix_Expansion2</Criteria>
-			<File>sql/MonkFix.sql</File>
-        </UpdateDatabase>
-
-        <UpdateDatabase id="BBGTS_GoldenGateFix_Data">
-            <Properties>
-                <LoadOrder>35010</LoadOrder>
-            </Properties>
-			<Criteria>BBGTS_GoldenGateFix_Expansion2</Criteria>
-			<File>sql/GoldenGateFix.sql</File>
-        </UpdateDatabase>
-
         <UpdateDatabase id="BBGTS_ReligionModifierFix_Data">
             <Properties>
-                <LoadOrder>35020</LoadOrder>
+                <LoadOrder>35000</LoadOrder>
             </Properties>
 			<Criteria>BBGTS_ReligionModifierFix_Expansion2</Criteria>
 			<File>sql/ReligionModifierFix.sql</File>
         </UpdateDatabase>
 
-        <UpdateDatabase id="BBGTS_MonkSuggestions_Data">
+		<UpdateDatabase id="BBGTS_KongoFounderBeliefFix_Data">
             <Properties>
-                <LoadOrder>38000</LoadOrder>
+                <LoadOrder>35010</LoadOrder>
             </Properties>
-			<Criteria>BBGTS_MonkSuggestions_Expansion2</Criteria>
-			<File>sql/MonkSuggestions.sql</File>
+			<Criteria>BBGTS_KongoFounderBeliefFix_Expansion2</Criteria>
+			<File>sql/KongoFounderBeliefFix.sql</File>
+        </UpdateDatabase>
+
+        <UpdateDatabase id="BBGTS_FreeInqBuxFix_Data">
+            <Properties>
+                <LoadOrder>35020</LoadOrder>
+            </Properties>
+			<Criteria>BBGTS_FreeInqBuxFix_Expansion2</Criteria>
+			<File>sql/FreeInqBuxFix.sql</File>
+        </UpdateDatabase>
+
+        <UpdateDatabase id="BBGTS_RemoveMonkScaling_Data">
+            <Properties>
+                <LoadOrder>35030</LoadOrder>
+            </Properties>
+			<Criteria>BBGTS_RemoveMonkScaling_Expansion2</Criteria>
+			<File>sql/RemoveMonkScaling.sql</File>
+        </UpdateDatabase>
+
+        <UpdateDatabase id="BBGTS_EthemenankiSuggestion_Data">
+    		<Properties>
+        		<LoadOrder>35040</LoadOrder>
+    		</Properties>
+			<Criteria>BBGTS_EthemenankiSuggestion_Expansion2</Criteria>
+			<File>sql/EthemenankiSuggestion.sql</File>
+        </UpdateDatabase>
+
+        <UpdateDatabase id="BBGTS_BBCCSuggestion_Data">
+    		<Properties>
+        		<LoadOrder>35050</LoadOrder>
+    		</Properties>
+			<Criteria>BBGTS_BBCCSuggestion_Expansion2</Criteria>
+			<File>sql/BBCC.sql</File>
+        </UpdateDatabase>
+
+		<UpdateDatabase id="BBGTS_Suggestion1_Data">
+    		<Properties>
+        		<LoadOrder>35000</LoadOrder>
+    		</Properties>
+			<Criteria>BBGTS_Suggestion1_Expansion2</Criteria>
+			<File>sql/Suggestion1.sql</File>
         </UpdateDatabase>
         <!--Conditional sql added like so
 		<UpdateDatabase id="BBGTS_BugFix1_Data">
@@ -190,7 +230,12 @@
 		<File>lua/Suggestion1.lua</File>
 		<File>sql/MonkFix.sql</File>
 		<File>sql/MonkSuggestions.sql</File>
+		<File>sql/GoldenGateFix.sql</File>
 		<File>sql/ReligionModifierFix.sql</File>
-		<File>sql/GoldenGateFix.sql</File>	
+		<File>sql/KongoFounderBeliefFix.sql</File>
+		<File>sql/FreeInqBuxFix.sql</File>
+		<File>sql/EthemenankiSuggestion.sql</File>
+		<File>sql/RemoveMonkScaling.sql</File>
+		<File>sql/BBCC.sql</File>
 	</Files>
 </Mod>
