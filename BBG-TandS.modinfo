@@ -94,6 +94,14 @@
 			</ConfigurationValueMatches>
 		</Criteria>
 
+		<Criteria id="BBGTS_MacedonFix_Expansion2">
+			<ConfigurationValueMatches>
+				<Group>Game</Group>
+				<ConfigurationId>BBGTS_MACEDON_FIX</ConfigurationId>
+				<Value>1</Value>
+			</ConfigurationValueMatches>
+		</Criteria>
+
 		<Criteria id="BBGTS_EthemenankiSuggestion_Expansion2">
 			<ConfigurationValueMatches>
 				<Group>Game</Group>
@@ -111,6 +119,7 @@
 		</Criteria>
 
 	</ActionCriteria>
+
 	<FrontEndActions>
 		<UpdateDatabase id="bbgts_updateconfig">
 			<File>config/config.sql</File>
@@ -132,6 +141,7 @@
 			</Items>
 		</ImportFiles>
 	</FrontEndActions>
+
 	<InGameActions>
 		<!--Conditional lua added like so
 
@@ -176,10 +186,19 @@
 			<Criteria>BBGTS_RemoveMonkScaling_Expansion2</Criteria>
 			<File>sql/RemoveMonkScaling.sql</File>
         </UpdateDatabase>
+		
+		<UpdateDatabase id="BBGTS_MacedonFix_Data">
+            		<Properties>
+                		<LoadOrder>35040</LoadOrder>
+            		</Properties>
+			<Criteria>BBGTS_MacedonFix_Expansion2</Criteria>
+			<File>sql/MacedonFix.sql</File>
+        </UpdateDatabase>
+
 
         <UpdateDatabase id="BBGTS_EthemenankiSuggestion_Data">
     		<Properties>
-        		<LoadOrder>35040</LoadOrder>
+        		<LoadOrder>35050</LoadOrder>
     		</Properties>
 			<Criteria>BBGTS_EthemenankiSuggestion_Expansion2</Criteria>
 			<File>sql/EthemenankiSuggestion.sql</File>
@@ -187,7 +206,7 @@
 
         <UpdateDatabase id="BBGTS_BBCCSuggestion_Data">
     		<Properties>
-        		<LoadOrder>35050</LoadOrder>
+        		<LoadOrder>35060</LoadOrder>
     		</Properties>
 			<Criteria>BBGTS_BBCCSuggestion_Expansion2</Criteria>
 			<File>sql/BBCC.sql</File>
@@ -237,5 +256,6 @@
 		<File>sql/EthemenankiSuggestion.sql</File>
 		<File>sql/RemoveMonkScaling.sql</File>
 		<File>sql/BBCC.sql</File>
+		<File>sql/MacedonFix.sql</File>
 	</Files>
 </Mod>

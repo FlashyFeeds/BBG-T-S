@@ -20,5 +20,25 @@ function EstablishPlayers()
 		end
 	end
 	print("players established")
-	return MajCount, MajTable, CsCount, CsTable;
+	return MajTable, CsTable
 end
+
+function IsCS(PlayerID)
+	local CheckedPlayer = Players[PlayerID];
+	if CheckedPlayer:IsMajor()==false and (CheckedPlayer:IsBarbarian()==false or GameInfo.Leaders[CheckedPlayer:GetLeader()].LeaderType ~= "LEADER_FREE_CITIES") then
+		return true
+	else
+		return false
+	end
+end
+
+function IsMajNotObserver(PlayerID)
+	local CheckedPlayer = Players[PlayerID];
+	if CheckedPlayer:IsMajor() == true and  (not ( PlayerConfigurations[PlayerID]:GetLeaderTypeName() == "LEADER_SPECTATOR" or PlayerConfigurations[PlayerID]:GetHandicapTypeID() == 2021024770 )) then
+		return true ;
+	else
+		return false ;
+	end
+end
+
+function On

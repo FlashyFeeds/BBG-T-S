@@ -59,6 +59,12 @@
         <Replace Tag="LOC_BBGTS_REMOVE_MONK_SCALING_FIX_DESC" language="en">
             <Text>Test:[NEWLINE]Monk Scaling Reverted to investigate Desyncs in BBG5+MPH+BSM</Text>
         </Replace>
+        <Replace Tag="LOC_BBGTS_MACEDON_FIX_NAME" language="en">
+            <Text>[COLOR_Civ6Red]Fix: Macedon City Capture[ENDCOLOR]</Text>
+        </Replace>
+        <Replace Tag="LOC_BBGTS_MACEDON_FIX_DESC" language="en">
+            <Text>Test:[NEWLINE]Attempt to fix Macedon ability: Hellenistic Fusion, production part</Text>
+        </Replace>
         <Replace Tag="LOC_BBGTS_ETHEMENANKI_SUGGESTION_NAME" language="en">
             <Text>[COLOR_LIGHTBLUE]Suggestion(5.2): Ethemenanki Marsh Wonder Yields[ENDCOLOR]</Text>
         </Replace>
