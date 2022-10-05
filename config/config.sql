@@ -16,16 +16,18 @@ INSERT INTO Parameters(ParameterId, Name, Description, Domain, DefaultValue, Con
     --('BBGTS_BugFix1', 'LOC_BBGTS_BUGFIX1_NAME', 'LOC_BBGTS_BUGFIX1_DESC', 'bool', '1', 'Game', 'BBGTS_BUGFIX1', 'AdvancedOptions', '1', '1', '20020');
 
 INSERT INTO Parameters(ParameterId, Name, Description, Domain, DefaultValue, ConfigurationGroup, ConfigurationId, GroupId, Visible, SupportsSinglePlayer, SortIndex) VALUES
-    ('BBGTS_KongoFix', 'LOC_BBGTS_KONGO_FIX_NAME', 'LOC_BBGTS_KONGO_FIX_DESC', 'bool', '1', 'Game', 'BBGTS_KONGO_FIX', 'AdvancedOptions', '1', '1', '20030'),
-    ('BBGTS_FreeInqFix', 'LOC_BBGTS_FREEINQ_FIX_NAME', 'LOC_BBGTS_FREEINQ_FIX_DESC', 'bool', '1', 'Game', 'BBGTS_FREEINQ_FIX', 'AdvancedOptions', '1', '1', '20040'),
-    ('BBGTS_ReligionModifierFix', 'LOC_BBGTS_RELIGION_MODIFIER_FIX_NAME', 'LOC_BBGTS_RELIGION_MODIFIER_FIX_DESC', 'bool', '1', 'Game', 'BBGTS_RELIGION_MODIFIER_FIX', 'AdvancedOptions', '1', '1', '20050'),
-    ('BBGTS_RemoveMonkScalingFix', 'LOC_BBGTS_REMOVE_MONK_SCALING_FIX_NAME', 'LOC_BBGTS_REMOVE_MONK_SCALING_FIX_DESC', 'bool', '1', 'Game', 'BBGTS_REMOVE_MONK_SCALING_FIX', 'AdvancedOptions', '1', '1', '20060'),
-    ('BBGTS_MacedonFix', 'LOC_BBGTS_MACEDON_FIX_NAME', 'LOC_BBGTS_MACEDON_FIX_DESC', 'bool', '1', 'Game', 'BBGTS_MACEDON_FIX', 'AdvancedOptions', '1', '1', '20070');
+    ('BBGTS_KongoFix', 'LOC_BBGTS_KONGO_FIX_NAME', 'LOC_BBGTS_KONGO_FIX_DESC', 'bool', '0', 'Game', 'BBGTS_KONGO_FIX', 'AdvancedOptions', '1', '1', '20030'),
+    ('BBGTS_FreeInqFix', 'LOC_BBGTS_FREEINQ_FIX_NAME', 'LOC_BBGTS_FREEINQ_FIX_DESC', 'bool', '0', 'Game', 'BBGTS_FREEINQ_FIX', 'AdvancedOptions', '1', '1', '20040'),
+    ('BBGTS_ReligionModifierFix', 'LOC_BBGTS_RELIGION_MODIFIER_FIX_NAME', 'LOC_BBGTS_RELIGION_MODIFIER_FIX_DESC', 'bool', '0', 'Game', 'BBGTS_RELIGION_MODIFIER_FIX', 'AdvancedOptions', '1', '1', '20050'),
+    ('BBGTS_RemoveMonkScalingFix', 'LOC_BBGTS_REMOVE_MONK_SCALING_FIX_NAME', 'LOC_BBGTS_REMOVE_MONK_SCALING_FIX_DESC', 'bool', '0', 'Game', 'BBGTS_REMOVE_MONK_SCALING_FIX', 'AdvancedOptions', '1', '1', '20060'),
+    ('BBGTS_MacedonFix', 'LOC_BBGTS_MACEDON_FIX_NAME', 'LOC_BBGTS_MACEDON_FIX_DESC', 'bool', '0', 'Game', 'BBGTS_MACEDON_FIX', 'AdvancedOptions', '1', '1', '20070'),
+    ('BBGTS_MonkNerf','LOC_BBGTS_MONK_NERF_NAME', 'LOC_BBGTS_MONK_NERF_DESC', 'bool', '0', 'Game', 'BBGTS_MONK_NERF', 'AdvancedOptions', '1', '1', '20080');
 --Insert your Suggestions Here, sort order 30000+
 --Insert your Suggestions Here, sort order 30000+
 INSERT INTO Parameters(ParameterId, Name, Description, Domain, DefaultValue, ConfigurationGroup, ConfigurationId, GroupId, Visible, SupportsSinglePlayer, SortIndex) VALUES
-    ('BBGTS_EthemenankiSuggestion', 'LOC_BBGTS_ETHEMENANKI_SUGGESTION_NAME', 'LOC_BBGTS_ETHEMENANKI_SUGGESTION_DESC', 'bool', '1', 'Game', 'BBGTS_ETHEMENANKI_SUGGESTION', 'AdvancedOptions', '1', '1', '30000'),
-    ('BBGTS_BBCCSuggestion', 'LOC_BBGTS_BBCC_SUGGESTION_NAME', 'LOC_BBGTS_BBCC_SUGGESTION_DESC', 'bool', '1', 'Game', 'BBGTS_BBCC_SUGGESTION', 'AdvancedOptions', '1', '1', '30010');
+    ('BBGTS_EthemenankiSuggestion', 'LOC_BBGTS_ETHEMENANKI_SUGGESTION_NAME', 'LOC_BBGTS_ETHEMENANKI_SUGGESTION_DESC', 'bool', '0', 'Game', 'BBGTS_ETHEMENANKI_SUGGESTION', 'AdvancedOptions', '1', '1', '30000'),
+    ('BBGTS_BBCCSuggestion', 'LOC_BBGTS_BBCC_SUGGESTION_NAME', 'LOC_BBGTS_BBCC_SUGGESTION_DESC', 'bool', '0', 'Game', 'BBGTS_BBCC_SUGGESTION', 'AdvancedOptions', '1', '1', '30010'),
+    ('BBGTS_AttachDetachModifier', 'LOC_BBGTS_ATTACH_DETACH_NAME', 'LOC_BBGTS_ATTACH_DETACH_DESC', 'bool', '0', 'Game', 'BBGTS_ATTACH_DETACH_TEST', 'AdvancedOptions', '1', '1', '30020');
 
 --Hide Options Unless BBGTS is active, Just copy any existing line and replace parameter ID with your Suggestion Name 
     --Like So:
@@ -39,4 +41,6 @@ INSERT INTO ParameterCriteria(ParameterId, ConfigurationGroup, ConfigurationId, 
     ('BBGTS_RemoveMonkScalingFix', 'Game', 'BBGTS_GAMEMODE', 'Equals', '1'),
     ('BBGTS_MacedonFix', 'Game', 'BBGTS_GAMEMODE', 'Equals', '1'),
     ('BBGTS_EthemenankiSuggestion', 'Game', 'BBGTS_GAMEMODE', 'Equals', '1'),
-    ('BBGTS_BBCCSuggestion', 'Game', 'BBGTS_GAMEMODE', 'Equals', '1');
+    ('BBGTS_BBCCSuggestion', 'Game', 'BBGTS_GAMEMODE', 'Equals', '1'),
+    ('BBGTS_MonkNerf', 'Game', 'BBGTS_GAMEMODE', 'Equals', '1'),
+    ('BBGTS_AttachDetachModifier', 'Game', 'BBGTS_GAMEMODE', 'Equals', '1');

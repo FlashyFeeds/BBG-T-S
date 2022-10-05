@@ -77,5 +77,17 @@
         <Replace Tag="LOC_BBGTS_BBCC_SUGGESTION_DESC" language="en">
             <Text>Suggestion for 5.2:[NEWLINE]All Capital Cities are guaranteed 3f1p on flat tiles and 2f2p on hill tiles.[NEWLINE]Rest of the yields is calculated according to standard firaxis formula for each yield:[NEWLINE]YIELD=MAX(BETWEEN GUARANTEED_YIELD AND TILE_YIELD-REMOVABLE_FEATURE_YIELD)[NEWLINE]Less RNG on the Capital Settle</Text>
         </Replace>
+        <Replace Tag="LOC_BBGTS_MONK_NERF_NAME" language="en">
+            <Text>[COLOR_Civ6Red]Nerf: Monk[ENDCOLOR]</Text>
+        </Replace>
+        <Replace Tag="LOC_BBGTS_MONK_NERF_DESC" language="en">
+            <Text>CS reduced, Price Adjusted. +10 congress replaced by +/-5 congress. Kotoku city can recruit monks</Text>
+        </Replace>
+        <Replace Tag="LOC_BBGTS_ATTACH_DETACH_NAME" language="en">
+            <Text>[COLOR_LIGHTBLUE]Test Attach Detach Modifier[ENDCOLOR]</Text>
+        </Replace>
+        <Replace Tag="LOC_BBGTS_ATTACH_DETACH_DESC" language="en">
+            <Text>Test</Text>
+        </Replace>
     </LocalizedText>
 </GameData>

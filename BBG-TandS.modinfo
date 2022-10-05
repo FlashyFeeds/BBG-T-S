@@ -118,6 +118,22 @@
 			</ConfigurationValueMatches>
 		</Criteria>
 
+		<Criteria id="BBGTS_MonkNerf_Expansion2">
+			<ConfigurationValueMatches>
+				<Group>Game</Group>
+				<ConfigurationId>BBGTS_MONK_NERF</ConfigurationId>
+				<Value>1</Value>
+			</ConfigurationValueMatches>
+		</Criteria>
+
+		<Criteria id="BBGTS_AttachDetachModifier_Expansion2">
+			<ConfigurationValueMatches>
+				<Group>Game</Group>
+				<ConfigurationId>BBGTS_ATTACH_DETACH_TEST</ConfigurationId>
+				<Value>1</Value>
+			</ConfigurationValueMatches>
+		</Criteria>
+
 	</ActionCriteria>
 
 	<FrontEndActions>
@@ -143,18 +159,17 @@
 	</FrontEndActions>
 
 	<InGameActions>
-		<!--Conditional lua added like so
-
-		<AddGameplayScripts id="BBGTS_BugFix1_Script">
-			<Criteria>BBGTS_BugFix1_Expansion2</Criteria>
-			<File>lua/BugFix1.lua</File>
+		<AddGameplayScripts id="BBGTS_MonkNerf_Script">
+			<Criteria>BBGTS_MonkNerf_Expansion2</Criteria>
+			<File>lua/WorldCongress_BBG.lua</File>
+			<File>lua/MonkKotoku.lua
 		</AddGameplayScripts>
 		
-		<AddGameplayScripts id="BBGTS_Suggestion1_Script">
-			<Criteria>BBGTS_Suggestion1_Expansion2</Criteria>
-			<File>lua/Suggestion1.lua</File>
+		<AddGameplayScripts id="BBGTS_AttachDetachModifier_Script">
+			<Criteria>BBGTS_AttachDetachModifier_Expansion2</Criteria>
+			<File>lua/TestAttachDetachModifier.lua</File>
 		</AddGameplayScripts>
-		-->
+
         <UpdateDatabase id="BBGTS_ReligionModifierFix_Data">
             <Properties>
                 <LoadOrder>35000</LoadOrder>
@@ -212,13 +227,22 @@
 			<File>sql/BBCC.sql</File>
         </UpdateDatabase>
 
-		<UpdateDatabase id="BBGTS_Suggestion1_Data">
+        <UpdateDatabase id="BBGTS_MonkNerf_Data">
     		<Properties>
-        		<LoadOrder>35000</LoadOrder>
+        		<LoadOrder>35070</LoadOrder>
     		</Properties>
-			<Criteria>BBGTS_Suggestion1_Expansion2</Criteria>
-			<File>sql/Suggestion1.sql</File>
+			<Criteria>BBGTS_MonkNerf_Expansion2</Criteria>
+			<File>sql/MonkNerf.sql</File>
         </UpdateDatabase>
+
+        <UpdateDatabase id="BBGTS_AttachDetachModifier_Data">
+    		<Properties>
+        		<LoadOrder>35080</LoadOrder>
+    		</Properties>
+			<Criteria>BBGTS_AttachDetachModifier_Expansion2</Criteria>
+			<File>sql/TestAttachDetachModifier.sql</File>
+        </UpdateDatabase>
+
         <!--Conditional sql added like so
 		<UpdateDatabase id="BBGTS_BugFix1_Data">
             		<Properties>
@@ -257,5 +281,10 @@
 		<File>sql/RemoveMonkScaling.sql</File>
 		<File>sql/BBCC.sql</File>
 		<File>sql/MacedonFix.sql</File>
+		<File>sql/MonkNerf.sql</File>
+		<File>lua/WorldCongress_BBG.lua</File>
+		<File>lua/MonkKotoku.lua
+		<File>sql/TestAttachDetachModifier.sql</File>
+		<File>lua/TestAttachDetachModifier.lua</File>
 	</Files>
 </Mod>
