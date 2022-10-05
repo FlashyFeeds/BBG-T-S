@@ -162,7 +162,7 @@
 		<AddGameplayScripts id="BBGTS_MonkNerf_Script">
 			<Criteria>BBGTS_MonkNerf_Expansion2</Criteria>
 			<File>lua/WorldCongress_BBG.lua</File>
-			<File>lua/MonkKotoku.lua
+			<File>lua/MonkKotoku.lua</File>
 		</AddGameplayScripts>
 		
 		<AddGameplayScripts id="BBGTS_AttachDetachModifier_Script">
