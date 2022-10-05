@@ -17,8 +17,10 @@ function  OnWarriorBuilt(playerID, cityID, iConstructionType, unitID, bCancelled
 	end
 
 	if GameInfo.Units[unitID].UnitType == 'UNIT_WARRIOR' then
+		print('WarriorBuilt')
 		pPlayer:AttachModifierByID('ALEX_PRODUCTION')
 		print("Modifier Attached")
+
 	end
 end
 
@@ -41,7 +43,8 @@ function OnSlingerBuilt(playerID, cityID, iConstructionType, unitID, bCancelled)
 	end
 
 	if GameInfo.Units[unitID].UnitType == 'UNIT_SLINGER' then
-		pPlayer:DetachModifierByID('ALEX_PRODUCTION')
+		print('Slinger Built')
+		pPlayer:AttachModifierByID('ALEX_PRODUCTION', false)
 		print("Modifier Detached")
 	end
 end

@@ -14,18 +14,24 @@ function KotokuAddMonks(iX, iY, buildingID, playerID, cityID, iPercentComplete, 
 		return
 	end
 	print('Kotoku Built')
+
+	local kotokuCity = {}
+	kotokuCity.ID = cityID
+	kotokuCity.status = false
+
 	if pCity:GetReligion():GetMajorityReligion() == -1 then
+		Game:SetProperty('KOTOKU_CITY', kotokuCity);
+		print('Monks Cannot Recruit, no Religion')
 		return
 	end
 
 	for row in GameInfo.Units() do
 		if row.UnitType == 'UNIT_WARRIOR_MONK' then
 			pCity:SetUnitFaithPurchaseEnabled(row.Index, true)
+			kotokuCity.status = true
 		end
 	end
-	local kotokuCity = {}
-	kotokuCity.ID = cityID
-	kotokuCity.status = true
+
 	Game:SetProperty('KOTOKU_CITY', kotokuCity);
 	print('Monks Can Recruit')
 end
