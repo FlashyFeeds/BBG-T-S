@@ -283,7 +283,7 @@
 		<File>sql/MacedonFix.sql</File>
 		<File>sql/MonkNerf.sql</File>
 		<File>lua/WorldCongress_BBG.lua</File>
-		<File>lua/MonkKotoku.lua
+		<File>lua/MonkKotoku.lua</File>
 		<File>sql/TestAttachDetachModifier.sql</File>
 		<File>lua/TestAttachDetachModifier.lua</File>
 	</Files>
