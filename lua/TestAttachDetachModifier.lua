@@ -1,5 +1,5 @@
 function  OnWarriorBuilt(playerID, cityID, iConstructionType, unitID, bCancelled)
-	print('WarriorBuilt')
+
 	local pPlayer = Players[playerID]
 
 	if pPlayer == nil then
@@ -10,7 +10,7 @@ function  OnWarriorBuilt(playerID, cityID, iConstructionType, unitID, bCancelled
 		return
 	end
 
-	local pCity = City(playerID, cityID)
+	local pCity = CityManager.GetCity(playerID, cityID)
 	
 	if pCity == nil then
 		return
@@ -20,12 +20,11 @@ function  OnWarriorBuilt(playerID, cityID, iConstructionType, unitID, bCancelled
 		print('WarriorBuilt')
 		pPlayer:AttachModifierByID('ALEX_PRODUCTION')
 		print("Modifier Attached")
-
 	end
 end
 
 function OnSlingerBuilt(playerID, cityID, iConstructionType, unitID, bCancelled)
-	print('Slinger Built')
+
 	local pPlayer = Players[playerID]
 
 	if pPlayer == nil then
@@ -36,7 +35,7 @@ function OnSlingerBuilt(playerID, cityID, iConstructionType, unitID, bCancelled)
 		return
 	end
 
-	local pCity = City(playerID, cityID)
+	local pCity = CityManager.GetCity(playerID, cityID)
 	
 	if pCity == nil then
 		return
@@ -44,7 +43,7 @@ function OnSlingerBuilt(playerID, cityID, iConstructionType, unitID, bCancelled)
 
 	if GameInfo.Units[unitID].UnitType == 'UNIT_SLINGER' then
 		print('Slinger Built')
-		pPlayer:AttachModifierByID('ALEX_PRODUCTION', false)
+		pPlayer:DetachModifier('ALEX_PRODUCTION')
 		print("Modifier Detached")
 	end
 end
@@ -53,5 +52,6 @@ function Initialize()
 	Events.CityProductionCompleted.Add(OnWarriorBuilt)
 	Events.CityProductionCompleted.Add(OnSlingerBuilt)
 end
+
 
 Initialize()

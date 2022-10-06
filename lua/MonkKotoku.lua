@@ -100,7 +100,10 @@ function OnKotokuCityRazed(playerID, cityID)
 end
 
 function Initialize()
+	print('Monk Kotoku Started')
 	Events.WonderCompleted.Add(KotokuAddMonks)
 	Events.CityReligionChanged.Add(OnKotokuReligionChanged)
 	Events.CityRemovedFromMap.Add(OnKotokuCityRazed)
 end
+
+Initialize()
