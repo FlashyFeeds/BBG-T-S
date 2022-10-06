@@ -13,7 +13,7 @@ function KotokuAddMonks(iX, iY, buildingID, playerID, cityID, iPercentComplete, 
 	if GameInfo.Buildings[buildingID].BuildingType ~= 'BUILDING_KOTOKU_IN' then
 		return
 	end
-	print('Kotoku Built')
+	print('Kotoku Built in City', kotokuCity.ID)
 
 	local kotokuCity = {}
 	kotokuCity.ID = cityID
@@ -54,7 +54,7 @@ function OnKotokuReligionChanged(playerID, cityID, eVisibility, city)
 	if pCity == nil then
 		return
 	end
-
+	print('Kotoku City', kotokuStatus.ID)
 	print('Kotoku City Converted')
 
 	if pCity:GetReligion():GetMajorityReligion() == -1 and kotokuStatus.status== true then
@@ -63,6 +63,7 @@ function OnKotokuReligionChanged(playerID, cityID, eVisibility, city)
 		for row in GameInfo.Units() do
 			if row.UnitType == 'UNIT_WARRIOR_MONK' then
 				pCity:SetUnitFaithPurchaseEnabled(row.Index, false)
+				print('Monk Removed')
 			end
 		end
 
@@ -76,6 +77,7 @@ function OnKotokuReligionChanged(playerID, cityID, eVisibility, city)
 		for row in GameInfo.Units() do
 			if row.UnitType == 'UNIT_WARRIOR_MONK' then
 				pCity:SetUnitFaithPurchaseEnabled(row.Index, true)
+				print('Monk Added')
 			end
 		end
 		print('Converted to Religion can Recruit')
@@ -94,7 +96,7 @@ function OnKotokuCityRazed(playerID, cityID)
 	if cityID ~= kotokuStatus.ID then
 		return
 	end
-	print('Kotoku City Razed')
+	print('Kotoku City Razed', kotokuStatus.ID)
 	Game:SetProperty('KOTOKU_CITY', nil)
 	print('Kotoku Property Released')
 end
