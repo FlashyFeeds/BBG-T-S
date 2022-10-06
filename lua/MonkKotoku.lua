@@ -13,12 +13,13 @@ function KotokuAddMonks(iX, iY, buildingID, playerID, cityID, iPercentComplete, 
 	if GameInfo.Buildings[buildingID].BuildingType ~= 'BUILDING_KOTOKU_IN' then
 		return
 	end
-	print('Kotoku Built in City', kotokuCity.ID)
+	
 
 	local kotokuCity = {}
 	kotokuCity.ID = cityID
 	kotokuCity.status = false
-
+	print('Kotoku Built in City', kotokuCity.ID)
+	
 	if pCity:GetReligion():GetMajorityReligion() == -1 then
 		Game:SetProperty('KOTOKU_CITY', kotokuCity);
 		print('Monks Cannot Recruit, no Religion')
