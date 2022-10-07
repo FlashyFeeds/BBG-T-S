@@ -150,6 +150,14 @@
 			</ConfigurationValueMatches>
 		</Criteria>
 
+		<Criteria id="BBGTS_Spy_Expansion2">
+			<ConfigurationValueMatches>
+				<Group>Game</Group>
+				<ConfigurationId>BBGTS_SPY_TEST</ConfigurationId>
+				<Value>1</Value>
+			</ConfigurationValueMatches>
+		</Criteria>
+
 	</ActionCriteria>
 
 	<FrontEndActions>
@@ -187,12 +195,17 @@
 		<AddGameplayScripts id="BBGTS_MonkNerf_Script">
 			<Criteria>BBGTS_MonkNerf_Expansion2</Criteria>
 			<File>lua/WorldCongress_BBG.lua</File>
-			<File>lua/MonkKotoku.lua</File>
+			<!--<File>lua/MonkKotoku.lua</File>-->
 		</AddGameplayScripts>
 		
 		<AddGameplayScripts id="BBGTS_AttachDetachModifier_Script">
 			<Criteria>BBGTS_AttachDetachModifier_Expansion2</Criteria>
 			<File>lua/TestAttachDetachModifier.lua</File>
+		</AddGameplayScripts>
+
+		<AddGameplayScripts id="BBGTS_Spy_Script">
+			<Criteria>BBGTS_Spy_Expansion2</Criteria>
+			<File>lua/spy.lua</File>
 		</AddGameplayScripts>
 
         <UpdateDatabase id="BBGTS_ReligionModifierFix_Data">
@@ -316,10 +329,11 @@
 		<File>sql/MacedonFix.sql</File>
 		<File>sql/MonkNerf.sql</File>
 		<File>lua/WorldCongress_BBG.lua</File>
-		<File>lua/MonkKotoku.lua</File>
+		<!--<File>lua/MonkKotoku.lua</File>-->
 		<File>sql/TestAttachDetachModifier.sql</File>
 		<File>lua/TestAttachDetachModifier.lua</File>
 		<File>sql/WaterAqueductDamSuggestiom.sql</File>
 		<File>ui/ProductionPanel_BBG.lua</File>
+		<File>lua/spy.lua</File>
 	</Files>
 </Mod>

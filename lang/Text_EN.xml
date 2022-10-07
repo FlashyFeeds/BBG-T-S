@@ -98,7 +98,13 @@
         <Replace Tag="LOC_BBGTS_PRODUCTION_PANEL_NAME" language="en">
             <Text>[COLOR_LIGHTBLUE]Production Panel Override[ENDCOLOR]</Text>
         </Replace>
-        <Replace Tag="LOC_LOC_BBGTS_PRODUCTION_PANEL_DESC" language="en">
+        <Replace Tag="LOC_BBGTS_PRODUCTION_PANEL_DESC" language="en">
+            <Text>Test</Text>
+        </Replace>
+        <Replace Tag="LOC_BBGTS_SPY_NAME" language="en">
+            <Text>[COLOR_LIGHTBLUE]Spy Initial Test[ENDCOLOR]</Text>
+        </Replace>
+        <Replace Tag="LOC_BBGTS_SPY_DESC" language="en">
             <Text>Test</Text>
         </Replace>
     </LocalizedText>
