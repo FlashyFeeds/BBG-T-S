@@ -107,5 +107,11 @@
         <Replace Tag="LOC_BBGTS_SPY_DESC" language="en">
             <Text>Test</Text>
         </Replace>
+        <Replace Tag="LOC_PLANES_FIX_NAME" language="en">
+            <Text>[COLOR_Civ6Red]Planes Fix[ENDCOLOR]</Text>
+        </Replace>
+        <Replace Tag="LOC_BBGTS_SPY_DESC" language="en">
+            <Text>Test</Text>
+        </Replace>
     </LocalizedText>
 </GameData>

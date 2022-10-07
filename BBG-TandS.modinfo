@@ -158,6 +158,14 @@
 			</ConfigurationValueMatches>
 		</Criteria>
 
+		<Criteria id="BBGTS_PlaneFix_Expansion2">
+			<ConfigurationValueMatches>
+				<Group>Game</Group>
+				<ConfigurationId>BBGTS_PLANES_FIX</ConfigurationId>
+				<Value>1</Value>
+			</ConfigurationValueMatches>
+		</Criteria>
+
 	</ActionCriteria>
 
 	<FrontEndActions>
@@ -289,6 +297,14 @@
 			<File>sql/WaterAqueductDamSuggestiom.sql</File>
         </UpdateDatabase>
 
+		<UpdateDatabase id="BBGTS_PlaneFix_Data">
+    		<Properties>
+        		<LoadOrder>35100</LoadOrder>
+    		</Properties>
+			<Criteria>BBGTS_PlaneFix_Expansion2</Criteria>
+			<File>sql/PlanesFix.sql</File>
+        </UpdateDatabase>
+
         <!--Conditional sql added like so
 		<UpdateDatabase id="BBGTS_BugFix1_Data">
             		<Properties>
@@ -335,5 +351,6 @@
 		<File>sql/WaterAqueductDamSuggestiom.sql</File>
 		<File>ui/ProductionPanel_BBG.lua</File>
 		<File>lua/spy.lua</File>
+		<File>sql/PlanesFix.sql</File>
 	</Files>
 </Mod>

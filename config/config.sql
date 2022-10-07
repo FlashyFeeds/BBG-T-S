@@ -22,7 +22,8 @@ INSERT INTO Parameters(ParameterId, Name, Description, Domain, DefaultValue, Con
     ('BBGTS_ReligionModifierFix', 'LOC_BBGTS_RELIGION_MODIFIER_FIX_NAME', 'LOC_BBGTS_RELIGION_MODIFIER_FIX_DESC', 'bool', '0', 'Game', 'BBGTS_RELIGION_MODIFIER_FIX', 'AdvancedOptions', '1', '1', '20050'),
     ('BBGTS_RemoveMonkScalingFix', 'LOC_BBGTS_REMOVE_MONK_SCALING_FIX_NAME', 'LOC_BBGTS_REMOVE_MONK_SCALING_FIX_DESC', 'bool', '0', 'Game', 'BBGTS_REMOVE_MONK_SCALING_FIX', 'AdvancedOptions', '1', '1', '20060'),
     ('BBGTS_MacedonFix', 'LOC_BBGTS_MACEDON_FIX_NAME', 'LOC_BBGTS_MACEDON_FIX_DESC', 'bool', '0', 'Game', 'BBGTS_MACEDON_FIX', 'AdvancedOptions', '1', '1', '20070'),
-    ('BBGTS_MonkNerf','LOC_BBGTS_MONK_NERF_NAME', 'LOC_BBGTS_MONK_NERF_DESC', 'bool', '0', 'Game', 'BBGTS_MONK_NERF', 'AdvancedOptions', '1', '1', '20080');
+    ('BBGTS_MonkNerf','LOC_BBGTS_MONK_NERF_NAME', 'LOC_BBGTS_MONK_NERF_DESC', 'bool', '0', 'Game', 'BBGTS_MONK_NERF', 'AdvancedOptions', '1', '1', '20080'),
+    ('BBGTS_PlanesFix','LOC_BBGTS_PLANES_FIX_NAME', 'LOC_BBGTS_PLANES_FIX_DESC', 'bool', '0', 'Game', 'BBGTS_PLANES_FIX', 'AdvancedOptions', '1', '1', '20090');
 --Insert your Suggestions Here, sort order 30000+
 --Insert your Suggestions Here, sort order 30000+
 INSERT INTO Parameters(ParameterId, Name, Description, Domain, DefaultValue, ConfigurationGroup, ConfigurationId, GroupId, Visible, SupportsSinglePlayer, SortIndex) VALUES
@@ -49,4 +50,5 @@ INSERT INTO ParameterCriteria(ParameterId, ConfigurationGroup, ConfigurationId, 
     ('BBGTS_AttachDetachModifier', 'Game', 'BBGTS_GAMEMODE', 'Equals', '1'),
     ('BBGTS_WatermillSuggestion', 'Game', 'BBGTS_GAMEMODE', 'Equals', '1'),
     ('BBGTS_ProductionPanel_BBG', 'Game', 'BBGTS_GAMEMODE', 'Equals', '1'),
-    ('BBGTS_Spy', 'Game', 'BBGTS_GAMEMODE', 'Equals', '1');
+    ('BBGTS_Spy', 'Game', 'BBGTS_GAMEMODE', 'Equals', '1'),
+    ('BBGTS_PlanesFix', 'Game', 'BBGTS_GAMEMODE', 'Equals', '1');
