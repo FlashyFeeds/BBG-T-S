@@ -7,8 +7,9 @@ INSERT INTO GameModeItems('GameModeType', 'Name', 'Description', 'Portrait', 'Ba
         ('BBGTS_GAMEMODE', 'LOC_BBGTS_GAMEMODE_NAME', 'LOC_BBGTS_GAMEMODE_DESCRIPTION', 'BBGTS_Portrait.dds', 'BBGTS_Background.dds', 'ICON_BBGTS_GAMEMODE', '-10');
 
 INSERT INTO Parameters(ParameterId, Name, Description, Domain, DefaultValue, ConfigurationGroup, ConfigurationId, GroupId, Visible, SupportsSinglePlayer, SortIndex) VALUES
-    ('BBGTS_GameMode', 'LOC_BBGTS_GAMEMODE_NAME', 'LOC_BBGTS_GAMEMODE_DESCRIPTION', 'bool', '0', 'Game', 'BBGTS_GAMEMODE', 'GameModes', '1', '1', '-10'),
-    ('BBGTS_DebugLua', 'LOC_BBGTS_DEBUG_LUA_NAME', 'LOC_BBGTS_DEBUG_LUA_DESC', 'bool', '1', 'Game', 'BBGTS_DEBUG_LUA', 'AdvancedOptions','1', '1', '20010');
+    ('BBGTS_GameMode', 'LOC_BBGTS_GAMEMODE_NAME', 'LOC_BBGTS_GAMEMODE_DESCRIPTION', 'bool', '1', 'Game', 'BBGTS_GAMEMODE', 'GameModes', '1', '1', '-10'),
+    ('BBGTS_DebugLua', 'LOC_BBGTS_DEBUG_LUA_NAME', 'LOC_BBGTS_DEBUG_LUA_DESC', 'bool', '1', 'Game', 'BBGTS_DEBUG_LUA', 'AdvancedOptions','1', '1', '20010'),
+    ('BBGTS_ProductionPanel_BBG', 'LOC_BBGTS_PRODUCTION_PANEL_NAME', 'LOC_BBGTS_BBGTS_PRODUCTION_PANEL_DESC', 'bool', '1', 'Game', 'BBGTS_PRODUCTION_PANEL_UTIL', 'AdvancedOptions','1', '1', '20020');
 
 --Insert your Bug Fixes Here, sort order between 20020 and 30000
 --ExampleCommentedOutBelow
@@ -45,4 +46,5 @@ INSERT INTO ParameterCriteria(ParameterId, ConfigurationGroup, ConfigurationId, 
     ('BBGTS_BBCCSuggestion', 'Game', 'BBGTS_GAMEMODE', 'Equals', '1'),
     ('BBGTS_MonkNerf', 'Game', 'BBGTS_GAMEMODE', 'Equals', '1'),
     ('BBGTS_AttachDetachModifier', 'Game', 'BBGTS_GAMEMODE', 'Equals', '1'),
-    ('BBGTS_WatermillSuggestion', 'Game', 'BBGTS_GAMEMODE', 'Equals', '1');
+    ('BBGTS_WatermillSuggestion', 'Game', 'BBGTS_GAMEMODE', 'Equals', '1'),
+    ('BBGTS_ProductionPanel_BBG', 'Game', 'BBGTS_GAMEMODE', 'Equals', '1');

@@ -7,7 +7,7 @@ include("ProductionPanel")
 --The OverrideResults function will be replacing my current two functions
 --boolean check if monk and check for dynamic district prereq for aqueduct/damm/river watermil
 
-function BBGCanProduce(buildingHash, pSelectedCity)
+function BBGCanProduce(row, pSelectedCity)
 	local buildQueue	= pSelectedCity:GetBuildQueue();
 	local bCanProduce = buildQueue:CanProduce( row.Hash, true )
 
@@ -15,10 +15,11 @@ function BBGCanProduce(buildingHash, pSelectedCity)
 		return bCanProduce
 	end
 
-	if GameInfo.Buildings[buildingHash].BuildingType~='BUILDING_PALGUM' or GameInfo.Buildings[buildingHash].BuildingType~='BUILDING_WATER_MILL' then
+	if GameInfo.Buildings[row.Index].BuildingType~='BUILDING_PALGUM' and GameInfo.Buildings[row.Index].BuildingType~='BUILDING_WATER_MILL' then
+		print('BBGCanProduce', GameInfo.Buildings[row.Index].BuildingType, bCanProduce)
 		return bCanProduce
 	end
-
+	
 	local iX = pSelectedCity:GetX()
 	local iY = pSelectedCity:GetY()
 	local pPlot = Map.GetPlot(iX, iY)
@@ -27,36 +28,52 @@ function BBGCanProduce(buildingHash, pSelectedCity)
 	local bHasBath = false
 	local bHasDam = false
 	local pCityDistricts = pSelectedCity:GetDistricts()
+	local bCanProduce = false
 	for _, pDistrict in pCityDistricts:Members() do
+		print("Detected districts", _)
 		if GameInfo.Districts[pDistrict:GetType()].DistrictType == 'DISTRICT_AQUEDUCT' then
 			bHasAqueduct = true
 		end
 		if GameInfo.Districts[pDistrict:GetType()].DistrictType == 'DISTRICT_BATH' then
-			bHasBath == true
+			bHasBath = true
 		end
 		if GameInfo.Districts[pDistrict:GetType()].DistrictType == 'DISTRICT_DAM' then
-			bHasDam == true
+			bHasDam = true
 		end
 	end
-	if pPlot:IsRiverAdjacent() then
-		bCanProduce = bCanProduce and true
-	elseif bHasAqueduct then
-		bCanProduce = bCanProduce and true
-	elseif pHasBath then
-		bCanProduce = bCanProduce and true
-	elseif pHasDam then
-		bCanProduce = bCanProduce and true
+	if pPlot:IsRiver() then
+		bCanProduce = true
+		print("Watermill Can produce river", bCanProduce)
+		return bCanProduce
 	end
 
-	return bCanProduce
+	if bHasAqueduct then
+		bCanProduce = true
+		print("Watermill Can produce aqueduct", bCanProduce)
+		return bCanProduce
+	end
+
+	if pHasBath then
+		bCanProduce = true
+		print("Watermill Can produce Bath", bCanProduce)
+		return bCanProduce
+	end
+
+	if pHasDam then
+		bCanProduce = true
+		print("Watermill Can produce Dam", bCanProduce)
+		return bCanProduce
+	end
+
 end
 
-function BBGDeductDynamicDistrictPrereq(buildingHash, pSelectedCity)
+function BBGDeductDynamicDistrictPrereq(row, pSelectedCity)
+	local iPrereqDistrict = GameInfo.Buildings[row.Index].PrereqDistrict
 	if GameConfiguration.GetValue("BBGTS_WATERMILL_SUGGESTION") == false then
-		return GameInfo.Buildings[buildingHash].PrereqDistrict
+		return iPrereqDistrict
 	end
-	if GameInfo.Buildings[buildingHash].BuildingType~='BUILDING_PALGUM' or GameInfo.Buildings[buildingHash].BuildingType~='BUILDING_WATER_MILL' then
-		return GameInfo.Buildings[buildingHash].PrereqDistrict
+	if GameInfo.Buildings[row.Index].BuildingType~='BUILDING_PALGUM' and GameInfo.Buildings[row.Index].BuildingType~='BUILDING_WATER_MILL' then
+		return iPrereqDistrict
 	else
 		local iX = pSelectedCity:GetX()
 		local iY = pSelectedCity:GetY()
@@ -71,22 +88,32 @@ function BBGDeductDynamicDistrictPrereq(buildingHash, pSelectedCity)
 				bHasAqueduct = true
 			end
 			if GameInfo.Districts[pDistrict:GetType()].DistrictType == 'DISTRICT_BATH' then
-				bHasBath == true
+				bHasBath = true
 			end
 			if GameInfo.Districts[pDistrict:GetType()].DistrictType == 'DISTRICT_DAM' then
-				bHasDam == true
+				bHasDam = true
 			end
 		end
-		if pPlot:IsRiverAdjacent() then
-			iPrereqDistrict = nil
-		elseif bHasAqueduct then
-			iPrereqDistrict = 'DISTRICT_AQUEDUCT'
-		elseif pHasBath then
-			iPrereqDistrict = 'DISTRICT_BATH'
-		elseif pHasDam then
-			iPrereqDistrict = 'DISTRICT_DAM'
+		if pPlot:IsRiver() then
+			iPrereqDistrict = 'DISTRICT_CITY_CENTER'
+			print('Watermill Prereq Center')
+			return iPrereqDistrict
 		end
-		return iPrereqDistrict
+		if bHasAqueduct then
+			iPrereqDistrict = 'DISTRICT_AQUEDUCT'
+			print('Watermill Prereq Aqueduct')
+			return iPrereqDistrict
+		end
+		if bHasBath then
+			iPrereqDistrict = 'DISTRICT_BATH'
+			print('Watermill Prereq Bath')
+			return iPrereqDistrict
+		end
+		if bHasDam then
+			iPrereqDistrict = 'DISTRICT_DAM'
+			print('Watermill Prereq Dam')
+			return iPrereqDistrict
+		end
 	end
 end
 
@@ -279,9 +306,9 @@ function GetData()
 			new_data.CurrentProductionType= row.BuildingType;
 		end
 
-		local bCanProduce = BBGCanProduce(buildingHash, pSelectedCity)
+		local bCanProduce = BBGCanProduce(row, pSelectedCity)
 		local iPrereqDistrict = "";
-		local DynamicPrereqDistrict = BBGDeductDynamicDistrictPrereq(row.Hash, pSelectedCity) --FlashyFeeds override
+		local DynamicPrereqDistrict = BBGDeductDynamicDistrictPrereq(row, pSelectedCity) --FlashyFeeds override
 		if DynamicPrereqDistrict ~= nil then 											   --FlashyFeeds override
 			iPrereqDistrict = DynamicPrereqDistrict; 									   --FlashyFeeds override
 				
@@ -497,3 +524,4 @@ function GetData()
 
 	return new_data;
 end
+

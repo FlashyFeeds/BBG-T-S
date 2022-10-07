@@ -1,16 +1,25 @@
 --Nerf Monk CS values--
-UPDATE Units SET Combat = '28',Cost = '50',CostProgressionParam1 = '1100', PurchaseYield = NULL, MustPurchase = '0', EnabledByReligion ='0', TrackReligion = '0' WHERE UnitType = 'UNIT_WARRIOR_MONK';
+UPDATE Units SET Combat = '28', PurchaseYield = NULL, MustPurchase = '0', EnabledByReligion ='0', TrackReligion = '0' WHERE UnitType = 'UNIT_WARRIOR_MONK';
 --Remove Monk +10 congress (by setting track religion = 0), +5/-5 via lua
 
 --Now Monk belief coupling should change accordingly so the belief doesn't break
-
+/*
 INSERT INTO Types(Type, Kind) VALUES
 	('MODIFIER_ALL_CITIES_ENABLE_UNIT_FAITH_PURCHASE','KIND_MODIFIER');
 
 INSERT INTO DynamicModifiers(ModifierType, CollectionType, EffectType) VALUES
 	('MODIFIER_ALL_CITIES_ENABLE_UNIT_FAITH_PURCHASE', 'COLLECTION_ALL_CITIES', 'EFFECT_ENABLE_UNIT_FAITH_PURCHASE');
+*/
+UPDATE Modifiers SET ModifierType = 'MODIFIER_ALL_PLAYERS_ATTACH_MODIFIER' WHERE ModifierId = 'ALLOW_WARRIOR_MONKS';
 
-UPDATE Modifiers SET ModifierType = 'MODIFIER_ALL_CITIES_ENABLE_UNIT_FAITH_PURCHASE', SubjectRequirementSetId = 'CITY_FOLLOWS_RELIGION_REQUIREMENTS' WHERE ModifierId = 'ALLOW_WARRIOR_MONKS';
+INSERT INTO Modifiers(ModifierId, ModifierType, SubjectRequirementSetId) VALUES
+	('BBG_PLAYER_ALLOW_MONKS_IN_CITY', 'MODIFIER_PLAYER_CITIES_ENABLE_UNIT_FAITH_PURCHASE' ,'CITY_FOLLOWS_RELIGION_REQUIREMENTS');
+
+INSERT INTO ModifierArguments(ModifierId, Name, Value) VALUES
+	('BBG_PLAYER_ALLOW_MONKS_IN_CITY', 'Tag', 'CLASS_WARRIOR_MONK');
+
+INSERT INTO ModifierArguments(ModifierId, Name, Value) VALUES
+	('ALLOW_WARRIOR_MONKS', 'ModifierId', 'BBG_PLAYER_ALLOW_MONKS_IN_CITY');
 /*
 INSERT INTO Requirements(RequirementId, RequirementType) VALUES
 	('BBG_REQUIRES_NOT_MONK_WC', 'REQUIREMENT_UNIT_TAG_MATCHES');
@@ -26,3 +35,4 @@ INSERT INTO RequirementSetRequirements(RequirementSetId, RequirementId) VALUES
 
 INSERT INTO Unit_BuildingPrereqs(Unit, PrereqBuilding, NumSupported) VALUES
 	('UNIT_WARRIOR_MONK', 'BUILDING_KOTOKU_IN', '-1');
+

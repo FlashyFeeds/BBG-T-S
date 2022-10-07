@@ -95,5 +95,11 @@
         <Replace Tag="LOC_BBGTS_WATERMILL_SUGGESTION_DESC" language="en">
             <Text>Test</Text>
         </Replace>
+        <Replace Tag="LOC_BBGTS_PRODUCTION_PANEL_NAME" language="en">
+            <Text>[COLOR_LIGHTBLUE]Production Panel Override[ENDCOLOR]</Text>
+        </Replace>
+        <Replace Tag="LOC_LOC_BBGTS_PRODUCTION_PANEL_DESC" language="en">
+            <Text>Test</Text>
+        </Replace>
     </LocalizedText>
 </GameData>
