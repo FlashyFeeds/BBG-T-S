@@ -134,6 +134,14 @@
 			</ConfigurationValueMatches>
 		</Criteria>
 
+		<Criteria id="BBGTS_Watermill_Expansion2">
+			<ConfigurationValueMatches>
+				<Group>Game</Group>
+				<ConfigurationId>BBGTS_WATERMILL_SUGGESTION</ConfigurationId>
+				<Value>1</Value>
+			</ConfigurationValueMatches>
+		</Criteria>
+
 	</ActionCriteria>
 
 	<FrontEndActions>
@@ -159,6 +167,14 @@
 	</FrontEndActions>
 
 	<InGameActions>
+		<ReplaceUIScript id="productionpanel_bbg">
+			<Properties>
+			<LoadOrder>19999</LoadOrder>
+			<LuaContext>ProductionPanel</LuaContext>
+			<LuaReplace>ui/ProductionPanel_BBG.lua</LuaReplace>
+			</Properties>
+		</ReplaceUIScript>
+
 		<AddGameplayScripts id="BBGTS_MonkNerf_Script">
 			<Criteria>BBGTS_MonkNerf_Expansion2</Criteria>
 			<File>lua/WorldCongress_BBG.lua</File>
@@ -243,6 +259,14 @@
 			<File>sql/TestAttachDetachModifier.sql</File>
         </UpdateDatabase>
 
+        <UpdateDatabase id="BBGTS_Watermill_Data">
+    		<Properties>
+        		<LoadOrder>35090</LoadOrder>
+    		</Properties>
+			<Criteria>BBGTS_Watermill_Expansion2</Criteria>
+			<File>sql/WaterAqueductDamSuggestiom.sql</File>
+        </UpdateDatabase>
+
         <!--Conditional sql added like so
 		<UpdateDatabase id="BBGTS_BugFix1_Data">
             		<Properties>
@@ -286,5 +310,7 @@
 		<File>lua/MonkKotoku.lua</File>
 		<File>sql/TestAttachDetachModifier.sql</File>
 		<File>lua/TestAttachDetachModifier.lua</File>
+		<File>sql/WaterAqueductDamSuggestiom.sql</File>
+		<File>ui/ProductionPanel_BBG.lua</File>
 	</Files>
 </Mod>

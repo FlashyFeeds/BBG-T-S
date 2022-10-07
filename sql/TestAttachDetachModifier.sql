@@ -1,3 +1,5 @@
+CREATE TABLE "InvisiblePolicies"("PolicyType" TEXT NOT NULL, PRIMARY KEY(PolicyType), FOREIGN KEY(PolicyType) REFERENCES Policies(PolicyType));
+
 INSERT INTO Modifiers(ModifierId, ModifierType) VALUES
 	('ALEX_PRODUCTION_MODIFIER','MODIFIER_SINGLE_CITY_ADJUST_CITY_YIELD_MODIFIER');
 
@@ -28,3 +30,6 @@ INSERT INTO Policies(PolicyType, Description, PrereqCivic, PrereqTech, Name, Gov
 
 INSERT INTO PolicyModifiers(PolicyType, ModifierId) VALUES
 	('HIDDEN_POLICY_TEST', 'ALEX_PRODUCTION');
+
+INSERT INTO InvisiblePolicies(PolicyType) VALUES
+	('HIDDEN_POLICY_TEST');

@@ -89,5 +89,11 @@
         <Replace Tag="LOC_BBGTS_ATTACH_DETACH_DESC" language="en">
             <Text>Test</Text>
         </Replace>
+        <Replace Tag="LOC_BBGTS_WATERMILL_SUGGESTION_NAME" language="en">
+            <Text>[COLOR_LIGHTBLUE]Watermill Suggestion[ENDCOLOR]</Text>
+        </Replace>
+        <Replace Tag="LOC_BBGTS_WATERMILL_SUGGESTION_DESC" language="en">
+            <Text>Test</Text>
+        </Replace>
     </LocalizedText>
 </GameData>

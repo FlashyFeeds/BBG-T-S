@@ -27,7 +27,8 @@ INSERT INTO Parameters(ParameterId, Name, Description, Domain, DefaultValue, Con
 INSERT INTO Parameters(ParameterId, Name, Description, Domain, DefaultValue, ConfigurationGroup, ConfigurationId, GroupId, Visible, SupportsSinglePlayer, SortIndex) VALUES
     ('BBGTS_EthemenankiSuggestion', 'LOC_BBGTS_ETHEMENANKI_SUGGESTION_NAME', 'LOC_BBGTS_ETHEMENANKI_SUGGESTION_DESC', 'bool', '0', 'Game', 'BBGTS_ETHEMENANKI_SUGGESTION', 'AdvancedOptions', '1', '1', '30000'),
     ('BBGTS_BBCCSuggestion', 'LOC_BBGTS_BBCC_SUGGESTION_NAME', 'LOC_BBGTS_BBCC_SUGGESTION_DESC', 'bool', '0', 'Game', 'BBGTS_BBCC_SUGGESTION', 'AdvancedOptions', '1', '1', '30010'),
-    ('BBGTS_AttachDetachModifier', 'LOC_BBGTS_ATTACH_DETACH_NAME', 'LOC_BBGTS_ATTACH_DETACH_DESC', 'bool', '0', 'Game', 'BBGTS_ATTACH_DETACH_TEST', 'AdvancedOptions', '1', '1', '30020');
+    ('BBGTS_AttachDetachModifier', 'LOC_BBGTS_ATTACH_DETACH_NAME', 'LOC_BBGTS_ATTACH_DETACH_DESC', 'bool', '0', 'Game', 'BBGTS_ATTACH_DETACH_TEST', 'AdvancedOptions', '1', '1', '30020'),
+    ('BBGTS_WatermillSuggestion', 'LOC_BBGTS_WATERMILL_SUGGESTION_NAME', 'LOC_BBGTS_WATERMILL_SUGGESTION_DESC', 'bool', '0', 'Game', 'BBGTS_WATERMILL_SUGGESTION', 'AdvancedOptions', '1', '1', '30030');
 
 --Hide Options Unless BBGTS is active, Just copy any existing line and replace parameter ID with your Suggestion Name 
     --Like So:
@@ -43,4 +44,5 @@ INSERT INTO ParameterCriteria(ParameterId, ConfigurationGroup, ConfigurationId, 
     ('BBGTS_EthemenankiSuggestion', 'Game', 'BBGTS_GAMEMODE', 'Equals', '1'),
     ('BBGTS_BBCCSuggestion', 'Game', 'BBGTS_GAMEMODE', 'Equals', '1'),
     ('BBGTS_MonkNerf', 'Game', 'BBGTS_GAMEMODE', 'Equals', '1'),
-    ('BBGTS_AttachDetachModifier', 'Game', 'BBGTS_GAMEMODE', 'Equals', '1');
+    ('BBGTS_AttachDetachModifier', 'Game', 'BBGTS_GAMEMODE', 'Equals', '1'),
+    ('BBGTS_WatermillSuggestion', 'Game', 'BBGTS_GAMEMODE', 'Equals', '1');

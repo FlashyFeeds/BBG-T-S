@@ -1,0 +1,1 @@
+UPDATE Buildings SET RequiresAdjacentRiver = '0' WHERE BuildingType IN ('BUILDING_WATER_MILL', 'BUILDING_PALGUM');

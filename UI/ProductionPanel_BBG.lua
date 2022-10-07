@@ -1,8 +1,105 @@
 include("ProductionPanel")
-include("BBG_ExcludedTypes")
---Controll Data--
---Excluded Types and their respective checks in BBG
-local ExcludedBBGTypes : table
+--Note this is a rawest form of the GetData() parametric override.
+--Big Idea add another include("BBG_ScriptOverrides") file with specific behaviour overides
+--Have those overrides and the Types (building/district/unit/project) plus some extra parameters
+--Build here a function OverrideResults(Type, ...) that would return a function defined in BBG_ScriptOverrides
+--applied to the context of application.
+--The OverrideResults function will be replacing my current two functions
+--boolean check if monk and check for dynamic district prereq for aqueduct/damm/river watermil
+
+function BBGCanProduce(buildingHash, pSelectedCity)
+	local buildQueue	= pSelectedCity:GetBuildQueue();
+	local bCanProduce = buildQueue:CanProduce( row.Hash, true )
+
+	if GameConfiguration.GetValue("BBGTS_WATERMILL_SUGGESTION") == false then
+		return bCanProduce
+	end
+
+	if GameInfo.Buildings[buildingHash].BuildingType~='BUILDING_PALGUM' or GameInfo.Buildings[buildingHash].BuildingType~='BUILDING_WATER_MILL' then
+		return bCanProduce
+	end
+
+	local iX = pSelectedCity:GetX()
+	local iY = pSelectedCity:GetY()
+	local pPlot = Map.GetPlot(iX, iY)
+
+	local bHasAqueduct = false
+	local bHasBath = false
+	local bHasDam = false
+	local pCityDistricts = pSelectedCity:GetDistricts()
+	for _, pDistrict in pCityDistricts:Members() do
+		if GameInfo.Districts[pDistrict:GetType()].DistrictType == 'DISTRICT_AQUEDUCT' then
+			bHasAqueduct = true
+		end
+		if GameInfo.Districts[pDistrict:GetType()].DistrictType == 'DISTRICT_BATH' then
+			bHasBath == true
+		end
+		if GameInfo.Districts[pDistrict:GetType()].DistrictType == 'DISTRICT_DAM' then
+			bHasDam == true
+		end
+	end
+	if pPlot:IsRiverAdjacent() then
+		bCanProduce = bCanProduce and true
+	elseif bHasAqueduct then
+		bCanProduce = bCanProduce and true
+	elseif pHasBath then
+		bCanProduce = bCanProduce and true
+	elseif pHasDam then
+		bCanProduce = bCanProduce and true
+	end
+
+	return bCanProduce
+end
+
+function BBGDeductDynamicDistrictPrereq(buildingHash, pSelectedCity)
+	if GameConfiguration.GetValue("BBGTS_WATERMILL_SUGGESTION") == false then
+		return GameInfo.Buildings[buildingHash].PrereqDistrict
+	end
+	if GameInfo.Buildings[buildingHash].BuildingType~='BUILDING_PALGUM' or GameInfo.Buildings[buildingHash].BuildingType~='BUILDING_WATER_MILL' then
+		return GameInfo.Buildings[buildingHash].PrereqDistrict
+	else
+		local iX = pSelectedCity:GetX()
+		local iY = pSelectedCity:GetY()
+		local pPlot = Map.GetPlot(iX, iY)
+		local bHasAqueduct = false
+		local bHasBath = false
+		local bHasDam = false
+		local iPrereqDistrict = 'DISTRICT_CITY_CENTER'
+		local pCityDistricts = pSelectedCity:GetDistricts()
+		for _, pDistrict in pCityDistricts:Members() do
+			if GameInfo.Districts[pDistrict:GetType()].DistrictType == 'DISTRICT_AQUEDUCT' then
+				bHasAqueduct = true
+			end
+			if GameInfo.Districts[pDistrict:GetType()].DistrictType == 'DISTRICT_BATH' then
+				bHasBath == true
+			end
+			if GameInfo.Districts[pDistrict:GetType()].DistrictType == 'DISTRICT_DAM' then
+				bHasDam == true
+			end
+		end
+		if pPlot:IsRiverAdjacent() then
+			iPrereqDistrict = nil
+		elseif bHasAqueduct then
+			iPrereqDistrict = 'DISTRICT_AQUEDUCT'
+		elseif pHasBath then
+			iPrereqDistrict = 'DISTRICT_BATH'
+		elseif pHasDam then
+			iPrereqDistrict = 'DISTRICT_DAM'
+		end
+		return iPrereqDistrict
+	end
+end
+
+function MonkOverride(UnitType)
+	if GameConfiguration.GetValue("BBGTS_MONK_NERF") == false then
+		return false
+	end
+	if UnitType == 'UNIT_WARRIOR_MONK' then
+		return true
+	else
+		return false
+	end
+end
 -- ===========================================================================
 -- Parametric Overide--
 -- ===========================================================================
@@ -182,13 +279,14 @@ function GetData()
 			new_data.CurrentProductionType= row.BuildingType;
 		end
 
-		local bCanProduce = buildQueue:CanProduce( row.Hash, true );
+		local bCanProduce = BBGCanProduce(buildingHash, pSelectedCity)
 		local iPrereqDistrict = "";
-		if row.PrereqDistrict ~= nil then
-			iPrereqDistrict = row.PrereqDistrict;
+		local DynamicPrereqDistrict = BBGDeductDynamicDistrictPrereq(row.Hash, pSelectedCity) --FlashyFeeds override
+		if DynamicPrereqDistrict ~= nil then 											   --FlashyFeeds override
+			iPrereqDistrict = DynamicPrereqDistrict; 									   --FlashyFeeds override
 				
 			--Only add buildings if the prereq district is not the current production (this can happen when repairing)
-			if new_data.CurrentProductionType == row.PrereqDistrict then
+			if new_data.CurrentProductionType == DynamicPrereqDistrict then 			   --FlashyFeeds override
 				bCanProduce = false;
 			end
 		end
@@ -280,7 +378,7 @@ function GetData()
 		kBuildParameters.MilitaryFormationType = MilitaryFormationTypes.STANDARD_MILITARY_FORMATION;
 
 		-- Can it be built normally?
-		if not row.MustPurchase and buildQueue:CanProduce( kBuildParameters, true ) and (row.UnitType~= "UNIT_WARRIOR_MONK") then --FlashyFeeds: Removes Monk From Generic Prod Queuethen
+		if not row.MustPurchase and buildQueue:CanProduce( kBuildParameters, true ) and not MonkOverride(row.UnitType) then --FlashyFeeds: Removes Monk From Generic Prod Queuethen
 			local isCanProduceExclusion, results	 = buildQueue:CanProduce( kBuildParameters, false, true );
 			local nProductionCost		:number = buildQueue:GetUnitCost( row.Index );
 			local nProductionProgress	:number = buildQueue:GetUnitProgress( row.Index );
