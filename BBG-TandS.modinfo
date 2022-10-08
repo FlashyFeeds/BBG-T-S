@@ -305,6 +305,14 @@
 			<File>sql/PlanesFix.sql</File>
         </UpdateDatabase>
 
+        <UpdateDatabase id="BBGTS_Spytest_Data">
+    		<Properties>
+        		<LoadOrder>35110</LoadOrder>
+    		</Properties>
+			<Criteria>BBGTS_Spy_Expansion2</Criteria>
+			<File>sql/spytest.sql</File>
+        </UpdateDatabase>
+
         <!--Conditional sql added like so
 		<UpdateDatabase id="BBGTS_BugFix1_Data">
             		<Properties>
@@ -351,6 +359,7 @@
 		<File>sql/WaterAqueductDamSuggestiom.sql</File>
 		<File>ui/ProductionPanel_BBG.lua</File>
 		<File>lua/spy.lua</File>
+		<File>sql/spytest.sql</File>
 		<File>sql/PlanesFix.sql</File>
 	</Files>
 </Mod>
