@@ -32,7 +32,7 @@
 	-->
 	<Dependencies>
 		<Mod id="4873eb62-8ccc-4574-b784-dda455e74e68" title="Expansion: Gathering Storm" />
-		<Mod id="cb84075d-5007-4207-b662-c35a5f7be260" title="Better Balanced Game 5.0.1" version="5001"/>
+		<Mod id="cb84075d-5007-4207-b662-c35a5f7be254" title="Better Balanced Game 5.0.2" version="5002"/>
 	</Dependencies>
 	<ActionCriteria>
 		<Criteria id="BBGTS_Mode_Expansion2">
