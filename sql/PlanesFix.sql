@@ -166,7 +166,7 @@ INSERT INTO Modifiers(ModifierId, ModifierType, OwnerRequirementSetId, SubjectRe
 	FROM Numbers WHERE Number IN ('10','30', '50', '70', '90');
 
 INSERT INTO ModifierArguments(ModifierId, Name, Value)
-	SELECT 'BBG_NATIONAL_FIX_MODIFIER_HP_THRESHOLD_' || Numbers.Number, 'Amount', '1' 
+	SELECT 'BBG_NATIONAL_PLANE_FIX_MODIFIER_HP_THRESHOLD_' || Numbers.Number, 'Amount', '1' 
 	FROM Numbers WHERE Number IN ('10','30', '50', '70', '90');
 
 INSERT INTO Modifiers(ModifierId, ModifierType, OwnerRequirementSetId, SubjectRequirementSetId)
@@ -174,7 +174,7 @@ INSERT INTO Modifiers(ModifierId, ModifierType, OwnerRequirementSetId, SubjectRe
 	FROM Numbers WHERE Number IN ('20', '60');
 
 INSERT INTO ModifierArguments(ModifierId, Name, Value)
-	SELECT 'BBG_NATIONAL_FIX_MODIFIER_HP_THRESHOLD_' || Numbers.Number, 'Amount', '-1' 
+	SELECT 'BBG_NATIONAL_PLANE_FIX_MODIFIER_HP_THRESHOLD_' || Numbers.Number, 'Amount', '-1' 
 	FROM Numbers WHERE Number IN ('20', '60');
 
 INSERT INTO Types(Type, Kind) VALUES
