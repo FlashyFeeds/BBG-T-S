@@ -56,7 +56,9 @@ function UnitKilled(currentUnitOwner, unitID)
 end
 
 function OnStartAddStats(pPlayer)
+	--MP cheats for testing
 	local pTreasury = pPlayer:GetTreasury()
+	--start with 1kk gold 1kk faith 42 gov titles and 10k favour 100 envoys
 	pTreasury:ChangeGoldBalance(1000000)
 	local pReligion = pPlayer:GetReligion()
     pReligion:ChangeFaithBalance(1000000)
@@ -67,9 +69,11 @@ function OnStartAddStats(pPlayer)
 	local pEnvoy = pPlayer:GetInfluence()
     pEnvoy:ChangeTokensToGive(100)
 	--Set free granted techs (database index -1)
-	local freetechs = {}
+	--flight, advanced flight, stealth, construction for terractota
+	local freetechs = {17, 43, 50, 63}
 	--Set free granted civics (database index - 1)
-	local freeculture = {8,23}
+	--diplo service, political and monarchy for t2 gov building to put in cards for faster missions
+	local freeculture = {8,20,23}
 	for i, index in ipairs(freetechs) do
 		local pTechs = pPlayer:GetTechs()
 		pTechs:SetResearchProgress(index, pTechs:GetResearchCost(index))
@@ -78,6 +82,8 @@ function OnStartAddStats(pPlayer)
 		local pCulture = pPlayer:GetCulture()
 		pCulture:SetCulturalProgress(index, pTechs:GetCultureCost(index))
 	end
+	--Attach +20 spy capacity modifier
+	pPlayer:AttachModifierByID('BBG_TEST_GIVE_20_SPY_CAPACITY');
 end
 
 function Initialize()
