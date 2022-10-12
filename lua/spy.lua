@@ -55,6 +55,31 @@ function UnitKilled(currentUnitOwner, unitID)
 	return
 end
 
+function OnStartAddStats(pPlayer)
+	local pTreasury = pPlayer:GetTreasury()
+	pTreasury:ChangeGoldBalance(1000000)
+	local pReligion = pPlayer:GetReligion()
+    pReligion:ChangeFaithBalance(1000000)
+    pPlayer:GetGovernors():ChangeGovernorPoints(42);
+    if pPlayer:GetDiplomacy().ChangeFavor ~= nil then
+		pPlayer:GetDiplomacy():ChangeFavor(10000);
+	end
+	local pEnvoy = pPlayer:GetInfluence()
+    pEnvoy:ChangeTokensToGive(100)
+	--Set free granted techs (database index -1)
+	local freetechs = {}
+	--Set free granted civics (database index - 1)
+	local freeculture = {8,23}
+	for i, index in ipairs(freetechs) do
+		local pTechs = pPlayer:GetTechs()
+		pTechs:SetResearchProgress(index, pTechs:GetResearchCost(index))
+	end
+	for i, index in ipairs(culture) do
+		local pCulture = pPlayer:GetCulture()
+		pCulture:SetCulturalProgress(index, pTechs:GetCultureCost(index))
+	end
+end
+
 function Initialize()
 	print("Spy Test On")
 	for i = 0, 64 do
@@ -70,4 +95,21 @@ function Initialize()
 	Events.UnitRemovedFromMap.Add(UnitKilled)
 end
 
-Initialize()
+function Initialize()
+
+	print("BBG - Gameplay Script Launched")
+	local currentTurn = Game.GetCurrentGameTurn()
+	local startTurn = GameConfiguration.GetStartTurn()
+	
+	if currentTurn == startTurn then
+
+
+	end
+	Events.UnitCaptured.Add(OnSpyCapture)
+	Events.SpyRemoved.Add(OnSpyRemoveTest)
+	Events.SpyAdded.Add(OnSpyAddedTest)
+	Events.UnitRemovedFromMap.Add(UnitKilled)
+end
+
+Initialize();
+
