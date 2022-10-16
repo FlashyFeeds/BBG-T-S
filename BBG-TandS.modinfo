@@ -206,6 +206,9 @@
 			<File>lua/DebugLuaScripts.lua</File>
 			<File>lua/testcheat.lua</File>
 		</AddGameplayScripts>
+		<ImportFiles id="BBGTS_Files">
+			<File>lua/Debug.lua</File>
+		</ImportFiles>
 		<!--
 		<ReplaceUIScript id="productionpanel_bbg">
 			<Criteria>BBGTS_ProductionPanel_BBG_Expansion2</Criteria>
@@ -386,6 +389,7 @@
 	-->
 		<File>sql/EthemenankiSuggestion.sql</File>
 		<File>sql/BBCC.sql</File>
+		<File>lua/Debug.lua</File>
 		<File>lua/DebugLuaScripts.lua</File>
 		<File>lua/testcheat.lua</File>
 		<File>sql/testcheat.sql</File>

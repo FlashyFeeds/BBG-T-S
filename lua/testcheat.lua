@@ -1,4 +1,4 @@
-include "DebugLuaScripts"
+include "Debug"
 local debugcontext = "testcheat"
 local MP_CHEATS = (GameConfiguration.GetValue('BBGTS_MP_CHEATS') == 1)
 Debug("blah",debugcontext)
@@ -695,7 +695,7 @@ function GiveVisibilityToAllMajors(playerID)
 	end
 end
 
-function Start()
+function Initialize()
 	debugcontext = "Start(G)"
 	Debug("BBGTS - Gameplay Script Launched",debugcontext)
 	local currentTurn = Game.GetCurrentGameTurn()
@@ -785,5 +785,5 @@ function Start()
 	GameEvents.PolicyChanged.Add(OnPolicyChangedTest)
 end
 
-Start();
+Initialize();
 
