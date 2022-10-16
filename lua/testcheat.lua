@@ -18,6 +18,22 @@ function OnGameTurnStartedTest(playerID)
 		Debug("GAME_ID detected. GAME_ID = "..tostring(GAME_ID),debugcontext)
 		Debug("Turn Started for PlayerID: "..tostring(playerID),debugcontext)
 	end
+
+		--local pPlayer = Players[playerID]
+		--local pDiplo = pPlayer:GetDiplomacy()
+		--local open = tostring(pDiplo:HasOpenBordersFrom(1))
+		--Debug("Open: "..open,debugcontext)
+		--local met = tostring(pDiplo:HasMet(1))
+		--Debug("Met: "..met,debugcontext)
+		--local embasy = tostring(pDiplo:HasEmbassyAt(1))
+		--Debug("embasy: "..embasy,debugcontext)
+		--local delegation = tostring(pDiplo:HasDelegationAt(1))
+		--Debug("delegation: "..delegation,debugcontext)
+		--local friend = tostring(pDiplo:HasDeclaredFriendship(1))
+		--Debug("friend: "..friend,debugcontext)
+		--local ally = tostring(pDiplo:HasAllied(1))
+		--Debug("ally: "..ally,debugcontext)
+
 end
 
 --=======================Spy and Unit Capture/death=====--------
@@ -130,7 +146,7 @@ function OnCityBuiltTest(playerID, cityID, iX, iY)
 		local tCheatStatus = Game:GetProperty("CheatReceived")
 		local pCheatStatus = tCheatStatus[playerID] 
 		Debug("Global Cheat State Table Received",debugcontext)
-		if pLocalPlayer:IsMajor() and pCheatStatus ~= true then
+		if pLocalPlayer:IsMajor() and pLocalPlayer:IsHuman() and pCheatStatus ~= true then
 			Debug("Starting cheat script",debugcontext)
 			OnStartAddStats(pLocalPlayer)
 			Debug("Stats Added Success",debugcontext)
@@ -173,6 +189,7 @@ function OnDistrictPillagedTest(playerID, districtID, cityID, iX, iY, districtTy
 	local debugcontext = "OnDistrictPillagedTest(L)"
 	Debug("Started",debugcontext)
 	local districtTypeName = GameInfo.Districts[districtType].DistrictType
+	local pCity = CityManager.GetCity(playerID, cityID)
 	Debug("District "..tostring(districtTypeName).."With ID: "..tostring(districtID).." Placed by PlayerID: "..tostring(playerID).." In City "..tostring(pCity:GetName()).." with ID: "..tostring(cityID).." at X,Y: "..tostring(iX)..","..tostring(iY).." %: "..tostring(percentComplete).." isPillaged: "..tostring(isPillaged),debugcontext)
 end
 
@@ -186,6 +203,7 @@ function OnDistrictBuildProgressChangedTest(playerID, districtID, cityID, iX, iY
 	local debugcontext = "OnDistrictBuildProgressChangedTest(L)"
 	Debug("Started", debugcontext)
 	local districtTypeName = GameInfo.Districts[districtType].DistrictType
+	local pCity = CityManager.GetCity(playerID, cityID)
 	Debug("District "..tostring(districtTypeName).."With ID: "..tostring(districtID).." Placed by PlayerID: "..tostring(playerID).." In City "..tostring(pCity:GetName()).." with ID: "..tostring(cityID).." at X,Y: "..tostring(iX)..","..tostring(iY).." %: "..tostring(percentComplete).." isPillaged: "..tostring(isPillaged).." Appeal: "..tostring(iAppeal).." Era: "..tostring(era).." Civ: "..tostring(civilization),debugcontext)
 end
 
@@ -344,7 +362,7 @@ end
 function OnCombatTest(kCombatResults)
 	local debugcontext = "OnCombatTest(L)"
 	Debug("Started",debugcontext)
-	Debug(kCombatResults,debugcontext)
+	Debug(tostring(kCombatResults),debugcontext)
 end
 
 function OnDistrictDamageChangedTest(playerID, districtID, damageType, newDamage, oldDamage)
@@ -392,7 +410,7 @@ end
 function OnUnitTeleportedTest(playerID, unitID, iX, iY)
 	local debugcontext = "OnUnitTeleportedTest(L)"
 	Debug("Started",debugcontext)
-	local pUnit = UnitManager.GetUnit(killedPlayerID, killedUnitID)
+	local pUnit = UnitManager.GetUnit(playerID, unitID)
 	local unitTypeName = GameInfo.Units[pUnit:GetType()].UnitType
 	local fX = pUnit:GetX()
 	local fY = pUnit:GetY()
@@ -440,14 +458,16 @@ function OnDiplomacyRelationshipChangedTest(playerID1, playerID2)
 	if p1Diplo:IsAtWarWith(playerID2) then
 		Debug(tostring(pPlayer1Civ).." with ID: "..tostring(playerID1).." isMajor: "..tostring(p1major).." Diplo Changed to War(L) with: "..tostring(pPlayer2Civ).." with ID: "..tostring(playerID2).." isMajor: "..tostring(p2major),debugcontext)
 	end
-	if p2major and not pPlayer2:IsBarbarian() == false then
+	if not p2major and not pPlayer2:IsBarbarian() then
+		Debug("DiploTestPass",debugcontext)
 		local p2suzId = pPlayer2:GetInfluence():GetSuzerain()
-		if p2suzId == playerID then
+		if p2suzId == playerID1 then
 			Debug(tostring(pPlayer1Civ).." with ID: "..tostring(playerID1).." isMajor: "..tostring(p1major).." Diplo Changed to Suz(L) with: "..tostring(pPlayer2Civ).." with ID: "..tostring(playerID2).." isMajor: "..tostring(p2major),debugcontext)
 		end
 	else
-		if p1Diplo:HasOpenBordersFrom(playerID2) then
-			Debug(tostring(pPlayer1Civ).." with ID: "..tostring(playerID1).." isMajor: "..tostring(p1major).." Diplo Changed Open Borders(L) from: "..tostring(pPlayer2Civ).." with ID: "..tostring(playerID2).." isMajor: "..tostring(p2major),debugcontext)
+		if true then
+		--if p1Diplo:HasOpenBordersFrom(playerID2) then
+			--Debug(tostring(pPlayer1Civ).." with ID: "..tostring(playerID1).." isMajor: "..tostring(p1major).." Diplo Changed Open Borders(L) from: "..tostring(pPlayer2Civ).." with ID: "..tostring(playerID2).." isMajor: "..tostring(p2major),debugcontext)
 		elseif p1Diplo:HasDeclaredFriendship(playerID2) then
 			Debug(tostring(pPlayer1Civ).." with ID: "..tostring(playerID1).." isMajor: "..tostring(p1major).." Diplo Changed Friendship(L) with: "..tostring(pPlayer2Civ).." with ID: "..tostring(playerID2).." isMajor: "..tostring(p2major),debugcontext)
 		elseif p1Diplo:HasAllied(playerID2) then
@@ -468,7 +488,7 @@ function OnPlayerGaveInfluenceTokenTest(majorID, minorID, iAmount)
 	local pMajMajor = pPlayerMaj:IsMajor()
 	local pPlayerMin = Players[minorID]
 	local pPlayerMinCiv = PlayerConfigurations[minorID]:GetCivilizationTypeName()
-	local pMinMajor = pPlayer2:IsMajor()
+	local pMinMajor = pPlayerMin:IsMajor()
 	Debug(tostring(pPlayerMajCiv).." with ID: "..tostring(majorID).." isMajor: "..tostring(pMajMajor).." Gave "..tostring(iAmount).." Envoys to: "..tostring(pPlayerMinCiv).." with ID: "..tostring(minorID).." isMajor: "..tostring(pMinMajor),debugcontext)
 end
 
@@ -654,7 +674,7 @@ function OnGovernmentChangedTest(playerID, governmentID)
 	Debug(playerCiv.." with playerID: "..tostring(playerID).." Changed Government to: "..governmentName,debugcontext)	
 end
 
-function OnGovernmentPolicyChangedTest(playerID, governmentID)
+function OnGovernmentPolicyChangedTest(playerID, policyID)
 	debugcontext = "OnGovernmentPolicyChangedTest(L)"
 	Debug("Started",debugcontext)
 	local pPlayer = Players[playerID]
@@ -710,7 +730,7 @@ function OnStartAddStats(pPlayer)
 	Debug("Techs Added", debugcontext)
 	--Set free granted civics (database index - 1)
 	--diplo service, political and monarchy for t2 gov building to put in cards for faster missions
-	local freeculture = {8,20,23}
+	local freeculture = {0,8,20,23}
 	for i, index in ipairs(freeculture) do
 		local pCulture = pPlayer:GetCulture()
 		Debug("CultureReceived",debugcontext)
