@@ -3,7 +3,7 @@ include "Debug"
 local debugcontext = "DebugLuaScripts"
 
 function Initialize()
-	if GameConfiguration.GetValue('BBGTS_DEBUG_LUA') == 0 then
+	if GameConfiguration.GetValue('BBGTS_DEBUG_LUA') == false then
 		return
 	end
 	print("Delta Debug Timer Started")

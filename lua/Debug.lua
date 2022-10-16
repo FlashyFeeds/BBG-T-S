@@ -1,5 +1,5 @@
 function Debug(statement: string, context)
-	if GameConfiguration.GetValue('BBGTS_DEBUG_LUA') == 0 then
+	if GameConfiguration.GetValue('BBGTS_DEBUG_LUA') == false then
 		return
 	end
 	local currentTime, float = math.modf(Automation.GetTime())
@@ -9,5 +9,5 @@ function Debug(statement: string, context)
 	end
 	local time_delta :number = currentTime + float - GAME_ID
 	print(context..": "..statement..". Local Player: "..tostring(Game.GetLocalPlayer()).." Turn: "..tostring(Game.GetCurrentGameTurn()).." Time: "..string.format(
-   "%.3f %%",tostring(time_delta)))
+   "%.3f %%",time_delta))
 end

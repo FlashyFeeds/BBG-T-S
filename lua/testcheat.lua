@@ -1,12 +1,12 @@
 include "Debug"
 local debugcontext = "testcheat"
 local MP_CHEATS = false
-if GameConfiguration.GetValue('BBGTS_MP_CHEATS') == 1 then
+if GameConfiguration.GetValue('BBGTS_MP_CHEATS') == true then
 	MP_CHEATS = true
 end
 Debug(tostring(GameConfiguration.GetValue('BBGTS_MP_CHEATS')),debugcontext)
-Debug(tostring(GameConfiguration.GetValue('BBGTS_MP_CHEATS')),debugcontext)
-Debug("BBGTS_DEBUG_LUA = "..tostring(MP_CHEATS), debugcontext)
+Debug(tostring(GameConfiguration.GetValue('BBGTS_DEBUG_LUA')),debugcontext)
+Debug("MP_CHEATS = "..tostring(MP_CHEATS), debugcontext)
 
 --======================Test Scripts=============------
 --======================Game Turn================--
@@ -116,6 +116,11 @@ function OnCityBuiltTest(playerID, cityID, iX, iY)
 	if MP_CHEATS then
 		Debug("Giving and Removing Visibility to all from PlayerID: "..tostring(playerID),debugcontext)
 		GiveVisibilityToAllMajors(playerID)
+		local pLocalPlayer = Players[locPlayerID]
+		if pLocalPlayer:IsMajor() and pCity:IsOriginalCapital() then
+			Debug("Starting cheat script",debugcontext)
+			OnStartAddStats(pLocalPlayer)
+		end
 	end
 end
 
@@ -673,7 +678,7 @@ function OnStartAddStats(pPlayer)
 	--Set free granted civics (database index - 1)
 	--diplo service, political and monarchy for t2 gov building to put in cards for faster missions
 	local freeculture = {8,20,23}
-	for i, index in ipairs(culture) do
+	for i, index in ipairs(freeculture) do
 		local pCulture = pPlayer:GetCulture()
 		pCulture:SetCulturalProgress(index, pTechs:GetCultureCost(index))
 	end
@@ -704,16 +709,18 @@ function Initialize()
 	Debug("BBGTS - Gameplay Script Launched",debugcontext)
 	local currentTurn = Game.GetCurrentGameTurn()
 	local startTurn = GameConfiguration.GetStartTurn()
-	
-	if currentTurn == startTurn and MP_CHEATS then
-		local locPlayerID = Game.GetLocalPlayer()
-		local pLocalPlayer = Players[locPlayerID]
-		if pLocalPlayer:IsMajor() then
-			Debug("Starting cheat script",debugcontext)
-			OnStartAddStats(pLocalPlayer)
-		end
 
+	if currentTurn == startTurn and MP_CHEATS then
+	
+		--local locPlayerID = Game.GetLocalPlayer()
+		--local pLocalPlayer = Players[locPlayerID]
+		--if pLocalPlayer:IsMajor() then
+			--Debug("Starting cheat script",debugcontext)
+			--OnStartAddStats(pLocalPlayer)
+		--end
+		
 	end
+
 	Debug("Adding Listener Events",debugcontext)
 	--=============Game Turn========--
 	GameEvents.OnGameTurnStarted.Add(OnGameTurnStartedTest)
