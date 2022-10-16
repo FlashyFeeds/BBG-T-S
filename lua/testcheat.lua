@@ -1,8 +1,12 @@
 include "Debug"
 local debugcontext = "testcheat"
-local MP_CHEATS = (GameConfiguration.GetValue('BBGTS_MP_CHEATS') == 1)
-Debug("blah",debugcontext)
-Debug("MP_CHEATS = "..tostring(MP_CHEATS), debugcontext)
+local MP_CHEATS = false
+if GameConfiguration.GetValue('BBGTS_MP_CHEATS') == 1 then
+	MP_CHEATS = true
+end
+Debug(tostring(GameConfiguration.GetValue('BBGTS_MP_CHEATS')),debugcontext)
+Debug(tostring(GameConfiguration.GetValue('BBGTS_MP_CHEATS')),debugcontext)
+Debug("BBGTS_DEBUG_LUA = "..tostring(MP_CHEATS), debugcontext)
 
 --======================Test Scripts=============------
 --======================Game Turn================--
