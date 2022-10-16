@@ -11,13 +11,13 @@
 	</Properties>
 	<LocalizedText>
 		<Text id="LOC_BBGTS_TITLE">
-			<en_US>BBGTS 1.0.0</en_US>
-			<fr_FR>BBGTS 1.0.0</fr_FR>
+			<en_US>BBGTS 1.0.1</en_US>
+			<fr_FR>BBGTS 1.0.1</fr_FR>
 		</Text>
 		
 		<Text id="LOC_BBGTS_TEASER">
 			<en_US>GameMode for DevAndTest Live BBG</en_US>
-            		<fr_FR>GameMode for DevAndTest Live BBG</fr_FR>
+            <fr_FR>GameMode for DevAndTest Live BBG</fr_FR>
 		</Text>
 		
 		<Text id="LOC_BBGTS_DESCRIPTION">
@@ -32,7 +32,7 @@
 	-->
 	<Dependencies>
 		<Mod id="4873eb62-8ccc-4574-b784-dda455e74e68" title="Expansion: Gathering Storm" />
-		<Mod id="cb84075d-5007-4207-b662-c35a5f7be260" title="Better Balanced Game 5.0.2" version="5002"/>
+		<!--<Mod id="cb84075d-5007-4207-b662-c35a5f7be260" title="Better Balanced Game 5.0.2" version="5002"/>-->
 	</Dependencies>
 	<ActionCriteria>
 		<Criteria id="BBGTS_Mode_Expansion2">
