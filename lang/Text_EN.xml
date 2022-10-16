@@ -22,7 +22,7 @@
             <Text> Allows Debugging Lua scripts in a standardised way. Use with discord for MP script debug</Text>
         </Replace>
         <Replace Tag="LOC_BBGTS_MP_CHEAT_NAME" language="en">
-            <Text>[COLOR_Civ6RedMultiplayer Cheats[ENDCOLOR]</Text>
+            <Text>[COLOR_Civ6Red]Multiplayer Cheats[ENDCOLOR]</Text>
         </Replace>        
         <Replace Tag="LOC_BBGTS_MP_CHEAT_DESC" language="en">
             <Text> Gives lots of free shit and changes some in game values for easier MP testing of the desired feature</Text>

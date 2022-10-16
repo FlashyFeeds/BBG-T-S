@@ -1,6 +1,8 @@
-include ("DebugLuaScripts")
-
+include "DebugLuaScripts"
+local debugcontext = "testcheat"
 local MP_CHEATS = (GameConfiguration.GetValue('BBGTS_MP_CHEATS') == 1)
+Debug("blah",debugcontext)
+Debug("MP_CHEATS = "..tostring(MP_CHEATS), debugcontext)
 
 --======================Test Scripts=============------
 --======================Game Turn================--
@@ -91,14 +93,14 @@ function OnUnitAddedToMapTest(playerID, unitID)
 	local debugcontext = "OnUnitAddedToMapTest(L)"
 	Debug("Started",debugcontext)
 	local pUnit = UnitManager.GetUnit(playerID, unitID)
-	Debug("Unit with ID:"..tostring(unitID).." and type: "..tostring(GameInfo.Units[pUnit:GetType()].UnitType).." Added For PlayerID: ")..tostring(playerID),debugcontext)
+	Debug("Unit with ID: "..tostring(unitID).." and type: "..tostring(GameInfo.Units[pUnit:GetType()].UnitType).." Added For PlayerID: "..tostring(playerID),debugcontext)
 end
 
 function OnUnitRetreatedTest(ownerPlayerID, unitID)
 	local debugcontext = "OnUnitRetreatedTest(G)"
 	Debug("Started",debugcontext)
 	local pUnit = UnitManager.GetUnit(ownerPlayerID, unitID)
-	Debug("Unit with ID:"..tostring(unitID).." and type: "..tostring(GameInfo.Units[pUnit:GetType()].UnitType).." Added For PlayerID: ")..tostring(ownerPlayerID),debugcontext)
+	Debug("Unit with ID:"..tostring(unitID).." and type: "..tostring(GameInfo.Units[pUnit:GetType()].UnitType).." Added For PlayerID: "..tostring(ownerPlayerID),debugcontext)
 end
 ----==============City Events========---------
 function OnCityBuiltTest(playerID, cityID, iX, iY)
@@ -108,7 +110,7 @@ function OnCityBuiltTest(playerID, cityID, iX, iY)
 	local pCity = CityManager.GetCity(playerID, cityID)
 	Debug("City with ID:"..tostring(cityID).." and name: "..tostring(pCity:GetName()).." Added For PlayerID: "..tostring(playerID).." with X,Y:"..tostring(iX)..","..tostring(iY),debugcontext)
 	if MP_CHEATS then
-		Debug("Giving and Removing Visibility to all from PlayerID: "playerID,debugcontext)
+		Debug("Giving and Removing Visibility to all from PlayerID: "..tostring(playerID),debugcontext)
 		GiveVisibilityToAllMajors(playerID)
 	end
 end
@@ -171,14 +173,14 @@ function OnBuildingAddedToMapTest(iX, iY, buildingID, playerID, misc2, misc3)
 	local debugcontext = "OnBuildingAddedToMapTest(L)"
 	Debug("Started",debugcontext)
 	local buildingTypeName = GameInfo.Buildings[buildingID].BuildingType
-	Debug("Added Building: "..tostring(buildingTypeName).." by PlayerID: "..tostring(playerID).." at X,Y: "..tostring(iX)..","..tostring(iY).." misc2: "..tostring(misc2).." misc3: "tostring(misc3),debugcontext)
+	Debug("Added Building: "..tostring(buildingTypeName).." by PlayerID: "..tostring(playerID).." at X,Y: "..tostring(iX)..","..tostring(iY).." misc2: "..tostring(misc2).." misc3: "..tostring(misc3),debugcontext)
 end
 
 function OnBuildingChangedTest(iX,iY, buildingID, playerID, iPercentComplete, iUnknown)
 	local debugcontext = "OnBuildingChangedTest(L)"
 	Debug("Started",debugcontext)
 	local buildingTypeName = GameInfo.Buildings[buildingID].BuildingType
-	Debug("Added Building: "..tostring(buildingTypeName).." by PlayerID: "..tostring(playerID).." at X,Y: "..tostring(iX)..","..tostring(iY).." iPercentComplete: "..tostring(iPercentComplete).." iUnknown: "tostring(iUnknown),debugcontext)
+	Debug("Added Building: "..tostring(buildingTypeName).." by PlayerID: "..tostring(playerID).." at X,Y: "..tostring(iX)..","..tostring(iY).." iPercentComplete: "..tostring(iPercentComplete).." iUnknown: "..tostring(iUnknown),debugcontext)
 end
 
 function OnBuildingConstructedTest(playerID, cityID, buildingID, plotID, bOriginalConstruction)
@@ -241,7 +243,7 @@ function OnImprovementActivatedTest(iX,iY,unitID,playerID,improvementType, impro
 	local improvementName = GameInfo.Improvements[improvementType].ImprovementType
 	local pUnit = UnitManager.GetUnit(playerID,unitID)
 	local unitTypeName = GameInfo.Units[pUnit:GetType()].UnitType
-	Debug(improvementName.." with ID: "..tostring(improvementID).." was built by: "..unitTypeName.." with ID: "..tostring(unitID).." by PlayerID: "..tostring(playerID).." at X,Y: "..tostring(iX)..","..tostring(iY).." activationType: "tostring(activationType),debugcontext)
+	Debug(improvementName.." with ID: "..tostring(improvementID).." was built by: "..unitTypeName.." with ID: "..tostring(unitID).." by PlayerID: "..tostring(playerID).." at X,Y: "..tostring(iX)..","..tostring(iY).." activationType: "..tostring(activationType),debugcontext)
 end
 
 function OnImprovementAddedToMapTest(iX,iY,improvementType,playerID,resource, isPillaged,isWorked)
@@ -574,7 +576,7 @@ function OnCityReligionFollowersChangedTest(playerID, cityID, eVisibility, city)
 	local cityReligion = pCity:GetReligion()
 	local str: string = ""
 	for i = -1,24 do
-		if cityReligion:GetNumFollowers(i) ~= 0 do
+		if cityReligion:GetNumFollowers(i) ~= 0 then
 			str = str.."Religion ID: "..tostring(i).." Num Followers: "..tostring(cityReligion:GetNumFollowers(i))
 		end
 	end
@@ -693,8 +695,8 @@ function GiveVisibilityToAllMajors(playerID)
 	end
 end
 
-function Initialize()
-	debugcontext = "Initialize(G)"
+function Start()
+	debugcontext = "Start(G)"
 	Debug("BBGTS - Gameplay Script Launched",debugcontext)
 	local currentTurn = Game.GetCurrentGameTurn()
 	local startTurn = GameConfiguration.GetStartTurn()
@@ -783,5 +785,5 @@ function Initialize()
 	GameEvents.PolicyChanged.Add(OnPolicyChangedTest)
 end
 
-Initialize();
+Start();
 

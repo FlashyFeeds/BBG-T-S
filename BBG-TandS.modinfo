@@ -204,7 +204,7 @@
 	<InGameActions>
 		<AddGameplayScripts id="BBGTS_TestScripts_Script">
 			<File>lua/DebugLuaScripts.lua</File>
-			<File>sql/testcheat.lua</File>
+			<File>lua/testcheat.lua</File>
 		</AddGameplayScripts>
 		<!--
 		<ReplaceUIScript id="productionpanel_bbg">
