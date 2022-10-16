@@ -16,13 +16,13 @@ function OnGameTurnStartedTest(playerID)
 	local GAME_ID = Game:GetProperty("GameID")
 	if GAME_ID~=nil then
 		Debug("GAME_ID detected. GAME_ID = "..tostring(GAME_ID),debugcontext)
-		Debug("Turn Started for PlayerID: "..tostring(playerID))
+		Debug("Turn Started for PlayerID: "..tostring(playerID),debugcontext)
 	end
 end
 
 --=======================Spy and Unit Capture/death=====--------
-function OnUnitCaptureTest(currentUnitOwner, unitID, owningPlayer, capturingPlayer)
-	local debugcontext = "OnUnitCaptureTest(L)"
+function OnUnitCapturedTest(currentUnitOwner, unitID, owningPlayer, capturingPlayer)
+	local debugcontext = "OnUnitCapturedTest(L)"
 	Debug("Started",debugcontext)
 	local u1 = UnitManager.GetUnit(currentUnitOwner, unitID);
 	local u2= UnitManager.GetUnit(owningPlayer, unitID);
@@ -93,6 +93,16 @@ function OnUnitKilledTest(currentUnitOwner, unitID)
 	return
 end
 
+function OnUnitRemovedFromMapTest(playerID, unitID)
+	debugcontext = "OnUnitRemovedFromMapTest(L)"
+	Debug("Started",debugcontext)
+	local pPlayer = Players[playerID]
+	local playerCiv = PlayerConfigurations[playerID]:GetCivilizationTypeName()
+	local pUnit = UnitManager.GetUnit(playerID,unitID)
+	local unitTypeName = GameInfo.Units[pUnit:GetType()].UnitType
+	Debug(unitTypeName.." with ID: "..tostring(unitID).." Owned By Civ: "..playerCiv.." with ID: "..tostring(playerID).." was removed from MAP",debugcontext)
+end
+
 function OnUnitAddedToMapTest(playerID, unitID)
 	local debugcontext = "OnUnitAddedToMapTest(L)"
 	Debug("Started",debugcontext)
@@ -116,10 +126,17 @@ function OnCityBuiltTest(playerID, cityID, iX, iY)
 	if MP_CHEATS then
 		Debug("Giving and Removing Visibility to all from PlayerID: "..tostring(playerID),debugcontext)
 		GiveVisibilityToAllMajors(playerID)
-		local pLocalPlayer = Players[locPlayerID]
-		if pLocalPlayer:IsMajor() and pCity:IsOriginalCapital() then
+		local pLocalPlayer = Players[playerID]
+		local tCheatStatus = Game:GetProperty("CheatReceived")
+		local pCheatStatus = tCheatStatus[playerID] 
+		Debug("Global Cheat State Table Received",debugcontext)
+		if pLocalPlayer:IsMajor() and pCheatStatus ~= true then
 			Debug("Starting cheat script",debugcontext)
 			OnStartAddStats(pLocalPlayer)
+			Debug("Stats Added Success",debugcontext)
+			tCheatStatus[playerID] = true
+			Game:SetProperty("CheatReceived",tCheatStatus)
+			Debug("Cheat Status Updated",debugcontext)
 		end
 	end
 end
@@ -228,7 +245,7 @@ function OnCityProjectCompletedTest(playerID, cityID, projectID, buildingID, iX,
 	local pY = pCity:GetY()
 	local cityName = pCity:GetName()
 	local pPlayer = Players[playerID]
-	local playerCiv = pPlayer:GetCivilizationTypeName()
+	local playerCiv = PlayerConfigurations[playerID]:GetCivilizationTypeName()
 	local projectName = GameInfo.Projects[projectID].ProjectType
 	local buildingTypeName = GameInfo.Buildings[buildingID].BuildingType
 	Debug(cityName.." with ID: "..tostring(cityID).." Owned by: "..playerCiv.." with ID: "..tostring(playerID).." located at iX,iY,pX,pY: "..tostring(iX)..","..tostring(iY)..","..tostring(pX)..","..tostring(pY).." completed Project: "..projectName.." in the Building: "..buildingTypeName,debugcontext)
@@ -242,7 +259,7 @@ function OnCityMadePurchaseTest(playerID, cityID, iX, iY, purchaseType, objectTy
 	local pY = pCity:GetY()
 	local cityName = pCity:GetName()
 	local pPlayer = Players[playerID]
-	local playerCiv = pPlayer:GetCivilizationTypeName()
+	local playerCiv = PlayerConfigurations[playerID]:GetCivilizationTypeName()
 	Debug(cityName.." with ID: "..tostring(cityID).." Owned by: "..playerCiv.." with ID: "..tostring(playerID).." located at pX,pY: "..tostring(pX)..","..tostring(pY).." Made Purchase of Type: "..tostring(purchaseType).." and objectType: "..tostring(objectType).." at iX,iY: "..tostring(iX)..","..tostring(iY),debugcontext)
 end
 --====================Improvement Events================------------
@@ -386,10 +403,10 @@ function OnDiplomacyDeclareWarTest(playerID1, playerID2)
 	local debugcontext = "OnDiplomacyDeclareWarTest(L)"
 	Debug("Started",debugcontext)
 	local pPlayer1 = Players[playerID1]
-	local pPlayer1Civ = pPlayer1:GetCivilizationTypeName()
+	local pPlayer1Civ = PlayerConfigurations[playerID1]:GetCivilizationTypeName()
 	local p1major = pPlayer1:IsMajor()
 	local pPlayer2 = Players[playerID2]
-	local pPlayer2Civ = pPlayer2:GetCivilizationTypeName()
+	local pPlayer2Civ = PlayerConfigurations[playerID2]:GetCivilizationTypeName()
 	local p2major = pPlayer2:IsMajor()
 	Debug(tostring(pPlayer1Civ).." with ID: "..tostring(playerID1).." isMajor: "..tostring(p1major).." Declared War On: "..tostring(pPlayer2Civ).." with ID: "..tostring(playerID2).." isMajor: "..tostring(p2major),debugcontext)
 end
@@ -398,10 +415,10 @@ function  OnDiploSurpriseDeclareWarTest(playerID1, playerID2)
 	local debugcontext = "OnDiploSurpriseDeclareWarTest(G)"
 	Debug("Started",debugcontext)
 	local pPlayer1 = Players[playerID1]
-	local pPlayer1Civ = pPlayer1:GetCivilizationTypeName()
+	local pPlayer1Civ = PlayerConfigurations[playerID1]:GetCivilizationTypeName()
 	local p1major = pPlayer1:IsMajor()
 	local pPlayer2 = Players[playerID2]
-	local pPlayer2Civ = pPlayer2:GetCivilizationTypeName()
+	local pPlayer2Civ = PlayerConfigurations[playerID2]:GetCivilizationTypeName()
 	local p2major = pPlayer2:IsMajor()
 	Debug(tostring(pPlayer1Civ).." with ID: "..tostring(playerID1).." isMajor: "..tostring(p1major).." Declared SurpriseWar(G) On: "..tostring(pPlayer2Civ).." with ID: "..tostring(playerID2).." isMajor: "..tostring(p2major),debugcontext)
 end
@@ -410,10 +427,10 @@ function OnDiplomacyRelationshipChangedTest(playerID1, playerID2)
 	local debugcontext = "OnDiplomacyRelationshipChangedTest(L)"
 	Debug("Started",debugcontext)
 	local pPlayer1 = Players[playerID1]
-	local pPlayer1Civ = pPlayer1:GetCivilizationTypeName()
+	local pPlayer1Civ = PlayerConfigurations[playerID1]:GetCivilizationTypeName()
 	local p1major = pPlayer1:IsMajor()
 	local pPlayer2 = Players[playerID2]
-	local pPlayer2Civ = pPlayer2:GetCivilizationTypeName()
+	local pPlayer2Civ = PlayerConfigurations[playerID2]:GetCivilizationTypeName()
 	local p2major = pPlayer2:IsMajor()
 
 	local p1Diplo = pPlayer1:GetDiplomacy()
@@ -447,10 +464,10 @@ function OnPlayerGaveInfluenceTokenTest(majorID, minorID, iAmount)
 	debugcontext = "OnPlayerGaveInfluenceTokenTest(G)"
 	Debug("Started",debugcontext)
 	local pPlayerMaj = Players[majorID]
-	local pPlayerMajCiv = pPlayerMaj:GetCivilizationTypeName()
+	local pPlayerMajCiv = PlayerConfigurations[majorID]:GetCivilizationTypeName()
 	local pMajMajor = pPlayerMaj:IsMajor()
-	local pPlayerMin = Players[majorID]
-	local pPlayerMinCiv = pPlayerMin:GetCivilizationTypeName()
+	local pPlayerMin = Players[minorID]
+	local pPlayerMinCiv = PlayerConfigurations[minorID]:GetCivilizationTypeName()
 	local pMinMajor = pPlayer2:IsMajor()
 	Debug(tostring(pPlayerMajCiv).." with ID: "..tostring(majorID).." isMajor: "..tostring(pMajMajor).." Gave "..tostring(iAmount).." Envoys to: "..tostring(pPlayerMinCiv).." with ID: "..tostring(minorID).." isMajor: "..tostring(pMinMajor),debugcontext)
 end
@@ -459,10 +476,10 @@ function OnDiplomacyMeetTest(playerID1,playerID2)
 	debugcontext = "OnDiplomacyMeetTest(L)"
 	Debug("Started",debugcontext)
 	local pPlayer1 = Players[playerID1]
-	local pPlayer1Civ = pPlayer1:GetCivilizationTypeName()
+	local pPlayer1Civ = PlayerConfigurations[playerID1]:GetCivilizationTypeName()
 	local p1major = pPlayer1:IsMajor()
 	local pPlayer2 = Players[playerID2]
-	local pPlayer2Civ = pPlayer2:GetCivilizationTypeName()
+	local pPlayer2Civ = PlayerConfigurations[playerID2]:GetCivilizationTypeName()
 	local p2major = pPlayer2:IsMajor()
 	Debug(tostring(pPlayer1Civ).." with ID: "..tostring(playerID1).." isMajor: "..tostring(p1major).." Met Player: "..tostring(pPlayer2Civ).." with ID: "..tostring(playerID2).." isMajor: "..tostring(p2major),debugcontext)
 end
@@ -478,30 +495,34 @@ function OnDiplomacyMeetMajorMinorTest(...)
 			str = str.."Var "..tostring(i)..": "..tostring(var1).." "
 		end
 	end
-	Debug(str,debugcontext)
+	if str ~= "" or str~=nil then
+		Debug(str,debugcontext)
+	end
 end
 
 function OnDiplomacyMeetMajorsTest(...)
 	local vars = {...}
 	debugcontext = "OnDiplomacyMeetMajorsTest(L)"
-	Debug("Started")
+	Debug("Started",debugcontext)
 	local str = ""
 	if #vars>0 then
 		for i,var in ipairs(vars) do
 			str = str.."Var "..tostring(i)..": "..tostring(var1).." "
 		end
 	end
-	Debug(str,debugcontext)
+	if str ~= "" or str~=nil then
+		Debug(str,debugcontext)
+	end
 end
 
 function OnDiplomacyMakePeaceTest(playerID1, playerID2)
 	debugcontext = "OnDiplomacyMakePeaceTest(L)"
 	Debug("Started",debugcontext)
 	local pPlayer1 = Players[playerID1]
-	local pPlayer1Civ = pPlayer1:GetCivilizationTypeName()
+	local pPlayer1Civ = PlayerConfigurations[playerID1]:GetCivilizationTypeName()
 	local p1major = pPlayer1:IsMajor()
 	local pPlayer2 = Players[playerID2]
-	local pPlayer2Civ = pPlayer2:GetCivilizationTypeName()
+	local pPlayer2Civ = PlayerConfigurations[playerID2]:GetCivilizationTypeName()
 	local p2major = pPlayer2:IsMajor()
 	Debug(tostring(pPlayer1Civ).." with ID: "..tostring(playerID1).." isMajor: "..tostring(p1major).." Made Peace with Player: "..tostring(pPlayer2Civ).." with ID: "..tostring(playerID2).." isMajor: "..tostring(p2major),debugcontext)
 end
@@ -527,8 +548,13 @@ function OnPhaseBeginTest(...)
 			str = str.."Var "..tostring(i)..": "..tostring(var1).." "
 		end
 	end
-	Debug(str,debugcontext)
-	Debug(tostring(Game.GetPhaseName()),debugcontext)
+	if str ~= "" or str~=nil then
+		Debug(str,debugcontext)
+	end
+	local gamephase = Game.GetPhaseName()
+	if gamephase ~= nil then
+		Debug(tostring(Game.GetPhaseName()),debugcontext)
+	end
 end
 
 function OnPhaseEndTest(...)
@@ -540,15 +566,20 @@ function OnPhaseEndTest(...)
 			str = str.."Var "..tostring(i)..": "..tostring(var1).." "
 		end
 	end
-	Debug(str,debugcontext)
-	Debug(tostring(Game.GetPhaseName()),debugcontext)
+	if str ~= "" or str~=nil then
+		Debug(str,debugcontext)
+	end
+	local gamephase = Game.GetPhaseName()
+	if gamephase ~= nil then
+		Debug(tostring(Game.GetPhaseName()),debugcontext)
+	end
 end
 --===================Religion Events============--------
 function OnReligionFoundedTest(playerID, religionID)
 	debugcontext = "OnReligionFoundedTest(L)"
 	Debug("Started", debugcontext)
 	local pPlayer = Players[playerID]
-	local playerCiv = pPlayer:GetCivilizationTypeName()
+	local playerCiv = PlayerConfigurations[playerID]:GetCivilizationTypeName()
 	Debug(tostring(playerCiv).." with ID: "..tostring(playerID).." Founded Religion with ID: "..tostring(religionID),debugcontext)
 end
 
@@ -556,7 +587,7 @@ function OnBeliefAddedTest(playerID, beliefID)
 	debugcontext = "OnBeliefAddedTest(L)"
 	Debug("Started",debugcontext)
 	local pPlayer = Players[playerID]
-	local playerCiv = pPlayer:GetCivilizationTypeName()
+	local playerCiv = PlayerConfigurations[playerID]:GetCivilizationTypeName()
 	Debug(tostring(playerCiv).." with ID: "..tostring(playerID).." Adopted Belief with ID: "..tostring(beliefID),debugcontext)
 end
 
@@ -570,7 +601,7 @@ function OnCityReligionChangedTest(playerID, cityID, eVisibility, city)
 	end
 	local cityReligionID = pCity:GetReligion():GetMajorityReligion()
 	local pPlayer = Players[playerID]
-	local playerCiv = pPlayer:GetCivilizationTypeName()
+	local playerCiv = PlayerConfigurations[playerID]:GetCivilizationTypeName()
 	Debug(tostring(cityName).." Owned by Player: "..tostring(playerCiv).." with ID: "..tostring(playerID).." Converted to Religion with ID: "..tostring(cityReligionID).." eVisibility: "..tostring( eVisibility).." city: "..tostring(city),debugcontext)
 end
 
@@ -590,7 +621,7 @@ function OnCityReligionFollowersChangedTest(playerID, cityID, eVisibility, city)
 		end
 	end
 	local pPlayer = Players[playerID]
-	local playerCiv = pPlayer:GetCivilizationTypeName()
+	local playerCiv = PlayerConfigurations[playerID]:GetCivilizationTypeName()
 	Debug(tostring(cityName).." Owned by Player: "..tostring(playerCiv).." with ID: "..tostring(playerID).." Religious Followers: "..str.." eVisibility: "..tostring( eVisibility).." city: "..tostring(city),debugcontext)
 end
 
@@ -604,7 +635,9 @@ function OnNewMajorityReligionTest(...)
 			str = str.."Var "..tostring(i)..": "..tostring(var1).." "
 		end
 	end
-	Debug(str,debugcontext)
+	if str ~= "" or str~=nil then
+		Debug(str,debugcontext)
+	end
 	local playerID = Game.GetLocalPlayer()
 	local pPlayer = Players[playerID]
 	local playerMajReligionID = pPlayer:GetReligion():GetReligionInMajorityOfCities()
@@ -616,7 +649,7 @@ function OnGovernmentChangedTest(playerID, governmentID)
 	debugcontext = "OnGovernmentChangedTest(L)"
 	Debug("Started",debugcontext)
 	local pPlayer = Players[playerID]
-	local playerCiv = pPlayer:GetCivilizationTypeName()
+	local playerCiv = PlayerConfigurations[playerID]:GetCivilizationTypeName()
 	local governmentName = GameInfo.Governments[governmentID].GovernmentType
 	Debug(playerCiv.." with playerID: "..tostring(playerID).." Changed Government to: "..governmentName,debugcontext)	
 end
@@ -625,7 +658,7 @@ function OnGovernmentPolicyChangedTest(playerID, governmentID)
 	debugcontext = "OnGovernmentPolicyChangedTest(L)"
 	Debug("Started",debugcontext)
 	local pPlayer = Players[playerID]
-	local playerCiv = pPlayer:GetCivilizationTypeName()
+	local playerCiv = PlayerConfigurations[playerID]:GetCivilizationTypeName()
 	local policyName = GameInfo.Policies[policyID].PolicyType
 	Debug(playerCiv.." with playerID: "..tostring(playerID).." Changed Policy: "..policyName,debugcontext)
 end
@@ -634,7 +667,7 @@ function OnGovernmentPolicyObsoletedTest(playerID)
 	debugcontext = "OnGovernmentPolicyObsoletedTest(L)"
 	Debug("Started",debugcontext)
 	local pPlayer = Players[playerID]
-	local playerCiv = pPlayer:GetCivilizationTypeName()
+	local playerCiv = PlayerConfigurations[playerID]:GetCivilizationTypeName()
 	Debug(playerCiv.." with playerID: "..tostring(playerID).." Has an Obsolete Policy")
 end
 
@@ -642,7 +675,7 @@ function OnPolicyChangedTest(playerID, policyID, bEnacted)
 	debugcontext = "OnPolicyChangedTest(G)"
 	Debug("Started",debugcontext)
 	local pPlayer = Players[playerID]
-	local playerCiv = pPlayer:GetCivilizationTypeName()
+	local playerCiv = PlayerConfigurations[playerID]:GetCivilizationTypeName()
 	local policyName = GameInfo.Policies[policyID].PolicyType
 	Debug(playerCiv.." with playerID: "..tostring(playerID).." bEnacted: "..tostring(bEnacted).." Policy: "..policyName,debugcontext)
 end
@@ -680,7 +713,8 @@ function OnStartAddStats(pPlayer)
 	local freeculture = {8,20,23}
 	for i, index in ipairs(freeculture) do
 		local pCulture = pPlayer:GetCulture()
-		pCulture:SetCulturalProgress(index, pTechs:GetCultureCost(index))
+		Debug("CultureReceived",debugcontext)
+		pCulture:SetCulturalProgress(index, pCulture:GetCultureCost(index))
 	end
 	Debug("Civics Added",debugcontext)
 	--Attach +20 spy capacity modifier
@@ -711,14 +745,15 @@ function Initialize()
 	local startTurn = GameConfiguration.GetStartTurn()
 
 	if currentTurn == startTurn and MP_CHEATS then
-	
-		--local locPlayerID = Game.GetLocalPlayer()
-		--local pLocalPlayer = Players[locPlayerID]
-		--if pLocalPlayer:IsMajor() then
-			--Debug("Starting cheat script",debugcontext)
-			--OnStartAddStats(pLocalPlayer)
-		--end
-		
+		local tCheatReceived = {}
+		for i =0,60 do
+			local pPlayer = Players[i]
+			if pPlayer:IsMajor() then
+				tCheatReceived[i] = false
+			end
+		end
+		Game:SetProperty("CheatReceived",tCheatReceived)
+		Debug("Cheat Status Saved",debugcontext)
 	end
 
 	Debug("Adding Listener Events",debugcontext)

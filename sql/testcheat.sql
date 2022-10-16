@@ -1,7 +1,9 @@
 --Gold Buy Spies with 1mil gold should be easy to test a lot
+UPDATE Units SET PurchaseYield = 'YIELD_GOLD' WHERE UnitType = 'UNIT_SPY';
+
+--Spy Retreat
 --UPDATE Units SET CanRetreatWhenCaptured = '1' WHERE UnitType = 'UNIT_SPY';
 --Give enables 20 spy capacity to major players for testing purposes
-
 INSERT INTO Modifiers(ModifierId, ModifierType) VALUES
 	('BBG_TEST_GIVE_20_SPY_CAPACITY', 'MODIFIER_PLAYER_GRANT_SPY');
 
