@@ -1,6 +1,19 @@
 include ("DebugLuaScripts")
 
+local MP_CHEATS = (GameConfiguration.GetValue('BBGTS_MP_CHEATS') == 1)
+
 --======================Test Scripts=============------
+--======================Game Turn================--
+function OnGameTurnStartedTest(playerID)
+	debugcontext = "OnGameTurnStartedTest(G)"
+	Debug("Started",debugcontext)
+	local GAME_ID = Game:GetProperty("GameID")
+	if GAME_ID~=nil then
+		Debug("GAME_ID detected. GAME_ID = "..tostring(GAME_ID),debugcontext)
+		Debug("Turn Started for PlayerID: "..tostring(playerID))
+	end
+end
+
 --=======================Spy and Unit Capture/death=====--------
 function OnUnitCaptureTest(currentUnitOwner, unitID, owningPlayer, capturingPlayer)
 	local debugcontext = "OnUnitCaptureTest(L)"
@@ -91,8 +104,13 @@ end
 function OnCityBuiltTest(playerID, cityID, iX, iY)
 	local debugcontext = "OnCityBuiltTest(G)"
 	Debug("Started",debugcontext)
+
 	local pCity = CityManager.GetCity(playerID, cityID)
 	Debug("City with ID:"..tostring(cityID).." and name: "..tostring(pCity:GetName()).." Added For PlayerID: "..tostring(playerID).." with X,Y:"..tostring(iX)..","..tostring(iY),debugcontext)
+	if MP_CHEATS then
+		Debug("Giving and Removing Visibility to all from PlayerID: "playerID,debugcontext)
+		GiveVisibilityToAllMajors(playerID)
+	end
 end
 
 function OnCityConqueredTest(newPlayerID, oldPlayerID, newCityID, iX, iY)
@@ -163,20 +181,6 @@ function OnBuildingChangedTest(iX,iY, buildingID, playerID, iPercentComplete, iU
 	Debug("Added Building: "..tostring(buildingTypeName).." by PlayerID: "..tostring(playerID).." at X,Y: "..tostring(iX)..","..tostring(iY).." iPercentComplete: "..tostring(iPercentComplete).." iUnknown: "tostring(iUnknown),debugcontext)
 end
 
-function OnCityProductionChangedTest(playerID, cityID, productionID, objectID, bCancelled)
-	local debugcontext = "OnCityProductionChangedTest(L)"
-	Debug("Started",debugcontext)
-	Debug("playerID: "..tostring(playerID).." cityID: "..tostring(cityID).." productionID: "..tostring(productionID).." objectID: "..tostring(objectID).." bCancelled: "..tostring(bCancelled),debugcontext)
-end
-
-function OnCityProductionCompletedTest(playerID, cityID, productionID, objectID, bCancelled)
-	local debugcontext = "OnCityProductionCompletedTest(L)"
-	Debug("Started",debugcontext)
-	Debug("playerID: "..tostring(playerID).." cityID: "..tostring(cityID).." productionID: "..tostring(productionID).." objectID: "..tostring(objectID).." bCancelled: "..tostring(bCancelled),debugcontext)
-end
-
-function OnCityProjectCompletedTest()
-	local debugcontext = "OnCityProjectCompletedTest(L)"
 function OnBuildingConstructedTest(playerID, cityID, buildingID, plotID, bOriginalConstruction)
 	local debugcontext = "OnBuildingConstructedTest(G)"
 	Debug("Started",debugcontext)
@@ -191,6 +195,44 @@ function OnBuildingPillageStateChangedTest(playerID, cityID, buildingID, bPillag
 	local pCity = CityManager.GetCity(playerID, cityID)
 	local buildingTypeName = GameInfo.Buildings[buildingID].BuildingType
 	Debug("Bulding: "..tostring(buildingTypeName).." In City: "..tostring(pCity:GetName()).." With cityID: "..tostring(cityID).." Owned by PlayerID: "..tostring(playerID).." PillageStatus: "..tostring(bPillageState),debugcontext)
+end
+--==========================City Events============-----------
+function OnCityProductionChangedTest(playerID, cityID, productionID, objectID, bCancelled)
+	local debugcontext = "OnCityProductionChangedTest(L)"
+	Debug("Started",debugcontext)
+	Debug("playerID: "..tostring(playerID).." cityID: "..tostring(cityID).." productionID: "..tostring(productionID).." objectID: "..tostring(objectID).." bCancelled: "..tostring(bCancelled),debugcontext)
+end
+
+function OnCityProductionCompletedTest(playerID, cityID, productionID, objectID, bCancelled)
+	local debugcontext = "OnCityProductionCompletedTest(L)"
+	Debug("Started",debugcontext)
+	Debug("playerID: "..tostring(playerID).." cityID: "..tostring(cityID).." productionID: "..tostring(productionID).." objectID: "..tostring(objectID).." bCancelled: "..tostring(bCancelled),debugcontext)
+end
+
+function OnCityProjectCompletedTest(playerID, cityID, projectID, buildingID, iX, iY, bCancelled)
+	local debugcontext = "OnCityProjectCompletedTest(L)"
+	Debug("Started", debugcontext)
+	local pCity = CityManager.GetCity(playerID, cityID)
+	local pX = pCity:GetX()
+	local pY = pCity:GetY()
+	local cityName = pCity:GetName()
+	local pPlayer = Players[playerID]
+	local playerCiv = pPlayer:GetCivilizationTypeName()
+	local projectName = GameInfo.Projects[projectID].ProjectType
+	local buildingTypeName = GameInfo.Buildings[buildingID].BuildingType
+	Debug(cityName.." with ID: "..tostring(cityID).." Owned by: "..playerCiv.." with ID: "..tostring(playerID).." located at iX,iY,pX,pY: "..tostring(iX)..","..tostring(iY)..","..tostring(pX)..","..tostring(pY).." completed Project: "..projectName.." in the Building: "..buildingTypeName,debugcontext)
+end
+
+function OnCityMadePurchaseTest(playerID, cityID, iX, iY, purchaseType, objectType)
+	debugcontext = "OnCityMadePurchaseTest(L)"
+	Debug("Started", debugcontext)
+	local pCity = CityManager.GetCity(playerID, cityID)
+	local pX = pCity:GetX()
+	local pY = pCity:GetY()
+	local cityName = pCity:GetName()
+	local pPlayer = Players[playerID]
+	local playerCiv = pPlayer:GetCivilizationTypeName()
+	Debug(cityName.." with ID: "..tostring(cityID).." Owned by: "..playerCiv.." with ID: "..tostring(playerID).." located at pX,pY: "..tostring(pX)..","..tostring(pY).." Made Purchase of Type: "..tostring(purchaseType).." and objectType: "..tostring(objectType).." at iX,iY: "..tostring(iX)..","..tostring(iY),debugcontext)
 end
 --====================Improvement Events================------------
 function OnImprovementActivatedTest(iX,iY,unitID,playerID,improvementType, improvementID,activationType)
@@ -558,8 +600,45 @@ function OnNewMajorityReligionTest(...)
 	Debug("Player ID: "..tostring(playerID).." Has New Majority Religion with ID: "..tostring(playerMajReligionID),debugcontext)
 end
 
+--========================Government Events================-----
+function OnGovernmentChangedTest(playerID, governmentID)
+	debugcontext = "OnGovernmentChangedTest(L)"
+	Debug("Started",debugcontext)
+	local pPlayer = Players[playerID]
+	local playerCiv = pPlayer:GetCivilizationTypeName()
+	local governmentName = GameInfo.Governments[governmentID].GovernmentType
+	Debug(playerCiv.." with playerID: "..tostring(playerID).." Changed Government to: "..governmentName,debugcontext)	
+end
+
+function OnGovernmentPolicyChangedTest(playerID, governmentID)
+	debugcontext = "OnGovernmentPolicyChangedTest(L)"
+	Debug("Started",debugcontext)
+	local pPlayer = Players[playerID]
+	local playerCiv = pPlayer:GetCivilizationTypeName()
+	local policyName = GameInfo.Policies[policyID].PolicyType
+	Debug(playerCiv.." with playerID: "..tostring(playerID).." Changed Policy: "..policyName,debugcontext)
+end
+
+function OnGovernmentPolicyObsoletedTest(playerID)
+	debugcontext = "OnGovernmentPolicyObsoletedTest(L)"
+	Debug("Started",debugcontext)
+	local pPlayer = Players[playerID]
+	local playerCiv = pPlayer:GetCivilizationTypeName()
+	Debug(playerCiv.." with playerID: "..tostring(playerID).." Has an Obsolete Policy")
+end
+
+function OnPolicyChangedTest(playerID, policyID, bEnacted)
+	debugcontext = "OnPolicyChangedTest(G)"
+	Debug("Started",debugcontext)
+	local pPlayer = Players[playerID]
+	local playerCiv = pPlayer:GetCivilizationTypeName()
+	local policyName = GameInfo.Policies[policyID].PolicyType
+	Debug(playerCiv.." with playerID: "..tostring(playerID).." bEnacted: "..tostring(bEnacted).." Policy: "..policyName,debugcontext)
+end
+
+--====================Gameplay Cheats============--
 function OnStartAddStats(pPlayer)
-	local debugcontext = "OnStartAddStats"
+	local debugcontext = "OnStartAddStats(L/S)"
 	Debug('Started', debugcontext)
 	--MP cheats for testing
 	local pTreasury = pPlayer:GetTreasury()
@@ -598,7 +677,40 @@ function OnStartAddStats(pPlayer)
 	Debug("Spy Capacity Increased", debugcontext)
 end
 
+function GiveVisibilityToAllMajors(playerID)
+	debugcontext = "GiveVisibilityToAllMajors(L/S)"
+	Debug("Started",debugcontext)
+	local pVis = PlayersVisibility[playerID]
+	Debug("visibility table retrieved for PlayerID:"..tostring(playerID),debugcontext)
+	for i=0,60 do
+		local nPlayer = Players[i]
+		if nPlayer:IsMajor() and i ~= playerID then
+			Debug("Major Player with ID: "..tostring(i).." Detected",debugcontext)
+			pVis:AddOutgoingVisibility(i)
+			pVis:RemoveOutgoingVisibility(i)
+			Debug("Visibility Added and Removed for PlayerID: "..tostring(i),debugcontext)
+		end
+	end
+end
+
 function Initialize()
+	debugcontext = "Initialize(G)"
+	Debug("BBGTS - Gameplay Script Launched",debugcontext)
+	local currentTurn = Game.GetCurrentGameTurn()
+	local startTurn = GameConfiguration.GetStartTurn()
+	
+	if currentTurn == startTurn and MP_CHEATS then
+		local locPlayerID = Game.GetLocalPlayer()
+		local pLocalPlayer = Players[locPlayerID]
+		if pLocalPlayer:IsMajor() then
+			Debug("Starting cheat script",debugcontext)
+			OnStartAddStats(pLocalPlayer)
+		end
+
+	end
+	Debug("Adding Listener Events",debugcontext)
+	--=============Game Turn========--
+	GameEvents.OnGameTurnStarted.Add(OnGameTurnStartedTest)
 	--=============Spy Functions============-----------
 	Events.UnitCaptured.Add(OnUnitCapturedTest)
 	Events.SpyRemoved.Add(OnSpyRemoveTest)
@@ -631,6 +743,7 @@ function Initialize()
 	Events.CityProductionCompleted.Add(OnCityProductionCompletedTest)
 	Events.CityProductionChanged.Add(OnCityProductionChangedTest)
 	Events.CityProjectCompleted.Add(OnCityProjectCompletedTest)
+	Events.CityMadePurchase.Add(OnCityMadePurchaseTest)
 	--=============General Pillage Event==========--
 	GameEvents.OnPillage.Add(OnPillageTest)
 	--=============Combat Events=============--
@@ -663,23 +776,11 @@ function Initialize()
 	Events.CityReligionChanged.Add(OnCityReligionChangedTest)
 	Events.CityReligionFollowersChanged.Add(OnCityReligionFollowersChangedTest)
 	GameEvents.OnNewMajorityReligion.Add(OnNewMajorityReligionTest)
-
-end
-
-function Initialize()
-
-	print("BBG - Gameplay Script Launched")
-	local currentTurn = Game.GetCurrentGameTurn()
-	local startTurn = GameConfiguration.GetStartTurn()
-	
-	if currentTurn == startTurn then
-
-
-	end
-	Events.UnitCaptured.Add(OnSpyCapture)
-	Events.SpyRemoved.Add(OnSpyRemoveTest)
-	Events.SpyAdded.Add(OnSpyAddedTest)
-	Events.UnitRemovedFromMap.Add(UnitKilled)
+	--============Government==========--
+	Events.GovernmentChanged.Add(OnGovernmentChangedTest)
+	Events.GovernmentPolicyChanged.Add(OnGovernmentPolicyChangedTest)
+	Events.GovernmentPolicyObsoleted.Add(OnGovernmentPolicyObsoletedTest)
+	GameEvents.PolicyChanged.Add(OnPolicyChangedTest)
 end
 
 Initialize();

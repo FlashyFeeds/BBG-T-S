@@ -19,7 +19,13 @@
             <Text>[COLOR_Grey]Debug Lua Scripts[ENDCOLOR]</Text>
         </Replace>        
         <Replace Tag="LOC_BBGTS_DEBUG_LUA_DESC" language="en">
-            <Text> Allows Debugging Lua scripts in a standardised way. TO ADD SUPPORT OF THIS LATER</Text>
+            <Text> Allows Debugging Lua scripts in a standardised way. Use with discord for MP script debug</Text>
+        </Replace>
+        <Replace Tag="LOC_BBGTS_MP_CHEAT_NAME" language="en">
+            <Text>[COLOR_Civ6RedMultiplayer Cheats[ENDCOLOR]</Text>
+        </Replace>        
+        <Replace Tag="LOC_BBGTS_MP_CHEAT_DESC" language="en">
+            <Text> Gives lots of free shit and changes some in game values for easier MP testing of the desired feature</Text>
         </Replace>
         <!--
         <Replace Tag="LOC_BBGTS_BUGFIX1_NAME" language="en">

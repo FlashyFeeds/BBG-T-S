@@ -62,6 +62,7 @@
 			</ConfigurationValueMatches>
 		</Criteria>
 		-->
+		<!--
 		<Criteria id="BBGTS_KongoFounderBeliefFix_Expansion2">
 			<ConfigurationValueMatches>
 				<Group>Game</Group>
@@ -101,6 +102,15 @@
 				<Value>1</Value>
 			</ConfigurationValueMatches>
 		</Criteria>
+		-->
+		
+		<Criteria id="BBGTS_testcheat_Expansion2">
+			<ConfigurationValueMatches>
+				<Group>Game</Group>
+				<ConfigurationId>BBGTS_MP_CHEATS</ConfigurationId>
+				<Value>1</Value>
+			</ConfigurationValueMatches>
+		</Criteria>
 
 		<Criteria id="BBGTS_EthemenankiSuggestion_Expansion2">
 			<ConfigurationValueMatches>
@@ -117,7 +127,7 @@
 				<Value>1</Value>
 			</ConfigurationValueMatches>
 		</Criteria>
-
+	<!--
 		<Criteria id="BBGTS_MonkNerf_Expansion2">
 			<ConfigurationValueMatches>
 				<Group>Game</Group>
@@ -165,6 +175,7 @@
 				<Value>1</Value>
 			</ConfigurationValueMatches>
 		</Criteria>
+	-->
 
 	</ActionCriteria>
 
@@ -191,6 +202,11 @@
 	</FrontEndActions>
 
 	<InGameActions>
+		<AddGameplayScripts id="BBGTS_TestScripts_Script">
+			<File>lua/DebugLuaScripts.lua</File>
+			<File>sql/testcheat.lua</File>
+		</AddGameplayScripts>
+		<!--
 		<ReplaceUIScript id="productionpanel_bbg">
 			<Criteria>BBGTS_ProductionPanel_BBG_Expansion2</Criteria>
 			<Properties>
@@ -199,13 +215,13 @@
 				<LuaReplace>ui/ProductionPanel_BBG.lua</LuaReplace>
 			</Properties>
 		</ReplaceUIScript>
-
+	
 		<AddGameplayScripts id="BBGTS_MonkNerf_Script">
 			<Criteria>BBGTS_MonkNerf_Expansion2</Criteria>
 			<File>lua/WorldCongress_BBG.lua</File>
-			<!--<File>lua/MonkKotoku.lua</File>-->
+			<File>lua/MonkKotoku.lua</File>
 		</AddGameplayScripts>
-		
+
 		<AddGameplayScripts id="BBGTS_AttachDetachModifier_Script">
 			<Criteria>BBGTS_AttachDetachModifier_Expansion2</Criteria>
 			<File>lua/TestAttachDetachModifier.lua</File>
@@ -255,7 +271,15 @@
 			<Criteria>BBGTS_MacedonFix_Expansion2</Criteria>
 			<File>sql/MacedonFix.sql</File>
         </UpdateDatabase>
+		-->
 
+		<UpdateDatabase id="BBGTS_testcheat_Data">
+    		<Properties>
+        		<LoadOrder>35000</LoadOrder>
+    		</Properties>
+			<Criteria>BBGTS_testcheat_Expansion2</Criteria>
+			<File>sql/testcheat.sql</File>
+        </UpdateDatabase>
 
         <UpdateDatabase id="BBGTS_EthemenankiSuggestion_Data">
     		<Properties>
@@ -273,6 +297,7 @@
 			<File>sql/BBCC.sql</File>
         </UpdateDatabase>
 
+        <!--
         <UpdateDatabase id="BBGTS_MonkNerf_Data">
     		<Properties>
         		<LoadOrder>35070</LoadOrder>
@@ -312,7 +337,7 @@
 			<Criteria>BBGTS_Spy_Expansion2</Criteria>
 			<File>sql/spytest.sql</File>
         </UpdateDatabase>
-
+		-->
         <!--Conditional sql added like so
 		<UpdateDatabase id="BBGTS_BugFix1_Data">
             		<Properties>
@@ -338,6 +363,7 @@
 		<File>icons/BBGTS_Portrait.dds</File>
 		<File>icons/BBGTS_Background.dds</File>
 		<File>sql/BugFix1.sql</File>
+	<!--
 		<File>sql/Suggestion1.sql</File>
 		<File>lua/BugFix1.lua</File>
 		<File>lua/Suggestion1.lua</File>
@@ -347,19 +373,22 @@
 		<File>sql/ReligionModifierFix.sql</File>
 		<File>sql/KongoFounderBeliefFix.sql</File>
 		<File>sql/FreeInqBuxFix.sql</File>
-		<File>sql/EthemenankiSuggestion.sql</File>
 		<File>sql/RemoveMonkScaling.sql</File>
-		<File>sql/BBCC.sql</File>
 		<File>sql/MacedonFix.sql</File>
 		<File>sql/MonkNerf.sql</File>
 		<File>lua/WorldCongress_BBG.lua</File>
-		<!--<File>lua/MonkKotoku.lua</File>-->
+		<File>lua/MonkKotoku.lua</File>
 		<File>sql/TestAttachDetachModifier.sql</File>
 		<File>lua/TestAttachDetachModifier.lua</File>
 		<File>sql/WaterAqueductDamSuggestiom.sql</File>
 		<File>ui/ProductionPanel_BBG.lua</File>
-		<File>lua/spy.lua</File>
-		<File>sql/spytest.sql</File>
 		<File>sql/PlanesFix.sql</File>
+	-->
+		<File>sql/EthemenankiSuggestion.sql</File>
+		<File>sql/BBCC.sql</File>
+		<File>lua/DebugLuaScripts.lua</File>
+		<File>lua/testcheat.lua</File>
+		<File>sql/testcheat.sql</File>
+		
 	</Files>
 </Mod>

@@ -9,13 +9,14 @@ INSERT INTO GameModeItems('GameModeType', 'Name', 'Description', 'Portrait', 'Ba
 INSERT INTO Parameters(ParameterId, Name, Description, Domain, DefaultValue, ConfigurationGroup, ConfigurationId, GroupId, Visible, SupportsSinglePlayer, SortIndex) VALUES
     ('BBGTS_GameMode', 'LOC_BBGTS_GAMEMODE_NAME', 'LOC_BBGTS_GAMEMODE_DESCRIPTION', 'bool', '1', 'Game', 'BBGTS_GAMEMODE', 'GameModes', '1', '1', '-10'),
     ('BBGTS_DebugLua', 'LOC_BBGTS_DEBUG_LUA_NAME', 'LOC_BBGTS_DEBUG_LUA_DESC', 'bool', '1', 'Game', 'BBGTS_DEBUG_LUA', 'AdvancedOptions','1', '1', '20010'),
-    ('BBGTS_ProductionPanel_BBG', 'LOC_BBGTS_PRODUCTION_PANEL_NAME', 'LOC_BBGTS_BBGTS_PRODUCTION_PANEL_DESC', 'bool', '1', 'Game', 'BBGTS_PRODUCTION_PANEL_UTIL', 'AdvancedOptions','1', '1', '20020');
+    ('BBGTS_MP_CHEAT', 'LOC_BBGTS_MP_CHEAT_NAME', 'LOC_BBGTS_MP_CHEAT_DESC', 'bool', '0', 'Game', 'BBGTS_MP_CHEATS', 'AdvancedOptions','1', '1', '20020');
+    --('BBGTS_ProductionPanel_BBG', 'LOC_BBGTS_PRODUCTION_PANEL_NAME', 'LOC_BBGTS_BBGTS_PRODUCTION_PANEL_DESC', 'bool', '1', 'Game', 'BBGTS_PRODUCTION_PANEL_UTIL', 'AdvancedOptions','1', '1', '20020');--
 
 --Insert your Bug Fixes Here, sort order between 20020 and 30000
 --ExampleCommentedOutBelow
 --INSERT INTO Parameters(ParameterId, Name, Description, Domain, DefaultValue, ConfigurationGroup, ConfigurationId, GroupId, Visible, SupportsSinglePlayer, SortIndex) VALUES
     --('BBGTS_BugFix1', 'LOC_BBGTS_BUGFIX1_NAME', 'LOC_BBGTS_BUGFIX1_DESC', 'bool', '1', 'Game', 'BBGTS_BUGFIX1', 'AdvancedOptions', '1', '1', '20020');
-
+/*
 INSERT INTO Parameters(ParameterId, Name, Description, Domain, DefaultValue, ConfigurationGroup, ConfigurationId, GroupId, Visible, SupportsSinglePlayer, SortIndex) VALUES
     ('BBGTS_KongoFix', 'LOC_BBGTS_KONGO_FIX_NAME', 'LOC_BBGTS_KONGO_FIX_DESC', 'bool', '0', 'Game', 'BBGTS_KONGO_FIX', 'AdvancedOptions', '1', '1', '20030'),
     ('BBGTS_FreeInqFix', 'LOC_BBGTS_FREEINQ_FIX_NAME', 'LOC_BBGTS_FREEINQ_FIX_DESC', 'bool', '0', 'Game', 'BBGTS_FREEINQ_FIX', 'AdvancedOptions', '1', '1', '20040'),
@@ -25,13 +26,14 @@ INSERT INTO Parameters(ParameterId, Name, Description, Domain, DefaultValue, Con
     ('BBGTS_MonkNerf','LOC_BBGTS_MONK_NERF_NAME', 'LOC_BBGTS_MONK_NERF_DESC', 'bool', '0', 'Game', 'BBGTS_MONK_NERF', 'AdvancedOptions', '1', '1', '20080'),
     ('BBGTS_PlanesFix','LOC_BBGTS_PLANES_FIX_NAME', 'LOC_BBGTS_PLANES_FIX_DESC', 'bool', '0', 'Game', 'BBGTS_PLANES_FIX', 'AdvancedOptions', '1', '1', '20090');
 --Insert your Suggestions Here, sort order 30000+
+*/
 --Insert your Suggestions Here, sort order 30000+
 INSERT INTO Parameters(ParameterId, Name, Description, Domain, DefaultValue, ConfigurationGroup, ConfigurationId, GroupId, Visible, SupportsSinglePlayer, SortIndex) VALUES
     ('BBGTS_EthemenankiSuggestion', 'LOC_BBGTS_ETHEMENANKI_SUGGESTION_NAME', 'LOC_BBGTS_ETHEMENANKI_SUGGESTION_DESC', 'bool', '0', 'Game', 'BBGTS_ETHEMENANKI_SUGGESTION', 'AdvancedOptions', '1', '1', '30000'),
     ('BBGTS_BBCCSuggestion', 'LOC_BBGTS_BBCC_SUGGESTION_NAME', 'LOC_BBGTS_BBCC_SUGGESTION_DESC', 'bool', '0', 'Game', 'BBGTS_BBCC_SUGGESTION', 'AdvancedOptions', '1', '1', '30010'),
-    ('BBGTS_AttachDetachModifier', 'LOC_BBGTS_ATTACH_DETACH_NAME', 'LOC_BBGTS_ATTACH_DETACH_DESC', 'bool', '0', 'Game', 'BBGTS_ATTACH_DETACH_TEST', 'AdvancedOptions', '1', '1', '30020'),
-    ('BBGTS_WatermillSuggestion', 'LOC_BBGTS_WATERMILL_SUGGESTION_NAME', 'LOC_BBGTS_WATERMILL_SUGGESTION_DESC', 'bool', '0', 'Game', 'BBGTS_WATERMILL_SUGGESTION', 'AdvancedOptions', '1', '1', '30030'),
-    ('BBGTS_Spy', 'LOC_BBGTS_SPY_NAME', 'LOC_BBGTS_SPY_DESC', 'bool', '0', 'Game', 'BBGTS_SPY_TEST', 'AdvancedOptions', '1', '1', '30040');
+    --('BBGTS_AttachDetachModifier', 'LOC_BBGTS_ATTACH_DETACH_NAME', 'LOC_BBGTS_ATTACH_DETACH_DESC', 'bool', '0', 'Game', 'BBGTS_ATTACH_DETACH_TEST', 'AdvancedOptions', '1', '1', '30020'),
+    --('BBGTS_WatermillSuggestion', 'LOC_BBGTS_WATERMILL_SUGGESTION_NAME', 'LOC_BBGTS_WATERMILL_SUGGESTION_DESC', 'bool', '0', 'Game', 'BBGTS_WATERMILL_SUGGESTION', 'AdvancedOptions', '1', '1', '30030'),
+    --('BBGTS_Spy', 'LOC_BBGTS_SPY_NAME', 'LOC_BBGTS_SPY_DESC', 'bool', '0', 'Game', 'BBGTS_SPY_TEST', 'AdvancedOptions', '1', '1', '30040');
 
 --Hide Options Unless BBGTS is active, Just copy any existing line and replace parameter ID with your Suggestion Name 
     --Like So:
@@ -39,16 +41,21 @@ INSERT INTO Parameters(ParameterId, Name, Description, Domain, DefaultValue, Con
     --('BBGTS_Suggestion1', 'Game', 'BBGTS_GAMEMODE', 'Equals', '1');
 
 INSERT INTO ParameterCriteria(ParameterId, ConfigurationGroup, ConfigurationId, Operator, ConfigurationValue) VALUES
+    ('BBGTS_EthemenankiSuggestion', 'Game', 'BBGTS_GAMEMODE', 'Equals', '1'),
+    ('BBGTS_BBCCSuggestion', 'Game', 'BBGTS_GAMEMODE', 'Equals', '1'),
+    ('BBGTS_DebugLua', 'Game', 'BBGTS_GAMEMODE', 'Equals', '1'),
+    ('BBGTS_MP_CHEAT', 'Game', 'BBGTS_GAMEMODE', 'Equals', '1');
+
+    /*
     ('BBGTS_KongoFix', 'Game', 'BBGTS_GAMEMODE', 'Equals', '1'),
     ('BBGTS_FreeInqFix', 'Game', 'BBGTS_GAMEMODE', 'Equals', '1'),
     ('BBGTS_ReligionModifierFix', 'Game', 'BBGTS_GAMEMODE', 'Equals', '1'),
     ('BBGTS_RemoveMonkScalingFix', 'Game', 'BBGTS_GAMEMODE', 'Equals', '1'),
     ('BBGTS_MacedonFix', 'Game', 'BBGTS_GAMEMODE', 'Equals', '1'),
-    ('BBGTS_EthemenankiSuggestion', 'Game', 'BBGTS_GAMEMODE', 'Equals', '1'),
-    ('BBGTS_BBCCSuggestion', 'Game', 'BBGTS_GAMEMODE', 'Equals', '1'),
     ('BBGTS_MonkNerf', 'Game', 'BBGTS_GAMEMODE', 'Equals', '1'),
     ('BBGTS_AttachDetachModifier', 'Game', 'BBGTS_GAMEMODE', 'Equals', '1'),
     ('BBGTS_WatermillSuggestion', 'Game', 'BBGTS_GAMEMODE', 'Equals', '1'),
     ('BBGTS_ProductionPanel_BBG', 'Game', 'BBGTS_GAMEMODE', 'Equals', '1'),
     ('BBGTS_Spy', 'Game', 'BBGTS_GAMEMODE', 'Equals', '1'),
     ('BBGTS_PlanesFix', 'Game', 'BBGTS_GAMEMODE', 'Equals', '1');
+    */
