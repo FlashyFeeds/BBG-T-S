@@ -770,7 +770,7 @@ end
 
 function OnPlayerCommandSetObjectStateTest(playerID, tParameters)
 	debugcontext = "OnPlayerCommandSetObjectStateTest(G)"
-	Debug("Started",debugcontext)]
+	Debug("Started",debugcontext)
 	Debug("PlayerID: "..tostring(playerID).." Set ParameterTable: "..tostring(tParameters),debugcontext)
 end
 
