@@ -737,7 +737,59 @@ function OnPolicyChangedTest(playerID, policyID, bEnacted)
 	local policyName = GameInfo.Policies[policyID].PolicyType
 	Debug(playerCiv.." with playerID: "..tostring(playerID).." bEnacted: "..tostring(bEnacted).." Policy: "..policyName,debugcontext)
 end
+--============Operations and commands======--
+function OnUnitOperationAddedTest(playerID, unitID, iUnknown, hOperation)
+	debugcontext = "OnUnitOperationAddedTest(L)"
+	Debug("Started",debugcontext)
+	Debug("PlayerID: "..tostring(playerID).." unitID: "..tostring(unitID).." iUnknown: "..tostring(iUnknown).." hOperation: "..tostring(hOperation),debugcontext)
+end
 
+function OnUnitOperationDeactivatedTest(playerID, unitID, hOperation, iData)
+	debugcontext = "OnUnitOperationDeactivatedTest(L)"
+	Debug("Started",debugcontext)
+	Debug("PlayerID: "..tostring(playerID).." unitID: "..tostring(unitID).." hOperation: "..tostring(hOperation).." iData: "..tostring(iData),debugcontext)
+end
+
+function OnUnitOperationSegmentCompleteTest(playerID, unitID, hOperation, iData)
+	debugcontext = "OnUnitOperationSegmentCompleteTest(L)"
+	Debug("Started",debugcontext)
+	Debug("PlayerID: "..tostring(playerID).." unitID: "..tostring(unitID).." hOperation: "..tostring(hOperation).." iData: "..tostring(iData),debugcontext)
+end
+
+function OnUnitOperationStartedTest(playerID, unitID, operationID)
+	debugcontext = "OnUnitOperationStartedTest(L)"
+	Debug("Started",debugcontext)
+	Debug("PlayerID: "..tostring(playerID).." unitID: "..tostring(unitID).." operationID: "..tostring(operationID),debugcontext)
+end
+
+function OnUnitOperationsClearedTest(playerID, unitID, hOperation, iData)
+	debugcontext = "OnUnitOperationsClearedTest(L)"
+	Debug("Started",debugcontext)
+	Debug("PlayerID: "..tostring(playerID).." unitID: "..tostring(unitID).." hOperation: "..tostring(hOperation).." iData: "..tostring(iData),debugcontext)
+end
+
+function OnPlayerCommandSetObjectStateTest(playerID, tParameters)
+	debugcontext = "OnPlayerCommandSetObjectStateTest(G)"
+	Debug("Started",debugcontext)]
+	Debug("PlayerID: "..tostring(playerID).." Set ParameterTable: "..tostring(tParameters),debugcontext)
+end
+
+function OnUnitCommandStartedTest(playerID, unitID, hCommand, iData)
+	debugcontext = "OnUnitCommandStartedTest(L)"
+	Debug("Started",debugcontext)
+	Debug("PlayerID: "..tostring(playerID).." unitID: "..tostring(unitID).." hCommand: "..tostring(hCommand).." iData: "..tostring(iData),debugcontext)
+end
+
+function OnCityCommandStartedTest(playerID, cityID, districtOwnerID, commandType, iData)
+	debugcontext = "OnCityCommandStartedTest(L)"
+	Debug("Started",debugcontext)
+	Debug("PlayerID: "..tostring(playerID).." cityID: "..tostring(cityID).." districtOwnerID: "..tostring(districtOwnerID).." commandType: "..tostring(commandType).." iData: "..tostring(iData),debugcontext)
+end
+
+function OnPlayerOperationCompleteTest()
+	debugcontext = "OnPlayerOperationCompleteTest(L)"
+	Debug("Started",debugcontext)
+end
 --====================Gameplay Cheats============--
 function OnStartAddStats(pPlayer)
 	local debugcontext = "OnStartAddStats(L/S)"
@@ -887,6 +939,17 @@ function Initialize()
 	Events.GovernmentPolicyChanged.Add(OnGovernmentPolicyChangedTest)
 	Events.GovernmentPolicyObsoleted.Add(OnGovernmentPolicyObsoletedTest)
 	GameEvents.PolicyChanged.Add(OnPolicyChangedTest)
+	--============Operations and commands======--
+	Events.UnitOperationAdded.Add(OnUnitOperationAddedTest)
+	Events.UnitOperationDeactivated.Add(OnUnitOperationDeactivatedTest)
+	Events.UnitOperationSegmentComplete.Add(OnUnitOperationSegmentCompleteTest)
+	Events.UnitOperationStarted.Add(OnUnitOperationStartedTest)
+	Events.UnitOperationsCleared.Add(OnUnitOperationsClearedTest)
+	GameEvents.OnPlayerCommandSetObjectState.Add(OnPlayerCommandSetObjectStateTest)
+	Events.UnitCommandStarted.Add(OnUnitCommandStartedTest)
+	Events.CityCommandStarted.Add(OnCityCommandStartedTest)
+	Events.PlayerOperationComplete.Add(OnPlayerOperationCompleteTest)
+
 end
 
 Initialize();
