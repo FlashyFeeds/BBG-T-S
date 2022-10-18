@@ -115,22 +115,36 @@ function OnUnitRemovedFromMapTest(playerID, unitID)
 	local pPlayer = Players[playerID]
 	local playerCiv = PlayerConfigurations[playerID]:GetCivilizationTypeName()
 	local pUnit = UnitManager.GetUnit(playerID,unitID)
-	local unitTypeName = GameInfo.Units[pUnit:GetType()].UnitType
-	Debug(unitTypeName.." with ID: "..tostring(unitID).." Owned By Civ: "..playerCiv.." with ID: "..tostring(playerID).." was removed from MAP",debugcontext)
+	if pUnit~=nil then
+		local unitTypeName = GameInfo.Units[pUnit:GetType()].UnitType
+		Debug(unitTypeName.." with ID: "..tostring(unitID).." Owned By Civ: "..playerCiv.." with ID: "..tostring(playerID).." was removed from MAP",debugcontext)
+	else
+		Debug("Unit with ID: "..tostring(unitID).." Owned By Civ: "..playerCiv.." with ID: "..tostring(playerID).." was removed from MAP",debugcontext)
+	end
 end
 
 function OnUnitAddedToMapTest(playerID, unitID)
 	local debugcontext = "OnUnitAddedToMapTest(L)"
 	Debug("Started",debugcontext)
 	local pUnit = UnitManager.GetUnit(playerID, unitID)
-	Debug("Unit with ID: "..tostring(unitID).." and type: "..tostring(GameInfo.Units[pUnit:GetType()].UnitType).." Added For PlayerID: "..tostring(playerID),debugcontext)
+	if pUnit~=nil then
+		local unitTypeName = GameInfo.Units[pUnit:GetType()].UnitType
+		Debug("Unit with ID: "..tostring(unitID).." and type: "..tostring(unitTypeName).." Added For PlayerID: "..tostring(playerID),debugcontext)
+	else
+		Debug("Unit with ID: "..tostring(unitID).." Added For PlayerID: "..tostring(playerID),debugcontext)
+	end
 end
 
 function OnUnitRetreatedTest(ownerPlayerID, unitID)
 	local debugcontext = "OnUnitRetreatedTest(G)"
 	Debug("Started",debugcontext)
 	local pUnit = UnitManager.GetUnit(ownerPlayerID, unitID)
-	Debug("Unit with ID:"..tostring(unitID).." and type: "..tostring(GameInfo.Units[pUnit:GetType()].UnitType).." Added For PlayerID: "..tostring(ownerPlayerID),debugcontext)
+	if pUnit~=nil then
+		local unitTypeName = GameInfo.Units[pUnit:GetType()].UnitType
+		Debug("Unit with ID: "..tostring(unitID).." and type: "..tostring(unitTypeName).." Retreated For PlayerID: "..tostring(playerID),debugcontext)
+	else
+		Debug("Unit with ID: "..tostring(unitID).." Retreated For PlayerID: "..tostring(playerID),debugcontext)
+	end
 end
 ----==============City Events========---------
 function OnCityBuiltTest(playerID, cityID, iX, iY)
@@ -281,13 +295,17 @@ function OnCityMadePurchaseTest(playerID, cityID, iX, iY, purchaseType, objectTy
 	Debug(cityName.." with ID: "..tostring(cityID).." Owned by: "..playerCiv.." with ID: "..tostring(playerID).." located at pX,pY: "..tostring(pX)..","..tostring(pY).." Made Purchase of Type: "..tostring(purchaseType).." and objectType: "..tostring(objectType).." at iX,iY: "..tostring(iX)..","..tostring(iY),debugcontext)
 end
 --====================Improvement Events================------------
-function OnImprovementActivatedTest(iX,iY,unitID,playerID,improvementType, improvementID,activationType)
+function OnImprovementActivatedTest(iX,iY,playerID, unitID, improvementType, improvementID,activationType)
 	debugcontext = "OnImprovementActivatedTest(L)"
 	Debug("Started",debugcontext)
 	local improvementName = GameInfo.Improvements[improvementType].ImprovementType
 	local pUnit = UnitManager.GetUnit(playerID,unitID)
-	local unitTypeName = GameInfo.Units[pUnit:GetType()].UnitType
-	Debug(improvementName.." with ID: "..tostring(improvementID).." was built by: "..unitTypeName.." with ID: "..tostring(unitID).." by PlayerID: "..tostring(playerID).." at X,Y: "..tostring(iX)..","..tostring(iY).." activationType: "..tostring(activationType),debugcontext)
+	if pUnit~=nil then
+		local unitTypeName = GameInfo.Units[pUnit:GetType()].UnitType
+		Debug(improvementName.." with ID: "..tostring(improvementID).." was activated by: "..unitTypeName.." with ID: "..tostring(unitID).." by PlayerID: "..tostring(playerID).." at X,Y: "..tostring(iX)..","..tostring(iY).." activationType: "..tostring(activationType),debugcontext)
+	else
+		Debug(improvementName.." with ID: "..tostring(improvementID).." was activated by: ".." unit with ID: "..tostring(unitID).." by PlayerID: "..tostring(playerID).." at X,Y: "..tostring(iX)..","..tostring(iY).." activationType: "..tostring(activationType),debugcontext)
+	end
 end
 
 function OnImprovementAddedToMapTest(iX,iY,improvementType,playerID,resource, isPillaged,isWorked)
@@ -377,18 +395,30 @@ function OnUnitDamageChangedTest(playerID, unitID, newDamage, oldDamage)
 	local debugcontext = "OnUnitDamageChangedTest(L)"
 	Debug("Started",debugcontext)
 	local pUnit = UnitManager.GetUnit(playerID, unitID)
-	local unitTypeName = GameInfo.Units[pUnit:GetType()].UnitType
-	Debug("Unit: "..tostring(unitTypeName).." with ID: "..tostring(unitID).." and OwnerID: "..tostring(playerID).." New Damage: "..tostring(newDamage).." Old Damage: "..tostring(oldDamage),debugcontext)
+	if pUnit~=nil then
+		local unitTypeName = GameInfo.Units[pUnit:GetType()].UnitType
+		Debug("Unit: "..tostring(unitTypeName).." with ID: "..tostring(unitID).." and OwnerID: "..tostring(playerID).." New Damage: "..tostring(newDamage).." Old Damage: "..tostring(oldDamage),debugcontext)
+	else
+		Debug("Unit with ID: "..tostring(unitID).." and OwnerID: "..tostring(playerID).." New Damage: "..tostring(newDamage).." Old Damage: "..tostring(oldDamage),debugcontext)
+	end
 end
 
 function OnUnitKilledInCombatTest(killedPlayerID, killedUnitID, playerID, unitID)
 	local debugcontext = "OnUnitKilledInCombatTest(L)"
 	Debug("Started",debugcontext)
 	local pKilledUnit = UnitManager.GetUnit(killedPlayerID, killedUnitID)
-	local killedUnitTypeName = GameInfo.Units[pKilledUnit:GetType()].UnitType
+	if pKilledUnit~=nil then
+		local killedUnitTypeName = GameInfo.Units[pKilledUnit:GetType()].UnitType
+	end
 	local pUnit = UnitManager.GetUnit(playerID, unitID)
-	local unitTypeName = GameInfo.Units[pUnit:GetType()].UnitType
-	Debug(tostring(killedUnitTypeName).." with ID: "..tostring(killedUnitID).." and Owner ID: "..tostring(killedPlayerID).." Was Killed by: "..tostring(unitTypeName).." with ID: "..tostring(unitID).." and Owner: "..tostring(playerID),debugcontext)
+	if pUnit~=nil then
+		local unitTypeName = GameInfo.Units[pUnit:GetType()].UnitType
+	end
+	if pKilledUnit~=nil and pUnit~=nil then
+		Debug(tostring(killedUnitTypeName).." with ID: "..tostring(killedUnitID).." and Owner ID: "..tostring(killedPlayerID).." Was Killed by: "..tostring(unitTypeName).." with ID: "..tostring(unitID).." and Owner: "..tostring(playerID),debugcontext)
+	else
+		Debug("Unit with ID: "..tostring(killedUnitID).." and Owner ID: "..tostring(killedPlayerID).." Was Killed by Unit with ID: "..tostring(unitID).." and Owner: "..tostring(playerID),debugcontext)
+	end
 end
 
 function OnUnitMoveCompleteTest(playerID, unitID, iX, iY)
@@ -403,18 +433,26 @@ function OnUnitMovedTest(playerID, unitID, iX, iY, locallyVisible, stateChange)
 	local debugcontext = "OnUnitMovedTest(L)"
 	Debug("Started",debugcontext)
 	local pUnit = UnitManager.GetUnit(playerID, unitID)
-	local unitTypeName = GameInfo.Units[pUnit:GetType()].UnitType
-	Debug(tostring(unitTypeName).." with ID: "..tostring(unitID).." and Owner ID: "..tostring(playerID).." Moved to X,Y: "..tostring(iX)..","..tostring(iY).." locallyVisible: "..tostring(locallyVisible).." stateChange: "..tostring(stateChange),debugcontext)
+	if pUnit~=nil then
+		local unitTypeName = GameInfo.Units[pUnit:GetType()].UnitType
+		Debug(tostring(unitTypeName).." with ID: "..tostring(unitID).." and Owner ID: "..tostring(playerID).." Moved to X,Y: "..tostring(iX)..","..tostring(iY).." locallyVisible: "..tostring(locallyVisible).." stateChange: "..tostring(stateChange),debugcontext)
+	else
+		Debug("Unit with ID: "..tostring(unitID).." and Owner ID: "..tostring(playerID).." Moved to X,Y: "..tostring(iX)..","..tostring(iY).." locallyVisible: "..tostring(locallyVisible).." stateChange: "..tostring(stateChange),debugcontext)
+	end
 end
 
 function OnUnitTeleportedTest(playerID, unitID, iX, iY)
 	local debugcontext = "OnUnitTeleportedTest(L)"
 	Debug("Started",debugcontext)
 	local pUnit = UnitManager.GetUnit(playerID, unitID)
-	local unitTypeName = GameInfo.Units[pUnit:GetType()].UnitType
-	local fX = pUnit:GetX()
-	local fY = pUnit:GetY()
-	Debug(tostring(unitTypeName).." with ID: "..tostring(unitID).." and Owner ID: "..tostring(playerID).." UnitTeleported to X,Y: "..tostring(fX)..","..tostring(fY).." from X,Y: "..tostring(iX)..","..tostring(iY),debugcontext)
+	if pUnit~=nil then
+		local unitTypeName = GameInfo.Units[pUnit:GetType()].UnitType
+		local fX = pUnit:GetX()
+		local fY = pUnit:GetY()
+		Debug(tostring(unitTypeName).." with ID: "..tostring(unitID).." and Owner ID: "..tostring(playerID).." UnitTeleported to X,Y: "..tostring(fX)..","..tostring(fY).." from X,Y: "..tostring(iX)..","..tostring(iY),debugcontext)
+	else
+		Debug("Unit ID: "..tostring(unitID).." and Owner ID: "..tostring(playerID).." UnitTeleported X,Y: "..tostring(iX)..","..tostring(iY),debugcontext)
+	end
 end
 --================================Diplo=========================
 function OnDiplomacyDeclareWarTest(playerID1, playerID2)
@@ -465,10 +503,10 @@ function OnDiplomacyRelationshipChangedTest(playerID1, playerID2)
 			Debug(tostring(pPlayer1Civ).." with ID: "..tostring(playerID1).." isMajor: "..tostring(p1major).." Diplo Changed to Suz(L) with: "..tostring(pPlayer2Civ).." with ID: "..tostring(playerID2).." isMajor: "..tostring(p2major),debugcontext)
 		end
 	else
-		if true then
+		--if true then
 		--if p1Diplo:HasOpenBordersFrom(playerID2) then
 			--Debug(tostring(pPlayer1Civ).." with ID: "..tostring(playerID1).." isMajor: "..tostring(p1major).." Diplo Changed Open Borders(L) from: "..tostring(pPlayer2Civ).." with ID: "..tostring(playerID2).." isMajor: "..tostring(p2major),debugcontext)
-		elseif p1Diplo:HasDeclaredFriendship(playerID2) then
+		if p1Diplo:HasDeclaredFriendship(playerID2) then
 			Debug(tostring(pPlayer1Civ).." with ID: "..tostring(playerID1).." isMajor: "..tostring(p1major).." Diplo Changed Friendship(L) with: "..tostring(pPlayer2Civ).." with ID: "..tostring(playerID2).." isMajor: "..tostring(p2major),debugcontext)
 		elseif p1Diplo:HasAllied(playerID2) then
 			Debug(tostring(pPlayer1Civ).." with ID: "..tostring(playerID1).." isMajor: "..tostring(p1major).." Diplo Changed Has Allied(L) with: "..tostring(pPlayer2Civ).." with ID: "..tostring(playerID2).." isMajor: "..tostring(p2major),debugcontext)
@@ -508,7 +546,7 @@ end
 function OnDiplomacyMeetMajorMinorTest(...)
 	local vars = {...}
 	debugcontext = "OnDiplomacyMeetMajorMinorTest(L)"
-	Debug("Started")
+	Debug("Started",debugcontext)
 	local str = ""
 	if #vars>0 then
 		for i,var in ipairs(vars) do

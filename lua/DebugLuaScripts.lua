@@ -12,6 +12,8 @@ function Initialize()
 		print("Time: ",time)
 		Game:SetProperty("GameID", time)
 		print("GameID Set as "..tostring(Game.GetLocalPlayer()).." PlayerID's: "..tostring(Game:GetProperty("GameID")).." starting time")
+	else
+		print("GameID started as "..tostring(Game.GetLocalPlayer()).." PlayerID. With GAME_ID: "..tostring(Game:GetProperty("GameID")).." starting time")
 	end
 end
 
