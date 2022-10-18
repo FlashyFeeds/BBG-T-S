@@ -4,9 +4,9 @@ local MP_CHEATS = false
 if GameConfiguration.GetValue('BBGTS_MP_CHEATS') == true then
 	MP_CHEATS = true
 end
-Debug(tostring(GameConfiguration.GetValue('BBGTS_MP_CHEATS')),debugcontext)
-Debug(tostring(GameConfiguration.GetValue('BBGTS_DEBUG_LUA')),debugcontext)
-Debug("MP_CHEATS = "..tostring(MP_CHEATS), debugcontext)
+--Debug(tostring(GameConfiguration.GetValue('BBGTS_MP_CHEATS')),debugcontext)
+--Debug(tostring(GameConfiguration.GetValue('BBGTS_DEBUG_LUA')),debugcontext)
+--Debug("MP_CHEATS = "..tostring(MP_CHEATS), debugcontext)
 
 --======================Test Scripts=============------
 --======================Game Turn================--

@@ -1,8 +1,12 @@
 include "Debug"
 
-local debugcontext = "DebugLuaScripts"
-
-function Initialize()
+function FindGameID()
+	local debugcontext = "FindGameID(L)"
+	local currentTurn = Game.GetCurrentGameTurn()
+	local startTurn = GameConfiguration.GetStartTurn()
+	if currentTurn ~= startTurn then
+		return
+	end
 	if GameConfiguration.GetValue('BBGTS_DEBUG_LUA') == false then
 		return
 	end
@@ -17,5 +21,8 @@ function Initialize()
 	end
 end
 
+function Initialize()
+	Events.LocalPlayerTurnBegin.Add(FindGameID)
+end
+
 Initialize()
-Debug("Started",debugcontext)
