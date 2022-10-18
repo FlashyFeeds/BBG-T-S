@@ -138,7 +138,7 @@ function OnCityBuiltTest(playerID, cityID, iX, iY)
 	Debug("Started",debugcontext)
 
 	local pCity = CityManager.GetCity(playerID, cityID)
-	Debug("City with ID:"..tostring(cityID).." and name: "..tostring(pCity:GetName()).." Added For PlayerID: "..tostring(playerID).." with X,Y:"..tostring(iX)..","..tostring(iY),debugcontext)
+	Debug("City with ID: "..tostring(cityID).." and name: "..tostring(pCity:GetName()).." Added For PlayerID: "..tostring(playerID).." with X,Y:"..tostring(iX)..","..tostring(iY),debugcontext)
 	if MP_CHEATS then
 		Debug("Giving and Removing Visibility to all from PlayerID: "..tostring(playerID),debugcontext)
 		GiveVisibilityToAllMajors(playerID)
@@ -161,7 +161,7 @@ function OnCityConqueredTest(newPlayerID, oldPlayerID, newCityID, iX, iY)
 	local debugcontext = "OnCityConqueredTest(G)"
 	Debug("Started",debugcontext)
 	local pCity = CityManager.GetCity(newPlayerID, newCityID)
-	Debug("City with ID:"..tostring(newCityID).." and name: "..tostring(pCity:GetName()).." Captured by PlayerID: "..tostring(newPlayerID).." from PlayerID: "..tostring(oldPlayerID).." with X,Y:"..tostring(iX)..","..tostring(iY),debugcontext)
+	Debug("City with ID: "..tostring(newCityID).." and name: "..tostring(pCity:GetName()).." Captured by PlayerID: "..tostring(newPlayerID).." from PlayerID: "..tostring(oldPlayerID).." with X,Y:"..tostring(iX)..","..tostring(iY),debugcontext)
 end
 
 function OnCityLiberatedTest(playerID, cityID)
@@ -174,7 +174,7 @@ function OnCityRemovedFromMapTest(playerID, cityID)
 	local debugcontext = "OnCityRemovedFromMapTest(L)"
 	Debug("Started",debugcontext)
 	local pCity = CityManager.GetCity(playerID, cityID)
-	Debug("City with ID:"..tostring(cityID).." and name: "..tostring(pCity:GetName()).." Razed by PlayerID: "..tostring(playerID),debugcontext)
+	Debug("City with ID: "..tostring(cityID).." and name: "..tostring(pCity:GetName()).." Razed by PlayerID: "..tostring(playerID),debugcontext)
 end
 ----===========District Events=====---------
 function OnDistrictAddedToMapTest(playerID, districtID, cityID, iX, iY, districtType, percentComplete)
