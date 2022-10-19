@@ -3,7 +3,11 @@ local debugcontext = "testcheat"
 local MP_CHEATS = false
 if GameConfiguration.GetValue('BBGTS_MP_CHEATS') == true then
 	MP_CHEATS = true
+	Debug("MP_CHEATS_ON: true")
 end
+
+local hostID = Network.GetGameHostPlayerID()
+
 --Debug(tostring(GameConfiguration.GetValue('BBGTS_MP_CHEATS')),debugcontext)
 --Debug(tostring(GameConfiguration.GetValue('BBGTS_DEBUG_LUA')),debugcontext)
 --Debug("MP_CHEATS = "..tostring(MP_CHEATS), debugcontext)
@@ -12,28 +16,17 @@ end
 --======================Game Turn================--
 function OnGameTurnStartedTest(playerID)
 	debugcontext = "OnGameTurnStartedTest(G)"
-	Debug("Started",debugcontext)
+	local currentTurn = Game.GetCurrentGameTurn()
+	local startTurn = GameConfiguration.GetStartTurn()
 	local GAME_ID = Game:GetProperty("GameID")
-	if GAME_ID~=nil then
-		Debug("GAME_ID detected. GAME_ID = "..tostring(GAME_ID),debugcontext)
+	if currentTurn == startTurn then
+		FindGameID()
+	elseif GAME_ID~=nil then
+		Debug("GAME_ID detected. GAME_ID = "..tostring(GAME_ID[1]),debugcontext)
 		Debug("Turn Started for PlayerID: "..tostring(playerID),debugcontext)
-	end
-
-		--local pPlayer = Players[playerID]
-		--local pDiplo = pPlayer:GetDiplomacy()
-		--local open = tostring(pDiplo:HasOpenBordersFrom(1))
-		--Debug("Open: "..open,debugcontext)
-		--local met = tostring(pDiplo:HasMet(1))
-		--Debug("Met: "..met,debugcontext)
-		--local embasy = tostring(pDiplo:HasEmbassyAt(1))
-		--Debug("embasy: "..embasy,debugcontext)
-		--local delegation = tostring(pDiplo:HasDelegationAt(1))
-		--Debug("delegation: "..delegation,debugcontext)
-		--local friend = tostring(pDiplo:HasDeclaredFriendship(1))
-		--Debug("friend: "..friend,debugcontext)
-		--local ally = tostring(pDiplo:HasAllied(1))
-		--Debug("ally: "..ally,debugcontext)
-
+	else
+		Debug("Error: NO GAME_ID detected or possible to set")
+	end	
 end
 
 --=======================Spy and Unit Capture/death=====--------
@@ -847,6 +840,27 @@ function GiveVisibilityToAllMajors(playerID)
 		end
 	end
 end
+
+function FindGameID()
+	local debugcontext = "FindGameID(G/S)"
+	local locID = Game.GetLocalPlayer()
+	if GameConfiguration.GetValue('BBGTS_DEBUG_LUA') == false then
+		return
+	end
+	print("Delta Debug Timer Started")
+	if locID==hostID then
+		local time, float = math.modf(Automation.GetTime())
+		local GAME_ID = []
+		GAME_ID[1] = time
+		GAME_ID[2] = math.modf(float*1000)[2]
+		print("Time: ",time)
+		Game:SetProperty("GameID", GAME_ID)
+		print("GameID Set as "..tostring(locID).." PlayerID's: "..tostring(Game:GetProperty("GameID")[1]).." starting time")
+	else
+		print("GameID started as "..tostring(Game.GetLocalPlayer()).." PlayerID. With GAME_ID: "..tostring(Game:GetProperty("GameID")[1]).." starting time")
+	end
+end
+
 
 function Initialize()
 	debugcontext = "Start(G)"
