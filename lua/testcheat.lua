@@ -3,10 +3,15 @@ local debugcontext = "testcheat"
 local MP_CHEATS = false
 if GameConfiguration.GetValue('BBGTS_MP_CHEATS') == true then
 	MP_CHEATS = true
-	Debug("MP_CHEATS_ON: true")
+	Debug("MP_CHEATS_ON: true",debugcontext)
 end
 
-local hostID = Network.GetGameHostPlayerID()
+local hostID : number
+if GameConfiguration.IsAnyMultiplayer() then 
+	hostID = Network.GetGameHostPlayerID()
+else
+	hostID = 0
+end
 
 --Debug(tostring(GameConfiguration.GetValue('BBGTS_MP_CHEATS')),debugcontext)
 --Debug(tostring(GameConfiguration.GetValue('BBGTS_DEBUG_LUA')),debugcontext)
@@ -850,9 +855,10 @@ function FindGameID()
 	print("Delta Debug Timer Started")
 	if locID==hostID then
 		local time, float = math.modf(Automation.GetTime())
-		local GAME_ID = []
+		local GAME_ID = {}
 		GAME_ID[1] = time
-		GAME_ID[2] = math.modf(float*1000)[2]
+		newint, newfloat = math.modf(float*1000)
+		GAME_ID[2] = newint/1000
 		print("Time: ",time)
 		Game:SetProperty("GameID", GAME_ID)
 		print("GameID Set as "..tostring(locID).." PlayerID's: "..tostring(Game:GetProperty("GameID")[1]).." starting time")
