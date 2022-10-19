@@ -6,13 +6,13 @@
 		<Created>1657375165</Created>
 		<Teaser>LOC_BBGTS_TEASER</Teaser>
     		<Authors>FlashyFeeds</Authors>
-    		<SpecialThanks>ZhenjaMax, BBG community</SpecialThanks>
+    		<SpecialThanks>ZhenjaMax, D./JackTheNarrator, BBG community</SpecialThanks>
 		<CompatibleVersions>1.2,2.0</CompatibleVersions>
 	</Properties>
 	<LocalizedText>
 		<Text id="LOC_BBGTS_TITLE">
-			<en_US>BBGTS 1.0.1</en_US>
-			<fr_FR>BBGTS 1.0.1</fr_FR>
+			<en_US>BBGTS 1.0.2</en_US>
+			<fr_FR>BBGTS 1.0.2</fr_FR>
 		</Text>
 		
 		<Text id="LOC_BBGTS_TEASER">
@@ -203,8 +203,8 @@
 
 	<InGameActions>
 		<AddGameplayScripts id="BBGTS_TestScripts_Script">
-			<File>lua/DebugLuaScripts.lua</File>
 			<File>lua/testcheat.lua</File>
+			<!--<File>lua/DebugLuaScripts.lua</File>-->
 		</AddGameplayScripts>
 		<ImportFiles id="BBGTS_Files">
 			<File>lua/Debug.lua</File>
@@ -386,11 +386,11 @@
 		<File>sql/WaterAqueductDamSuggestiom.sql</File>
 		<File>ui/ProductionPanel_BBG.lua</File>
 		<File>sql/PlanesFix.sql</File>
+		<File>lua/DebugLuaScripts.lua</File>
 	-->
 		<File>sql/EthemenankiSuggestion.sql</File>
 		<File>sql/BBCC.sql</File>
 		<File>lua/Debug.lua</File>
-		<File>lua/DebugLuaScripts.lua</File>
 		<File>lua/testcheat.lua</File>
 		<File>sql/testcheat.sql</File>
 		
