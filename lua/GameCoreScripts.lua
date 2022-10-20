@@ -8,7 +8,10 @@ if GameConfiguration.GetValue('BBGTS_MP_CHEATS') == true then
 end
 
 --======================Test Scripts=============------
+
+--===========Research Listeners=================--
 --======================Game Turn================--
+--GamePlayAction Present
 function OnGameTurnStartedTest(playerID)
 	local debugcontext = "OnGameTurnStartedTest(S)"
 	Debug("Started",debugcontext)
@@ -26,7 +29,6 @@ function OnGameTurnStartedTest(playerID)
 		Debug("Cheat Status Initial State",debugcontext)
 	end
 end
-
 --=======================Spy and Unit Capture/death=====--------
 function OnUnitRetreatedTest(ownerPlayerID, unitID)
 	local debugcontext = "OnUnitRetreatedTest(G)"
@@ -40,6 +42,7 @@ function OnUnitRetreatedTest(ownerPlayerID, unitID)
 	end
 end
 ----==============City Events========---------
+--Gameplay Action Present
 function OnCityBuiltTest(playerID, cityID, iX, iY)
 	local debugcontext = "OnCityBuiltTest(G)"
 	Debug("Started",debugcontext)
@@ -232,6 +235,7 @@ function OnPlayerCommandSetObjectStateTest(playerID, kParameters)
 		--Debug("Error: CheatReceived shouldn't trigger here",debugcontext)
 	--end
 end
+
 --====================Gameplay Cheats============--
 function OnStartAddStats(pPlayer)
 	local debugcontext = "OnStartAddStats(G/S)"
@@ -295,11 +299,11 @@ function Initialize()
 	Debug("GameCoreScripts - Launched",debugcontext)
 	Debug("Adding Listener Events",debugcontext)
 	--=============Game Turn========--
-	GameEvents.OnGameTurnStarted.Add(OnGameTurnStartedTest)
+	GameEvents.OnGameTurnStarted.Add(OnGameTurnStartedTest) --Has GamePlayAction
 	--=============Spy Functions============-----------
 	GameEvents.OnUnitRetreated.Add(OnUnitRetreatedTest)
 	--=============City Events Functions=============----------
-	GameEvents.CityBuilt.Add(OnCityBuiltTest)
+	GameEvents.CityBuilt.Add(OnCityBuiltTest)  --Has GamePlayAction
 	GameEvents.CityConquered.Add(OnCityConqueredTest)
 	--=============District Events===========-----------
 	GameEvents.OnDistrictConstructed.Add(OnDistrictConstructedTest)

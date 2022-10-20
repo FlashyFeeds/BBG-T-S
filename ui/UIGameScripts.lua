@@ -1,7 +1,7 @@
 include "MPMAPI_core"
 local debugcontext = "UIGameScripts"
 print("Started",debugcontext)
-
+--===========Research Listeners=================--
 ----=========Units(incl Spy): Add Remove Capture==========----
 function OnUnitCapturedTest(currentUnitOwner, unitID, owningPlayer, capturingPlayer)
 	local debugcontext = "OnUnitCapturedTest(L)"
@@ -638,7 +638,36 @@ end
 function OnPlayerTurnDeactivatedTest(playerID)
 	local debugcontext="OnPlayerTurnDeactivatedTest(L)"
 	Debug("Turn deactivated for playerID: "..tostring(playerID),debugcontext)
-end	
+end
+
+--===============Techs and Civics==============---
+function OnTechBoostTriggeredTest(playerID, techID, iUnknownA, iUnknownB)
+	local debugcontext = "OnTechBoostTriggeredTest(L)"
+	local playerCiv = PlayerConfigurations[playerID]:GetCivilizationTypeName()
+	local techName = GameInfo.Technologies[techID].TechnologyType
+	Debug(playerCiv.." with ID: "..tostring(playerID).." Boosted Tech: "..techName.." iUnknownA: "..tostring(iUnknownA).." iUnknownB:"..tostring(iUnknownB), debugcontext)
+end
+
+function OnResearchCompletedTest(playerID, techID, bCancelled)
+	local debugcontext = "OnResearchCompletedTest(L)"
+	local playerCiv = PlayerConfigurations[playerID]:GetCivilizationTypeName()
+	local techName = GameInfo.Technologies[techID].TechnologyType
+	Debug(playerCiv.." with ID: "..tostring(playerID).." Finished Tech: "..techName.." bCancelled: "..tostring(bCancelled),debugcontext)
+end
+
+function OnCivicBoostTriggeredTest(playerID, civicID, iUnknownA, iUnknownB)
+	local debugcontext = "OnCivicBoostTriggeredTest(L)"
+	local playerCiv = PlayerConfigurations[playerID]:GetCivilizationTypeName()
+	local civicName = GameInfo.Civics[civicID].CivicType
+	Debug(playerCiv.." with ID: "..tostring(playerID).." Boosted Civic: "..civicName.." iUnknownA: "..tostring(iUnknownA).." iUnknownB:"..tostring(iUnknownB), debugcontext)
+end
+
+function OnCivicCompletedTest(playerID, civicID, bCancelled)
+	local debugcontext = "OnCivicCompletedTest(L)"
+	local playerCiv = PlayerConfigurations[playerID]:GetCivilizationTypeName()
+	local civicName = GameInfo.Civics[civicID].CivicType
+	Debug(playerCiv.." with ID: "..tostring(playerID).." Finished Civic: "..civicName.." bCancelled: "..tostring(bCancelled),debugcontext)
+end
 --=========Event Actions for Gameplay==========---
 function GameID()
 	local debugcontext = "GameID(LS)"
@@ -684,7 +713,9 @@ end
 
 --===========Scripts That Will Affect GamePlay========
 function Initialize()
+	--===========Events With Gameplay Effects===============--
 	Events.LocalPlayerTurnBegin.Add(GameID)
+	--===========Research Listeners=================--
 	--===========Local Player Turn stuff==============
 	Events.LocalPlayerTurnBegin.Add(OnLocalPlayerTurnBeginTest)
 	Events.LocalPlayerTurnEnd.Add(OnLocalPlayerTurnEndTest)
@@ -756,6 +787,11 @@ function Initialize()
 	Events.InfluenceGiven.Add(OnInfluenceGivenTest)
 	Events.DiplomacyDeclareWar.Add(OnDiplomacyDeclareWarTest)
 	Events.DiplomacyRelationshipChanged.Add(OnDiplomacyRelationshipChangedTest)
+	--===============Techs and Civics==============---
+	Events.TechBoostTriggered.Add(OnTechBoostTriggeredTest)
+	Events.ResearchCompleted.Add(OnResearchCompletedTest)
+	Events.CivicBoostTriggered.Add(OnCivicBoostTriggeredTest)
+	Events.CivicCompleted.Add(OnCivicCompletedTest)
 end
 
 Initialize()
