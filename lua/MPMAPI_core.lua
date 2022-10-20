@@ -87,7 +87,7 @@ function OnPlayerCommandSetObjectStateHandler(ePlayer : number, params : table)
 	end
 
 	local str = BuildRecursiveDataString(params)
-	Debug("Value Type: "..type(params.value),debugcontext)
+	--Debug("Value Type: "..type(params.value),debugcontext)
 	Debug("PlayerID: "..tostring(ePlayer).." SetParameterTable: "..tostring(str),debugcontext)
 	if params.propertyName == "GameID" then
 		Debug("GameID started as "..tostring(ePlayer).." PlayerID. With GAME_ID: "..tostring(params.value[1]).." starting time",debugcontext)
