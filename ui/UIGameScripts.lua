@@ -1,5 +1,5 @@
 include "MPMAPI_core"
-debugcontext = "UIGameScripts"
+local debugcontext = "UIGameScripts"
 print("Started",debugcontext)
 
 ----=========Units(incl Spy): Add Remove Capture==========----
@@ -76,7 +76,7 @@ function OnUnitKilledTest(currentUnitOwner, unitID)
 end
 
 function OnUnitRemovedFromMapTest(playerID, unitID)
-	debugcontext = "OnUnitRemovedFromMapTest(L)"
+	local debugcontext = "OnUnitRemovedFromMapTest(L)"
 	Debug("Started",debugcontext)
 	local pPlayer = Players[playerID]
 	local playerCiv = PlayerConfigurations[playerID]:GetCivilizationTypeName()
@@ -103,7 +103,7 @@ end
 
 --===========City Events========------
 function OnCityLiberatedTest(playerID, cityID)
-	debugcontext = "OnCityLiberatedTest(L)"
+	local debugcontext = "OnCityLiberatedTest(L)"
 	Debug("Started")
 	Debug("playerID: "..tostring(playerID).." Liberated cityID: "..tostring(cityID))
 end
@@ -187,7 +187,7 @@ function OnCityProjectCompletedTest(playerID, cityID, projectID, buildingID, iX,
 end
 
 function OnCityMadePurchaseTest(playerID, cityID, iX, iY, purchaseType, objectType)
-	debugcontext = "OnCityMadePurchaseTest(L)"
+	local debugcontext = "OnCityMadePurchaseTest(L)"
 	Debug("Started", debugcontext)
 	local pCity = CityManager.GetCity(playerID, cityID)
 	local pX = pCity:GetX()
@@ -200,7 +200,7 @@ end
 
 --====================Improvement Events================------------
 function OnImprovementActivatedTest(iX,iY,playerID, unitID, improvementType, improvementID,activationType)
-	debugcontext = "OnImprovementActivatedTest(L)"
+	local debugcontext = "OnImprovementActivatedTest(L)"
 	Debug("Started",debugcontext)
 	local improvementName = GameInfo.Improvements[improvementType].ImprovementType
 	local pUnit = UnitManager.GetUnit(playerID,unitID)
@@ -213,21 +213,21 @@ function OnImprovementActivatedTest(iX,iY,playerID, unitID, improvementType, imp
 end
 
 function OnImprovementAddedToMapTest(iX,iY,improvementType,playerID,resource, isPillaged,isWorked)
-	debugcontext = "OnImprovementAddedToMapTest(L)"
+	local debugcontext = "OnImprovementAddedToMapTest(L)"
 	Debug("Started",debugcontext)
 	local improvementName = GameInfo.Improvements[improvementType].ImprovementType
 	Debug(improvementName.." by PlayerID: "..tostring(playerID).." at X,Y: "..tostring(iX)..","..tostring(iY).." resource: "..tostring(resource).." isPillaged: "..tostring(isPillaged).." isWorked: "..tostring(isWorked),debugcontext)
 end
 
 function OnImprovementChangedTest(iX,iY,improvementType,playerID,resource, isPillaged,isWorked)
-	debugcontext = "OnImprovementChangedTest(L)"
+	local debugcontext = "OnImprovementChangedTest(L)"
 	Debug("Started",debugcontext)
 	local improvementName = GameInfo.Improvements[improvementType].ImprovementType
 	Debug(improvementName.." by PlayerID: "..tostring(playerID).." at X,Y: "..tostring(iX)..","..tostring(iY).." resource: "..tostring(resource).." isPillaged: "..tostring(isPillaged).." isWorked: "..tostring(isWorked),debugcontext)
 end
 
 function OnImprovementRemovedFromMapTest(iX,iY, ownerID)
-	debugcontext = "OnImprovementRemovedFromMapTest(L)"
+	local debugcontext = "OnImprovementRemovedFromMapTest(L)"
 	Debug("Started",debugcontext)
 	Debug("Improvement at X,Y: "..tostring(iX)..","..tostring(iY).." ownerID: "..tostring(ownerID).." Removed",debugcontext)
 end
@@ -313,55 +313,55 @@ end
 
 --============Operations and commands======--
 function OnUnitOperationAddedTest(playerID, unitID, iUnknown, hOperation)
-	debugcontext = "OnUnitOperationAddedTest(L)"
+	local debugcontext = "OnUnitOperationAddedTest(L)"
 	Debug("Started",debugcontext)
 	Debug("PlayerID: "..tostring(playerID).." unitID: "..tostring(unitID).." iUnknown: "..tostring(iUnknown).." hOperation: "..tostring(hOperation),debugcontext)
 end
 
 function OnUnitOperationDeactivatedTest(playerID, unitID, hOperation, iData)
-	debugcontext = "OnUnitOperationDeactivatedTest(L)"
+	local debugcontext = "OnUnitOperationDeactivatedTest(L)"
 	Debug("Started",debugcontext)
 	Debug("PlayerID: "..tostring(playerID).." unitID: "..tostring(unitID).." hOperation: "..tostring(hOperation).." iData: "..tostring(iData),debugcontext)
 end
 
 function OnUnitOperationSegmentCompleteTest(playerID, unitID, hOperation, iData)
-	debugcontext = "OnUnitOperationSegmentCompleteTest(L)"
+	local debugcontext = "OnUnitOperationSegmentCompleteTest(L)"
 	Debug("Started",debugcontext)
 	Debug("PlayerID: "..tostring(playerID).." unitID: "..tostring(unitID).." hOperation: "..tostring(hOperation).." iData: "..tostring(iData),debugcontext)
 end
 
 function OnUnitOperationStartedTest(playerID, unitID, operationID)
-	debugcontext = "OnUnitOperationStartedTest(L)"
+	local debugcontext = "OnUnitOperationStartedTest(L)"
 	Debug("Started",debugcontext)
 	Debug("PlayerID: "..tostring(playerID).." unitID: "..tostring(unitID).." operationID: "..tostring(operationID),debugcontext)
 end
 
 function OnUnitOperationsClearedTest(playerID, unitID, hOperation, iData)
-	debugcontext = "OnUnitOperationsClearedTest(L)"
+	local debugcontext = "OnUnitOperationsClearedTest(L)"
 	Debug("Started",debugcontext)
 	Debug("PlayerID: "..tostring(playerID).." unitID: "..tostring(unitID).." hOperation: "..tostring(hOperation).." iData: "..tostring(iData),debugcontext)
 end
 
 function OnUnitCommandStartedTest(playerID, unitID, hCommand, iData)
-	debugcontext = "OnUnitCommandStartedTest(L)"
+	local debugcontext = "OnUnitCommandStartedTest(L)"
 	Debug("Started",debugcontext)
 	Debug("PlayerID: "..tostring(playerID).." unitID: "..tostring(unitID).." hCommand: "..tostring(hCommand).." iData: "..tostring(iData),debugcontext)
 end
 
 function OnCityCommandStartedTest(playerID, cityID, districtOwnerID, commandType, iData)
-	debugcontext = "OnCityCommandStartedTest(L)"
+	local debugcontext = "OnCityCommandStartedTest(L)"
 	Debug("Started",debugcontext)
 	Debug("PlayerID: "..tostring(playerID).." cityID: "..tostring(cityID).." districtOwnerID: "..tostring(districtOwnerID).." commandType: "..tostring(commandType).." iData: "..tostring(iData),debugcontext)
 end
 
 function OnPlayerOperationCompleteTest()
-	debugcontext = "OnPlayerOperationCompleteTest(L)"
+	local debugcontext = "OnPlayerOperationCompleteTest(L)"
 	Debug("Started",debugcontext)
 end
 
 --========================Government Events================-----
 function OnGovernmentChangedTest(playerID, governmentID)
-	debugcontext = "OnGovernmentChangedTest(L)"
+	local debugcontext = "OnGovernmentChangedTest(L)"
 	Debug("Started",debugcontext)
 	local pPlayer = Players[playerID]
 	local playerCiv = PlayerConfigurations[playerID]:GetCivilizationTypeName()
@@ -370,7 +370,7 @@ function OnGovernmentChangedTest(playerID, governmentID)
 end
 
 function OnGovernmentPolicyChangedTest(playerID, policyID)
-	debugcontext = "OnGovernmentPolicyChangedTest(L)"
+	local debugcontext = "OnGovernmentPolicyChangedTest(L)"
 	Debug("Started",debugcontext)
 	local pPlayer = Players[playerID]
 	local playerCiv = PlayerConfigurations[playerID]:GetCivilizationTypeName()
@@ -379,7 +379,7 @@ function OnGovernmentPolicyChangedTest(playerID, policyID)
 end
 
 function OnGovernmentPolicyObsoletedTest(playerID)
-	debugcontext = "OnGovernmentPolicyObsoletedTest(L)"
+	local debugcontext = "OnGovernmentPolicyObsoletedTest(L)"
 	Debug("Started",debugcontext)
 	local pPlayer = Players[playerID]
 	local playerCiv = PlayerConfigurations[playerID]:GetCivilizationTypeName()
@@ -388,7 +388,7 @@ end
 
 --===================Religion Events============--------
 function OnReligionFoundedTest(playerID, religionID)
-	debugcontext = "OnReligionFoundedTest(L)"
+	local debugcontext = "OnReligionFoundedTest(L)"
 	Debug("Started", debugcontext)
 	local pPlayer = Players[playerID]
 	local playerCiv = PlayerConfigurations[playerID]:GetCivilizationTypeName()
@@ -396,7 +396,7 @@ function OnReligionFoundedTest(playerID, religionID)
 end
 
 function OnBeliefAddedTest(playerID, beliefID)
-	debugcontext = "OnBeliefAddedTest(L)"
+	local debugcontext = "OnBeliefAddedTest(L)"
 	Debug("Started",debugcontext)
 	local pPlayer = Players[playerID]
 	local playerCiv = PlayerConfigurations[playerID]:GetCivilizationTypeName()
@@ -404,7 +404,7 @@ function OnBeliefAddedTest(playerID, beliefID)
 end
 
 function OnCityReligionChangedTest(playerID, cityID, eVisibility, city)
-	debugcontext = "OnCityReligionChangedTest(L)"
+	local debugcontext = "OnCityReligionChangedTest(L)"
 	Debug("Started",debugcontext)
 	local pCity = CityManager.GetCity(playerID, cityID)
 	local cityName : string
@@ -418,7 +418,7 @@ function OnCityReligionChangedTest(playerID, cityID, eVisibility, city)
 end
 
 function OnCityReligionFollowersChangedTest(playerID, cityID, eVisibility, city)
-	debugcontext = "OnCityReligionFollowersChangedTest(L)"
+	local debugcontext = "OnCityReligionFollowersChangedTest(L)"
 	Debug("Started",debugcontext)
 	local pCity = CityManager.GetCity(playerID, cityID)
 	local cityName : string
@@ -439,14 +439,14 @@ end
 
 --=======================Congress Events ?=========-------------
 function OnDiplomacySessionClosedTest(sessionID)
-	debugcontext = "OnDiplomacySessionClosedTest(L)"
+	local debugcontext = "OnDiplomacySessionClosedTest(L)"
 	Debug("Started",debugcontext)
 	Debug("Diplo Session with ID: "..tostring(sessionID).." closed",debugcontext)
 end
 
 function OnPhaseBeginTest(...)
 	local vars = {...}
-	debugcontext = "OnPhaseBeginTest(L)"
+	local debugcontext = "OnPhaseBeginTest(L)"
 	local str = ""
 	if #vars>0 then
 		for i,var in ipairs(vars) do
@@ -466,7 +466,7 @@ end
 
 function OnPhaseEndTest(...)
 	local vars = {...}
-	debugcontext = "OnPhaseEndTest(L)"
+	local debugcontext = "OnPhaseEndTest(L)"
 	local str = ""
 	if #vars>0 then
 		for i,var in ipairs(vars) do
@@ -486,7 +486,7 @@ end
 
 --======Diplo=====----
 function OnDiplomacyMeetTest(playerID1,playerID2)
-	debugcontext = "OnDiplomacyMeetTest(L)"
+	local debugcontext = "OnDiplomacyMeetTest(L)"
 	Debug("Started",debugcontext)
 	local pPlayer1 = Players[playerID1]
 	local pPlayer1Civ = PlayerConfigurations[playerID1]:GetCivilizationTypeName()
@@ -500,7 +500,7 @@ end
 
 function OnDiplomacyMeetMajorMinorTest(...)
 	local vars = {...}
-	debugcontext = "OnDiplomacyMeetMajorMinorTest(L)"
+	local debugcontext = "OnDiplomacyMeetMajorMinorTest(L)"
 	Debug("Started",debugcontext)
 	local str = ""
 	if #vars>0 then
@@ -515,7 +515,7 @@ end
 
 function OnDiplomacyMeetMajorsTest(...)
 	local vars = {...}
-	debugcontext = "OnDiplomacyMeetMajorsTest(L)"
+	local debugcontext = "OnDiplomacyMeetMajorsTest(L)"
 	Debug("Started",debugcontext)
 	local str = ""
 	if #vars>0 then
@@ -529,7 +529,7 @@ function OnDiplomacyMeetMajorsTest(...)
 end
 
 function OnDiplomacyMakePeaceTest(playerID1, playerID2)
-	debugcontext = "OnDiplomacyMakePeaceTest(L)"
+	local debugcontext = "OnDiplomacyMakePeaceTest(L)"
 	Debug("Started",debugcontext)
 	local pPlayer1 = Players[playerID1]
 	local pPlayer1Civ = PlayerConfigurations[playerID1]:GetCivilizationTypeName()
@@ -541,7 +541,7 @@ function OnDiplomacyMakePeaceTest(playerID1, playerID2)
 end
 
 function OnInfluenceGivenTest(csID, playerID)
-	debugcontext = "OnInfluenceGivenTest(L)"
+	local debugcontext = "OnInfluenceGivenTest(L)"
 	Debug("Started",debugcontext)
 	Debug("csID: "..tostring(playerID).." gave envory to playerID: "..tostring(playerID),debugcontext)
 end
@@ -598,59 +598,54 @@ function OnDiplomacyDeclareWarTest(playerID1, playerID2)
 end
 --===========Local Player Turn stuff==============
 function OnLocalPlayerTurnBeginTest()
-	debugcontext = "OnLocalPlayerTurnBeginTest(L)"
+	local debugcontext = "OnLocalPlayerTurnBeginTest(L)"
 	local locID = Game.GetLocalPlayer()
 	Debug("Turn started for playerID: "..tostring(locID),debugcontext)
 end
 
 function OnLocalPlayerTurnEndTest()
-	debugcontext = "OnLocalPlayerTurnEndTest(L)"
+	local debugcontext = "OnLocalPlayerTurnEndTest(L)"
 	local locID = Game.GetLocalPlayer()
 	Debug("Turn Ended for playerID: "..tostring(locID),debugcontext)
 end
 
 function OnLocalPlayerTurnUnreadyTest()
-	debugcontext = "OnLocalPlayerTurnUnreadyTest(L)"
+	local debugcontext = "OnLocalPlayerTurnUnreadyTest(L)"
 	local locID = Game.GetLocalPlayer()
 	Debug("Turn Unready for playerID: "..tostring(locID),debugcontext)
 end
 
 function OnRemotePlayerTurnBeginTest()
-	debugcontext = "OnRemotePlayerTurnBeginTest(L)"
+	local debugcontext = "OnRemotePlayerTurnBeginTest(L)"
 	Debug("Started",debugcontext)
 end
 
 function OnRemotePlayerTurnEndTest()
-	debugcontext = "OnRemotePlayerTurnEndTest(L)"
+	local debugcontext = "OnRemotePlayerTurnEndTest(L)"
 	Debug("Started",debugcontext)
 end
 
 function OnRemotePlayerTurnUnreadyTest()
-	debugcontext = "OnRemotePlayerTurnUnreadyTest(L)"
+	local debugcontext = "OnRemotePlayerTurnUnreadyTest(L)"
 	Debug("Started",debugcontext)
 end
 
 function OnPlayerTurnActivatedTest(playerID, bIsFirstTime)
-	debugcontext="OnPlayerTurnActivatedTest(L)"
+	local debugcontext="OnPlayerTurnActivatedTest(L)"
 	Debug("Turn Activated for playerID: "..tostring(playerID).." bIsFirstTime: "..tostring(bIsFirstTime),debugcontext)
 end
 
 function OnPlayerTurnDeactivatedTest(playerID)
-	debugcontext="OnPlayerTurnDeactivatedTest(L)"
+	local debugcontext="OnPlayerTurnDeactivatedTest(L)"
 	Debug("Turn deactivated for playerID: "..tostring(playerID),debugcontext)
 end	
 --=========Event Actions for Gameplay==========---
 function GameID()
-	debugcontext = "GameID(LS)"
+	local debugcontext = "GameID(LS)"
 	local currentTurn = Game.GetCurrentGameTurn()
 	local startTurn = GameConfiguration.GetStartTurn()
 	local GAME_ID = GetObjectState(Game,"GameID")
 	local pDiplo = Players[0]:GetDiplomacy()
-	print(pDiplo:HasMet(1))
-	print(pDiplo:IsAtWarWith(1))
-	print(pDiplo:HasOpenBordersFrom(1))
-	print(pDiplo:HasDelegationAt(1))
-	print(pDiplo:HasEmbassyAt(1))
 	if currentTurn == startTurn and GAME_ID==nil then
 		FindGameID()
 	elseif GAME_ID~=nil then
@@ -681,9 +676,9 @@ function FindGameID()
 		GAME_ID[1] = time
 		newint, newfloat = math.modf(float*1000)
 		GAME_ID[2] = newint/1000
-		Debug("Time: "..tostring(time),debugcontext)
+		--Debug("Time: "..tostring(time),debugcontext)
 		SetObjectState(Game,"GameID", GAME_ID)
-		Debug("GameID Set as "..tostring(locID).." PlayerID's: "..tostring(GAME_ID[1]).." starting time",debugcontext)
+		--Debug("GameID Set as "..tostring(locID).." PlayerID's: "..tostring(GAME_ID[1]).." starting time",debugcontext)
 	end
 end
 

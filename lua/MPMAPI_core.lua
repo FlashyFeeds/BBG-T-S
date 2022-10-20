@@ -21,7 +21,7 @@ end
 
 -- ===========================================================================
 function SetObjectState(pObject : object, sPropertyName : string, value)
-	debugcontext = "SetObjectState(CS)"
+	local debugcontext = "SetObjectState(CS)"
 	--print("SetObjectState(CS): Started")
 	if (sPropertyName == nil) then
 		return nil;
@@ -47,7 +47,12 @@ function SetObjectState(pObject : object, sPropertyName : string, value)
 		local kParameters:table = {};
 		kParameters.propertyName = sPropertyName;
 		kParameters.value = value;
-		kParameters.objectID = pObject:GetComponentID();
+		if pObject == Game then
+			kParameters.objectID = "Game"
+		else
+			kParameters.objectID = pObject:GetComponentID()
+		end
+		print("Attempting to index object: "..tostring(pObject).." Result: "..tostring(kParameters.objectID))
 		-- Send this GameEvent when processing the operation
 		kParameters.OnStart = "OnPlayerCommandSetObjectState";
 
@@ -55,6 +60,7 @@ function SetObjectState(pObject : object, sPropertyName : string, value)
 		print("SetObjectState(CS): OnPlayerCommandSetObjectState GameEvent sent to GamePlayScript")
 	else
 		if (pObject.SetProperty ~= nil) then
+			print("GameCore Set: "..tostring(pObject))
 			pObject:SetProperty(sPropertyName, value);
 		end
 	end
@@ -62,12 +68,37 @@ end
 
 -- ===========================================================================
 function OnPlayerCommandSetObjectStateHandler(ePlayer : number, params : table)
-	--debugcontext = "OnPlayerCommandSetObjectStateHandler(G)"
+	local debugcontext = "OnPlayerCommandSetObjectStateHandler(G)"
 	--print("OnPlayerCommandSetObjectStateHandler(G): Started")
-	local pObject = Game.GetObjectFromComponentID(params.objectID);
-
+	local pObject = nil
+	if params.objectID == "Game" then
+		pObject = Game
+	else
+		pObject= Game.GetObjectFromComponentID(params.objectID)
+	end
+	if pObject == Game then
+		print("Fire")
+	end
+	print("Attempting to UI set: "..tostring(params.objectID))
 	if pObject ~= nil then
 		SetObjectState(pObject, params.propertyName, params.value);
+		local val_str = BuildRecursiveDataString(params.value)
+		Debug("Object: "..tostring(pObject).." params.propertyName: "..tostring(params.propertyName).." params.value: "..tostring(val_str),debugcontext)
+	end
+
+	local str = BuildRecursiveDataString(params)
+	Debug("Value Type: "..type(params.value),debugcontext)
+	Debug("PlayerID: "..tostring(ePlayer).." SetParameterTable: "..tostring(str),debugcontext)
+	if params.propertyName == "GameID" then
+		Debug("GameID started as "..tostring(ePlayer).." PlayerID. With GAME_ID: "..tostring(params.value[1]).." starting time",debugcontext)
+		local GAME_ID = GetObjectState(Game,"GameID")
+		if GAME_ID~=nil then
+			print("extra print to confirm:"..tostring(GAME_ID[1]))
+		else
+			print("Weird Bug Investigate")
+		end
+	elseif params.propertyName == "CheatReceived" then
+		Debug("Error: CheatReceived shouldn't trigger here",debugcontext)
 	end
 		
 end
@@ -80,7 +111,7 @@ end
 
 -- ===========================================================================
 function GetObjectState(pObject : object, sPropertyName : string, bCacheCheckOnly : boolean)
-	debugcontext = "GetObjectState(CS)"
+	local debugcontext = "GetObjectState(CS)"
 	--print("GetObjectState(CS): Started")
 	if (sPropertyName == nil) then
 		return nil;
@@ -91,6 +122,7 @@ function GetObjectState(pObject : object, sPropertyName : string, bCacheCheckOnl
 		return nil;
 	end
 
+	--print(tostring(pObject))
 	bCacheCheckOnly = bCacheCheckOnly or false;
 
 	if (USE_CACHE == true) then
@@ -108,14 +140,18 @@ function GetObjectState(pObject : object, sPropertyName : string, bCacheCheckOnl
 			end
 		end
 	else
-		return pObject:GetProperty(sPropertyName);
+		if (pObject ~= Game) then
+			return pObject:GetProperty(sPropertyName)
+		elseif (pObject == Game) then
+			return Game:GetProperty(sPropertyName)
+		end
 	end
 end
 
 -- ===========================================================================
 -- Forces a call to gamecore and cache update.
 function RefreshObjectState(pObject : object, sPropertyName : string)
-	debugcontext = "GetObjectState(CS)"
+	local debugcontext = "GetObjectState(CS)"
 	--print("GetObjectState(CS): Started")
 	if (sPropertyName == nil) then
 		return nil;
@@ -124,7 +160,7 @@ function RefreshObjectState(pObject : object, sPropertyName : string)
 	if (pObject.GetProperty == nil) then
 		return nil;
 	end	
-
+	
 	local propResult = pObject:GetProperty(sPropertyName);
 
 	if (g_ObjectStateCache[pObject] == nil) then
@@ -133,4 +169,20 @@ function RefreshObjectState(pObject : object, sPropertyName : string)
 
 	g_ObjectStateCache[pObject][sPropertyName] = propResult;
 	return propResult;
+end
+
+function BuildRecursiveDataString(data: table)
+	local str: string = ""
+	for k,v in pairs(data) do
+		if type(v)=="table" then
+			--print("BuildRecursiveDataString: Table Detected")
+			local deeper_data = v
+			local new_string = BuildRecursiveDataString(deeper_data)
+			--print("NewString ="..new_string)
+			str = "table: "..new_string.."; "
+		else
+			str = str..tostring(k)..": "..tostring(v).." "
+		end
+	end
+	return str
 end

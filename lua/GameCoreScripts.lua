@@ -10,7 +10,7 @@ end
 --======================Test Scripts=============------
 --======================Game Turn================--
 function OnGameTurnStartedTest(playerID)
-	debugcontext = "OnGameTurnStartedTest(S)"
+	local debugcontext = "OnGameTurnStartedTest(S)"
 	Debug("Started",debugcontext)
 	local currentTurn = Game.GetCurrentGameTurn()
 	local startTurn = GameConfiguration.GetStartTurn()
@@ -165,7 +165,7 @@ function  OnDiploSurpriseDeclareWarTest(playerID1, playerID2)
 end
 
 function OnPlayerGaveInfluenceTokenTest(majorID, minorID, iAmount)
-	debugcontext = "OnPlayerGaveInfluenceTokenTest(G)"
+	local debugcontext = "OnPlayerGaveInfluenceTokenTest(G)"
 	Debug("Started",debugcontext)
 	local pPlayerMaj = Players[majorID]
 	local pPlayerMajCiv = PlayerConfigurations[majorID]:GetCivilizationTypeName()
@@ -189,7 +189,7 @@ function OnCheckFriendAllyTest(playerID1, kParameters)
 end
 --===================Religion Events============--------
 function OnNewMajorityReligionTest(...)
-	debugcontext = "OnNewMajorityReligionTest(G)"
+	local debugcontext = "OnNewMajorityReligionTest(G)"
 	Debug("Started",debugcontext)
 	vars = {...}
 	local str = ""
@@ -208,7 +208,7 @@ function OnNewMajorityReligionTest(...)
 end
 --========================Government Events================-----
 function OnPolicyChangedTest(playerID, policyID, bEnacted)
-	debugcontext = "OnPolicyChangedTest(G)"
+	local debugcontext = "OnPolicyChangedTest(G)"
 	Debug("Started",debugcontext)
 	local pPlayer = Players[playerID]
 	local playerCiv = PlayerConfigurations[playerID]:GetCivilizationTypeName()
@@ -217,15 +217,20 @@ function OnPolicyChangedTest(playerID, policyID, bEnacted)
 end
 --===============Commands and Operations=========----
 function OnPlayerCommandSetObjectStateTest(playerID, kParameters)
-	debugcontext = "OnPlayerCommandSetObjectStateTest(G)"
-	--Debug("Started",debugcontext)
-	Debug("PlayerID: "..tostring(playerID).." SetParameterTable: "..tostring(tParameters),debugcontext)
-	if kParameters.propertyName == "GameID" then
-		Debug("GameID started as "..tostring(Game.GetLocalPlayer()).." PlayerID. With GAME_ID: "..tostring(kParameters.value[1]).." starting time",debugcontext)
-		print("extra print to confirm:", Game:GetProperty("GameID"))
-	elseif kParameters.propertyName == "CheatReceived" then
-		Debug("Error: CheatReceived shouldn't trigger here",debugcontext)
-	end
+	local debugcontext = "OnPlayerCommandSetObjectStateTest(G)"
+	local str = BuildRecursiveDataString(kParameters)
+	Debug("PlayerID: "..tostring(playerID).." SetParameterTable: "..tostring(str),debugcontext)
+	--if kParameters.propertyName == "GameID" then
+		--Debug("GameID started as "..tostring(playerID).." PlayerID. With GAME_ID: "..tostring(kParameters.value[1]).." starting time",debugcontext)
+		--local GAME_ID = GetObjectState(Game,"GameID")
+		--if GAME_ID~=nil then
+			--print("extra print to confirm:"..tostring(GAME_ID[1]))
+		--else
+			--print("Weird Bug Investigate")
+		--end
+	--elseif kParameters.propertyName == "CheatReceived" then
+		--Debug("Error: CheatReceived shouldn't trigger here",debugcontext)
+	--end
 end
 --====================Gameplay Cheats============--
 function OnStartAddStats(pPlayer)
@@ -270,7 +275,7 @@ function OnStartAddStats(pPlayer)
 end
 
 function GiveVisibilityToAllMajors(playerID)
-	debugcontext = "GiveVisibilityToAllMajors(G/S)"
+	local debugcontext = "GiveVisibilityToAllMajors(G/S)"
 	Debug("Started",debugcontext)
 	local pVis = PlayersVisibility[playerID]
 	Debug("visibility table retrieved for PlayerID:"..tostring(playerID),debugcontext)
@@ -286,7 +291,7 @@ function GiveVisibilityToAllMajors(playerID)
 end
 
 function Initialize()
-	debugcontext = "Start(G)"
+	local debugcontext = "Start(G)"
 	Debug("GameCoreScripts - Launched",debugcontext)
 	Debug("Adding Listener Events",debugcontext)
 	--=============Game Turn========--
