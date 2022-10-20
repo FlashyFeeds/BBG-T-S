@@ -203,12 +203,32 @@
 
 	<InGameActions>
 		<AddGameplayScripts id="BBGTS_TestScripts_Script">
-			<File>lua/testcheat.lua</File>
+			<File>lua/GameCoreScripts.lua</File>
 			<!--<File>lua/DebugLuaScripts.lua</File>-->
 		</AddGameplayScripts>
-		<ImportFiles id="BBGTS_Files">
-			<File>lua/Debug.lua</File>
+		
+		<ImportFiles id="MPMAPI_InGame">
+			<Properties>
+				<LoadOrder>1</LoadOrder>
+			</Properties>
+			<File>lua/MPMAPI_core.lua</File>
 		</ImportFiles>
+
+		<ImportFiles id="BBGTS_UIscript">
+			<Properties>
+				<LoadOrder>10</LoadOrder>
+			</Properties>
+			<File>ui/UIGameScripts.lua</File>
+		</ImportFiles>
+
+		<AddUserInterfaces id="BBGTS_UI">
+			<Properties>
+				<Context>InGame</Context>
+				<LoadOrder>11</LoadOrder>
+			</Properties>
+		<File>ui/UIGameScripts.xml</File>
+		</AddUserInterfaces>
+					 	
 		<!--
 		<ReplaceUIScript id="productionpanel_bbg">
 			<Criteria>BBGTS_ProductionPanel_BBG_Expansion2</Criteria>
@@ -390,9 +410,10 @@
 	-->
 		<File>sql/EthemenankiSuggestion.sql</File>
 		<File>sql/BBCC.sql</File>
-		<File>lua/Debug.lua</File>
-		<File>lua/testcheat.lua</File>
+		<File>lua/MPMAPI_core.lua</File>
+		<File>lua/GameCoreScripts.lua</File>
+		<File>ui/UIGameScripts.lua</File>
 		<File>sql/testcheat.sql</File>
-		
+		<File>ui/UIGameScripts.xml</File>
 	</Files>
 </Mod>
