@@ -171,6 +171,7 @@ function RefreshObjectState(pObject : object, sPropertyName : string)
 	return propResult;
 end
 
+-- ===================Support=================================================
 function BuildRecursiveDataString(data: table)
 	local str: string = ""
 	for k,v in pairs(data) do
