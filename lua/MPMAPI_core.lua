@@ -55,9 +55,19 @@ function SetObjectState(pObject : object, sPropertyName : string, value)
 		print("Attempting to index object: "..tostring(pObject).." Result: "..tostring(kParameters.objectID))
 		-- Send this GameEvent when processing the operation
 		kParameters.OnStart = "OnPlayerCommandSetObjectState";
-
-		UI.RequestPlayerOperation(Game.GetLocalPlayer(), PlayerOperations.EXECUTE_SCRIPT, kParameters);
-		print("SetObjectState(CS): OnPlayerCommandSetObjectState GameEvent sent to GamePlayScript")
+		
+		local hostID = 0
+		if GameConfiguration.IsNetworkMultiplayer() then
+			hostID = Network.GetGameHostPlayerID()
+		end
+		local localPlayerID = Game.GetLocalPlayer()
+		local bIsTurnActive = Players[localPlayerID]:IsTurnActive()
+		print("SetObjectState(CS): OnPlayerCommandSetObjectState GameEvent sending to GamePlayScript")
+		if bIsTurnActive then
+			UI.RequestPlayerOperation(localPlayerID, PlayerOperations.EXECUTE_SCRIPT, kParameters);
+		else
+			ExposedMembers.LuaEvents.OffTurnSetObjectState(hostID, params)
+		end
 	else
 		if (pObject.SetProperty ~= nil) then
 			print("GameCore Set: "..tostring(pObject))
@@ -97,16 +107,20 @@ function OnPlayerCommandSetObjectStateHandler(ePlayer : number, params : table)
 		else
 			print("Weird Bug Investigate")
 		end
-	elseif params.propertyName == "CheatReceived" then
-		Debug("Error: CheatReceived shouldn't trigger here",debugcontext)
-	end
-		
+	end	
 end
 
 -- This file gets includes on both the UI and GameCore side, we only want to handle the event on the Game Core side.
 if UI == nil then
 	print("MPMAPI(C): OnPlayerCommandSetObjectStateHandler Added")
 	GameEvents.OnPlayerCommandSetObjectState.Add( OnPlayerCommandSetObjectStateHandler );
+
+	function OffTurnSetObjectState(ePlayer: number, params: table)
+		local debugcontext = "OffTurnSetObjectState(G)"
+		GameEvents.OnPlayerCommandSetObjectState.Call(ePlayer, params)
+	end
+
+	ExposedMembers.LuaEvents.Add(OffTurnSetObjectState)
 end
 
 -- ===========================================================================
