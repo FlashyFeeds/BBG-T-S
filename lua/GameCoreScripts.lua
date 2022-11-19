@@ -6,7 +6,7 @@ if GameConfiguration.GetValue('BBGTS_MP_CHEATS') == true then
 	MP_CHEATS = true
 	Debug("MP_CHEATS_FOR_DEBUG_ON: true",debugcontext)
 end
-
+print(where(1))
 --======================Test Scripts=============------
 
 --===========Research Listeners=================--
@@ -17,6 +17,7 @@ function OnGameTurnStartedTest(playerID)
 	Debug("Started",debugcontext)
 	local currentTurn = Game.GetCurrentGameTurn()
 	local startTurn = GameConfiguration.GetStartTurn()
+	print(where(1))
 	if currentTurn == startTurn and MP_CHEATS then
 		local tCheatReceived = {}
 		for i =0,60 do
