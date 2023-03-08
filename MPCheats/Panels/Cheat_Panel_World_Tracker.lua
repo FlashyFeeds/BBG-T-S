@@ -1,5 +1,5 @@
 -- // ----------------------------------------------------------------------------------------------
--- // Author: Sparrow
+-- // Author: Sparrow, Integrated by FlashyFeeds
 -- // DateCreated: 01/24/2019 2:27:04 PM
 -- // ----------------------------------------------------------------------------------------------
 include("Cheat_Menu_Panel_Functions");
@@ -75,28 +75,9 @@ function OnPanelTitleClicked_Base()
 		Controls.ButtonStackMIN:SetHide(false);
 		Controls.ButtonSep:SetHide(false);
 		Controls.CheatButtonDiplo:SetDisabled(true); --keep
-		Controls.CheatMakeFreeCity:SetDisabled(true);
 		Controls.Diplo:SetHide(true); --keep
-		Controls.Loyalty:SetHide(true);
-		Controls.CheatButtonLoyalty:SetDisabled(true);
-		Controls.CheatButtonEra:SetDisabled(true);
-		Controls.CheatButtonEra2:SetDisabled(true);
 		Controls.CheatButtonGov:SetDisabled(true); --keep
-		Controls.CheatResourcesLux:SetDisabled(true);
-		Controls.CheatResourcesStr:SetDisabled(true);
-		Controls.CheatResourcesBonus:SetDisabled(true);
-		Controls.CheatResourcesBonusimg:SetHide(true);
-		Controls.CheatResourcesStrimg:SetHide(true);
-		Controls.CheatResourcesLuximg:SetHide(true);
-		Controls.CheatResourcesLux:SetToolTipString("Disabled - Requires GS DLC");
-		Controls.CheatResourcesStr:SetToolTipString("Disabled - Requires GS DLC");
-		Controls.CheatResourcesBonus:SetToolTipString("Disabled - Requires GS DLC");
-		Controls.CheatButtonEra:SetToolTipString("Disabled - Requires R&F DLC");
-		Controls.CheatButtonEra2:SetToolTipString("Disabled - Requires R&F DLC");
-		Controls.GovPoints:SetToolTipString("Disabled - Requires R&F DLC");
 		Controls.CheatButtonDiplo:SetToolTipString("Disabled - Requires GS DLC"); --keep
-		Controls.CheatButtonLoyalty:SetToolTipString("Disabled - Requires R&F DLC");
-		Controls.CheatMakeFreeCity:SetToolTipString("Disabled - Requires R&F DLC");
 		m_CheatPanelState = 1;
 	else
 		UI.PlaySound("Tech_Tray_Slide_Closed");
@@ -104,7 +85,6 @@ function OnPanelTitleClicked_Base()
 		Controls.ButtonStackMIN:SetHide(true);
 		Controls.ButtonSep:SetHide(true);
 		Controls.Diplo:SetHide(true);--keep
-		Controls.Loyalty:SetHide(true);
 		m_CheatPanelState = 0;
 	end	
 end
@@ -115,20 +95,8 @@ function OnPanelTitleClicked_Expansion1()
 		Controls.ButtonStackMIN:SetHide(false);
 		Controls.ButtonSep:SetHide(false);
 		Controls.CheatButtonDiplo:SetDisabled(true); --keep
-		Controls.lable_plus:SetHide(false);
-		Controls.Lable_minus:SetHide(false);
 		Controls.Diplo:SetHide(true); --keep
-		Controls.CheatResourcesLux:SetDisabled(true);
-		Controls.CheatResourcesStr:SetDisabled(true);
-		Controls.CheatResourcesBonus:SetDisabled(true);
-		Controls.CheatResourcesBonusimg:SetHide(true);
-		Controls.CheatResourcesStrimg:SetHide(true);
-		Controls.CheatResourcesLuximg:SetHide(true);
-		Controls.CheatResourcesLux:SetToolTipString("Disabled - Requires GS DLC");
-		Controls.CheatResourcesStr:SetToolTipString("Disabled - Requires GS DLC");
-		Controls.CheatResourcesBonus:SetToolTipString("Disabled - Requires GS DLC");
 		m_CheatPanelState = 1;
-
 	else
 		UI.PlaySound("Tech_Tray_Slide_Closed");
 		Controls.CheatPanel:SetSizeY(25);
@@ -144,8 +112,6 @@ function OnPanelTitleClicked_Expansion2()
 		Controls.CheatPanel:SetSizeY(235);
 		Controls.ButtonStackMIN:SetHide(false);
 		Controls.ButtonSep:SetHide(false);
-		Controls.lable_plus:SetHide(false);
-		Controls.Lable_minus:SetHide(false);
 		m_CheatPanelState = 1;
 
 	else
