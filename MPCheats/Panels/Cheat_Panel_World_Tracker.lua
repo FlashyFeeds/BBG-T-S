@@ -2,8 +2,8 @@
 -- // Author: Sparrow, Integrated by FlashyFeeds
 -- // DateCreated: 01/24/2019 2:27:04 PM
 -- // ----------------------------------------------------------------------------------------------
-include("Cheat_Menu_Panel_Functions");
-
+include("cheat_menu_panel_functions");
+include("bbgts_debug.lua")
 local m_CheatPanelState:number		= 0;
 
 function AttachPanelToWorldTracker()

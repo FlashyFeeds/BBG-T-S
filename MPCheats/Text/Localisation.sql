@@ -21,7 +21,10 @@ VALUES
 		("LOC_CHEAT_MENU_FAITH",  					"en_US",		"Adds +10000 [ICON_Faith]"),
 		("LOC_CHEAT_MENU_ENVOY",  					"en_US",		"Adds +5 [ICON_Envoy] Envoy"),
 		("LOC_CHEAT_MENU_OBVS",  					"en_US",		"Toggle Map Observer");
-	
+
+INSERT OR REPLACE INTO LocalizedText
+		(Tag, 								Language,	Text)
+VALUES	
 -- Italian --------------------------------------------------------------------------------------------------
 		("LOC_CHEAT_MENU_ABOUT",  					"it_IT",		"Cheat Panel By [Sparrow]"),
 		("LOC_CHEAT_EXPAND_MAX",  					"it_IT",		"Hide Advanced Panel"),
@@ -38,7 +41,9 @@ VALUES
 		("LOC_CHEAT_MENU_FAITH", 					"it_IT", 		"Aggiunge +10000 [ICON_Faith]"),
 		("LOC_CHEAT_MENU_ENVOY", 					"it_IT",		"Aggiunge +5 [ICON_Envoy] Envoy"),
 		("LOC_CHEAT_MENU_OBVS", 					"it_IT", 		"Attiva / disattiva mappa osservatore");
-		
+INSERT OR REPLACE INTO LocalizedText
+		(Tag, 								Language,	Text)
+VALUES		
 -- Chinese (simplified)---------------------------------------------------------------------------------------------------------------
 		("LOC_CHEAT_MENU_ABOUT",  					"zh_Hans_CN",	"Cheat Panel By [Sparrow]"),
 		("LOC_CHEAT_EXPAND_MAX",  					"zh_Hans_CN",	"Hide Advanced Panel"),
@@ -54,6 +59,9 @@ VALUES
 		("LOC_CHEAT_MENU_FAITH",					"zh_Hans_CN",	"加+10000信仰"),
 		("LOC_CHEAT_MENU_ENVOY",					"zh_Hans_CN",	"加+5使者"),
 		("LOC_CHEAT_MENU_OBVS",						"zh_Hans_CN",	"切换地图观察模式");
+INSERT OR REPLACE INTO LocalizedText
+		(Tag, 								Language,	Text)
+VALUES
 -- Japanese ------------------------------------------------------------------------------------------------------------
 		("LOC_CHEAT_MENU_ABOUT",  					"ja_JP",		"Cheat Panel By [Sparrow]"),
 		("LOC_CHEAT_EXPAND_MAX",  					"ja_JP",		"Hide Advanced Panel"),

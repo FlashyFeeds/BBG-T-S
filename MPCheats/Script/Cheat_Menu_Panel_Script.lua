@@ -3,6 +3,7 @@
 -- // DateCreated: 01/24/2019 2:27:04 PM
 -- // ----------------------------------------------------------------------------------------------
 ExposedMembers.LuaEvents = LuaEvents
+include("bbgts_debug.lua")
 local iLocPlayerID;
 local iLocCityID;
 
@@ -11,101 +12,103 @@ local iLocCityID;
 -- // ----------------------------------------------------------------------------------------------
 --set local state
 function OnUIPlayerCityUpdt(tPlayerSelections)
-	print("OnUIPlayerCityUpdt called")
+	Debug("Called", "OnUIPlayerCityUpdt")
 	GameEvents.GameplayPlayerCityUpdt(tPlayerSelections)
 end
 
 function OnGameplayPlayerCityUpdt(tPlayerSelections)
-	print("GameplayPlayerCityUpdt called")
+	Debug("Called", "OnGameplayPlayerCityUpdt")
 	Game.SetProperty("PLAYER_SELECTIONS", tPlayerSelections)
+	Debug("Game Property PLAYER_SELECTIONS set with values")
+	civ6tostring(tPlayerSelections)
 	iLocPlayerID = Game.GetLocalPlayer()
 	iLocCityID = tPlayerSelections[iLocPlayerID]
-	print("Local instnace variables set: iLocPlayerID, iLocCityID", iLocPlayerID, iLocCityID)
+	Debug("Local instnace variables set: iLocPlayerID, iLocCityID: "..tostring(iLocPlayerID)..", "..tostring(iLocCityID), "OnGameplayPlayerCityUpdt")
 end
 --gold
 function OnUIChangeGold(iPlayerID, pNewGold)
-	print("OnUIChangeGold called")
+	Debug("Called", "OnUIChangeGold")
 	GameEvents.GameplayChangeGold.Call(iPlayerID, pNewGold)
 end
 
 function OnGameplayChangeGold(iPlayerID, pNewGold)
-	print("OnGameplayChangeGold called")
+	Debug("Called", "OnGameplayChangeGold")
 	OnChangeGold(iPlayerID, pNewGold)
 end
 function OnChangeGold(iPlayerID, pNewGold)
-	print("OnChangeGold called")
+	Debug("Called", "OnChangeGold")
 	local pPlayer = Players[iPlayerID]
     local pTreasury = pPlayer:GetTreasury()
     pTreasury:ChangeGoldBalance(pNewGold)
-    print("Gold added to", iPlayerID)
+    Debug("Gold added to iPlayerID "..tostring(iPlayerID), "OnChangeGold")
 end
 --faith
 function OnUIChangeFaith(iPlayerID, pNewReligion)
-	print("OnUIChangeFaith called")
+	Debug("Called", "OnUIChangeFaith")
 	GameEvents.GameplayChangeFaith.Call(iPlayerID, pNewReligion)
 end
 
 function OnGameplayChangeFaith(iPlayerID, pNewReligion)
-	print("OnGameplayChangeFaith called")
+	Debug("Called", "OnGameplayChangeFaith")
 	OnChangeFaith(iPlayerID, pNewReligion)
 end
 
 function OnChangeFaith(iPlayerID, pNewReligion)
-	print("OnChangeFaith called")
+	Debug("Called", "OnChangeFaith")
 	local pPlayer = Players[iPlayerID]
     local pReligion = pPlayer:GetReligion()
     pReligion:ChangeFaithBalance(pNewReligion)
-    print("Faith added to iPlayerID", iPlayerID)
+    Debug("Faith added to iPlayerID "..tostring(iPlayerID), "OnChangeFaith")
 end
 --science current
 function OnUICompleteResearch(iPlayerID, pResearchComplete)
-	print("OnUICompleteResearch called")
+	Debug("Called", "OnUICompleteResearch")
 	GameEvents.GameplayCompleteResearch.Call(iPlayerID, pResearchComplete)
 end
 
 function OnGameplayCompleteResearch(iPlayerID, pResearchComplete)
-	print("OnGameplayCompleteResearch called")
+	Debug("Called", "OnGameplayCompleteResearch")
 	OnCompleteResearch(iPlayerID, pResearchComplete)
 end
 
 function OnCompleteResearch(iPlayerID, pResearchComplete)
-	print("OnCompleteResearch called")
+	Debug("Called", "OnCompleteResearch")
     local pPlayer = Players[iPlayerID]
     local pResearch = pPlayer:GetTechs()
     pResearch:ChangeCurrentResearchProgress(pResearchComplete)
-    print("Research Completed for iPlayerID", iPlayerID)
+    Debug("Research Completed for iPlayerID "..tostring(iPlayerID), "OnCompleteResearch")
 end
 --culture current
 function OnUICompleteCivic(iPlayerID, pCivicComplete)
-	print("CompleteCivic called")
+	Debug("Called", "OnUICompleteCivic")
 	GameEvents.GameplayCompleteCivic.Call(iPlayerID, pCivicComplete)
 end
 
 function OnGameplayCompleteCivic(iPlayerID, pCivicComplete)
-	print("OnGameplayCompleteCivic called")
+	Debug("Called", "OnGameplayCompleteCivic")
 	OnCompleteCivic(iPlayerID, pCivicComplete)
 end
 
 function OnCompleteCivic(iPlayerID, pCivicComplete)
-	print("OnCompleteCivic")
+	Debug("Called", "OnCompleteCivic")
     local pPlayer = Players[iPlayerID]
     local pCivics = pPlayer:GetCulture()
     pCivics:ChangeCurrentCulturalProgress(pCivicComplete)
-    print("Civic completed for iPlayerID", iPlayerID)
+    Debug("Civic completed for iPlayerID "..tostring(iPlayerID), "OnCompleteCivic")
 end
 --Production Current
 function OnUICompleteProduction(iPlayerID)
-	print("CompleteProduction called")
+	Debug("Called", "OnUICompleteProduction")
 	GameEvents.GameplayCompleteProduction.Call(iPlayerID)
 end
 
 function OnGameplayCompleteProduction(iPlayerID)
-	print("OnGameplayCompleteProduction called")
+	Debug("Called", "OnGameplayCompleteProduction")
 	OnCompleteProduction(iPlayerID)
 end
 
 function OnCompleteProduction(iPlayerID)
-	print("OnCompleteProduction called")
+	Debug("Called", "OnCompleteProduction")
 	local pPlayer = Players[iPlayerID]
 	local pCity = pPlayer:GetCities():FindID(iLocCityID)
 	if pCity == nil then
@@ -115,87 +118,88 @@ function OnCompleteProduction(iPlayerID)
 	if iLocPlayerID == iPlayerID then
 		pCityBuildQueue:FinishProgress()		
 	end
-	print("Production Completed for iPlayerID in iLocCityID", iPlayerID, iLocCityID)
+	Debug("Production Completed for iPlayerID in iLocCityID: "..tostring(iPlayerID)..", "..tostring(iLocCityID), "OnCompleteProduction")
 end
 --gov titles
 function OnUIChangeGovPoints(iPlayerID, pNewGP)
-	print("ChangeGovernorPoints called")
+	Debug("Called", "OnUIChangeGovernorPoints")
 	GameEvents.GameplayChangeGovPoints.Call(iPlayerID, pNewGP)
 end
 
 function OnGameplayChangeGovPoints(iPlayerID, pNewGP)
-	print("OnGameplayChangeGovPoints called")
+	Debug("Called", "OnGameplayChangeGovPoints")
 	OnChangeGovPoints(iPlayerID, pNewGP)
 end
 
 function OnChangeGovPoints(iPlayerID, pNewGP)
-	print("OnChangeGovPoints called")
+	Debug("Called", "OnChangeGovPoints")
 	local pPlayer = Players[iPlayerID];
 	pPlayer:GetGovernors():ChangeGovernorPoints(pNewGP);
-	print("Gov Titles added to iPlayerID", iPlayerID)
+	Debug("Gov Titles added to iPlayerID "..tostring(iPlayerID), "OnChangeGovPoints")
 end
 --envoys
 function OnUIChangeEnvoy(iPlayerID, pNewEnvoy)
-	print("ChangeEnvoy called")
+	Debug("Called", "OnUIChangeEnvoy")
 	GameEvents.GameplayChangeEnvoy.Call(iPlayerID, pNewEnvoy)
 end
 
 function OnGameplayChangeEnvoy(iPlayerID, pNewEnvoy)
-	print("OnGameplayChangeEnvoy called")
+	Debug("Called", "OnGameplayChangeEnvoy")
 	OnChangeEnvoy(iPlayerID, pNewEnvoy)
 end
 
 function OnChangeEnvoy(iPlayerID, pNewEnvoy)
-	print("OnChangeEnvoy called")
+	Debug("Called", "OnChangeEnvoy")
 	local pPlayer = Players[iPlayerID]
     local pEnvoy = pPlayer:GetInfluence()
     pEnvoy:ChangeTokensToGive(pNewEnvoy)
-    print("Envoys added to iPlayerID", iPlayerID)
+    Debug("Envoys added to iPlayerID "..tostring(iPlayerID), "OnChangeEnvoy")
 end
 --diplo favor
 function OnUIChangeDiplomaticFavor(iPlayerID, pNewFavor)
-	print("ChangeDiplomaticFavor called")
+	Debug("Called", "OnUIChangeDiplomaticFavor")
 	GameEvents.GameplayChangeDiplomaticFavor(iPlayerID, pNewFavor)
 end
 
 function OnGameplayChangeDiplomaticFavor(iPlayerID, pNewFavor)
-	print("OnChangeDiplomaticFavor called")
+	Debug("Called", "OnChangeDiplomaticFavor")
 	OnChangeDiplomaticFavor(iPlayerID, pNewFavor)
 end
 
 function OnChangeDiplomaticFavor(iPlayerID, pNewFavor)
-	print("OnChangeDiplomaticFavor called")
+	Debug("Called", "OnChangeDiplomaticFavor")
 	local pPlayer = Players[iPlayerID]
     if pPlayer:GetDiplomacy().ChangeFavor ~= nil then
 		pPlayer:GetDiplomacy():ChangeFavor(pNewFavor);
 	end
-	print("Diplo Favor added to iPlayerID", iPlayerID)
+	Debug("Diplo Favor added to iPlayerID"..tostring(iPlayerID), "OnChangeDiplomaticFavor")
 end
 --reveal cs and players
 function OnUIRevealAll(iPlayerID)
-	print("RevealAll called")
+	Debug("Called", "OnUIRevealAll")
 	GameEvents.GameplayRevealAll.Call(iPlayerID)
 end
 
 function OnGameplayRevealAll(iPlayerID)
-	print("OnGameplayRevealAll called")
+	Debug("Called", "OnGameplayRevealAll")
 	OnRevealAll(iPlayerID)
 end
 
 function OnRevealAll(iPlayerID)
-	print("OnRevealAll called")
+	Debug("Called", "OnRevealAll")
 	local eObserverID = Game.GetLocalObserver();
 	if (eObserverID == PlayerTypes.OBSERVER) then
 		PlayerManager.SetLocalObserverTo(playerID);
 	else
 		PlayerManager.SetLocalObserverTo(PlayerTypes.OBSERVER);
 	end
-	print("All Players and City-States revealed for playerID", playerID)
+	Debug("All Players and City-States revealed for playerID "..tostring(playerID), "OnRevealAll")
 end
 -- // ----------------------------------------------------------------------------------------------
 -- // Lua Events
 -- // ----------------------------------------------------------------------------------------------
 function Initialize()
+	Debug("Cheat Menu Initialization Started", "Initialize");
 	--if ( not ExposedMembers.MOD_CheatMenu) then ExposedMembers.MOD_CheatMenu = {}; end
 	--set local state values
 
@@ -227,7 +231,7 @@ function Initialize()
 	LuaEvents.UIRevealAll.Add(OnUIRevealAll);
 	GameEvents.GameplayRevealAll.Add(OnGameplayRevealAll)	
 	--ExposedMembers.MOD_CheatMenu_Initialized = true;
-	print( "Cheat Menu Initialization Started" );
+	Debug("Cheat Menu Initialization Finished", "Initialize");
 end
 
 Initialize();

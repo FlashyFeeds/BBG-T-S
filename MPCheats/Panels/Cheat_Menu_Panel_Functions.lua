@@ -11,6 +11,7 @@ include("PopupDialog");
 include("AnimSidePanelSupport");
 --include("Cheat_Menu_CityBannerManager");
 include( "CitySupport" );
+include("bbgts_debug.lua")
 
 local playerID 						= Game.GetLocalPlayer();
 local pPlayer 						= Players[playerID];
@@ -105,9 +106,12 @@ function RefreshActionPanel()
 end
 
 function OnCitySelectionChanged(iPlayerID, iCityID)
+	Debug("Called", "OnCitySelectionChanged")
 	tPlayerSelections = Game.GetProperty("PLAYER_SELECTIONS")
 	tPlayerSelections[iPlayerID] = iCityID
 	UICheatEvents.UIPlayerCityUpdt(tPlayerSelections)
+	Debug("Transmitted Values", "OnCitySelectionChanged")
+	civ6tostring(tPlayerSelections)
 end
 -- // ----------------------------------------------------------------------------------------------
 -- // HOTKEYS

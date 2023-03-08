@@ -43,7 +43,7 @@
 			</ConfigurationValueMatches>
 		</Criteria>
 		
-		<Criteria id="BBGTS_testcheat_Expansion2">
+		<Criteria id="bbgts_mp_cheats">
 			<ConfigurationValueMatches>
 				<Group>Game</Group>
 				<ConfigurationId>BBGTS_MP_CHEATS</ConfigurationId>
@@ -69,27 +69,60 @@
 			<File>config/config.sql</File>
 		</UpdateDatabase>
 		
-		<UpdateText id="BBGTS_TEXTS">
-			<File>lang/Text_EN.xml</File>
+		<UpdateText id="bbgts_config_texts">
+			<File>lang/text_en.xml</File>
 		</UpdateText>
+		<UpdateText id="bbgts_mpcheats_config_texts">
+			<!--<Criteria>bbgts_mp_cheats</Criteria>-->
+			<File>MPCheats/Text/input_config.xml</File>
+			<File>MPCheats/Text/options_text.xml</File>
+		<UpdateText>
 		
 		<UpdateIcons id="BBGTS_Icons FrontEnd">
-			<File>icons/BBGTS_Icons.xml</File>
+			<File>icons/bbgts_icons.xml</File>
 		</UpdateIcons>
 		
 		<ImportFiles id="FrontEnd_Arts_Icons_Import">
 			<Items>
-				<File>icons/BBGTS_Portrait.dds</File>
-				<File>icons/BBGTS_44.dds</File>
-				<File>icons/BBGTS_Icon.dds</File>
+				<File>icons/bbgts_portrait.dds</File>
+				<File>icons/bbgts_44.dds</File>
+				<File>icons/bbgts_icon.dds</File>
 			</Items>
 		</ImportFiles>
 	</FrontEndActions>
 
 	<InGameActions>
+		<!--Debug-->
+		<ImportFiles id="bbgts_debug">
+			<File>debug/bbgts_debug.lua</File>
+		</ImportFiles>
+		<!-- MPCheats -->
+		<AddUserInterfaces id="bbgts_mpcheats_panel">
+			<Properties>
+				<Context>InGame</Context>
+			</Properties>
+			<Criteria>bbgts_mp_cheats</Criteria>
+			<File>MPCheats/Panels/cheat_panel_world_tracker.xml</File>
+		</AddUserInterfaces>
+		<ImportFiles id="bbgts_mpcheats_ui">
+			<Criteria>bbgts_mp_cheats</Criteria>
+			<File>MPCheats/Panels/cheat_menu_panel_functions.lua</File>
+			<File>MPCheats/Panels/cheat_panel_world_tracker.lua</File>
+		</ImportFiles>
+		<AddGameplayScripts id="bbgts_mp_cheats_gameplay_lua">
+			<Criteria>bbgts_mp_cheats</Criteria>
+			<File>MPCheats/Script/cheat_menu_panel_script.lua</File>
+		</AddGameplayScripts>
+		<UpdateText id="bbgts_mpcheats_gameplaytext">
+			<Criteria>bbgts_mp_cheats</Criteria>
+			<File>MPCheats/UI/Text/options_text.xml</File>
+			<File>MPCheats/UI/Text/localisation.sql</File>
+		</UpdateText>
+
+		<!--
 		<AddGameplayScripts id="BBGTS_TestScripts_Script">
 			<File>lua/GameCoreScripts.lua</File>
-			<!--<File>lua/DebugLuaScripts.lua</File>-->
+			<File>lua/DebugLuaScripts.lua</File>
 		</AddGameplayScripts>
 		
 		<ImportFiles id="MPMAPI_InGame">
@@ -105,7 +138,7 @@
 			</Properties>
 			<File>ui/UIGameScripts.lua</File>
 		</ImportFiles>
-
+	-->
         <!--Conditional sql added like so
 		<UpdateDatabase id="BBGTS_BugFix1_Data">
             		<Properties>
@@ -124,12 +157,26 @@
         -->				
 	</InGameActions>		
 	<Files>
+		<!--Basic stuff-->
 		<File>config/config.sql</File>
 		<File>lang/Text_EN.xml</File>
 		<File>icons/BBGTS_Icons.xml</File>
 		<File>icons/BBGTS_44.dds</File>
 		<File>icons/BBGTS_Portrait.dds</File>
 		<File>icons/BBGTS_Background.dds</File>
-		<File></File>
+		<!--debug-->
+		<File>debug/bbgts_debug.lua</File>
+		<!--MP Cheats-->
+		<File>MPCheats/Panels/cheat_panel_world_tracker.xml</File>
+		<File>MPCheats/Panels/cheat_menu_panel_functions.lua</File>
+		<File>MPCheats/Panels/cheat_panel_world_tracker.lua</File>
+		<File>MPCheats/Script/cheat_menu_panel_script.lua</File>
+		<File>MPCheats/UI/Text/options_text.xml</File>
+		<File>MPCheats/UI/Text/localisation.sql</File>
+		<File>MPCheats/Text/input_config.xml</File>
+		<File>MPCheats/Text/options_text.xml</File>
+		<File>MPCheats/UI/Text/options_text.xml</File>
+		<File>MPCheats/UI/Text/localisation.sql</File>
+
 	</Files>
 </Mod>
