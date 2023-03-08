@@ -1,5 +1,5 @@
 -- // ----------------------------------------------------------------------------------------------
--- // Author: Sparrow
+-- // Author: Sparrow, Integrated by FlashyFeeds
 -- // DateCreated: 01/24/2019 2:27:04 PM
 -- // ----------------------------------------------------------------------------------------------
 include("Civ6Common");
@@ -18,7 +18,7 @@ local pEnvoy 						= pPlayer:GetInfluence();
 local pVis 							= PlayersVisibility[playerID];
 local pNewGP 						= 1;
 local pNewEnvoy 					= 5;
-local pNewReligion 					= 1000;
+local pNewReligion 					= 10000;
 local pNewFavor						= 100;
 local pNewPopulation				= 1;
 local m_hideCheatPanel				= false;

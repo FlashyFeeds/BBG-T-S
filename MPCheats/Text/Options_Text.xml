@@ -6,13 +6,10 @@
 <GameData>
 	<LocalizedText>	
 		<Row Tag="LOC_OPTIONS_FAITH" Language="en_US">
-			<Text>Add +1000 Faith</Text>
+			<Text>Add +10000 Faith</Text>
 		</Row>
 		<Row Tag="LOC_OPTIONS_GOLD" Language="en_US">
-			<Text>Add +1000 Gold</Text>
-		</Row>
-		<Row Tag="LOC_OPTIONS_GOLDMORE" Language="en_US">
-			<Text>Add +100,000 Gold</Text>
+			<Text>Add +10000 Gold</Text>
 		</Row>
 		<Row Tag="LOC_OPTIONS_PRODUCTION" Language="en_US">
 			<Text>Complete Production</Text>
@@ -34,33 +31,6 @@
 		</Row>
 		<Row Tag="LOC_OPTIONS_MENU" Language="en_US">
 			<Text>Toggle Cheat Panel</Text>
-		</Row>
-		<Row Tag="LOC_OPTIONS_MOV" Language="en_US">
-			<Text>Restore Unit Movement</Text>
-		</Row>
-		<Row Tag="LOC_OPTIONS_5MOV" Language="en_US">
-			<Text>Add +5 to Unit Movement</Text>
-		</Row>
-		<Row Tag="LOC_OPTIONS_HP" Language="en_US">
-			<Text>Restore Unit Health</Text>
-		</Row>
-		<Row Tag="LOC_OPTIONS_XP" Language="en_US">
-			<Text>Promote Unit</Text>
-		</Row>
-		<Row Tag="LOC_OPTIONS_DUPE" Language="en_US">
-			<Text>Duplicate Unit</Text>
-		</Row>
-		<Row Tag="LOC_OPTIONS_POP" Language="en_US">
-			<Text>Add Population</Text>
-		</Row>
-		<Row Tag="LOC_OPTIONS_LOYALTY" Language="en_US">
-			<Text>Change Loyalty</Text>
-		</Row>
-		<Row Tag="LOC_OPTIONS_ALL_TECH" Language="en_US">
-			<Text>Complete All Research</Text>
-		</Row>
-		<Row Tag="LOC_OPTIONS_ALL_CIVIC" Language="en_US">
-			<Text>Complete All Civic</Text>
 		</Row>
 		<Row Tag="LOC_OPTIONS_GOVPOINTS" Language="en_US">
 			<Text>Adds +1 Governor Title Point</Text>
