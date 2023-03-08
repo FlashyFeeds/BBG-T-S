@@ -7,7 +7,7 @@ include("InstanceManager");
 include("SupportFunctions");
 include("PopupDialog");
 include("AnimSidePanelSupport");
-include("Cheat_Menu_CityBannerManager");
+--include("Cheat_Menu_CityBannerManager");
 include( "CitySupport" );
 
 local playerID 						= Game.GetLocalPlayer();
@@ -29,61 +29,16 @@ local m_IsAttached:boolean			= false;
 -- // MENU BUTTON FUNCTIONS
 -- // ----------------------------------------------------------------------------------------------
 
-function ChangeLUXURYResources(playerID)
- 	if pPlayer:IsHuman() then		
-		ExposedMembers.MOD_CheatMenu.ChangeLUXURYResources(playerID);
-	end
-end
-function ChangeSTRATEGICResources(playerID)
- 	if pPlayer:IsHuman() then		
-		ExposedMembers.MOD_CheatMenu.ChangeSTRATEGICResources(playerID);
-	end
-end
-function ChangeBONUSResources(playerID)
- 	if pPlayer:IsHuman() then		
-		ExposedMembers.MOD_CheatMenu.ChangeBONUSResources(playerID);
-	end
-end
-function ChangeEraScore()
-	if pPlayer:IsHuman() then
-        ExposedMembers.MOD_CheatMenu.ChangeEraScore(playerID);
-    end
-	RefreshActionPanel();
-end
-function ChangeEraScoreBack()
-	if pPlayer:IsHuman() then
-        ExposedMembers.MOD_CheatMenu.ChangeEraScoreBack(playerID);
-    end
-	RefreshActionPanel();
-end
 function ChangeGold()
-	local pNewGold = 1000
+	local pNewGold = 10000
 	if pPlayer:IsHuman() then
 		ExposedMembers.MOD_CheatMenu.ChangeGold(playerID, pNewGold); 
-    end
-end
-function ChangeGoldMore()
-	local pNewGold = 100000;
-	if pPlayer:IsHuman() then
-        ExposedMembers.MOD_CheatMenu.ChangeGold(playerID, pNewGold); 
     end
 end
 function CompleteProduction()
 	if pPlayer:IsHuman() then
 		ExposedMembers.MOD_CheatMenu.CompleteProduction(playerID);
 	end
-end
-function CompleteAllResearch()
- 	local pTechs = pPlayer:GetTechs()
-	if pPlayer:IsHuman() then		
-		ExposedMembers.MOD_CheatMenu.CompleteAllResearch(playerID);	
-	end		
-end
-function CompleteAllCivic()
- 	local pTechs = pPlayer:GetCulture()
-	if pPlayer:IsHuman() then		
-		ExposedMembers.MOD_CheatMenu.CompleteAllCivic(playerID);	
-	end		
 end
 function CompleteResearch()
  	local pTechs = pPlayer:GetTechs()
@@ -112,97 +67,6 @@ end
 function ChangeFaith()
 	if pPlayer:IsHuman() then
 		ExposedMembers.MOD_CheatMenu.ChangeFaith(playerID, pNewReligion);
-    end
-end
-function ChangePopulation()
- 	local pCity = UI.GetHeadSelectedCity();
-	if pCity ~= nil and pPlayer:IsHuman() then
-		ExposedMembers.MOD_CheatMenu.ChangePopulation(playerID, pNewPopulation, pCity);
-	end
-end
-function RestoreCityHealth()
- 	if pPlayer:IsHuman() then		
-		ExposedMembers.MOD_CheatMenu.RestoreCityHealth(playerID);
-	end
-end
-function ChangeCityLoyalty()
- 	if pPlayer:IsHuman() then		
-		ExposedMembers.MOD_CheatMenu.ChangeCityLoyalty(playerID);
-	end
-end
-function DestroyCity()
-	local pCity = UI.GetHeadSelectedCity();
-	if pCity ~= nil and pPlayer:IsHuman() then
-		local pCityName:string = Locale.Lookup(pCity:GetName());
-		local pCityPop:string = Locale.Lookup(pCity:GetPopulation());
-		ExposedMembers.MOD_CheatMenu.DestroyCity(playerID);	
-	end
-end
-function UnitPromote()
-	local pUnit = UI.GetHeadSelectedUnit();
-    if pUnit ~= nil and pPlayer:IsHuman() then
-		local unitID = pUnit:GetID();
-		ExposedMembers.MOD_CheatMenu.UnitPromote(playerID, unitID);
-		UI:DeselectUnitID(unitID);
-		UI:SelectUnitID(unitID);
-	end
-end
-function UnitMovementChange()
-	local pUnit = UI.GetHeadSelectedUnit();
-    if pUnit ~= nil and pPlayer:IsHuman() then
-		local unitID = pUnit:GetID();
-        ExposedMembers.MOD_CheatMenu.UnitMovementChange(playerID, unitID);
-		UI:DeselectUnitID(unitID);
-		UI:SelectUnitID(unitID);
-	end
-end
-function UnitAddMovement()
-	local pUnit = UI.GetHeadSelectedUnit();
-    if pUnit ~= nil and pPlayer:IsHuman() then
-		local unitID = pUnit:GetID();
-        ExposedMembers.MOD_CheatMenu.UnitAddMovement(playerID, unitID);
-		UI:DeselectUnitID(unitID);
-		UI:SelectUnitID(unitID);
-    end
-end
-function OnDuplicate()
-	local pUnit = UI.GetHeadSelectedUnit();
-	if pUnit ~= nil and pPlayer:IsHuman() then
-		local unitID = pUnit:GetID();
-		local unitType:string = GameInfo.Units[pUnit:GetUnitType()].UnitType;
-		ExposedMembers.MOD_CheatMenu.OnDuplicate(playerID, unitID, unitType);
-    end
-end
-function UnitHealChange()
-	local pUnit = UI.GetHeadSelectedUnit();
-    if pUnit ~= nil and pPlayer:IsHuman() then
-		local unitID = pUnit:GetID();
-        ExposedMembers.MOD_CheatMenu.UnitHealChange(playerID, unitID);
-    	UI:DeselectUnitID(unitID);
-		UI:SelectUnitID(unitID);
-	end
-end
-function UnitFormCorps()
-	local pUnit = UI.GetHeadSelectedUnit();
-    if pUnit ~= nil and pPlayer:IsHuman() then
-		local unitID = pUnit:GetID();
-        ExposedMembers.MOD_CheatMenu.UnitFormCorps(playerID, unitID);
-    	UI:DeselectUnitID(unitID);
-		UI:SelectUnitID(unitID);
-	end
-end
-function UnitFormArmy()
-	local pUnit = UI.GetHeadSelectedUnit();
-    if pUnit ~= nil and pPlayer:IsHuman() then
-		local unitID = pUnit:GetID();
-        ExposedMembers.MOD_CheatMenu.UnitFormArmy(playerID, unitID);
-    	UI:DeselectUnitID(unitID);
-		UI:SelectUnitID(unitID);
-	end
-end
-function MakeFreeCity()
-	if pPlayer:IsHuman() then
-		ExposedMembers.MOD_CheatMenu.MakeFreeCity(playerID, pCity);
     end
 end
 function ChangeEnvoy()
@@ -244,9 +108,6 @@ function OnInputActionTriggered( actionId )
 	if ( actionId == Input.GetActionId("ToggleGold") ) then
 		ChangeGold();
 	end
-	if ( actionId == Input.GetActionId("ToggleGoldMore") ) then
-		ChangeGoldMore();
-	end
 	if ( actionId == Input.GetActionId("ToggleFaith") ) then
 		ChangeFaith();
 	end
@@ -262,35 +123,8 @@ function OnInputActionTriggered( actionId )
 	if ( actionId == Input.GetActionId("ToggleEnvoy") ) then
 		ChangeEnvoy();
 	end
-	if ( actionId == Input.GetActionId("ToggleEra") ) then
-		ChangeEraScore();
-	end
 	if ( actionId == Input.GetActionId("ToggleObs") ) then
 		RevealAll();
-	end
-	if ( actionId == Input.GetActionId("ToggleUnitMovementChange") ) then
-		UnitMovementChange();
-	end
-	if ( actionId == Input.GetActionId("ToggleUnitHealChange") ) then
-		UnitHealChange();
-	end
-	if ( actionId == Input.GetActionId("ToggleUnitPromote") ) then
-		UnitPromote();
-	end
-	if ( actionId == Input.GetActionId("ToggleDuplicate") ) then
-		OnDuplicateUnit();
-	end
-	if ( actionId == Input.GetActionId("ToggleChangePopulation") ) then
-		ChangePopulation();
-	end
-	if ( actionId == Input.GetActionId("ToggleChangeCityLoyalty") ) then
-		ChangeCityLoyalty();
-	end
-	if ( actionId == Input.GetActionId("ToggleCompleteAllResearch") ) then
-		CompleteAllResearch();
-	end
-	if ( actionId == Input.GetActionId("ToggleCompleteAllCivic") ) then
-		CompleteAllCivic();
 	end
 	if ( actionId == Input.GetActionId("ToggleMenu") ) then
 		OnMenuButtonToggle();
