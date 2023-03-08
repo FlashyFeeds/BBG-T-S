@@ -2,6 +2,8 @@
 -- // Author: Sparrow, Integrated by FlashyFeeds
 -- // DateCreated: 01/24/2019 2:27:04 PM
 -- // ----------------------------------------------------------------------------------------------
+UICheatEvents = ExposedMembers.LuaEvents
+
 include("Civ6Common");
 include("InstanceManager");
 include("SupportFunctions");
@@ -24,6 +26,7 @@ local pNewPopulation				= 1;
 local m_hideCheatPanel				= false;
 local m_IsLoading:boolean			= false;
 local m_IsAttached:boolean			= false;
+local tPlayerSelections             = {}
 
 -- // ----------------------------------------------------------------------------------------------
 -- // MENU BUTTON FUNCTIONS
@@ -32,12 +35,12 @@ local m_IsAttached:boolean			= false;
 function ChangeGold()
 	local pNewGold = 10000
 	if pPlayer:IsHuman() then
-		ExposedMembers.MOD_CheatMenu.ChangeGold(playerID, pNewGold); 
+		UICheatEvents.UIChangeGold(playerID, pNewGold); 
     end
 end
 function CompleteProduction()
 	if pPlayer:IsHuman() then
-		ExposedMembers.MOD_CheatMenu.CompleteProduction(playerID);
+		UICheatEvents.UICompleteProduction(playerID);
 	end
 end
 function CompleteResearch()
@@ -48,7 +51,7 @@ function CompleteResearch()
 		local pProgress = pTechs:GetResearchProgress(pRTech)
 		local pResearchComplete = (pCost - pProgress)
 		if pPlayer:IsHuman() then		
-			ExposedMembers.MOD_CheatMenu.CompleteResearch(playerID, pResearchComplete);				
+			UICheatEvents.UICompleteResearch(playerID, pResearchComplete);				
 		end		
 	end
 end
@@ -60,34 +63,34 @@ function CompleteCivic()
 		local pProgress = pCivics:GetCulturalProgress(pRCivic)
 		local pCivicComplete = (pCost - pProgress)
 		if pPlayer:IsHuman() then		
-			ExposedMembers.MOD_CheatMenu.CompleteCivic(playerID, pCivicComplete);				
+			UICheatEvents.UICompleteCivic(playerID, pCivicComplete);				
 		end
 	end	
 end
 function ChangeFaith()
 	if pPlayer:IsHuman() then
-		ExposedMembers.MOD_CheatMenu.ChangeFaith(playerID, pNewReligion);
+		UICheatEvents.UIChangeFaith(playerID, pNewReligion);
     end
 end
 function ChangeEnvoy()
 	if pPlayer:IsHuman() then
-		ExposedMembers.MOD_CheatMenu.ChangeEnvoy(playerID, pNewEnvoy);
+		UICheatEvents.UIChangeEnvoy(playerID, pNewEnvoy);
     end
 end
 function ChangeDiplomaticFavor()
 	if pPlayer:IsHuman() then
-		ExposedMembers.MOD_CheatMenu.ChangeDiplomaticFavor(playerID, pNewFavor);
+		UICheatEvents.UIChangeDiplomaticFavor(playerID, pNewFavor);
     end
 end
 function ChangeGovPoints()
 	if pPlayer:IsHuman() then
-		ExposedMembers.MOD_CheatMenu.ChangeGovPoints(playerID, pNewGP);
+		UICheatEvents.UIChangeGovPoints(playerID, pNewGP);
     end
 end
 function RevealAll()
 	if pPlayer:IsHuman() then		
-		LuaEvents.ChangeFOW(playerID)	
-		ExposedMembers.MOD_CheatMenu.RevealAll(playerID);
+		--LuaEvents.ChangeFOW(playerID)	
+		UICheatEvents.UIRevealAll(playerID);
 	end		
 end
 
@@ -101,6 +104,11 @@ function RefreshActionPanel()
 	ContextPtr:RequestRefresh(); 
 end
 
+function OnCitySelectionChanged(iPlayerID, iCityID)
+	tPlayerSelections = Game.GetProperty("PLAYER_SELECTIONS")
+	tPlayerSelections[iPlayerID] = iCityID
+	UICheatEvents.UIPlayerCityUpdt(tPlayerSelections)
+end
 -- // ----------------------------------------------------------------------------------------------
 -- // HOTKEYS
 -- // ----------------------------------------------------------------------------------------------
@@ -133,4 +141,18 @@ function OnInputActionTriggered( actionId )
 		ChangeDiplomaticFavor();
 	end
 end
+--========support functions========--
+function InitPlayerSelection()
+	local tAliveMajors = PlayerManager.GetAliveMajorIDs()
+	local tPlayerCheatState = Game.GetProperty("PLAYER_SELECTIONS")
+	if tPlayerCheatState ~= nil then return end
+	
+	for i, iPlayerID in ipairs(tAliveMajors) do
+		tPlayerSelections[iPlayerID] = -1
+	end
+	UICheatEvents.UIPlayerCityUpdt(tPlayerSelections)
+end
+--====Events and Init====--
+Events.CitySelectionChanged.Add(OnCitySelectionChanged)
+InitPlayerSelection()
 

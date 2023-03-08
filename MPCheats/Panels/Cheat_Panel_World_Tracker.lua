@@ -182,5 +182,6 @@ function Initialize()
 			UpdateCheatPanel(false);
 		end
 	m_IsLoading = false;
+	Events.TurnTimerUpdated.Add(OnTurnTimerUpdated)
 end
 Initialize();
