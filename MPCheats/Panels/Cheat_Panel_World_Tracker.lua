@@ -76,7 +76,7 @@ function OnPanelTitleClicked_Base()
 		Controls.ButtonSep:SetHide(false);
 		Controls.CheatButtonDiplo:SetDisabled(true); --keep
 		Controls.CheatMakeFreeCity:SetDisabled(true);
-		Controls.Diplo:SetHide(true);
+		Controls.Diplo:SetHide(true); --keep
 		Controls.Loyalty:SetHide(true);
 		Controls.CheatButtonLoyalty:SetDisabled(true);
 		Controls.CheatButtonEra:SetDisabled(true);
@@ -103,7 +103,7 @@ function OnPanelTitleClicked_Base()
 		Controls.CheatPanel:SetSizeY(25);
 		Controls.ButtonStackMIN:SetHide(true);
 		Controls.ButtonSep:SetHide(true);
-		Controls.Diplo:SetHide(true);
+		Controls.Diplo:SetHide(true);--keep
 		Controls.Loyalty:SetHide(true);
 		m_CheatPanelState = 0;
 	end	
@@ -117,7 +117,7 @@ function OnPanelTitleClicked_Expansion1()
 		Controls.CheatButtonDiplo:SetDisabled(true); --keep
 		Controls.lable_plus:SetHide(false);
 		Controls.Lable_minus:SetHide(false);
-		Controls.Diplo:SetHide(true);
+		Controls.Diplo:SetHide(true); --keep
 		Controls.CheatResourcesLux:SetDisabled(true);
 		Controls.CheatResourcesStr:SetDisabled(true);
 		Controls.CheatResourcesBonus:SetDisabled(true);
@@ -134,7 +134,7 @@ function OnPanelTitleClicked_Expansion1()
 		Controls.CheatPanel:SetSizeY(25);
 		Controls.ButtonStackMIN:SetHide(true);
 		Controls.ButtonSep:SetHide(true);
-		Controls.Diplo:SetHide(true);
+		Controls.Diplo:SetHide(true); --keep
 		m_CheatPanelState = 0;
 	end	
 end
