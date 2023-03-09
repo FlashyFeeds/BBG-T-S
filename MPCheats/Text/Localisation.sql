@@ -6,7 +6,6 @@ INSERT OR REPLACE INTO LocalizedText
 VALUES
 -- English US ------------------------------------------------------------------------------------------------------------
 		("LOC_CHEAT_MENU_ABOUT",  					"en_US",		"Cheat Panel By [Sparrow], Integrated by FlashyFeeds for MP"),
-		("LOC_CHEAT_MENU_FREECITY",  				"en_US",		"Make Selected City a FREE City"),
 		("LOC_CHEAT_EXPAND_MAX",  					"en_US",		"Hide Advanced Panel"),
 		("LOC_CHEAT_COLLAPSE_MAX",  				"en_US",		"Show Advanced Panel"),
 		("LOC_CHEAT_MENU_DIPLOMATIC_FAVOR", 		"en_US",		"Adds +100  Diplomatic Favor"),

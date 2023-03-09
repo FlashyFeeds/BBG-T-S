@@ -153,7 +153,6 @@ local function InitializeControls()
 	Controls.CheatButtonScience:RegisterCallback( Mouse.eMouseEnter, function() UI.PlaySound("Main_Menu_Mouse_Over") end); --keep
 	Controls.CheatButtonCulture:RegisterCallback( Mouse.eMouseEnter, function() UI.PlaySound("Main_Menu_Mouse_Over") end); --keep
 	Controls.CheatButtonFaith:RegisterCallback( Mouse.eMouseEnter, function() UI.PlaySound("Main_Menu_Mouse_Over") end); --keep
-	Controls.CheatButtonAddMovement:RegisterCallback( Mouse.eMouseEnter, function() UI.PlaySound("Main_Menu_Mouse_Over") end);
 	Controls.CheatButtonEnvoy:RegisterCallback( Mouse.eMouseEnter, function() UI.PlaySound("Main_Menu_Mouse_Over") end); --keep
 	Controls.CheatButtonObs:RegisterCallback( Mouse.eMouseEnter, function() UI.PlaySound("Main_Menu_Mouse_Over") end); --keep
 	Controls.CheatButtonGov:RegisterCallback( Mouse.eMouseEnter, function() UI.PlaySound("Main_Menu_Mouse_Over"); end); --keep
@@ -182,6 +181,6 @@ function Initialize()
 			UpdateCheatPanel(false);
 		end
 	m_IsLoading = false;
-	Events.TurnTimerUpdated.Add(OnTurnTimerUpdated)
+	--Events.TurnTimerUpdated.Add(OnTurnTimerUpdated)
 end
 Initialize();

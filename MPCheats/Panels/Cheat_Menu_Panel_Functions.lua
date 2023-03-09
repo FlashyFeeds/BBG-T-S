@@ -107,8 +107,9 @@ end
 
 function OnCitySelectionChanged(iPlayerID, iCityID)
 	Debug("Called", "OnCitySelectionChanged")
-	tPlayerSelections = Game.GetProperty("PLAYER_SELECTIONS")
-	tPlayerSelections[iPlayerID] = iCityID
+	Debug("iPlayerID, iCityID values "..tostring(iPlayerID)..", "..tostring(iCityID), "OnCitySelectionChanged")
+	local tPlayerSelections = Game.GetProperty("PLAYER_SELECTIONS")
+	tPlayerSelections[iPlayerID] = iCityID	
 	UICheatEvents.UIPlayerCityUpdt(tPlayerSelections)
 	Debug("Transmitted Values", "OnCitySelectionChanged")
 	civ6tostring(tPlayerSelections)
@@ -164,20 +165,10 @@ function OnInputActionTriggered( actionId )
 	end
 end
 --========support functions========--
-function InitPlayerSelection()
-	local tAliveMajors = PlayerManager.GetAliveMajorIDs()
-	local tPlayerCheatState = Game.GetProperty("PLAYER_SELECTIONS")
-	if tPlayerCheatState ~= nil then return end
-	
-	for i, iPlayerID in ipairs(tAliveMajors) do
-		tPlayerSelections[iPlayerID] = -1
-	end
-	UICheatEvents.UIPlayerCityUpdt(tPlayerSelections)
-end
+
 --====Events and Init====--
 Events.CitySelectionChanged.Add(OnCitySelectionChanged) -- populates player/city table on change 
 Events.LocalPlayerTurnBegin.Add(OnLocalPlayerTurnBegin) -- needed to remove visibility (probably migrate)
 Events.PlayerDefeat.Add(OnPlayerDefeat) --needed to repopulate alive table for visibility cheat (probably migrate)
 Events.PlayerRevived.Add(OnPlayerRevived)
-InitPlayerSelection()
 

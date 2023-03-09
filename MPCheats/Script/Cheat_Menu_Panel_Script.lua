@@ -12,15 +12,30 @@ local tAlivePlayers = {}
 -- // Event Handlers
 -- // ----------------------------------------------------------------------------------------------
 --set local state
+function InitPlayerSelection()
+	local tAliveMajors = PlayerManager.GetAliveMajorIDs()
+	local tPlayerCheatState = Game.GetProperty("PLAYER_SELECTIONS")
+	local tPlayerSelections = {}
+	if tPlayerCheatState ~= nil then return end
+	
+	for i, iPlayerID in ipairs(tAliveMajors) do
+		tPlayerSelections[iPlayerID] = -1
+	end
+	Game.SetProperty("PLAYER_SELECTIONS", tPlayerSelections)
+	Debug("tPlayerSelections populated with values", "InitPlayerSelection")
+	civ6tostring(tPlayerSelections)
+	--UICheatEvents.UIPlayerCityUpdt(tPlayerSelections)
+end
+
 function OnUIPlayerCityUpdt(tPlayerSelections)
 	Debug("Called", "OnUIPlayerCityUpdt")
-	GameEvents.GameplayPlayerCityUpdt(tPlayerSelections)
+	GameEvents.GameplayPlayerCityUpdt.Call(tPlayerSelections)
 end
 
 function OnGameplayPlayerCityUpdt(tPlayerSelections)
 	Debug("Called", "OnGameplayPlayerCityUpdt")
 	Game.SetProperty("PLAYER_SELECTIONS", tPlayerSelections)
-	Debug("Game Property PLAYER_SELECTIONS set with values")
+	Debug("Game Property PLAYER_SELECTIONS set with values", "OnGameplayPlayerCityUpdt")
 	civ6tostring(tPlayerSelections)
 	iLocPlayerID = Game.GetLocalPlayer()
 	iLocCityID = tPlayerSelections[iLocPlayerID]
@@ -111,6 +126,9 @@ end
 function OnCompleteProduction(iPlayerID)
 	Debug("Called", "OnCompleteProduction")
 	local pPlayer = Players[iPlayerID]
+	if pPlayer == nil then
+		return print("Error: nil player")
+	end
 	local pCity = pPlayer:GetCities():FindID(iLocCityID)
 	if pCity == nil then
 		return print("Error: nil City")
@@ -159,11 +177,11 @@ end
 --diplo favor
 function OnUIChangeDiplomaticFavor(iPlayerID, pNewFavor)
 	Debug("Called", "OnUIChangeDiplomaticFavor")
-	GameEvents.GameplayChangeDiplomaticFavor(iPlayerID, pNewFavor)
+	GameEvents.GameplayChangeDiplomaticFavor.Call(iPlayerID, pNewFavor)
 end
 
 function OnGameplayChangeDiplomaticFavor(iPlayerID, pNewFavor)
-	Debug("Called", "OnChangeDiplomaticFavor")
+	Debug("Called", "OnGameplayChangeDiplomaticFavor")
 	OnChangeDiplomaticFavor(iPlayerID, pNewFavor)
 end
 
@@ -215,6 +233,9 @@ end
 
 function OnGameplayLocalTurnBegin(iPlayerID)
 	Debug("Called", "OnGameplayLocalTurnBegin")
+	local pPlayer = Players[iPlayerID]
+	if pPlayer:GetProperty("VISIBILITY_END_TURN")==nil then return end
+
 	local tAlivePlayers = Game.GetProperty("ALIVE_PLAYERS")
 	if tAlivePlayers == nil then
 		return print("Error Occured while populating/retrieving alive players")
@@ -229,7 +250,7 @@ function OnGameplayLocalTurnBegin(iPlayerID)
 			Debug("Visibility removed from iAliveID "..tostring(iAliveID).." to iPlayerID "..tostring(iPlayerID), "OnGameplayLocalTurnBegin")
 		end
 	end
-	local pPlayer = Players[iPlayerID]
+	
 	pPlayer:SetProperty("VISIBILITY_END_TURN", nil)
 	Debug("All Players and City-States visibility removed for playerID "..tostring(playerID), "OnGameplayLocalTurnBegin")
 end
@@ -338,30 +359,34 @@ function Initialize()
 	--if ( not ExposedMembers.MOD_CheatMenu) then ExposedMembers.MOD_CheatMenu = {}; end
 	--set local alive values (probably migrate to bbg script)
 	PopulateAliveTable()
+	InitPlayerSelection()
+	--update city selection
+	LuaEvents.UIPlayerCityUpdt.Add(OnUIPlayerCityUpdt)
+	GameEvents.GameplayPlayerCityUpdt.Add(OnGameplayPlayerCityUpdt)
 	--repopulate alive values (probably migrate to bbg script)
 	LuaEvents.UIPlayerDefeat.Add(OnUIPlayerDefeat)
 	LuaEvents.UIPlayerRevived.Add(OnUIPlayerRevived)
 	GameEvents.GameplayPlayerDefeat.Add(OnGameplayPlayerDefeat)
 	--gold
-	LuaEvents.MOD_CheatMenu.UIChangeGold.Add(OnUIChangeGold);
+	LuaEvents.UIChangeGold.Add(OnUIChangeGold);
 	GameEvents.GameplayChangeGold.Add(OnGameplayChangeGold)
 	--faith
-	LuaEvents.MOD_CheatMenu.UIChangeFaith.Add(OnUIChangeFaith);
+	LuaEvents.UIChangeFaith.Add(OnUIChangeFaith);
 	GameEvents.GameplayChangeFaith.Add(OnGameplayChangeFaith)
 	--science current
-	LuaEvents.MOD_CheatMenu.UICompleteResearch.Add(OnUICompleteResearch);
+	LuaEvents.UICompleteResearch.Add(OnUICompleteResearch);
 	GameEvents.GameplayCompleteResearch.Add(OnGameplayCompleteResearch)
 	--culture current
-	LuaEvents.MOD_CheatMenu.UICompleteCivic.Add(OnUICompleteCivic);	
+	LuaEvents.UICompleteCivic.Add(OnUICompleteCivic);	
 	GameEvents.GameplayCompleteCivic.Add(OnGameplayCompleteCivic)
 	--production current
-	LuaEvents.MOD_CheatMenu.UICompleteProduction.Add(OnUICompleteProduction);
+	LuaEvents.UICompleteProduction.Add(OnUICompleteProduction);
 	GameEvents.GameplayCompleteProduction.Add(OnGameplayCompleteProduction)
 	--Gov titles
-	LuaEvents.MOD_CheatMenu.UIChangeGovPoints.Add(OnUIChangeGovPoints);
+	LuaEvents.UIChangeGovPoints.Add(OnUIChangeGovPoints);
 	GameEvents.GameplayChangeGovPoints.Add(OnGameplayChangeGovPoints)
 	--Envoys
-	LuaEvents.MOD_CheatMenu.UIChangeEnvoy.Add(OnUIChangeEnvoy);
+	LuaEvents.UIChangeEnvoy.Add(OnUIChangeEnvoy);
 	GameEvents.GameplayChangeEnvoy.Add(OnGameplayChangeEnvoy)
 	--Diplo Favor
 	LuaEvents.UIChangeDiplomaticFavor.Add(OnUIChangeDiplomaticFavor);

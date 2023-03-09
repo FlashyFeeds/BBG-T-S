@@ -68,27 +68,32 @@
 		<UpdateDatabase id="bbgts_updateconfig">
 			<File>config/config.sql</File>
 		</UpdateDatabase>
-		
 		<UpdateText id="bbgts_config_texts">
 			<File>lang/text_en.xml</File>
 		</UpdateText>
+		<!--
 		<UpdateText id="bbgts_mpcheats_config_texts">
-			<!--<Criteria>bbgts_mp_cheats</Criteria>-->
+			<Criteria>bbgts_mp_cheats</Criteria>
 			<File>MPCheats/Text/input_config.xml</File>
 			<File>MPCheats/Text/options_text.xml</File>
 		</UpdateText>
-		
-		<UpdateIcons id="BBGTS_Icons FrontEnd">
+		-->
+		<UpdateIcons id="bbgts_icons_frontend">
 			<File>icons/bbgts_icons.xml</File>
 		</UpdateIcons>
 		
-		<ImportFiles id="FrontEnd_Arts_Icons_Import">
+		<ImportFiles id="frontend_arts_icons_import">
 			<Items>
 				<File>icons/bbgts_portrait.dds</File>
 				<File>icons/bbgts_44.dds</File>
 				<File>icons/bbgts_icon.dds</File>
 			</Items>
 		</ImportFiles>
+		<!-- MP Cheats Keybinds -->
+		<UpdateDatabase id="bbgts_mp_cheats_config">
+			<Criteria>bbgts_mp_cheats</Criteria>
+			<File>MPCheats/Text/input_config.xml</File>
+		</UpdateDatabase>
 	</FrontEndActions>
 
 	<InGameActions>
@@ -120,12 +125,11 @@
 			<Criteria>bbgts_mp_cheats</Criteria>
 			<File>MPCheats/sql/mp_cheats.sql</File>
 		</UpdateDatabase>
+		
 		<UpdateText id="bbgts_mpcheats_gameplaytext">
-			<Criteria>bbgts_mp_cheats</Criteria>
-			<File>MPCheats/UI/Text/options_text.xml</File>
-			<File>MPCheats/UI/Text/localisation.sql</File>
+			<File>lang/text_en.xml</File>
 		</UpdateText>
-
+		
 		<!--
 		<AddGameplayScripts id="BBGTS_TestScripts_Script">
 			<File>lua/GameCoreScripts.lua</File>
@@ -166,11 +170,11 @@
 	<Files>
 		<!--Basic stuff-->
 		<File>config/config.sql</File>
-		<File>lang/Text_EN.xml</File>
-		<File>icons/BBGTS_Icons.xml</File>
-		<File>icons/BBGTS_44.dds</File>
-		<File>icons/BBGTS_Portrait.dds</File>
-		<File>icons/BBGTS_Background.dds</File>
+		<File>lang/text_en.xml</File>
+		<File>icons/bbgts_icons.xml</File>
+		<File>icons/bbgts_44.dds</File>
+		<File>icons/bbgts_Portrait.dds</File>
+		<File>icons/bbgts_background.dds</File>
 		<!--debug-->
 		<File>debug/bbgts_debug.lua</File>
 		<!--MP Cheats-->

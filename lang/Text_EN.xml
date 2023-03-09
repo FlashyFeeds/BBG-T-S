@@ -22,10 +22,10 @@
             <Text> Allows Debugging Lua scripts in a standardised way. Use with discord for MP script debug</Text>
         </Replace>
         <Replace Tag="LOC_BBGTS_MP_CHEAT_NAME" language="en">
-            <Text>[COLOR_Civ6Red]Multiplayer Cheats[ENDCOLOR]</Text>
+            <Text>[COLOR_Civ6Red]Multiplayer Tester Panel[ENDCOLOR]</Text>
         </Replace>        
         <Replace Tag="LOC_BBGTS_MP_CHEAT_DESC" language="en">
-            <Text> Gives lots of free shit and changes some in game values for easier MP testing of the desired feature</Text>
+            <Text> Enables In-Game Multiplayer Tester Panel and Several City Projects to Accelerate the Game for Testing Purposes</Text>
         </Replace>
         <!--
         <Replace Tag="LOC_BBGTS_BUGFIX1_NAME" language="en">
@@ -119,5 +119,80 @@
         <Replace Tag="LOC_BBGTS_SPY_DESC" language="en">
             <Text>Test</Text>
         </Replace>
+        <Row Tag="LOC_OPTIONS_FAITH" language="en_US">
+            <Text>Add +10000 Faith</Text>
+        </Row>
+        <Row Tag="LOC_OPTIONS_GOLD" language="en_US">
+            <Text>Add +10000 Gold</Text>
+        </Row>
+        <Row Tag="LOC_OPTIONS_PRODUCTION" language="en">
+            <Text>Complete Production</Text>
+        </Row>
+        <Row Tag="LOC_OPTIONS_CIVIC" language="en">
+            <Text>Complete Civic</Text>
+        </Row>
+        <Row Tag="LOC_OPTIONS_TECH" language="en">
+            <Text>Complete Research</Text>
+        </Row>
+        <Row Tag="LOC_OPTIONS_ENVOY" language="en">
+            <Text>Add Envoy</Text>
+        </Row>
+        <Row Tag="LOC_OPTIONS_ERA" language="en">
+            <Text>Adds +10  Era Points</Text>
+        </Row>
+        <Row Tag="LOC_OPTIONS_OBS" language="en">
+            <Text>Toggle Map Observer</Text>
+        </Row>
+        <Row Tag="LOC_OPTIONS_MENU" language="en">
+            <Text>Toggle Cheat Panel</Text>
+        </Row>
+        <Row Tag="LOC_OPTIONS_GOVPOINTS" language="en">
+            <Text>Adds +1 Governor Title Point</Text>
+        </Row>
+        <Row Tag="LOC_OPTIONS_DIPLOMATIC_FAVOR" language="en">
+            <Text>Add +100 Diplomatic Favor</Text>
+        </Row>
+        <Row Tag="LOC_CHEAT_MENU_ABOUT" language="en">
+            <Text>Multiplayer Tester Panel for BBGTS, Import and adaptaion of [Sparrow]'s Cheat Panel done by FlashyFeeds</Text>
+        </Row>
+        <Row Tag="LOC_CHEAT_EXPAND_MAX" language="en">
+            <Text>Hide Tester Panel</Text>
+        </Row>
+        <Row Tag="LOC_CHEAT_COLLAPSE_MAX" language="en">
+            <Text>Show Tester Panel</Text>
+        </Row>
+        <Row Tag="LOC_CHEAT_MENU_HEADER" language="en">
+            <Text>Tester Panel</Text>
+        </Row>
+        <Row Tag="LOC_CHEAT_TOGGLE_MENU" language="en">
+            <Text>Toggle Tester Panel</Text>
+        </Row>
+        <Row Tag="LOC_CHEAT_MENU_GOLD" language="en">
+            <Text>Adds +10000 [ICON_Gold]</Text>
+        </Row>
+        <Row Tag="LOC_CHEAT_MENU_FAITH" language="en">
+            <Text>Adds +10000 [ICON_Faith]</Text>
+        </Row>
+        <Row Tag="LOC_CHEAT_MENU_PRODUCTION" language="en">
+            <Text>Completes Current [ICON_Production] in Selected City</Text>
+        </Row>
+        <Row Tag="LOC_CHEAT_MENU_SCIENCE" language="en">
+            <Text>Completes Current Research [ICON_Science]</Text>
+        </Row>
+        <Row Tag="LOC_CHEAT_MENU_CULTURE" language="en">
+            <Text>Completes Current Civic [ICON_Culture]</Text>
+        </Row>
+        <Row Tag="LOC_CHEAT_MENU_ENVOY" language="en">
+            <Text>Adds +5 [ICON_Envoy] Envoy</Text>
+        </Row>
+        <Row Tag="LOC_CHEAT_MENU_DIPLOMATIC_FAVOR" language="en">
+            <Text>Adds +100  Diplomatic Favor</Text>
+        </Row>
+        <Row Tag="LOC_CHEAT_MENU_GOVPOINTS" language="en">
+            <Text>Adds +1 Governor Title Point</Text>
+        </Row>
+        <Row Tag="LOC_CHEAT_MENU_OBVS" language="en">
+            <Text>Reveals All Players and All City States for one turn</Text>
+        </Row>
     </LocalizedText>
 </GameData>
