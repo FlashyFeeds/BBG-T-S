@@ -41,84 +41,8 @@
             <Text> Suggestion1 Description</Text>>
         </Replace>
         -->
-        <Replace Tag="LOC_BBGTS_KONGO_FIX_NAME" language="en">
-            <Text>[COLOR_Civ6Red]FIX: Mvemba Religious Convert Ability[ENDCOLOR] </Text>
-        </Replace>
-        <Replace Tag="LOC_BBGTS_KONGO_FIX_DESC" language="en">
-            <Text>[COLOR_Civ6Red]Mvemba(Kongo) Religious Convert Ability:[ENDCOLOR] [NEWLINE]Fixed: Should work as in the descriptopm</Text>
-        </Replace>
-        <Replace Tag="LOC_BBGTS_FREEINQ_FIX_NAME" language="en">
-            <Text>[COLOR_Civ6Red]FIX: Free Inquiry[ENDCOLOR]</Text>
-        </Replace>
-        <Replace Tag="LOC_BBGTS_FREEINQ_FIX_DESC" language="en">
-            <Text>Fixed BBG Game Bug: Since Babylon was reworked by BBG to not receive free inquiry boost to eureka, it stopped working for all civs. Should now work for all except babylon.</Text>>
-        </Replace>
-        <Replace Tag="LOC_BBGTS_RELIGION_MODIFIER_FIX_NAME" language="en">
-            <Text>[COLOR_Civ6Red]FIX: Religion Belief Modifiers[ENDCOLOR]</Text>
-        </Replace>
-        <Replace Tag="LOC_BBGTS_RELIGION_MODIFIER_FIX_DESC" language="en">
-            <Text>Fixed Base Game Bug: Where Monk Culture Bombs work on only Founder.[NEWLINE]BBG: Make Holly Water Follow same logic as Defender/Crusade on implementation level</Text>
-        </Replace>
-        <Replace Tag="LOC_BBGTS_REMOVE_MONK_SCALING_FIX_NAME" language="en">
-            <Text>[COLOR_Civ6Red]Fix: Monk Scaling CS Removed[ENDCOLOR]</Text>
-        </Replace>
-        <Replace Tag="LOC_BBGTS_REMOVE_MONK_SCALING_FIX_DESC" language="en">
-            <Text>Test:[NEWLINE]Monk Scaling Reverted to investigate Desyncs in BBG5+MPH+BSM</Text>
-        </Replace>
-        <Replace Tag="LOC_BBGTS_MACEDON_FIX_NAME" language="en">
-            <Text>[COLOR_Civ6Red]Fix: Macedon City Capture[ENDCOLOR]</Text>
-        </Replace>
-        <Replace Tag="LOC_BBGTS_MACEDON_FIX_DESC" language="en">
-            <Text>Test:[NEWLINE]Attempt to fix Macedon ability: Hellenistic Fusion, production part</Text>
-        </Replace>
-        <Replace Tag="LOC_BBGTS_ETHEMENANKI_SUGGESTION_NAME" language="en">
-            <Text>[COLOR_LIGHTBLUE]Suggestion(5.2): Ethemenanki Marsh Wonder Yields[ENDCOLOR]</Text>
-        </Replace>
-        <Replace Tag="LOC_BBGTS_ETHEMENANKI_SUGGESTION_DESC" language="en">
-            <Text>Suggestions for 5.2:[NEWLINE]Ethemenanki provides it's respective bonus yields to marsh wonders. One of the interractions to test for upcomming natural wonder rework.</Text>
-        </Replace>
-        <Replace Tag="LOC_BBGTS_BBCC_SUGGESTION_NAME" language="en">
-            <Text>[COLOR_LIGHTBLUE]Suggestion(5.2): Better Balanced Capitals => Less RNG[ENDCOLOR]</Text>
-        </Replace>
-        <Replace Tag="LOC_BBGTS_BBCC_SUGGESTION_DESC" language="en">
-            <Text>Suggestion for 5.2:[NEWLINE]All Capital Cities are guaranteed 3f1p on flat tiles and 2f2p on hill tiles.[NEWLINE]Rest of the yields is calculated according to standard firaxis formula for each yield:[NEWLINE]YIELD=MAX(BETWEEN GUARANTEED_YIELD AND TILE_YIELD-REMOVABLE_FEATURE_YIELD)[NEWLINE]Less RNG on the Capital Settle</Text>
-        </Replace>
-        <Replace Tag="LOC_BBGTS_MONK_NERF_NAME" language="en">
-            <Text>[COLOR_Civ6Red]Nerf: Monk[ENDCOLOR]</Text>
-        </Replace>
-        <Replace Tag="LOC_BBGTS_MONK_NERF_DESC" language="en">
-            <Text>CS reduced, Price Adjusted. +10 congress replaced by +/-5 congress. Kotoku city can recruit monks</Text>
-        </Replace>
-        <Replace Tag="LOC_BBGTS_ATTACH_DETACH_NAME" language="en">
-            <Text>[COLOR_LIGHTBLUE]Test Attach Detach Modifier[ENDCOLOR]</Text>
-        </Replace>
-        <Replace Tag="LOC_BBGTS_ATTACH_DETACH_DESC" language="en">
-            <Text>Test</Text>
-        </Replace>
-        <Replace Tag="LOC_BBGTS_WATERMILL_SUGGESTION_NAME" language="en">
-            <Text>[COLOR_LIGHTBLUE]Watermill Suggestion[ENDCOLOR]</Text>
-        </Replace>
-        <Replace Tag="LOC_BBGTS_WATERMILL_SUGGESTION_DESC" language="en">
-            <Text>Test</Text>
-        </Replace>
-        <Replace Tag="LOC_BBGTS_PRODUCTION_PANEL_NAME" language="en">
-            <Text>[COLOR_LIGHTBLUE]Production Panel Override[ENDCOLOR]</Text>
-        </Replace>
-        <Replace Tag="LOC_BBGTS_PRODUCTION_PANEL_DESC" language="en">
-            <Text>Test</Text>
-        </Replace>
-        <Replace Tag="LOC_BBGTS_SPY_NAME" language="en">
-            <Text>[COLOR_LIGHTBLUE]Spy Initial Test[ENDCOLOR]</Text>
-        </Replace>
-        <Replace Tag="LOC_BBGTS_SPY_DESC" language="en">
-            <Text>Test</Text>
-        </Replace>
-        <Replace Tag="LOC_PLANES_FIX_NAME" language="en">
-            <Text>[COLOR_Civ6Red]Planes Fix[ENDCOLOR]</Text>
-        </Replace>
-        <Replace Tag="LOC_BBGTS_SPY_DESC" language="en">
-            <Text>Test</Text>
-        </Replace>
+        
+        <!-- MP Cheats -->
         <Row Tag="LOC_OPTIONS_FAITH" language="en_US">
             <Text>Add +10000 Faith</Text>
         </Row>
@@ -193,6 +117,25 @@
         </Row>
         <Row Tag="LOC_CHEAT_MENU_OBVS" language="en">
             <Text>Reveals All Players and All City States for one turn</Text>
+        </Row>
+        <!--MP Cheats Projects -->
+        <Row Tag="LOC_PROJECT_MP_CHEAT_20_SPY_NAME" language="en">
+            <Text>Tester's Spy Project</Text>
+        </Row>
+        <Row Tag="LOC_PROJECT_MP_CHEAT_20_SPY_SHORT_NAME" language="en">
+            <Text>Spy Project</Text>
+        </Row>
+        <Row Tag="LOC_PROJECT_MP_CHEAT_20_SPY_DESCRIPTION" language="en">
+            <Text>Grants you +20 Spy Capacity</Text>
+        </Row>
+        <Row Tag="LOC_PROJECT_MP_CHEAT_3_POPULATION_NAME" language="en">
+            <Text>Tester's Population Project</Text>
+        </Row>
+        <Row Tag="LOC_PROJECT_MP_CHEAT_3_POPULATION_SHORT_NAME" language="en">
+            <Text>Population Project</Text>
+        </Row>
+        <Row Tag="LOC_PROJECT_MP_CHEAT_3_POPULATION_DESCRIPTION" language="en">
+            <Text>Grants this city extra 3 [ICON_CITIZEN] Populations</Text>
         </Row>
     </LocalizedText>
 </GameData>

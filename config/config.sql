@@ -41,8 +41,6 @@ INSERT INTO Parameters(ParameterId, Name, Description, Domain, DefaultValue, Con
     --('BBGTS_Suggestion1', 'Game', 'BBGTS_GAMEMODE', 'Equals', '1');
 
 INSERT INTO ParameterCriteria(ParameterId, ConfigurationGroup, ConfigurationId, Operator, ConfigurationValue) VALUES
-    ('BBGTS_EthemenankiSuggestion', 'Game', 'BBGTS_GAMEMODE', 'Equals', '1'),
-    ('BBGTS_BBCCSuggestion', 'Game', 'BBGTS_GAMEMODE', 'Equals', '1'),
     ('BBGTS_DebugLua', 'Game', 'BBGTS_GAMEMODE', 'Equals', '1'),
     ('BBGTS_MP_CHEATS', 'Game', 'BBGTS_GAMEMODE', 'Equals', '1');
 

@@ -36,7 +36,12 @@ local tPlayerSelections             = {}
 function ChangeGold()
 	local pNewGold = 10000
 	if pPlayer:IsHuman() then
-		UICheatEvents.UIChangeGold(iPlayerID, pNewGold); 
+		local kParameters = {}
+		kParameters.OnStart = "GameplayChangeGold"
+		kParameters["iPlayerID"] = iPlayerID
+		kParameters["pNewGold"] = pNewGold
+		UI.RequestPlayerOperation(iPlayerID, PlayerOperations.EXECUTE_SCRIPT, kParameters);
+		--UICheatEvents.UIChangeGold(iPlayerID, pNewGold); 
     end
 end
 function CompleteProduction()

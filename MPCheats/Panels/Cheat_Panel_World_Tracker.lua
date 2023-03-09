@@ -71,7 +71,7 @@ end
 function OnPanelTitleClicked_Base()
     if(m_CheatPanelState == 0) then
 		UI.PlaySound("Tech_Tray_Slide_Open");
-		Controls.CheatPanel:SetSizeY(235);
+		Controls.CheatPanel:SetSizeY(110);
 		Controls.ButtonStackMIN:SetHide(false);
 		Controls.ButtonSep:SetHide(false);
 		Controls.CheatButtonDiplo:SetDisabled(true); --keep
@@ -91,7 +91,7 @@ end
 function OnPanelTitleClicked_Expansion1()
     if(m_CheatPanelState == 0) then
 		UI.PlaySound("Tech_Tray_Slide_Open");
-		Controls.CheatPanel:SetSizeY(235);
+		Controls.CheatPanel:SetSizeY(110);
 		Controls.ButtonStackMIN:SetHide(false);
 		Controls.ButtonSep:SetHide(false);
 		Controls.CheatButtonDiplo:SetDisabled(true); --keep
@@ -109,7 +109,7 @@ end
 function OnPanelTitleClicked_Expansion2()
     if(m_CheatPanelState == 0) then
 		UI.PlaySound("Tech_Tray_Slide_Open");
-		Controls.CheatPanel:SetSizeY(235);
+		Controls.CheatPanel:SetSizeY(110);
 		Controls.ButtonStackMIN:SetHide(false);
 		Controls.ButtonSep:SetHide(false);
 		m_CheatPanelState = 1;
@@ -174,12 +174,13 @@ function Initialize()
 		InitializeControls();
 		IsExpansion2Active();
 		IsExpansion1Active();
-		if  GameConfiguration.IsNetworkMultiplayer() then
-			UpdateCheatPanel(true);
-			Controls.ToggleCheatPanel:SetHide(true);
-		else
-			UpdateCheatPanel(false);
-		end
+		UpdateCheatPanel(false);
+		--if  GameConfiguration.IsNetworkMultiplayer() then
+			--UpdateCheatPanel(true);
+			--Controls.ToggleCheatPanel:SetHide(true);
+		--else
+			--UpdateCheatPanel(false);
+		--end
 	m_IsLoading = false;
 	--Events.TurnTimerUpdated.Add(OnTurnTimerUpdated)
 end
