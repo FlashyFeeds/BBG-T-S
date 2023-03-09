@@ -6,6 +6,7 @@ ExposedMembers.LuaEvents = LuaEvents
 include("bbgts_debug.lua")
 local iLocPlayerID;
 local iLocCityID;
+local tAlivePlayers = {}
 
 -- // ----------------------------------------------------------------------------------------------
 -- // Event Handlers
@@ -187,22 +188,160 @@ end
 
 function OnRevealAll(iPlayerID)
 	Debug("Called", "OnRevealAll")
-	local eObserverID = Game.GetLocalObserver();
-	if (eObserverID == PlayerTypes.OBSERVER) then
-		PlayerManager.SetLocalObserverTo(playerID);
-	else
-		PlayerManager.SetLocalObserverTo(PlayerTypes.OBSERVER);
+	local tAlivePlayers = Game.GetProperty("ALIVE_PLAYERS")
+	if tAlivePlayers == nil then
+		return print("Error Occured while populating/retrieving alive players")
 	end
+	local nCount = tAlivePlayers.Count
+	local tAliveIDs = tAlivePlayers.AlivePlayers
+	for i=1, nCount do
+		local iAliveID = tAliveIDs[i]
+		if iPlayerID~=iAliveID then
+			local pAliveVis = PlayersVisibility[iAliveID]
+			pAliveVis:AddOutgoingVisibility(iPlayerID)
+			Debug("Visibility added from iAliveID "..tostring(iAliveID).." to iPlayerID "..tostring(iPlayerID), "OnRevealAll")
+		end
+	end
+	local pPlayer = Players[iPlayerID]
+	local nVisRemoveTurn = Game.GetCurrentGameTurn() + 1
+	pPlayer:SetProperty("VISIBILITY_END_TURN", nVisRemoveTurn)
 	Debug("All Players and City-States revealed for playerID "..tostring(playerID), "OnRevealAll")
 end
+
+function OnUILocalPlayerTurnBegin(iPlayerID)
+	Debug("Called", "OnUILocalPlayerTurnBegin")
+	GameEvents.GameplayLocalTurnBegin.Call(iPlayerID)
+end
+
+function OnGameplayLocalTurnBegin(iPlayerID)
+	Debug("Called", "OnGameplayLocalTurnBegin")
+	local tAlivePlayers = Game.GetProperty("ALIVE_PLAYERS")
+	if tAlivePlayers == nil then
+		return print("Error Occured while populating/retrieving alive players")
+	end
+	local nCount = tAlivePlayers.Count
+	local tAliveIDs = tAlivePlayers.AlivePlayers
+	for i=1, nCount do
+		local iAliveID = tAliveIDs[i]
+		if iPlayerID~=iAliveID then
+			local pAliveVis = PlayersVisibility[iAliveID]
+			pAliveVis:RemoveOutgoingVisibility(iPlayerID)
+			Debug("Visibility removed from iAliveID "..tostring(iAliveID).." to iPlayerID "..tostring(iPlayerID), "OnGameplayLocalTurnBegin")
+		end
+	end
+	local pPlayer = Players[iPlayerID]
+	pPlayer:SetProperty("VISIBILITY_END_TURN", nil)
+	Debug("All Players and City-States visibility removed for playerID "..tostring(playerID), "OnGameplayLocalTurnBegin")
+end
+--alive table (will probably migrate to bbg script)
+function PopulateAliveTable()
+	local tPlayerIDs = {}
+	local nAlivePlayerCount = 0
+	for i=0, 60 do
+		local tmp_civ = Players[i]
+		if tmp_civ~=nil then
+			table.insert(tPlayerIDs, i)
+			nAlivePlayerCount = nAlivePlayerCount+1
+		end
+	end
+	tAlivePlayers.AlivePlayers = tPlayerIDs
+	tAlivePlayers.Count = nAlivePlayerCount
+	Game.SetProperty("ALIVE_PLAYERS", tAlivePlayers)
+	Debug("ALIVE_PLAYERS populated with data:", "PopulateAliveTable")
+	civ6tostring(tAlivePlayers)
+end
+--player defeated
+function OnUIPlayerDefeat(iPlayerID)
+	Debug("Called", "OnUIPlayerDefeat")
+	GameEvents.GameplayPlayerDefeat.Call(iPlayerID)
+end
+
+function OnGameplayPlayerDefeat(iPlayerID)
+	Debug("Called", "OnGameplayPlayerDefeat")
+	local tGAlivePlayers = Game.GetProperty("ALIVE_PLAYERS")
+	local tPlayerIDs = tGAlivePlayers.AlivePlayers
+	local nCount = tGAlivePlayers.Count
+	local iPos = IDToPos(tPlayerIDs, iPlayerID)
+	table.remove(tPlayerIDs, iPos)
+	nCount = nCount - 1
+	tGAlivePlayers.AlivePlayers = tPlayerIDs
+	tGAlivePlayers.Count = nCount
+	tAlivePlayers = tGAlivePlayers
+	Game.SetProperty("ALIVE_PLAYERS", tGAlivePlayers)
+	Debug("ALIVE_PLAYERS populated with data:", "OnGameplayPlayerDefeat")
+	civ6tostring(tAlivePlayers)
+end
+--player revived
+function OnUIPlayerRevived()
+	Debug("Called", "OnUIPlayerRevived")
+	GameEvents.GameplayPlayerRevived.Call()
+end
+
+function OnGameplayPlayerRevived()
+	Debug("Called", "OnGameplayPlayerRevived")
+	PopulateAliveTable()
+end
+
+-- // ----------------------------------------------------------------------------------------------
+-- // Support Functions
+-- // ----------------------------------------------------------------------------------------------
+function IDToPos(List, SearchItem, key, multi)
+	Debug("Search Item "..tostring(SearchItem), "IDToPos")
+	multi = multi or false
+	Debug("multi "..tostring(multi), "IDToPos")
+	key = key or nil
+	Debug("key "..tostring(key), "IDToPos")
+	local results = {}
+	if List == {} then
+		return false
+	end
+    if SearchItem==nil then
+        return print("Search Error")
+    end
+    for i, item in ipairs(List) do
+    	if key == nil then
+    		Debug("nil key, item "..tostring(item), "IDToPos")
+	        if item == SearchItem then
+	        	if multi then
+	        		table.insert(results, i)
+	        	else
+	            	return i;
+	            end
+	        end
+	    else
+	    	Debug("not nil key, item[key] "..tostring(item[key]), "IDToPos")
+	    	if item[key] == SearchItem then
+	        	if multi then
+	        		table.insert(results, i)
+	        	else
+	            	return i;
+	            end
+	    	end
+	    end
+    end
+    if results == {} or #results==0 or results==nil then
+    	return false
+    else
+    	Debug("Results:", "IDToPos")
+    	for _, item in ipairs(results) do
+    		print(item)
+    	end
+    	return results
+    end
+end
+
 -- // ----------------------------------------------------------------------------------------------
 -- // Lua Events
 -- // ----------------------------------------------------------------------------------------------
 function Initialize()
 	Debug("Cheat Menu Initialization Started", "Initialize");
 	--if ( not ExposedMembers.MOD_CheatMenu) then ExposedMembers.MOD_CheatMenu = {}; end
-	--set local state values
-
+	--set local alive values (probably migrate to bbg script)
+	PopulateAliveTable()
+	--repopulate alive values (probably migrate to bbg script)
+	LuaEvents.UIPlayerDefeat.Add(OnUIPlayerDefeat)
+	LuaEvents.UIPlayerRevived.Add(OnUIPlayerRevived)
+	GameEvents.GameplayPlayerDefeat.Add(OnGameplayPlayerDefeat)
 	--gold
 	LuaEvents.MOD_CheatMenu.UIChangeGold.Add(OnUIChangeGold);
 	GameEvents.GameplayChangeGold.Add(OnGameplayChangeGold)
@@ -229,7 +368,9 @@ function Initialize()
 	GameEvents.GameplayChangeDiplomaticFavor.Add(OnGameplayChangeDiplomaticFavor)
 	--Reveal CS and Players
 	LuaEvents.UIRevealAll.Add(OnUIRevealAll);
-	GameEvents.GameplayRevealAll.Add(OnGameplayRevealAll)	
+	GameEvents.GameplayRevealAll.Add(OnGameplayRevealAll)
+	LuaEvents.UILocalPlayerTurnBegin.Add(OnUILocalPlayerTurnBegin)
+	GameEvents.GameplayLocalTurnBegin.Add(OnGameplayLocalTurnBegin)	
 	--ExposedMembers.MOD_CheatMenu_Initialized = true;
 	Debug("Cheat Menu Initialization Finished", "Initialize");
 end

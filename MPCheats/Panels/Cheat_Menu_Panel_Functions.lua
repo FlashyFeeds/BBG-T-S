@@ -13,12 +13,12 @@ include("AnimSidePanelSupport");
 include( "CitySupport" );
 include("bbgts_debug.lua")
 
-local playerID 						= Game.GetLocalPlayer();
-local pPlayer 						= Players[playerID];
+local iPlayerID 					= Game.GetLocalPlayer();
+local pPlayer 						= Players[iPlayerID];
 local pTreasury 					= pPlayer:GetTreasury();
 local pReligion 					= pPlayer:GetReligion();
 local pEnvoy 						= pPlayer:GetInfluence();
-local pVis 							= PlayersVisibility[playerID];
+local pVis 							= PlayersVisibility[iPlayerID];
 local pNewGP 						= 1;
 local pNewEnvoy 					= 5;
 local pNewReligion 					= 10000;
@@ -36,12 +36,12 @@ local tPlayerSelections             = {}
 function ChangeGold()
 	local pNewGold = 10000
 	if pPlayer:IsHuman() then
-		UICheatEvents.UIChangeGold(playerID, pNewGold); 
+		UICheatEvents.UIChangeGold(iPlayerID, pNewGold); 
     end
 end
 function CompleteProduction()
 	if pPlayer:IsHuman() then
-		UICheatEvents.UICompleteProduction(playerID);
+		UICheatEvents.UICompleteProduction(iPlayerID);
 	end
 end
 function CompleteResearch()
@@ -52,7 +52,7 @@ function CompleteResearch()
 		local pProgress = pTechs:GetResearchProgress(pRTech)
 		local pResearchComplete = (pCost - pProgress)
 		if pPlayer:IsHuman() then		
-			UICheatEvents.UICompleteResearch(playerID, pResearchComplete);				
+			UICheatEvents.UICompleteResearch(iPlayerID, pResearchComplete);				
 		end		
 	end
 end
@@ -64,34 +64,34 @@ function CompleteCivic()
 		local pProgress = pCivics:GetCulturalProgress(pRCivic)
 		local pCivicComplete = (pCost - pProgress)
 		if pPlayer:IsHuman() then		
-			UICheatEvents.UICompleteCivic(playerID, pCivicComplete);				
+			UICheatEvents.UICompleteCivic(iPlayerID, pCivicComplete);				
 		end
 	end	
 end
 function ChangeFaith()
 	if pPlayer:IsHuman() then
-		UICheatEvents.UIChangeFaith(playerID, pNewReligion);
+		UICheatEvents.UIChangeFaith(iPlayerID, pNewReligion);
     end
 end
 function ChangeEnvoy()
 	if pPlayer:IsHuman() then
-		UICheatEvents.UIChangeEnvoy(playerID, pNewEnvoy);
+		UICheatEvents.UIChangeEnvoy(iPlayerID, pNewEnvoy);
     end
 end
 function ChangeDiplomaticFavor()
 	if pPlayer:IsHuman() then
-		UICheatEvents.UIChangeDiplomaticFavor(playerID, pNewFavor);
+		UICheatEvents.UIChangeDiplomaticFavor(iPlayerID, pNewFavor);
     end
 end
 function ChangeGovPoints()
 	if pPlayer:IsHuman() then
-		UICheatEvents.UIChangeGovPoints(playerID, pNewGP);
+		UICheatEvents.UIChangeGovPoints(iPlayerID, pNewGP);
     end
 end
 function RevealAll()
 	if pPlayer:IsHuman() then		
-		--LuaEvents.ChangeFOW(playerID)	
-		UICheatEvents.UIRevealAll(playerID);
+		--LuaEvents.ChangeFOW(iPlayerID)	
+		UICheatEvents.UIRevealAll(iPlayerID);
 	end		
 end
 
@@ -113,8 +113,26 @@ function OnCitySelectionChanged(iPlayerID, iCityID)
 	Debug("Transmitted Values", "OnCitySelectionChanged")
 	civ6tostring(tPlayerSelections)
 end
+
+--ui hook to remove granted visibility next turn
+function OnLocalPlayerTurnBegin()
+	Debug("Called", "OnLocalPlayerTurnBegin")
+	local iPlayerID = Game.GetLocalPlayer()
+	UICheatEvents.UILocalPlayerTurnBegin(iPlayerID)
+end
+--ui hook to remove a defeated player from the list
+function OnPlayerDefeat(iPlayerID, iDefeatType, iEventID)
+	Debug("Called", "OnPlayerDefeat")
+	UICheatEvents.UIPlayerDefeat(iPlayerID)
+end
+--ui hook when the player gets revived
+function OnPlayerRevived()
+	Debug("Called", "OnPlayerRevived")
+	UICheatEvents.UIPlayerRevived()
+end
+
 -- // ----------------------------------------------------------------------------------------------
--- // HOTKEYS
+-- // HOTKEYS (need to make an overlay and disable functions unless all players have time on the timer/loaded in)
 -- // ----------------------------------------------------------------------------------------------
 function OnInputActionTriggered( actionId )
 	if ( actionId == Input.GetActionId("ToggleGold") ) then
@@ -157,6 +175,9 @@ function InitPlayerSelection()
 	UICheatEvents.UIPlayerCityUpdt(tPlayerSelections)
 end
 --====Events and Init====--
-Events.CitySelectionChanged.Add(OnCitySelectionChanged)
+Events.CitySelectionChanged.Add(OnCitySelectionChanged) -- populates player/city table on change 
+Events.LocalPlayerTurnBegin.Add(OnLocalPlayerTurnBegin) -- needed to remove visibility (probably migrate)
+Events.PlayerDefeat.Add(OnPlayerDefeat) --needed to repopulate alive table for visibility cheat (probably migrate)
+Events.PlayerRevived.Add(OnPlayerRevived)
 InitPlayerSelection()
 
