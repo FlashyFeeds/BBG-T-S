@@ -11,7 +11,7 @@ local tAlivePlayers = {}
 -- // ----------------------------------------------------------------------------------------------
 -- // Event Handlers
 -- // ----------------------------------------------------------------------------------------------
---set local state
+--// set local state
 function InitPlayerSelection()
 	local tAliveMajors = PlayerManager.GetAliveMajorIDs()
 	local tPlayerCheatState = Game.GetProperty("PLAYER_SELECTIONS")
@@ -41,14 +41,17 @@ function OnGameplayPlayerCityUpdt(tPlayerSelections)
 	iLocCityID = tPlayerSelections[iLocPlayerID]
 	Debug("Local instnace variables set: iLocPlayerID, iLocCityID: "..tostring(iLocPlayerID)..", "..tostring(iLocCityID), "OnGameplayPlayerCityUpdt")
 end
---gold
-function OnUIChangeGold(iPlayerID, pNewGold)
-	Debug("Called", "OnUIChangeGold")
-	GameEvents.GameplayChangeGold.Call(iPlayerID, pNewGold)
-end
+--// gold
+--function OnUIChangeGold(iPlayerID, pNewGold)
+	--Debug("Called", "OnUIChangeGold")
+	--GameEvents.GameplayChangeGold.Call(iPlayerID, pNewGold)
+--end
 
-function OnGameplayChangeGold(iPlayerID, pNewGold)
+function OnGameplayChangeGold(iPlayerID, kParameters)
 	Debug("Called", "OnGameplayChangeGold")
+	--if kParameters.Type~="ChangeGold" then return end
+	local iPlayerID = kParameters["iPlayerID"]
+	local pNewGold = kParameters["pNewGold"]
 	OnChangeGold(iPlayerID, pNewGold)
 end
 function OnChangeGold(iPlayerID, pNewGold)
@@ -58,14 +61,16 @@ function OnChangeGold(iPlayerID, pNewGold)
     pTreasury:ChangeGoldBalance(pNewGold)
     Debug("Gold added to iPlayerID "..tostring(iPlayerID), "OnChangeGold")
 end
---faith
-function OnUIChangeFaith(iPlayerID, pNewReligion)
-	Debug("Called", "OnUIChangeFaith")
-	GameEvents.GameplayChangeFaith.Call(iPlayerID, pNewReligion)
-end
+--// faith
+--function OnUIChangeFaith(iPlayerID, pNewReligion)
+	--Debug("Called", "OnUIChangeFaith")
+	--GameEvents.GameplayChangeFaith.Call(iPlayerID, pNewReligion)
+--end
 
 function OnGameplayChangeFaith(iPlayerID, pNewReligion)
 	Debug("Called", "OnGameplayChangeFaith")
+	local iPlayerID = kParameters["iPlayerID"]
+	local pNewReligion = kParameters["pNewReligion"]
 	OnChangeFaith(iPlayerID, pNewReligion)
 end
 
@@ -76,14 +81,16 @@ function OnChangeFaith(iPlayerID, pNewReligion)
     pReligion:ChangeFaithBalance(pNewReligion)
     Debug("Faith added to iPlayerID "..tostring(iPlayerID), "OnChangeFaith")
 end
---science current
-function OnUICompleteResearch(iPlayerID, pResearchComplete)
-	Debug("Called", "OnUICompleteResearch")
-	GameEvents.GameplayCompleteResearch.Call(iPlayerID, pResearchComplete)
-end
+--// science current
+--function OnUICompleteResearch(iPlayerID, pResearchComplete)
+	--Debug("Called", "OnUICompleteResearch")
+	--GameEvents.GameplayCompleteResearch.Call(iPlayerID, pResearchComplete)
+--end
 
-function OnGameplayCompleteResearch(iPlayerID, pResearchComplete)
+function OnGameplayCompleteResearch(iPlayerID, kParameters)
 	Debug("Called", "OnGameplayCompleteResearch")
+	local iPlayerID = kParameters["iPlayerID"]
+	local pResearchComplete = kParameters["pResearchComplete"]
 	OnCompleteResearch(iPlayerID, pResearchComplete)
 end
 
@@ -94,14 +101,16 @@ function OnCompleteResearch(iPlayerID, pResearchComplete)
     pResearch:ChangeCurrentResearchProgress(pResearchComplete)
     Debug("Research Completed for iPlayerID "..tostring(iPlayerID), "OnCompleteResearch")
 end
---culture current
-function OnUICompleteCivic(iPlayerID, pCivicComplete)
-	Debug("Called", "OnUICompleteCivic")
-	GameEvents.GameplayCompleteCivic.Call(iPlayerID, pCivicComplete)
-end
+--// culture current
+--function OnUICompleteCivic(iPlayerID, pCivicComplete)
+	--Debug("Called", "OnUICompleteCivic")
+	--GameEvents.GameplayCompleteCivic.Call(iPlayerID, pCivicComplete)
+--end
 
 function OnGameplayCompleteCivic(iPlayerID, pCivicComplete)
 	Debug("Called", "OnGameplayCompleteCivic")
+	iPlayerID = kParameters["iPlayerID"]
+	pCivicComplete = kParameters["pCivicComplete"]
 	OnCompleteCivic(iPlayerID, pCivicComplete)
 end
 
@@ -112,14 +121,15 @@ function OnCompleteCivic(iPlayerID, pCivicComplete)
     pCivics:ChangeCurrentCulturalProgress(pCivicComplete)
     Debug("Civic completed for iPlayerID "..tostring(iPlayerID), "OnCompleteCivic")
 end
---Production Current
-function OnUICompleteProduction(iPlayerID)
-	Debug("Called", "OnUICompleteProduction")
-	GameEvents.GameplayCompleteProduction.Call(iPlayerID)
-end
+--// Production Current
+--function OnUICompleteProduction(iPlayerID)
+	--Debug("Called", "OnUICompleteProduction")
+	--GameEvents.GameplayCompleteProduction.Call(iPlayerID)
+--end
 
-function OnGameplayCompleteProduction(iPlayerID)
+function OnGameplayCompleteProduction(iPlayerID, kParameters)
 	Debug("Called", "OnGameplayCompleteProduction")
+	local iPlayerID = kParameters["iPlayerID"]
 	OnCompleteProduction(iPlayerID)
 end
 
@@ -139,14 +149,16 @@ function OnCompleteProduction(iPlayerID)
 	end
 	Debug("Production Completed for iPlayerID in iLocCityID: "..tostring(iPlayerID)..", "..tostring(iLocCityID), "OnCompleteProduction")
 end
---gov titles
-function OnUIChangeGovPoints(iPlayerID, pNewGP)
-	Debug("Called", "OnUIChangeGovernorPoints")
-	GameEvents.GameplayChangeGovPoints.Call(iPlayerID, pNewGP)
-end
+--// gov titles
+--function OnUIChangeGovPoints(iPlayerID, pNewGP)
+	--Debug("Called", "OnUIChangeGovernorPoints")
+	--GameEvents.GameplayChangeGovPoints.Call(iPlayerID, pNewGP)
+--end
 
 function OnGameplayChangeGovPoints(iPlayerID, pNewGP)
 	Debug("Called", "OnGameplayChangeGovPoints")
+	local iPlayerID = kParameters["iPlayerID"]
+	local pNewGP = kParameters["pNewFavor"]
 	OnChangeGovPoints(iPlayerID, pNewGP)
 end
 
@@ -156,14 +168,16 @@ function OnChangeGovPoints(iPlayerID, pNewGP)
 	pPlayer:GetGovernors():ChangeGovernorPoints(pNewGP);
 	Debug("Gov Titles added to iPlayerID "..tostring(iPlayerID), "OnChangeGovPoints")
 end
---envoys
-function OnUIChangeEnvoy(iPlayerID, pNewEnvoy)
-	Debug("Called", "OnUIChangeEnvoy")
-	GameEvents.GameplayChangeEnvoy.Call(iPlayerID, pNewEnvoy)
-end
+--// envoys
+--function OnUIChangeEnvoy(iPlayerID, pNewEnvoy)
+	--Debug("Called", "OnUIChangeEnvoy")
+	--GameEvents.GameplayChangeEnvoy.Call(iPlayerID, pNewEnvoy)
+--end
 
 function OnGameplayChangeEnvoy(iPlayerID, pNewEnvoy)
 	Debug("Called", "OnGameplayChangeEnvoy")
+	local iPlayerID = kParameters["iPlayerID"]
+	local pNewEnvoy = kParameters["pNewEnvoy"]
 	OnChangeEnvoy(iPlayerID, pNewEnvoy)
 end
 
@@ -174,14 +188,16 @@ function OnChangeEnvoy(iPlayerID, pNewEnvoy)
     pEnvoy:ChangeTokensToGive(pNewEnvoy)
     Debug("Envoys added to iPlayerID "..tostring(iPlayerID), "OnChangeEnvoy")
 end
---diplo favor
-function OnUIChangeDiplomaticFavor(iPlayerID, pNewFavor)
-	Debug("Called", "OnUIChangeDiplomaticFavor")
-	GameEvents.GameplayChangeDiplomaticFavor.Call(iPlayerID, pNewFavor)
-end
+--// diplo favor
+--function OnUIChangeDiplomaticFavor(iPlayerID, pNewFavor)
+	--Debug("Called", "OnUIChangeDiplomaticFavor")
+	--GameEvents.GameplayChangeDiplomaticFavor.Call(iPlayerID, pNewFavor)
+--end
 
 function OnGameplayChangeDiplomaticFavor(iPlayerID, pNewFavor)
 	Debug("Called", "OnGameplayChangeDiplomaticFavor")
+	local iPlayerID = kParameters["iPlayerID"]
+	local pNewFavor = kParameters["pNewFavor"]
 	OnChangeDiplomaticFavor(iPlayerID, pNewFavor)
 end
 
@@ -194,13 +210,14 @@ function OnChangeDiplomaticFavor(iPlayerID, pNewFavor)
 	Debug("Diplo Favor added to iPlayerID"..tostring(iPlayerID), "OnChangeDiplomaticFavor")
 end
 --reveal cs and players
-function OnUIRevealAll(iPlayerID)
-	Debug("Called", "OnUIRevealAll")
-	GameEvents.GameplayRevealAll.Call(iPlayerID)
-end
+--function OnUIRevealAll(iPlayerID)
+	--Debug("Called", "OnUIRevealAll")
+	--GameEvents.GameplayRevealAll.Call(iPlayerID)
+--end
 
 function OnGameplayRevealAll(iPlayerID)
 	Debug("Called", "OnGameplayRevealAll")
+	local iPlayerID = kParameters["iPlayerID"]
 	OnRevealAll(iPlayerID)
 end
 
@@ -217,6 +234,8 @@ function OnRevealAll(iPlayerID)
 		if iPlayerID~=iAliveID then
 			local pAliveVis = PlayersVisibility[iAliveID]
 			pAliveVis:AddOutgoingVisibility(iPlayerID)
+			local pAliveDiplo = Players[iAliveID]:GetDiplomacy()
+			pAliveDiplo:HasMet(iPlayerID)
 			Debug("Visibility added from iAliveID "..tostring(iAliveID).." to iPlayerID "..tostring(iPlayerID), "OnRevealAll")
 		end
 	end
@@ -368,31 +387,32 @@ function Initialize()
 	LuaEvents.UIPlayerRevived.Add(OnUIPlayerRevived)
 	GameEvents.GameplayPlayerDefeat.Add(OnGameplayPlayerDefeat)
 	--gold
-	LuaEvents.UIChangeGold.Add(OnUIChangeGold);
+	--LuaEvents.UIChangeGold.Add(OnUIChangeGold);
 	GameEvents.GameplayChangeGold.Add(OnGameplayChangeGold)
+	--GameEvents.OnPlayerCommandSetObjectState.Add(OnGameplayChangeGold)
 	--faith
-	LuaEvents.UIChangeFaith.Add(OnUIChangeFaith);
+	--LuaEvents.UIChangeFaith.Add(OnUIChangeFaith);
 	GameEvents.GameplayChangeFaith.Add(OnGameplayChangeFaith)
 	--science current
-	LuaEvents.UICompleteResearch.Add(OnUICompleteResearch);
+	--LuaEvents.UICompleteResearch.Add(OnUICompleteResearch);
 	GameEvents.GameplayCompleteResearch.Add(OnGameplayCompleteResearch)
 	--culture current
-	LuaEvents.UICompleteCivic.Add(OnUICompleteCivic);	
+	--LuaEvents.UICompleteCivic.Add(OnUICompleteCivic);	
 	GameEvents.GameplayCompleteCivic.Add(OnGameplayCompleteCivic)
 	--production current
-	LuaEvents.UICompleteProduction.Add(OnUICompleteProduction);
+	--LuaEvents.UICompleteProduction.Add(OnUICompleteProduction);
 	GameEvents.GameplayCompleteProduction.Add(OnGameplayCompleteProduction)
 	--Gov titles
-	LuaEvents.UIChangeGovPoints.Add(OnUIChangeGovPoints);
+	--LuaEvents.UIChangeGovPoints.Add(OnUIChangeGovPoints);
 	GameEvents.GameplayChangeGovPoints.Add(OnGameplayChangeGovPoints)
 	--Envoys
-	LuaEvents.UIChangeEnvoy.Add(OnUIChangeEnvoy);
+	--LuaEvents.UIChangeEnvoy.Add(OnUIChangeEnvoy);
 	GameEvents.GameplayChangeEnvoy.Add(OnGameplayChangeEnvoy)
 	--Diplo Favor
-	LuaEvents.UIChangeDiplomaticFavor.Add(OnUIChangeDiplomaticFavor);
+	--LuaEvents.UIChangeDiplomaticFavor.Add(OnUIChangeDiplomaticFavor);
 	GameEvents.GameplayChangeDiplomaticFavor.Add(OnGameplayChangeDiplomaticFavor)
 	--Reveal CS and Players
-	LuaEvents.UIRevealAll.Add(OnUIRevealAll);
+	--LuaEvents.UIRevealAll.Add(OnUIRevealAll);
 	GameEvents.GameplayRevealAll.Add(OnGameplayRevealAll)
 	LuaEvents.UILocalPlayerTurnBegin.Add(OnUILocalPlayerTurnBegin)
 	GameEvents.GameplayLocalTurnBegin.Add(OnGameplayLocalTurnBegin)	

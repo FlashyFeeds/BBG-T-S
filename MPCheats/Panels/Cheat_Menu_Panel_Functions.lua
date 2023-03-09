@@ -36,6 +36,7 @@ local tPlayerSelections             = {}
 function ChangeGold()
 	local pNewGold = 10000
 	if pPlayer:IsHuman() then
+		Debug("Called", "ChangeGold")
 		local kParameters = {}
 		kParameters.OnStart = "GameplayChangeGold"
 		kParameters["iPlayerID"] = iPlayerID
@@ -46,57 +47,103 @@ function ChangeGold()
 end
 function CompleteProduction()
 	if pPlayer:IsHuman() then
-		UICheatEvents.UICompleteProduction(iPlayerID);
+		Debug("Called", "CompleteProduction")
+		local kParameters = {}
+		kParameters.OnStart = "GameplayCompleteProduction"
+		kParameters["iPlayerID"] = iPlayerID
+		UI.RequestPlayerOperation(iPlayerID, PlayerOperations.EXECUTE_SCRIPT, kParameters);
+		--UICheatEvents.UICompleteProduction(iPlayerID);
 	end
 end
 function CompleteResearch()
+	Debug("Called", "CompleteResearch")
  	local pTechs = pPlayer:GetTechs()
 	local pRTech = pTechs:GetResearchingTech()	
 	if pRTech >= 0 then
 		local pCost = pTechs:GetResearchCost(pRTech)	
 		local pProgress = pTechs:GetResearchProgress(pRTech)
 		local pResearchComplete = (pCost - pProgress)
-		if pPlayer:IsHuman() then		
-			UICheatEvents.UICompleteResearch(iPlayerID, pResearchComplete);				
+		if pPlayer:IsHuman() then
+			local kParameters = {}
+			kParameters.OnStart = "GameplayCompleteResearch"
+			kParameters["iPlayerID"] = iPlayerID
+			kParameters["pResearchComplete"] = pResearchComplete
+			UI.RequestPlayerOperation(iPlayerID, PlayerOperations.EXECUTE_SCRIPT, kParameters);		
+			--UICheatEvents.UICompleteResearch(iPlayerID, pResearchComplete);				
 		end		
 	end
 end
 function CompleteCivic()
+	Debug("Called", "CompleteCivic")
  	local pCivics = pPlayer:GetCulture()
 	local pRCivic = pCivics:GetProgressingCivic()
 	if pRCivic >= 0 then		
 		local pCost = pCivics:GetCultureCost(pRCivic)	
 		local pProgress = pCivics:GetCulturalProgress(pRCivic)
 		local pCivicComplete = (pCost - pProgress)
-		if pPlayer:IsHuman() then		
-			UICheatEvents.UICompleteCivic(iPlayerID, pCivicComplete);				
+		if pPlayer:IsHuman() then			
+			local kParameters = {}
+			kParameters.OnStart = "GameplayCompleteCivic"
+			kParameters["iPlayerID"] = iPlayerID
+			kParameters["pCivicComplete"] = pCivicComplete
+			UI.RequestPlayerOperation(iPlayerID, PlayerOperations.EXECUTE_SCRIPT, kParameters);			
+			--UICheatEvents.UICompleteCivic(iPlayerID, pCivicComplete);				
 		end
 	end	
 end
 function ChangeFaith()
+	Debug("Called", "ChangeFaith")
 	if pPlayer:IsHuman() then
-		UICheatEvents.UIChangeFaith(iPlayerID, pNewReligion);
+		local kParameters = {}
+		kParameters.OnStart = "GameplayChangeFaith"
+		kParameters["iPlayerID"] = iPlayerID
+		kParameters["pNewReligion"] = pNewReligion
+		UI.RequestPlayerOperation(iPlayerID, PlayerOperations.EXECUTE_SCRIPT, kParameters);			
+		--UICheatEvents.UIChangeFaith(iPlayerID, pNewReligion);
     end
 end
 function ChangeEnvoy()
+	Debug("Called", "ChangeEnvoy")
 	if pPlayer:IsHuman() then
-		UICheatEvents.UIChangeEnvoy(iPlayerID, pNewEnvoy);
+		local kParameters = {}
+		kParameters.OnStart = "GameplayChangeEnvoy"
+		kParameters["iPlayerID"] = iPlayerID
+		kParameters["pNewEnvoy"] = pNewEnvoy
+		UI.RequestPlayerOperation(iPlayerID, PlayerOperations.EXECUTE_SCRIPT, kParameters);			
+		--UICheatEvents.UIChangeEnvoy(iPlayerID, pNewEnvoy);
     end
 end
 function ChangeDiplomaticFavor()
+	Debug("Called", "ChangeDiplomaticFavor")
 	if pPlayer:IsHuman() then
-		UICheatEvents.UIChangeDiplomaticFavor(iPlayerID, pNewFavor);
+		local kParameters = {}
+		kParameters.OnStart = "GameplayChangeDiplomaticFavor"
+		kParameters["iPlayerID"] = iPlayerID
+		kParameters["pNewFavor"] = pNewFavor
+		UI.RequestPlayerOperation(iPlayerID, PlayerOperations.EXECUTE_SCRIPT, kParameters);
+		--UICheatEvents.UIChangeDiplomaticFavor(iPlayerID, pNewFavor);
     end
 end
 function ChangeGovPoints()
+	Debug("Called", "ChangeGovPoints")
 	if pPlayer:IsHuman() then
-		UICheatEvents.UIChangeGovPoints(iPlayerID, pNewGP);
+		local kParameters = {}
+		kParameters.OnStart = "GameplayChangeGovPoints"
+		kParameters["iPlayerID"] = iPlayerID
+		kParameters["pNewFavor"] = pNewGP
+		UI.RequestPlayerOperation(iPlayerID, PlayerOperations.EXECUTE_SCRIPT, kParameters);
+		--UICheatEvents.UIChangeGovPoints(iPlayerID, pNewGP);
     end
 end
 function RevealAll()
-	if pPlayer:IsHuman() then		
+	Debug("Called", "RevealAll")
+	if pPlayer:IsHuman() then
+		local kParameters = {}
+		kParameters.OnStart = "GameplayRevealAll"
+		kParameters["iPlayerID"] = iPlayerID
+		UI.RequestPlayerOperation(iPlayerID, PlayerOperations.EXECUTE_SCRIPT, kParameters);		
 		--LuaEvents.ChangeFOW(iPlayerID)	
-		UICheatEvents.UIRevealAll(iPlayerID);
+		--UICheatEvents.UIRevealAll(iPlayerID);
 	end		
 end
 
