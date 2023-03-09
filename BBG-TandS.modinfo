@@ -76,7 +76,7 @@
 			<!--<Criteria>bbgts_mp_cheats</Criteria>-->
 			<File>MPCheats/Text/input_config.xml</File>
 			<File>MPCheats/Text/options_text.xml</File>
-		<UpdateText>
+		</UpdateText>
 		
 		<UpdateIcons id="BBGTS_Icons FrontEnd">
 			<File>icons/bbgts_icons.xml</File>
