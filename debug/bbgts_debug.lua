@@ -5,7 +5,7 @@ function Debug(statement: string, context)
 		return
 	end
 	local currentTime, float = math.modf(Automation.GetTime())
-	local GAME_ID = GetObjectState(Game,"GameID")
+	local GAME_ID = Game.GetProperty("GameID")
 	if GAME_ID==nil then
 		print(context..": "..statement..". Local Player: "..tostring(Game.GetLocalPlayer()).." Turn: "..tostring(Game.GetCurrentGameTurn()))
 		return
