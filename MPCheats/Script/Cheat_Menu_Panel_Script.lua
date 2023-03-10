@@ -253,8 +253,9 @@ function OnUILocalPlayerTurnBegin(iPlayerID)
 	GameEvents.GameplayLocalTurnBegin.Call(iPlayerID)
 end
 
-function OnGameplayLocalTurnBegin(iPlayerID)
+function OnGameplayLocalTurnBegin(iPlayerID, kParameters)
 	Debug("Called", "OnGameplayLocalTurnBegin")
+	local iPlayerID = kParameters["iPlayerID"]
 	local pPlayer = Players[iPlayerID]
 	if pPlayer:GetProperty("VISIBILITY_END_TURN")==nil then return end
 

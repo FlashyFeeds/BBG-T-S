@@ -178,7 +178,11 @@ end
 function OnLocalPlayerTurnBegin()
 	Debug("Called", "OnLocalPlayerTurnBegin")
 	local iPlayerID = Game.GetLocalPlayer()
-	UICheatEvents.UILocalPlayerTurnBegin(iPlayerID)
+	local kParameters = {}
+	kParameters.OnStart = "GameplayLocalTurnBegin"
+	kParameters["iPlayerID"] = iPlayerID
+	UI.RequestPlayerOperation(iPlayerID, PlayerOperations.EXECUTE_SCRIPT, kParameters);
+	--UICheatEvents.UILocalPlayerTurnBegin(iPlayerID)
 end
 --ui hook to remove a defeated player from the list
 function OnPlayerDefeat(iPlayerID, iDefeatType, iEventID)
