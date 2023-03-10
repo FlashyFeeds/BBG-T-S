@@ -67,7 +67,7 @@ end
 	--GameEvents.GameplayChangeFaith.Call(iPlayerID, pNewReligion)
 --end
 
-function OnGameplayChangeFaith(iPlayerID, pNewReligion)
+function OnGameplayChangeFaith(iPlayerID, kParameters)
 	Debug("Called", "OnGameplayChangeFaith")
 	local iPlayerID = kParameters["iPlayerID"]
 	local pNewReligion = kParameters["pNewReligion"]
@@ -107,7 +107,7 @@ end
 	--GameEvents.GameplayCompleteCivic.Call(iPlayerID, pCivicComplete)
 --end
 
-function OnGameplayCompleteCivic(iPlayerID, pCivicComplete)
+function OnGameplayCompleteCivic(iPlayerID, kParameters)
 	Debug("Called", "OnGameplayCompleteCivic")
 	iPlayerID = kParameters["iPlayerID"]
 	pCivicComplete = kParameters["pCivicComplete"]
@@ -155,7 +155,7 @@ end
 	--GameEvents.GameplayChangeGovPoints.Call(iPlayerID, pNewGP)
 --end
 
-function OnGameplayChangeGovPoints(iPlayerID, pNewGP)
+function OnGameplayChangeGovPoints(iPlayerID, kParameters)
 	Debug("Called", "OnGameplayChangeGovPoints")
 	local iPlayerID = kParameters["iPlayerID"]
 	local pNewGP = kParameters["pNewFavor"]
@@ -174,7 +174,7 @@ end
 	--GameEvents.GameplayChangeEnvoy.Call(iPlayerID, pNewEnvoy)
 --end
 
-function OnGameplayChangeEnvoy(iPlayerID, pNewEnvoy)
+function OnGameplayChangeEnvoy(iPlayerID, kParameters)
 	Debug("Called", "OnGameplayChangeEnvoy")
 	local iPlayerID = kParameters["iPlayerID"]
 	local pNewEnvoy = kParameters["pNewEnvoy"]
@@ -194,7 +194,7 @@ end
 	--GameEvents.GameplayChangeDiplomaticFavor.Call(iPlayerID, pNewFavor)
 --end
 
-function OnGameplayChangeDiplomaticFavor(iPlayerID, pNewFavor)
+function OnGameplayChangeDiplomaticFavor(iPlayerID, kParameters)
 	Debug("Called", "OnGameplayChangeDiplomaticFavor")
 	local iPlayerID = kParameters["iPlayerID"]
 	local pNewFavor = kParameters["pNewFavor"]
@@ -215,7 +215,7 @@ end
 	--GameEvents.GameplayRevealAll.Call(iPlayerID)
 --end
 
-function OnGameplayRevealAll(iPlayerID)
+function OnGameplayRevealAll(iPlayerID, kParameters)
 	Debug("Called", "OnGameplayRevealAll")
 	local iPlayerID = kParameters["iPlayerID"]
 	OnRevealAll(iPlayerID)
@@ -235,7 +235,10 @@ function OnRevealAll(iPlayerID)
 			local pAliveVis = PlayersVisibility[iAliveID]
 			pAliveVis:AddOutgoingVisibility(iPlayerID)
 			local pAliveDiplo = Players[iAliveID]:GetDiplomacy()
-			pAliveDiplo:HasMet(iPlayerID)
+			print("Diplo fetched sucka")
+			if pAliveDiplo~=nil then
+				pAliveDiplo:SetHasMet(iPlayerID)
+			end
 			Debug("Visibility added from iAliveID "..tostring(iAliveID).." to iPlayerID "..tostring(iPlayerID), "OnRevealAll")
 		end
 	end
@@ -278,10 +281,12 @@ function PopulateAliveTable()
 	local tPlayerIDs = {}
 	local nAlivePlayerCount = 0
 	for i=0, 60 do
-		local tmp_civ = Players[i]
-		if tmp_civ~=nil then
-			table.insert(tPlayerIDs, i)
-			nAlivePlayerCount = nAlivePlayerCount+1
+		local pTmpPlayer = Players[i]
+		if pTmpPlayer~=nil then
+			if pTmpPlayer:IsAlive() then
+				table.insert(tPlayerIDs, i)
+				nAlivePlayerCount = nAlivePlayerCount+1
+			end
 		end
 	end
 	tAlivePlayers.AlivePlayers = tPlayerIDs
