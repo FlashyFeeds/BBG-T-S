@@ -4,43 +4,43 @@
 -- // ----------------------------------------------------------------------------------------------
 ExposedMembers.LuaEvents = LuaEvents
 include("bbgts_debug.lua")
-local iLocPlayerID;
-local iLocCityID;
+--local iLocPlayerID;
+--local iLocCityID;
 local tAlivePlayers = {}
 
 -- // ----------------------------------------------------------------------------------------------
 -- // Event Handlers
 -- // ----------------------------------------------------------------------------------------------
 --// set local state
-function InitPlayerSelection()
-	local tAliveMajors = PlayerManager.GetAliveMajorIDs()
-	local tPlayerCheatState = Game.GetProperty("PLAYER_SELECTIONS")
-	local tPlayerSelections = {}
-	if tPlayerCheatState ~= nil then return end
+--function InitPlayerSelection()
+	--local tAliveMajors = PlayerManager.GetAliveMajorIDs()
+	--local tPlayerCheatState = Game.GetProperty("PLAYER_SELECTIONS")
+	--local tPlayerSelections = {}
+	--if tPlayerCheatState ~= nil then return end
 	
-	for i, iPlayerID in ipairs(tAliveMajors) do
-		tPlayerSelections[iPlayerID] = -1
-	end
-	Game.SetProperty("PLAYER_SELECTIONS", tPlayerSelections)
-	Debug("tPlayerSelections populated with values", "InitPlayerSelection")
-	civ6tostring(tPlayerSelections)
+	--for i, iPlayerID in ipairs(tAliveMajors) do
+		--tPlayerSelections[iPlayerID] = -1
+	--end
+	--Game.SetProperty("PLAYER_SELECTIONS", tPlayerSelections)
+	--Debug("tPlayerSelections populated with values", "InitPlayerSelection")
+	--civ6tostring(tPlayerSelections)
 	--UICheatEvents.UIPlayerCityUpdt(tPlayerSelections)
-end
+--end
 
-function OnUIPlayerCityUpdt(tPlayerSelections)
-	Debug("Called", "OnUIPlayerCityUpdt")
-	GameEvents.GameplayPlayerCityUpdt.Call(tPlayerSelections)
-end
+--function OnUIPlayerCityUpdt(tPlayerSelections)
+	--Debug("Called", "OnUIPlayerCityUpdt")
+	--GameEvents.GameplayPlayerCityUpdt.Call(tPlayerSelections)
+--end
 
-function OnGameplayPlayerCityUpdt(tPlayerSelections)
-	Debug("Called", "OnGameplayPlayerCityUpdt")
-	Game.SetProperty("PLAYER_SELECTIONS", tPlayerSelections)
-	Debug("Game Property PLAYER_SELECTIONS set with values", "OnGameplayPlayerCityUpdt")
-	civ6tostring(tPlayerSelections)
-	iLocPlayerID = Game.GetLocalPlayer()
-	iLocCityID = tPlayerSelections[iLocPlayerID]
-	Debug("Local instnace variables set: iLocPlayerID, iLocCityID: "..tostring(iLocPlayerID)..", "..tostring(iLocCityID), "OnGameplayPlayerCityUpdt")
-end
+--function OnGameplayPlayerCityUpdt(tPlayerSelections)
+	--Debug("Called", "OnGameplayPlayerCityUpdt")
+	--Game.SetProperty("PLAYER_SELECTIONS", tPlayerSelections)
+	--Debug("Game Property PLAYER_SELECTIONS set with values", "OnGameplayPlayerCityUpdt")
+	--civ6tostring(tPlayerSelections)
+	--iLocPlayerID = Game.GetLocalPlayer()
+	--iLocCityID = tPlayerSelections[iLocPlayerID]
+	--Debug("Local instnace variables set: iLocPlayerID, iLocCityID: "..tostring(iLocPlayerID)..", "..tostring(iLocCityID), "OnGameplayPlayerCityUpdt")
+--end
 --// gold
 --function OnUIChangeGold(iPlayerID, pNewGold)
 	--Debug("Called", "OnUIChangeGold")
@@ -130,24 +130,24 @@ end
 function OnGameplayCompleteProduction(iPlayerID, kParameters)
 	Debug("Called", "OnGameplayCompleteProduction")
 	local iPlayerID = kParameters["iPlayerID"]
-	OnCompleteProduction(iPlayerID)
+	local iCityID = kParameters["iCityID"]
+	OnCompleteProduction(iPlayerID, iCityID)
 end
 
-function OnCompleteProduction(iPlayerID)
+function OnCompleteProduction(iPlayerID, iCityID)
 	Debug("Called", "OnCompleteProduction")
 	local pPlayer = Players[iPlayerID]
 	if pPlayer == nil then
 		return print("Error: nil player")
 	end
-	local pCity = pPlayer:GetCities():FindID(iLocCityID)
+	local pCity = CityManager.GetCity(iPlayerID, iCityID)
 	if pCity == nil then
 		return print("Error: nil City")
 	end
 	local pCityBuildQueue = pCity:GetBuildQueue();
-	if iLocPlayerID == iPlayerID then
-		pCityBuildQueue:FinishProgress()		
-	end
-	Debug("Production Completed for iPlayerID in iLocCityID: "..tostring(iPlayerID)..", "..tostring(iLocCityID), "OnCompleteProduction")
+	
+	pCityBuildQueue:FinishProgress()		
+	Debug("Production Completed for iPlayerID in iLocCityID: "..tostring(iPlayerID)..", "..tostring(iCityID), "OnCompleteProduction")
 end
 --// gov titles
 --function OnUIChangeGovPoints(iPlayerID, pNewGP)
@@ -383,10 +383,10 @@ function Initialize()
 	--if ( not ExposedMembers.MOD_CheatMenu) then ExposedMembers.MOD_CheatMenu = {}; end
 	--set local alive values (probably migrate to bbg script)
 	PopulateAliveTable()
-	InitPlayerSelection()
+	--InitPlayerSelection()
 	--update city selection
-	LuaEvents.UIPlayerCityUpdt.Add(OnUIPlayerCityUpdt)
-	GameEvents.GameplayPlayerCityUpdt.Add(OnGameplayPlayerCityUpdt)
+	--LuaEvents.UIPlayerCityUpdt.Add(OnUIPlayerCityUpdt)
+	--GameEvents.GameplayPlayerCityUpdt.Add(OnGameplayPlayerCityUpdt)
 	--repopulate alive values (probably migrate to bbg script)
 	LuaEvents.UIPlayerDefeat.Add(OnUIPlayerDefeat)
 	LuaEvents.UIPlayerRevived.Add(OnUIPlayerRevived)

@@ -14,6 +14,7 @@ include( "CitySupport" );
 include("bbgts_debug.lua")
 
 local iPlayerID 					= Game.GetLocalPlayer();
+local iLocCityID                    = -1
 local pPlayer 						= Players[iPlayerID];
 local pTreasury 					= pPlayer:GetTreasury();
 local pReligion 					= pPlayer:GetReligion();
@@ -51,6 +52,7 @@ function CompleteProduction()
 		local kParameters = {}
 		kParameters.OnStart = "GameplayCompleteProduction"
 		kParameters["iPlayerID"] = iPlayerID
+		kParameters["iCityID"] =  iLocCityID
 		UI.RequestPlayerOperation(iPlayerID, PlayerOperations.EXECUTE_SCRIPT, kParameters);
 		--UICheatEvents.UICompleteProduction(iPlayerID);
 	end
@@ -160,11 +162,16 @@ end
 function OnCitySelectionChanged(iPlayerID, iCityID)
 	Debug("Called", "OnCitySelectionChanged")
 	Debug("iPlayerID, iCityID values "..tostring(iPlayerID)..", "..tostring(iCityID), "OnCitySelectionChanged")
-	local tPlayerSelections = Game.GetProperty("PLAYER_SELECTIONS")
-	tPlayerSelections[iPlayerID] = iCityID	
-	UICheatEvents.UIPlayerCityUpdt(tPlayerSelections)
-	Debug("Transmitted Values", "OnCitySelectionChanged")
-	civ6tostring(tPlayerSelections)
+	--local tPlayerSelections = Game.GetProperty("PLAYER_SELECTIONS")
+	iLocCityID = iCityID
+	--tPlayerSelections[iPlayerID] = iLocCityID
+	--local kParameters = {}
+	--kParameters.OnStart = "GameplayPlayerCityUpdt"
+	--kParameters["tPlayerSelections"] = tPlayerSelections
+	--UI.RequestPlayerOperation(iPlayerID, PlayerOperations.EXECUTE_SCRIPT, kParameters);
+	--UICheatEvents.UIPlayerCityUpdt(tPlayerSelections)
+	Debug("iPlayerID, iLocCityID values "..tostring(iPlayerID)..", "..tostring(iLocCityID), "OnCitySelectionChanged")
+	--civ6tostring(tPlayerSelections)
 end
 
 --ui hook to remove granted visibility next turn
