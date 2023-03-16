@@ -47,11 +47,23 @@
         <Row Tag="LOC_BBGTS_AMANI_DESC" language="en">
             <Text> BugFix1 Description</Text>>
         </Row>
-        <Row Tag="LOC_BBGTS_COMMUNISM_NAME" language="en">
+        <Row Tag="LOC_BBGTS_COMMUNISM_MOD_NAME" language="en">
             <Text> Suggestion1</Text>>
         </Row>
-        <Row Tag="LOC_BBGTS_COMMUNISM_DESC" language="en">
+        <Row Tag="LOC_BBGTS_COMMUNISM_MOD_DESC" language="en">
             <Text> Suggestion1 Description</Text>>
+        </Row>
+        <Row Tag="LOC_BBGTS_COMMUNISM_MOD_NAME" language="en">
+            <Text> Suggestion1</Text>>
+        </Row>
+        <Row Tag="LOC_BBGTS_COMMUNISM_MOD_DESC" language="en">
+            <Text> Suggestion1 Description</Text>>
+        </Row>
+        <Row Tag="LOC_BBGTS_COMMUNISM_BUILD_NAME" language="en">
+            <Text> BugFix1</Text>>
+        </Row>
+        <Row Tag="LOC_BBGTS_COMMUNISM_BUILD_DESC" language="en">
+            <Text> BugFix1 Description</Text>>
         </Row>
         <Row Tag="LOC_BBGTS_UNIFIER_NAME" language="en">
             <Text> BugFix1</Text>>

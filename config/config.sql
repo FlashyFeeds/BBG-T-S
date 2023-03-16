@@ -30,11 +30,13 @@ INSERT INTO Parameters(ParameterId, Name, Description, Domain, DefaultValue, Con
 --Insert your Suggestions Here, sort order 30000+
 INSERT INTO Parameters(ParameterId, Name, Description, Domain, DefaultValue, ConfigurationGroup, ConfigurationId, GroupId, Visible, SupportsSinglePlayer, SortIndex) VALUES
     ('BBGTS_Amani', 'LOC_BBGTS_AMANI_NAME', 'LOC_BBGTS_AMANI_DESC', 'bool', '0', 'Game', 'BBGTS_AMANI', 'AdvancedOptions', '1', '1', '30000'),
-    ('BBGTS_Communism', 'LOC_BBGTS_COMMUNISM_NAME', 'LOC_BBGTS_COMMUNISM_DESC', 'bool', '0', 'Game', 'BBGTS_COMMUNISM', 'AdvancedOptions', '1', '1', '30010'),
-    ('BBGTS_Unifier', 'LOC_BBGTS_UNIFIER_NAME', 'LOC_BBGTS_UNIFIER_DESC', 'bool', '0', 'Game', 'BBGTS_UNIFIER', 'AdvancedOptions', '1', '1', '30020'),
-    ('BBGTS_IncaWonders', 'LOC_BBGTS_INCA_WONDERS_NAME', 'LOC_BBGTS_INCA_WONDERS_DESC', 'bool', '0', 'Game', 'BBGTS_INCA_WONDERS', 'AdvancedOptions', '1', '1', '30030');
-    ('BBGTS_ExpBugFix', 'LOC_BBGTS_EXP_FIX_NAME', 'LOC_BBGTS_EXP_FIX_DESC', 'bool', '0', 'Game', 'BBGTS_EXP_FIX', 'AdvancedOptions', '1', '1', '30040'),
-    ('BBGTS_MovementBugFix', 'LOC_BBGTS_MOVE_FIX_NAME', 'LOC_BBGTS_MOVE_FIX_DESC', 'bool', '0', 'Game', 'BBGTS_MOVE_FIX', 'AdvancedOptions', '1', '1', '30050');
+    ('BBGTS_Communism_Mod', 'LOC_BBGTS_COMMUNISM_MOD_NAME', 'LOC_BBGTS_COMMUNISM_MOD_DESC', 'bool', '0', 'Game', 'BBGTS_COMMUNISM_MOD', 'AdvancedOptions', '1', '1', '30010'),
+    ('BBGTS_Communism_Build', 'LOC_BBGTS_COMMUNISM_BUILD_NAME', 'LOC_BBGTS_COMMUNISM_BUILD_DESC', 'bool', '0', 'Game', 'BBGTS_COMMUNISM_BUILD', 'AdvancedOptions', '1', '1', '30020'),
+    ('BBGTS_Unifier', 'LOC_BBGTS_UNIFIER_NAME', 'LOC_BBGTS_UNIFIER_DESC', 'bool', '0', 'Game', 'BBGTS_UNIFIER', 'AdvancedOptions', '1', '1', '30030'),
+    ('BBGTS_IncaWonders', 'LOC_BBGTS_INCA_WONDERS_NAME', 'LOC_BBGTS_INCA_WONDERS_DESC', 'bool', '0', 'Game', 'BBGTS_INCA_WONDERS', 'AdvancedOptions', '1', '1', '30040'),
+    ('BBGTS_MacedonBugFix', 'LOC_BBGTS_MACEDON_FIX_NAME', 'LOC_BBGTS_MACEDON_FIX_DESC', 'bool', '0', 'Game', 'BBGTS_MACEDON_FIX', 'AdvancedOptions', '1', '1', '30050'),
+    ('BBGTS_ExpBugFix', 'LOC_BBGTS_EXP_FIX_NAME', 'LOC_BBGTS_EXP_FIX_DESC', 'bool', '0', 'Game', 'BBGTS_EXP_FIX', 'AdvancedOptions', '1', '1', '30060'),
+    ('BBGTS_MovementBugFix', 'LOC_BBGTS_MOVE_FIX_NAME', 'LOC_BBGTS_MOVE_FIX_DESC', 'bool', '0', 'Game', 'BBGTS_MOVE_FIX', 'AdvancedOptions', '1', '1', '30070');
     --('BBGTS_AttachDetachModifier', 'LOC_BBGTS_ATTACH_DETACH_NAME', 'LOC_BBGTS_ATTACH_DETACH_DESC', 'bool', '0', 'Game', 'BBGTS_ATTACH_DETACH_TEST', 'AdvancedOptions', '1', '1', '30020'),
     --('BBGTS_WatermillSuggestion', 'LOC_BBGTS_WATERMILL_SUGGESTION_NAME', 'LOC_BBGTS_WATERMILL_SUGGESTION_DESC', 'bool', '0', 'Game', 'BBGTS_WATERMILL_SUGGESTION', 'AdvancedOptions', '1', '1', '30030'),
     --('BBGTS_Spy', 'LOC_BBGTS_SPY_NAME', 'LOC_BBGTS_SPY_DESC', 'bool', '0', 'Game', 'BBGTS_SPY_TEST', 'AdvancedOptions', '1', '1', '30040');
@@ -48,9 +50,11 @@ INSERT INTO ParameterCriteria(ParameterId, ConfigurationGroup, ConfigurationId, 
     ('BBGTS_DebugLua', 'Game', 'BBGTS_GAMEMODE', 'Equals', '1'),
     ('BBGTS_MP_CHEATS', 'Game', 'BBGTS_GAMEMODE', 'Equals', '1'),
     ('BBGTS_Amani', 'Game', 'BBGTS_GAMEMODE', 'Equals', '1'),
-    ('BBGTS_Communism', 'Game', 'BBGTS_GAMEMODE', 'Equals', '1'),
+    ('BBGTS_Communism_Mod', 'Game', 'BBGTS_GAMEMODE', 'Equals', '1'),
+    ('BBGTS_Communism_Build', 'Game', 'BBGTS_GAMEMODE', 'Equals', '1'),
     ('BBGTS_Unifier', 'Game', 'BBGTS_GAMEMODE', 'Equals', '1'),
     ('BBGTS_IncaWonders', 'Game', 'BBGTS_GAMEMODE', 'Equals', '1'),
+    ('BBGTS_MacedonBugFix', 'Game', 'BBGTS_GAMEMODE', 'Equals', '1'),
     ('BBGTS_ExpBugFix', 'Game', 'BBGTS_GAMEMODE', 'Equals', '1'),
     ('BBGTS_MovementBugFix', 'Game', 'BBGTS_GAMEMODE', 'Equals', '1');
     
