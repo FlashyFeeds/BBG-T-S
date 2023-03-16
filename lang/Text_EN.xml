@@ -13,19 +13,19 @@
             <Text>[COLOR_Civ6Red]BBG: Tests and Suggestions[ENDCOLOR] </Text>
         </Replace>
         <Replace Tag="LOC_BBGTS_GAMEMODE_DESCRIPTION" language="en">
-            <Text> Enables currently present alpha tests and suggestions</Text>
+            <Text>Enables currently present alpha tests and suggestions</Text>
         </Replace>
         <Replace Tag="LOC_BBGTS_DEBUG_LUA_NAME" language="en">
             <Text>[COLOR_Grey]Debug Lua Scripts[ENDCOLOR]</Text>
         </Replace>        
         <Replace Tag="LOC_BBGTS_DEBUG_LUA_DESC" language="en">
-            <Text> Allows Debugging Lua scripts in a standardised way. Use with discord for MP script debug</Text>
+            <Text>Allows Debugging Lua scripts in a standardised way. Use with discord for MP script debug</Text>
         </Replace>
         <Replace Tag="LOC_BBGTS_MP_CHEAT_NAME" language="en">
             <Text>[COLOR_Civ6Red]Multiplayer Tester Panel[ENDCOLOR]</Text>
         </Replace>        
         <Replace Tag="LOC_BBGTS_MP_CHEAT_DESC" language="en">
-            <Text> Enables In-Game Multiplayer Tester Panel and Several City Projects to Accelerate the Game for Testing Purposes</Text>
+            <Text>Enables In-Game Multiplayer Tester Panel and Several City Projects to Accelerate the Game for Testing Purposes. A Multiplayer adaptation of [Sparrow]'s Cheat Panel</Text>
         </Replace>
         <!--
         <Replace Tag="LOC_BBGTS_BUGFIX1_NAME" language="en">
@@ -41,7 +41,42 @@
             <Text> Suggestion1 Description</Text>>
         </Replace>
         -->
-        
+        <Row Tag="LOC_BBGTS_AMANI_NAME" language="en">
+            <Text> BugFix1</Text>>
+        </Row>
+        <Row Tag="LOC_BBGTS_AMANI_DESC" language="en">
+            <Text> BugFix1 Description</Text>>
+        </Row>
+        <Row Tag="LOC_BBGTS_COMMUNISM_NAME" language="en">
+            <Text> Suggestion1</Text>>
+        </Row>
+        <Row Tag="LOC_BBGTS_COMMUNISM_DESC" language="en">
+            <Text> Suggestion1 Description</Text>>
+        </Row>
+        <Row Tag="LOC_BBGTS_UNIFIER_NAME" language="en">
+            <Text> BugFix1</Text>>
+        </Row>
+        <Row Tag="LOC_BBGTS_UNIFIER_DESC" language="en">
+            <Text> BugFix1 Description</Text>>
+        </Row>
+        <Row Tag="LOC_BBGTS_INCA_WONDERS_DESC" language="en">
+            <Text> Suggestion1 Description</Text>>
+        </Row>
+        <Row Tag="LOC_BBGTS_EXP_FIX_NAME" language="en">
+            <Text> Suggestion1</Text>>
+        </Row>
+        <Row Tag="LOC_BBGTS_EXP_FIX_DESC" language="en">
+            <Text> Suggestion1 Description</Text>>
+        </Row>
+        <Row Tag="LOC_BBGTS_MOVE_FIX_NAME" language="en">
+            <Text> Suggestion1</Text>>
+        </Row>
+        <Row Tag="LOC_BBGTS_MOVE_FIX_DESC" language="en">
+            <Text> Suggestion1 Description</Text>>
+        </Row>
+        <Row Tag="LOC_BBGTS_INCA_WONDERS_NAME" language="en">
+            <Text> Suggestion1</Text>>
+        </Row>
         <!-- MP Cheats -->
         <Row Tag="LOC_OPTIONS_FAITH" language="en_US">
             <Text>Add +10000 Faith</Text>

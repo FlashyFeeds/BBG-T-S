@@ -31,16 +31,13 @@
 	For easier Commits into BBG branches.
 	-->
 	<Dependencies>
-		<Mod id="4873eb62-8ccc-4574-b784-dda455e74e68" title="Expansion: Gathering Storm" />
+		<!--<Mod id="4873eb62-8ccc-4574-b784-dda455e74e68" title="Expansion: Gathering Storm" />-->
 		<Mod id="cb84075d-5007-4207-b662-c35a5f7be260" title="Better Balanced Game 5.2.9" version="5029"/>
 	</Dependencies>
 	<ActionCriteria>
 		<!-- Firaxis Content Criteria -->
-		<Criteria id="XP1" any="1">
-			<GameCoreInUse>Expansion1</GameCoreInUse>
-			<RuleSetInUse>RULESET_EXPANSION_1</RuleSetInUse><!--,RULESET_EXPANSION_2-->
-			<LeaderPlayable>Players:Expansion1_Players::LEADER_CHANDRAGUPTA,Players:Expansion1_Players::LEADER_GENGHIS_KHAN,Players:Expansion1_Players::LEADER_LAUTARO,Players:Expansion1_Players::LEADER_POUNDMAKER,Players:Expansion1_Players::LEADER_ROBERT_THE_BRUCE,Players:Expansion1_Players::LEADER_SEONDEOK,Players:Expansion1_Players::LEADER_SHAKA,Players:Expansion1_Players::LEADER_TAMAR,Players:Expansion1_Players::LEADER_WILHELMINA</LeaderPlayable>
-			<LeaderPlayable>Players:Expansion2_Players::LEADER_CHANDRAGUPTA,Players:Expansion2_Players::LEADER_GENGHIS_KHAN,Players:Expansion2_Players::LEADER_LAUTARO,Players:Expansion2_Players::LEADER_POUNDMAKER,Players:Expansion2_Players::LEADER_ROBERT_THE_BRUCE,Players:Expansion2_Players::LEADER_SEONDEOK,Players:Expansion2_Players::LEADER_SHAKA,Players:Expansion2_Players::LEADER_TAMAR,Players:Expansion2_Players::LEADER_WILHELMINA</LeaderPlayable>
+		<Criteria id="XP1">
+			<ModInUse>1B28771A-C749-434B-9053-D1380C553DE9</ModInUse>
 		</Criteria>
 		<Criteria id="XP2">
 			<GameCoreInUse>Expansion2</GameCoreInUse>
@@ -49,7 +46,7 @@
 			<!--<RuleSetInUse>RULESET_EXPANSION_2</RuleSetInUse>-->
 			<LeaderPlayable>Players:Expansion2_Players::LEADER_CHANDRAGUPTA,Players:Expansion2_Players::LEADER_GENGHIS_KHAN,Players:Expansion2_Players::LEADER_LAUTARO,Players:Expansion2_Players::LEADER_POUNDMAKER,Players:Expansion2_Players::LEADER_ROBERT_THE_BRUCE,Players:Expansion2_Players::LEADER_SEONDEOK,Players:Expansion2_Players::LEADER_SHAKA,Players:Expansion2_Players::LEADER_TAMAR,Players:Expansion2_Players::LEADER_WILHELMINA</LeaderPlayable>
 		</Criteria>
-		<Criteria id = "XP1_OR_XP2" any="1">
+		<Criteria id="XP1_OR_XP2" any="1">
 			<GameCoreInUse>Expansion1</GameCoreInUse>
 			<GameCoreInUse>Expansion2</GameCoreInUse>
 		</Criteria>
@@ -118,14 +115,6 @@
 		</Criteria>
 		<Criteria id="RulersChina">
 			<ModInUse>7D27831B-BAA6-4A8B-A39C-94243BAD3F47</ModInUse>
-		</Criteria>
-		<!-- -->
-		<Criteria id="BBS">
-			<ModInUse>c88cba8b-8311-4d35-90c3-51a4a5d66550</ModInUse>
-		</Criteria>
-		<Criteria id="NoConflictingUIMod">
-			<ModInUse inverse="1">1d44b5e7-753e-405b-af24-5ee634ec8a01</ModInUse>
-			<ModInUse inverse="1">8d4fa23a-ef43-440c-8422-2bec11f8f5d7</ModInUse>
 		</Criteria>
 
 		<!-- BBGTS Criteria -->
@@ -225,16 +214,29 @@
 			<File>lang/text_en.xml</File>
 		</UpdateText>
 		<!--import of bbg script extensions -->
-		<ImportFiles id="bbgts_scripts">
-			<!--<File>lua/bbg_script_bbgts.lua</File>-->
-			<File>lua/bbg_uitogameplay_bbgts.lua</File>
-		</ImportFiles>
-		<ReplaceUIScript id="bbgts_uitogameplay">
+		
+		<AddGameplayScripts id="BBG_CoreScript">
+			<File>lua/bbg_script.lua</File>
+		</AddGameplayScripts>
+
+		<AddUserInterfaces id="bbg_uitogameplay_dummy_xml">
 			<Properties>
-				<LuaContext>bbg_uitogameplay</LuaContext>
-				<LuaReplace>lua/bbg_uitogameplay_bbgts.lua</LuaReplace>
+				<Context>InGame</Context>
 			</Properties>
-		</ReplaceUIScript>
+			<File>lua/bbg_uitogameplay.xml</File>
+		</AddUserInterfaces>
+		<ImportFiles id="bbg_uitogameplay_lua">
+			<File>lua/bbg_uitogameplay.lua</File>
+		</ImportFiles>
+		<!-- BBCC-->
+		<!-- Script is integrated in BBG beta at the moment for performance increase
+		<AddGameplayScripts id="bbcc_no_rng_script">
+	    	<Criteria>core_bbcc</Criteria>
+	    	<Criteria>no_rng_bbcc</Criteria>
+			<File>scripts/bbcc_no_rng.lua</File>
+		</AddGameplayScripts>
+		-->
+		
 		<!--
 		<AddGameplayScripts id="bbgts_gameplayscript">
 			<File>lua/bbg_script_bbgts.lua</File>
@@ -298,7 +300,8 @@
 		<File>MPCheats/Text/input_config.xml</File>
 		<File>MPCheats/Text/options_text.xml</File>
 		<!--bbg scripts extension -->
-		<File>lua/bbg_script_bbgts.lua</File>
-		<File>lua/bbg_uitogameplay_bbgts.lua</File>		
+		<File>lua/bbg_script.lua</File>
+		<File>lua/bbg_uitogameplay.xml</File>
+		<File>lua/bbg_uitogameplay.lua</File>	
 	</Files>
 </Mod>
