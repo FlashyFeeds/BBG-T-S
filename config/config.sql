@@ -36,7 +36,8 @@ INSERT INTO Parameters(ParameterId, Name, Description, Domain, DefaultValue, Con
     ('BBGTS_IncaWonders', 'LOC_BBGTS_INCA_WONDERS_NAME', 'LOC_BBGTS_INCA_WONDERS_DESC', 'bool', '0', 'Game', 'BBGTS_INCA_WONDERS', 'AdvancedOptions', '1', '1', '30040'),
     ('BBGTS_MacedonBugFix', 'LOC_BBGTS_MACEDON_FIX_NAME', 'LOC_BBGTS_MACEDON_FIX_DESC', 'bool', '0', 'Game', 'BBGTS_MACEDON_FIX', 'AdvancedOptions', '1', '1', '30050'),
     ('BBGTS_ExpBugFix', 'LOC_BBGTS_EXP_FIX_NAME', 'LOC_BBGTS_EXP_FIX_DESC', 'bool', '0', 'Game', 'BBGTS_EXP_FIX', 'AdvancedOptions', '1', '1', '30060'),
-    ('BBGTS_MovementBugFix', 'LOC_BBGTS_MOVE_FIX_NAME', 'LOC_BBGTS_MOVE_FIX_DESC', 'bool', '0', 'Game', 'BBGTS_MOVE_FIX', 'AdvancedOptions', '1', '1', '30070');
+    ('BBGTS_MovementBugFix', 'LOC_BBGTS_MOVE_FIX_NAME', 'LOC_BBGTS_MOVE_FIX_DESC', 'bool', '0', 'Game', 'BBGTS_MOVE_FIX', 'AdvancedOptions', '1', '1', '30070'),
+    ('BBGTS_FWondersBugFix', 'LOC_BBGTS_MOVE_FIX_NAME', 'LOC_BBGTS_MOVE_FIX_DESC', 'bool', '0', 'Game', 'BBGTS_F_WONDER_FIX', 'AdvancedOptions', '1', '1', '30080');
     --('BBGTS_AttachDetachModifier', 'LOC_BBGTS_ATTACH_DETACH_NAME', 'LOC_BBGTS_ATTACH_DETACH_DESC', 'bool', '0', 'Game', 'BBGTS_ATTACH_DETACH_TEST', 'AdvancedOptions', '1', '1', '30020'),
     --('BBGTS_WatermillSuggestion', 'LOC_BBGTS_WATERMILL_SUGGESTION_NAME', 'LOC_BBGTS_WATERMILL_SUGGESTION_DESC', 'bool', '0', 'Game', 'BBGTS_WATERMILL_SUGGESTION', 'AdvancedOptions', '1', '1', '30030'),
     --('BBGTS_Spy', 'LOC_BBGTS_SPY_NAME', 'LOC_BBGTS_SPY_DESC', 'bool', '0', 'Game', 'BBGTS_SPY_TEST', 'AdvancedOptions', '1', '1', '30040');
@@ -56,7 +57,8 @@ INSERT INTO ParameterCriteria(ParameterId, ConfigurationGroup, ConfigurationId, 
     ('BBGTS_IncaWonders', 'Game', 'BBGTS_GAMEMODE', 'Equals', '1'),
     ('BBGTS_MacedonBugFix', 'Game', 'BBGTS_GAMEMODE', 'Equals', '1'),
     ('BBGTS_ExpBugFix', 'Game', 'BBGTS_GAMEMODE', 'Equals', '1'),
-    ('BBGTS_MovementBugFix', 'Game', 'BBGTS_GAMEMODE', 'Equals', '1');
+    ('BBGTS_MovementBugFix', 'Game', 'BBGTS_GAMEMODE', 'Equals', '1'),
+    ('BBGTS_FWondersBugFix', 'Game', 'BBGTS_GAMEMODE', 'Equals', '1'); 
     
 
     /*

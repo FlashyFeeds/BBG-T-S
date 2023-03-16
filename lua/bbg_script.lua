@@ -3521,7 +3521,9 @@ function Initialize()
 	print("BBG - ressource yields populated")
 	PopulateFeatureYields()
 	print("BBG - relevant feature yields populated")
-	PopulateBugWonders()
+	if GameConfiguration.GetValue("BBGTS_F_WONDER_FIX") then
+		PopulateBugWonders()
+	end
 	print("BBG - relevant Bug wonders populated")
 	-- turn checked effects:
 	GameEvents.OnGameTurnStarted.Add(OnGameTurnStarted);
@@ -3532,36 +3534,48 @@ function Initialize()
 	print("BBG Monk Hook Added")
 	-- upgradable uu exp bug fix
 	--LuaEvents.UIPromotionFixExp.Add(OnUIPromotionFixExp)
-	GameEvents.GameplayPromotionFixExp.Add(OnGameplayPromotionFixExp)
-	print("BBG Promotion bugfix hook added")
+	if GameConfiguration.GetValue("BBGTS_EXP_FIX") then
+		GameEvents.GameplayPromotionFixExp.Add(OnGameplayPromotionFixExp)
+		print("BBG Promotion bugfix hook added")
+	end
 	-- tech boost effect:
 	-- Events.TechBoostTriggered.Add(OnTechBoost);
 	-- Extra Movement bugfix
-	GameEvents.GameplayMovementBugFix.Add(OnGameplayMovementBugFix)
-	GameEvents.GameplayMovementBugFixUpgrade.Add(OnGameplayMovementBugFixUpgrade)
-	print("BBG Movement bugfix hook added")
-	-- Yield Adjustment hook
-	GameEvents.CityBuilt.Add(OnCitySettledAdjustYields)
-	print("BBG Fix firaxis wonder yield hook added")
-	-- communism
-	--LuaEvents.UIBBGWorkersChanged.Add(OnUIBBGWorkersChanged)
-	GameEvents.GameplayBBGWorkersChanged.Add(OnGameplayBBGWorkersChanged)
-	--LuaEvents.UIBBGDestroyDummyBuildings.Add(OnUIBBGDestroyDummyBuildings)
-	GameEvents.GameplayBBGDestroyDummyBuildings.Add(OnGameplayBBGDestroyDummyBuildings)
-	GameEvents.PolicyChanged.Add(OnPolicyChanged)
-	--LuaEvents.UIBBGGovChanged.Add(OnUIBBGGovChanged)
-	GameEvents.GameplayBBGGovChanged.Add(OnGameplayBBGGovChanged)
-	print("BBG Communism Hooks Added")
-	--Amani
-	--LuaEvents.UISetAmaniProperty.Add(OnUISetAmaniProperty)
-	GameEvents.GameplaySetAmaniProperty.Add(OnGameplaySetAmaniProperty)
-	--LuaEvents.UISetCSTrader.Add(OnUISetCSTrader)
-	GameEvents.GameplaySetCSTrader.Add(OnGameplaySetCSTrader)
-	print("BBG Amani Gameplay hooks added")
-	--Delete Suntzu for not-Unifier
-	--LuaEvents.UINotUnifierDeleteSunTzu.Add(OnUINotUnifierDeleteSunTzu)
-	GameEvents.GameplayNotUnifierDeleteSunTzu.Add(OnGameplayNotUnifierDeleteSunTzu)
-	print("BBG Suntzu Gameplay Deletion hooks added")
+	if GameConfiguration.GetValue("BBGTS_MOVE_FIX") then
+		GameEvents.GameplayMovementBugFix.Add(OnGameplayMovementBugFix)
+		GameEvents.GameplayMovementBugFixUpgrade.Add(OnGameplayMovementBugFixUpgrade)
+		print("BBG Movement bugfix hook added")
+	end
+	if GameConfiguration.GetValue("BBGTS_F_WONDER_FIX") then
+		-- Yield Adjustment hook
+		GameEvents.CityBuilt.Add(OnCitySettledAdjustYields)
+		print("BBG Fix firaxis wonder yield hook added")
+	end
+	if GameConfiguration.GetValue("BBGTS_COMMUNISM_MOD") then
+		-- communism
+		--LuaEvents.UIBBGWorkersChanged.Add(OnUIBBGWorkersChanged)
+		GameEvents.GameplayBBGWorkersChanged.Add(OnGameplayBBGWorkersChanged)
+		--LuaEvents.UIBBGDestroyDummyBuildings.Add(OnUIBBGDestroyDummyBuildings)
+		GameEvents.GameplayBBGDestroyDummyBuildings.Add(OnGameplayBBGDestroyDummyBuildings)
+		GameEvents.PolicyChanged.Add(OnPolicyChanged)
+		--LuaEvents.UIBBGGovChanged.Add(OnUIBBGGovChanged)
+		GameEvents.GameplayBBGGovChanged.Add(OnGameplayBBGGovChanged)
+		print("BBG Communism Hooks Added")
+	end
+	if GameConfiguration.GetValue("BBGTS_AMANI") then
+		--Amani
+		--LuaEvents.UISetAmaniProperty.Add(OnUISetAmaniProperty)
+		GameEvents.GameplaySetAmaniProperty.Add(OnGameplaySetAmaniProperty)
+		--LuaEvents.UISetCSTrader.Add(OnUISetCSTrader)
+		GameEvents.GameplaySetCSTrader.Add(OnGameplaySetCSTrader)
+		print("BBG Amani Gameplay hooks added")
+	end
+	if GameConfiguration.GetValue("BBGTS_UNIFIER") then
+		--Delete Suntzu for not-Unifier
+		--LuaEvents.UINotUnifierDeleteSunTzu.Add(OnUINotUnifierDeleteSunTzu)
+		GameEvents.GameplayNotUnifierDeleteSunTzu.Add(OnGameplayNotUnifierDeleteSunTzu)
+		print("BBG Suntzu Gameplay Deletion hooks added")
+	end
 	local tMajorIDs = PlayerManager.GetAliveMajorIDs()
 	for i, iPlayerID in ipairs(tMajorIDs) do
 		if PlayerConfigurations[iPlayerID]:GetLeaderTypeName()=="LEADER_BASIL" then
@@ -3579,7 +3593,7 @@ function Initialize()
 				--InitBarbData()
 			end
 			print("Sumeria Warcart Added")
-		elseif PlayerConfigurations[iPlayerID]:GetCivilizationTypeName() == "CIVILIZATION_INCA" then
+		elseif PlayerConfigurations[iPlayerID]:GetCivilizationTypeName() == "CIVILIZATION_INCA" and GameConfiguration.GetValue("BBGTS_INCA_WONDERS") then
 			-- Inca Yields on non-mountain impassibles bugfix
 			--LuaEvents.UISetPlotProperty.Add(OnUISetPlotProperty)
 			GameEvents.GameplayFixIncaBug.Add(OnGameplayFixIncaBug)
@@ -3590,13 +3604,13 @@ function Initialize()
 			GameEvents.CityBuilt.Add(OnCityBuilt);
 			GameEvents.CityConquered.Add(OnCityConquered)
 			print("BBG Caesar Hooks Added")
-		elseif PlayerConfigurations[iPlayerID]:GetCivilizationTypeName() == "CIVILIZATION_MACEDON" then
+		elseif PlayerConfigurations[iPlayerID]:GetCivilizationTypeName() == "CIVILIZATION_MACEDON" and GameConfiguration.GetValue("BBGTS_MACEDON_FIX") then
 			--Macedon 20%
 			GameEvents.CityConquered.Add(OnMacedonConqueredACity)
 			GameEvents.OnGameTurnStarted.Add(OnGameTurnStartedCheckMacedon)
 			GameEvents.CityBuilt.Add(OnMacedonCitySettled)
 			print("BBG Macedon Hooks Added")
-		elseif PlayerConfigurations[iPlayerID]:GetLeaderTypeName() == "LEADER_QIN_ALT" then
+		elseif PlayerConfigurations[iPlayerID]:GetLeaderTypeName() == "LEADER_QIN_ALT" and GameConfiguration.GetValue("BBGTS_UNIFIER") then
 			--Qin Unifier general bugfix
 			--LuaEvents.UIGPGeneralUnifierCreated.Add(OnUIGPGeneralUnifierCreated)
 			--LuaEvents.UIUnifierTrackRelevantGenerals.Add(OnUIUnifierTrackRelevantGenerals)

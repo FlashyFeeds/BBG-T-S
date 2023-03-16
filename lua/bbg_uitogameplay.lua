@@ -9,8 +9,10 @@ print("BBG UI to Gameplay Script started")
 --- Inca Scrits
 -- Constants: populating the table of features from which we remove inca bug yields
 tRemoveIncaYieldsFromFeatures = {}
-local qQuery = "SELECT WonderType FROM WonderTerrainFeature_BBG WHERE TerrainClassType<>'TERRAIN_CLASS_MOUNTAIN' OR TerrainClassType IS NULL"
-tRemoveIncaYieldsFromFeatures=DB.Query(qQuery)
+if GameConfiguration.GetValue("BBGTS_INCA_WONDERS") then
+	local qQuery = "SELECT WonderType FROM WonderTerrainFeature_BBG WHERE TerrainClassType<>'TERRAIN_CLASS_MOUNTAIN' OR TerrainClassType IS NULL"
+	tRemoveIncaYieldsFromFeatures=DB.Query(qQuery)
+end
 --for i, row in ipairs(tRemoveIncaYieldsFromFeatures) do
 	--print(i, row.WonderType)
 --end
@@ -507,30 +509,40 @@ end
 
 function Initialize()
 	--Exp bug
-	Events.UnitPromoted.Add(OnPromotionFixExp);
+	if GameConfiguration.GetValue("BBGTS_EXP_FIX") then
+		Events.UnitPromoted.Add(OnPromotionFixExp);
+	end
 	--Movement bugfix
-	Events.UnitAddedToMap.Add(OnUnitAddedToMap)
-	Events.UnitUpgraded.Add(OnUnitUpgraded)
-	--Communism
-	Events.CityWorkerChanged.Add(OnCityWorkerChanged)
-	Events.GovernmentChanged.Add(OnGovernmentChanged)
-	print("Delete Communism UI hooks added")
-	--Amani
-	Events.GovernorAssigned.Add(OnGovernorAssigned)
-	Events.GovernorChanged.Add(OnGovernorChanged)
-	Events.TradeRouteActivityChanged.Add(OnTradeRouteActivityChanged)
-	print("Delete Amani UI hooks added")
-	--delete suntzu after use for non-unifier
-	Events.UnitGreatPersonActivated.Add(OnUnitGreatPersonActivatedNotQinUnifier)
-	print("Delete Suntzu UI Hook added")
+	if GameConfiguration.GetValue("BBGTS_MOVE_FIX") then
+		Events.UnitAddedToMap.Add(OnUnitAddedToMap)
+		Events.UnitUpgraded.Add(OnUnitUpgraded)
+	end
+	if GameConfiguration.GetValue("BBGTS_COMMUNISM_MOD") then
+		--Communism
+		Events.CityWorkerChanged.Add(OnCityWorkerChanged)
+		Events.GovernmentChanged.Add(OnGovernmentChanged)
+		print("Delete Communism UI hooks added")
+	end
+	if GameConfiguration.GetValue("BBGTS_AMANI") then
+		--Amani
+		Events.GovernorAssigned.Add(OnGovernorAssigned)
+		Events.GovernorChanged.Add(OnGovernorChanged)
+		Events.TradeRouteActivityChanged.Add(OnTradeRouteActivityChanged)
+		print("Delete Amani UI hooks added")
+	end
+	if GameConfiguration.GetValue("BBGTS_UNIFIER") then
+		--delete suntzu after use for non-unifier
+		Events.UnitGreatPersonActivated.Add(OnUnitGreatPersonActivatedNotQinUnifier)
+		print("Delete Suntzu UI Hook added")
+	end
 	local tMajorIDs = PlayerManager.GetAliveMajorIDs()
 	for i, iPlayerID in ipairs(tMajorIDs) do
-		if PlayerConfigurations[iPlayerID]:GetLeaderTypeName() == "LEADER_QIN_ALT" then
+		if PlayerConfigurations[iPlayerID]:GetLeaderTypeName() == "LEADER_QIN_ALT" and GameConfiguration.GetValue("BBGTS_UNIFIER") then
 			--Qin Unifier
 			Events.UnitGreatPersonCreated.Add(OnUnitGreatPersonCreated)
 			Events.UnitGreatPersonActivated.Add(OnUnitGreatPersonActivatedQinUnifier)
 			Events.UnitMoved.Add(OnUnitMoved)
-		elseif PlayerConfigurations[iPlayerID]:GetCivilizationTypeName() == "CIVILIZATION_INCA" then
+		elseif PlayerConfigurations[iPlayerID]:GetCivilizationTypeName() == "CIVILIZATION_INCA" and GameConfiguration.GetValue("BBGTS_INCA_WONDERS") then
 			--inca dynamic yield cancelation
 			Events.PlotYieldChanged.Add(OnIncaPlotYieldChanged)
 		end
