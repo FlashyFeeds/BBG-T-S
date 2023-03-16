@@ -118,8 +118,8 @@
 		</Criteria>
 
 		<!-- BBGTS Criteria -->
-
-		<Criteria id="BBGTS_Mode_Expansion2">
+		<!-- core bbgts criteria -->
+		<Criteria id="bbgts_mode">
 			<ConfigurationValueMatches>
 				<Group>Game</Group>
 				<ConfigurationId>BBGTS_GAMEMODE</ConfigurationId>
@@ -134,17 +134,54 @@
 				<Value>1</Value>
 			</ConfigurationValueMatches>
 		</Criteria>
-
-	
-	<!--
-		<Criteria id="BBGTS_PlaneFix_Expansion2">
+		<!-- content bbgts criteria -->
+		<Criteria id="bbgts_amani_c">
 			<ConfigurationValueMatches>
 				<Group>Game</Group>
-				<ConfigurationId>BBGTS_PLANES_FIX</ConfigurationId>
+				<ConfigurationId>BBGTS_AMANI</ConfigurationId>
 				<Value>1</Value>
 			</ConfigurationValueMatches>
 		</Criteria>
-	-->
+
+		<Criteria id="bbgts_communism_mod_c">
+			<ConfigurationValueMatches>
+				<Group>Game</Group>
+				<ConfigurationId>BBGTS_COMMUNISM_MOD</ConfigurationId>
+				<Value>1</Value>
+			</ConfigurationValueMatches>
+		</Criteria>
+
+		<Criteria id="bbgts_communism_build_c">
+			<ConfigurationValueMatches>
+				<Group>Game</Group>
+				<ConfigurationId>BBGTS_COMMUNISM_BUILD</ConfigurationId>
+				<Value>1</Value>
+			</ConfigurationValueMatches>
+		</Criteria>
+
+		<Criteria id="bbgts_inca_wonders_c">
+			<ConfigurationValueMatches>
+				<Group>Game</Group>
+				<ConfigurationId>BBGTS_INCA_WONDERS</ConfigurationId>
+				<Value>1</Value>
+			</ConfigurationValueMatches>
+		</Criteria>
+
+		<Criteria id="bbgts_unifier_c">
+			<ConfigurationValueMatches>
+				<Group>Game</Group>
+				<ConfigurationId>BBGTS_UNIFIER</ConfigurationId>
+				<Value>1</Value>
+			</ConfigurationValueMatches>
+		</Criteria>
+
+		<Criteria id="bbgts_macedon_fix_c">
+			<ConfigurationValueMatches>
+				<Group>Game</Group>
+				<ConfigurationId>BBGTS_MACEDON_FIX</ConfigurationId>
+				<Value>1</Value>
+			</ConfigurationValueMatches>
+		</Criteria>
 
 	</ActionCriteria>
 
@@ -228,56 +265,140 @@
 		<ImportFiles id="bbg_uitogameplay_lua">
 			<File>lua/bbg_uitogameplay.lua</File>
 		</ImportFiles>
-		<!-- BBCC-->
-		<!-- Script is integrated in BBG beta at the moment for performance increase
-		<AddGameplayScripts id="bbcc_no_rng_script">
-	    	<Criteria>core_bbcc</Criteria>
-	    	<Criteria>no_rng_bbcc</Criteria>
-			<File>scripts/bbcc_no_rng.lua</File>
-		</AddGameplayScripts>
-		-->
+		<!-- content ingameactions -->
+		<!-- BBG Loadorders Readme
+		=======preload utils:========
+		glob: _utils => 11600
+		base => 11601
+		vikings => 11602
+		aust => 11603
+		indo => 11604
+		xp1 => 11605
+		xp2 => 11606
+		maya => 11607
+		bbs => 11608
+		=======BBG Content:==========
+		base => 11611
+		xp1 (exclusive) => 11612
+		xp1_or_xp2 => 11613
+		xp2 => 11614
+		xp1_and_xp2 => 11615
+		dlc aztek => 11616
+		dlc vikings => 11617
+		dlc poland => 11618
+		dlc poland+xp2 => 11619
+		dlc austr => 11620
+		dlc austr+xp2 => 11621
+		dlc macedon => 11622
+		dlc macedon+xp1 => 11623
+		dlc macedon+xp2 => 11624
+		dlc nubia => 11625
+		dlc nubia+xp2 => 11626
+		dlc indo => 11627
+		dlc indo+xp2 => 11628
+		nfp maya => 11640
+		nfp maya+xp1 => 11641
+		nfp maya+xp2 => 11642
+		nfp ethiop => 11643
+		nfp teddy => 11645
+		nfp catherine => 11646
+		nfp byzantium => 11647
+		nfp babylon => 11648
+		nfp babylon+xp2 => 11649
+		nfp kublai => 11650
+		nfp portugal => 11651
+		lp caesar => 11652
+		lp negotiators 11653
+		lp warlords 11655
+		lp china 11656
+		lp china xp1 11657
+		lp china xp2 11658
+		=======BCY ===================
+		bcy configval => 11661
+		bcy core => 11662
+		bcy no rng => 11663
+		bcy cap only => 11670
 		
-		<!--
-		<AddGameplayScripts id="bbgts_gameplayscript">
-			<File>lua/bbg_script_bbgts.lua</File>
-		</AddGameplayScripts>
+		Note: for BBGTS we use (bbg_loadorder_numbers+1)
 	-->
-		<!--
-		<AddGameplayScripts id="BBGTS_TestScripts_Script">
-			<File>lua/GameCoreScripts.lua</File>
-			<File>lua/DebugLuaScripts.lua</File>
-		</AddGameplayScripts>
-		
-		<ImportFiles id="MPMAPI_InGame">
-			<Properties>
-				<LoadOrder>1</LoadOrder>
-			</Properties>
-			<File>lua/MPMAPI_core.lua</File>
-		</ImportFiles>
+		<UpdateDatabase id="bbgts_amani_data">
+    		<Properties>
+        		<LoadOrder>11614</LoadOrder>
+    		</Properties>
+    		<Criteria>XP1_or_XP2</Criteria>
+			<Criteria>bbgts_amani_c</Criteria>
+			<File>content/amani/amani_traders.sql</File>
+        </UpdateDatabase>
 
-		<ImportFiles id="BBGTS_UIscript">
-			<Properties>
-				<LoadOrder>10</LoadOrder>
-			</Properties>
-			<File>ui/UIGameScripts.lua</File>
-		</ImportFiles>
-	-->
-        <!--Conditional sql added like so
-		<UpdateDatabase id="BBGTS_BugFix1_Data">
-            		<Properties>
-                		<LoadOrder>35000</LoadOrder>
-            		</Properties>
-			<Criteria>BBGTS_BugFix1_Expansion2</Criteria>
-			<File>sql/BugFix1.sql</File>
+        <UpdateDatabase id="bbgts_communism_mod_data">
+    		<Properties>
+        		<LoadOrder>11612</LoadOrder>
+    		</Properties>
+			<Criteria>bbgts_communism_mod_c</Criteria>
+			<File>content/communism/communism_mod/communism_mod_base.sql</File>
         </UpdateDatabase>
-		<UpdateDatabase id="BBGTS_Suggestion1_Data">
-            		<Properties>
-                		<LoadOrder>35000</LoadOrder>
-            		</Properties>
-			<Criteria>BBGTS_Suggestion1_Expansion2</Criteria>
-			<File>sql/Suggestion1.sql</File>
+
+       	<UpdateDatabase id="bbgts_communism_mod_xp1_or_xp2_data">
+    		<Properties>
+        		<LoadOrder>11614</LoadOrder>
+    		</Properties>
+    		<Criteria>XP1_or_XP2</Criteria>
+			<Criteria>bbgts_communism_mod_c</Criteria>
+			<File>content/communism/communism_mod/communism_mod_xp1_or_xp2.sql</File>
         </UpdateDatabase>
-        -->				
+
+       	<UpdateDatabase id="bbgts_communism_build_xp2_data">
+    		<Properties>
+        		<LoadOrder>11615</LoadOrder>
+    		</Properties>
+    		<Criteria>XP2</Criteria>
+			<Criteria>bbgts_communism_build_c</Criteria>
+			<File>content/communism/communism_build/communism_build_xp2.sql</File>
+        </UpdateDatabase>
+
+        <UpdateDatabase id="bbgts_inca_data">
+    		<Properties>
+        		<LoadOrder>11615</LoadOrder>
+    		</Properties>
+    		<Criteria>XP2</Criteria>
+			<Criteria>bbgts_inca_wonders_c</Criteria>
+			<File>content/inca/inca.sql</File>
+        </UpdateDatabase>
+
+        <UpdateDatabase id="bbgts_macedon_data">
+    		<Properties>
+        		<LoadOrder>11623</LoadOrder>
+    		</Properties>
+    		<Criteria>DLC_Macedon_Persia</Criteria>
+			<Criteria>bbgts_macedon_fix_c</Criteria>
+			<File>content/macedon/macedon.sql</File>
+        </UpdateDatabase>
+
+        <UpdateDatabase id="bbgts_unifier_data">
+    		<Properties>
+        		<LoadOrder>11657</LoadOrder>
+    		</Properties>
+    		<Criteria>RulersChina</Criteria>
+			<File>content/unifier/unifier_base.sql</File>
+        </UpdateDatabase>
+
+        <UpdateDatabase id="bbgts_unifier_data">
+    		<Properties>
+        		<LoadOrder>11658</LoadOrder>
+    		</Properties>
+    		<Criteria>XP1</Criteria>
+    		<Criteria>RulersChina</Criteria>
+			<File>content/unifier/unifier_xp1.sql</File>
+        </UpdateDatabase>
+
+        <UpdateDatabase id="bbgts_unifier_data">
+    		<Properties>
+        		<LoadOrder>11659</LoadOrder>
+    		</Properties>
+    		<Criteria>XP2</Criteria>
+    		<Criteria>RulersChina</Criteria>
+			<File>content/unifier/unifier_xp2.sql</File>
+        </UpdateDatabase>				
 	</InGameActions>		
 	<Files>
 		<!--Basic stuff-->
@@ -302,6 +423,16 @@
 		<!--bbg scripts extension -->
 		<File>lua/bbg_script.lua</File>
 		<File>lua/bbg_uitogameplay.xml</File>
-		<File>lua/bbg_uitogameplay.lua</File>	
+		<File>lua/bbg_uitogameplay.lua</File>
+		<!--Content -->
+		<File>content/amani/amani_traders.sql</File>
+		<File>content/communism/communism_build/communism_build_xp2.sql</File>
+		<File>content/communism/communism_mod/communism_mod_base.sql</File>
+		<File>content/communism/communism_mod/communism_mod_xp1_or_xp2.sql</File>
+		<File>content/inca/inca.sql</File>
+		<File>content/macedon/macedon.sql</File>
+		<File>content/unifier/unifier_base.sql</File>
+		<File>content/unifier/unifier_xp1.sql</File>
+		<File>content/unifier/unifier_xp2.sql</File>	
 	</Files>
 </Mod>
