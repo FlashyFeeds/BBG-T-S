@@ -32,7 +32,7 @@
 	-->
 	<Dependencies>
 		<!--<Mod id="4873eb62-8ccc-4574-b784-dda455e74e68" title="Expansion: Gathering Storm" />-->
-		<Mod id="cb84075d-5007-4207-b662-c35a5f7be254" title="Better Balanced Game 5.2.11" version="50211"/>
+		<Mod id="cb84075d-5007-4207-b662-c35a5f7be250" title="Better Balanced Game 5.2.11 Beta" version="50211"/>
 	</Dependencies>
 	<ActionCriteria>
 		<!-- Firaxis Content Criteria -->
@@ -212,7 +212,6 @@
 		</ImportFiles>
 		<!-- MP Cheats Keybinds -->
 		<UpdateDatabase id="bbgts_mp_cheats_config">
-			<Criteria>bbgts_mp_cheats</Criteria>
 			<File>MPCheats/Text/input_config.xml</File>
 		</UpdateDatabase>
 	</FrontEndActions>

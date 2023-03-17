@@ -195,6 +195,14 @@ function OnPlayerRevived()
 	UICheatEvents.UIPlayerRevived()
 end
 
+function OnTurnTimerUpdated(elapsedTime :number, maxTurnTime :number)
+	if maxTurnTime <= 0 then
+		return
+	end
+	Debug("Called","OnTurnTimerUpdated")
+	Debug("elapsedTime "..tostring(elapsedTime).." maxTurnTime"..tostring(maxTurnTime))
+end
+
 -- // ----------------------------------------------------------------------------------------------
 -- // HOTKEYS (need to make an overlay and disable functions unless all players have time on the timer/loaded in)
 -- // ----------------------------------------------------------------------------------------------
@@ -234,4 +242,5 @@ Events.CitySelectionChanged.Add(OnCitySelectionChanged) -- populates player/city
 Events.LocalPlayerTurnBegin.Add(OnLocalPlayerTurnBegin) -- needed to remove visibility (probably migrate)
 Events.PlayerDefeat.Add(OnPlayerDefeat) --needed to repopulate alive table for visibility cheat (probably migrate)
 Events.PlayerRevived.Add(OnPlayerRevived)
+Events.TurnTimerUpdated.Add(OnTurnTimerUpdated)
 
