@@ -42,20 +42,22 @@
         </Replace>
         -->
         <Row Tag="LOC_BBGTS_AMANI_NAME" language="en">
-            <Text> BugFix1</Text>>
+            <Text>Amani: Traders</Text>>
         </Row>
         <Row Tag="LOC_BBGTS_AMANI_DESC" language="en">
-            <Text> BugFix1 Description</Text>>
+            <Text>Traders to a city-state with the established Amani gain +2 [ICON_FOOD] +2 [ICON_PRODUCTION]. Displayed as city Modifier</Text>>
         </Row>
         <Row Tag="LOC_BBGTS_COMMUNISM_MOD_NAME" language="en">
-            <Text> Suggestion1</Text>>
+            <Text>Communism: Specialists</Text>
         </Row>
         <Row Tag="LOC_BBGTS_COMMUNISM_MOD_DESC" language="en">
-            <Text> Suggestion1 Description</Text>>
+            <Text>Communism: +1 to each respective yield per specialist in communism or with communism legacy card. Displayed as City Modifiers</Text>>
         </Row>
+        <!--
         <Row Tag="LOC_BBGTS_COMMUNISM_MOD_NAME" language="en">
             <Text> Suggestion1</Text>>
         </Row>
+    
         <Row Tag="LOC_BBGTS_COMMUNISM_MOD_DESC" language="en">
             <Text> Suggestion1 Description</Text>>
         </Row>
@@ -65,29 +67,42 @@
         <Row Tag="LOC_BBGTS_COMMUNISM_BUILD_DESC" language="en">
             <Text> BugFix1 Description</Text>>
         </Row>
+        -->
         <Row Tag="LOC_BBGTS_UNIFIER_NAME" language="en">
-            <Text> BugFix1</Text>>
+            <Text>Qin Unifier - Double General Charge</Text>
         </Row>
         <Row Tag="LOC_BBGTS_UNIFIER_DESC" language="en">
-            <Text> BugFix1 Description</Text>>
+            <Text>Enables Qin Unifier Double Genearal Charge. All generals work bug-free</Text>
+        </Row>
+         <Row Tag="LOC_BBGTS_INCA_WONDERS_NAME" language="en">
+            <Text>Inca Interractions</Text>
         </Row>
         <Row Tag="LOC_BBGTS_INCA_WONDERS_DESC" language="en">
-            <Text> Suggestion1 Description</Text>>
+            <Text>Inca's Kit Interracts with Mountain and Volcano Wonders as if they were normal Mountain Tiles</Text>
         </Row>
         <Row Tag="LOC_BBGTS_EXP_FIX_NAME" language="en">
-            <Text> Suggestion1</Text>>
+            <Text>Upgradable UU Experience BugFix (Firaxis)</Text>
         </Row>
         <Row Tag="LOC_BBGTS_EXP_FIX_DESC" language="en">
-            <Text> Suggestion1 Description</Text>>
+            <Text>Experience of Upgradable UU's is calculated correctly, if they already had a promotion</Text>
         </Row>
         <Row Tag="LOC_BBGTS_MOVE_FIX_NAME" language="en">
-            <Text> Suggestion1</Text>>
+            <Text>Extra Movement: BugFix (Firaxis)</Text>
         </Row>
         <Row Tag="LOC_BBGTS_MOVE_FIX_DESC" language="en">
-            <Text> Suggestion1 Description</Text>>
+            <Text>Units that start with extra movement modifier have correct movement upon creation</Text>
         </Row>
-        <Row Tag="LOC_BBGTS_INCA_WONDERS_NAME" language="en">
-            <Text> Suggestion1</Text>>
+        <Row Tag="LOC_BBGTS_MACEDON_FIX_NAME" language="en">
+            <Text>Macedon Bugfix (BBG)</Text>
+        </Row>
+        <Row Tag="LOC_BBGTS_MACEDON_FIX_DESC" language="en">
+            <Text>Macedon gains production only when he captures a player city or city-state, instead of any player capturing a city or city state</Text>
+        </Row>
+        <Row Tag="LOC_BBGTS_F_WONDER_FIX_NAME" language="en">
+            <Text>City Center Yield Consistency (Firaxis)</Text>
+        </Row>
+        <Row Tag="LOC_BBGTS_F_WONDER_FIX_DESC" language="en">
+            <Text>Some Wonder settles resulted in city center yield be higher than the original tile's value. Made consistent with the general settiling behaviour</Text>
         </Row>
         <!-- MP Cheats -->
         <Row Tag="LOC_OPTIONS_FAITH" language="en_US">
