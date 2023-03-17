@@ -6,7 +6,7 @@
 
 --UIEvents = ExposedMembers.LuaEvents
 include("bbgts_debug.lua")
-print("BBG UI to Gameplay Script started")
+print("BBG UI to Gameplay Script (BBGTS) started")
 --- Inca Scrits
 -- Constants: populating the table of features from which we remove inca bug yields
 tRemoveIncaYieldsFromFeatures = {}

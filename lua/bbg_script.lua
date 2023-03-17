@@ -34,6 +34,7 @@
 --ExposedMembers.LuaEvents = LuaEvents
 include("SupportFunctions");
 include("bbgts_debug.lua")
+print("BBG Script (BBGTS Replacement) Loaded")
 -- ===========================================================================
 --	Constants
 -- ===========================================================================
@@ -60,6 +61,8 @@ local tCommBuild2Dictionary = {}
 -- ==========================================================================
 -- Setting Up data to easily deal with tile yields (performance/convenience)
 -- ==========================================================================
+local BBCC_MODE = GameConfiguration.GetValue('BBCC_SETTING') -- -1 off, 0 on, 1 capitals only
+local BBCC_YIELDS = GameConfiguration.GetValue('BBCC_SETTING_YIELD') -- 0 standard, 1 no rng, 2 maximum
 local TerrainYieldsLookup = {}
 local ResourceYieldsLookup = {}
 local FeatureYieldsLookup = {}
