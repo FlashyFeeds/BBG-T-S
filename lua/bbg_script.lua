@@ -31,8 +31,9 @@
 
 --include "bbg_stateutils"
 --include "bbg_unitcommands"
-ExposedMembers.LuaEvents = LuaEvents
+--ExposedMembers.LuaEvents = LuaEvents
 include("SupportFunctions");
+include("bbgts_debug.lua")
 -- ===========================================================================
 --	Constants
 -- ===========================================================================
@@ -55,6 +56,7 @@ local NO_DISTRICT :number = -1;
 local NO_IMPROVEMENT :number = -1;
 local NO_BUILDING :number = -1;
 
+local tCommBuild2Dictionary = {}
 -- ==========================================================================
 -- Setting Up data to easily deal with tile yields (performance/convenience)
 -- ==========================================================================
@@ -1708,7 +1710,9 @@ function OnGameplayFixIncaBug(iPlayerID, tParameters)
 		end	
 	end
 end
--- Communism Specialists
+--/---------------------------------
+-- Communism Specialists (modifiers)
+--/---------------------------------
 --function OnUIBBGWorkersChanged(iPlayerID, iCityID, iX, iY)
 	--print("UIBBGWorkersChanged Triggered")
 	--GameEvents.GameplayBBGWorkersChanged.Call(iPlayerID, iCityID, iX, iY)
@@ -1913,8 +1917,114 @@ function WorkerDictionary(index: number)
 	local tWorkerDict={"HOLY","CAMP","ENCA","HARB","COMM", "THEA","INDU"}
 	return tWorkerDict[index]
 end
+--/-----------------------------------
+--Communism Specialists (buildings)
+--/-----------------------------------
+function OnGameplayRefreshCommunismProp(iPlayerID, kParameters)
+	Debug("Called","OnGameplayRefreshCommunismProp")
+	local iPlayerID = kParameters["iPlayerID"]
+	local bVal = kParameters["bVal"]
+	local pPlayer = Players[iPlayerID]
+	if pPlayer == nil then
+		return
+	end
+	pPlayer:SetProperty("HAS_COMMUNISM", bVal)
+	Debug("HAS_COMMUNISM property for iPlayerID "..tostring(pPlayer:GetID()).." has value "..tostring(pPlayer:GetProperty("HAS_COMMUNISM")), "RefreshCommunismProp")
+end
 
+function OnGameplayAddCommBuildings(iPlayerID, kParameters)
+	Debug("Called", "OnGameplayAddCommBuildings")
+	local iPlayerID = kParameters["iPlayerID"]
+	local iCityID = kParameters["iCityID"]
+	local pCity = CityManager.GetCity(iPlayerID, iCityID)
+	if pCity == nil then 
+		return print("City is nil => Exit")
+	end
+	local tCommModifierIndexes = kParameters["tCommModifierIndexes"]
+	for i, Index in ipairs(tCommModifierIndexes) do
+		pCity:AttachModifierByID(Communism2Dict(0, Index))
+		Debug("Modifier "..Communism2Dict(0, Index).." is Attached to pCity: "..tostring(pCity), "OnGameplayAddCommBuildings")
+	end
+end
+
+function OnGameplayRemoveCommBuildings(iPlayerID, kParameters)
+	Debug("Called", "OnGameplayRemoveCommBuildings")
+	local iPlayerID = kParameters["iPlayerID"]
+	local iCityID = kParameters["iCityID"]
+	local pCity = CityManager.GetCity(iPlayerID, iCityID)
+	if pCity == nil then 
+		return print("City is nil => Exit")
+	end
+	local tCommModifierIndexes = kParameters["tCommModifierIndexes"]
+	for i, Index in ipairs(tCommModifierIndexes) do
+		pCity:GetBuildings():RemoveBuilding(Communism2Dict(0, Index))
+		Debug("Building "..Communism2Dict(1, Index).." is Removed from the pCity: "..tostring(pCity), "OnGameplayRemoveCommBuildings")
+	end
+end
+
+function OnPolicyChanged_Build(iPlayerID, iPolicyID, bEnacted)
+	Debug("Called", "OnPolicyChanged_Build")
+	if iPlayerID ~= Game.GetLocalPlayer() then
+		return
+	end
+	ExposedMembers.OnPolicyChanged_Build(iPlayerID, iPolicyID, bEnacted)
+end
+
+function OnGameplayCommDistrictComplete(iPlayerID, kParameters)
+	Debug("Called", "OnGameplayCommDistrictComplete")
+	local iPlayerID = kParameters["iPlayerID"]
+	local iCityID = kParameters["iCityID"]
+	local iCommBuildIndex = kParameters["iCommBuildIndex"]
+	local pCity = CityManager.GetCity(iPlayerID, iCityID)
+	if pCity == nil then
+		return
+	end
+	pCity:AttachModifierByID(Communism2Dict(0, iCommBuildIndex))
+	Debug("Modifier "..Communism2Dict(0, iCommBuildIndex).." is Attached to pCity: "..tostring(pCity), "OnGameplayAddCommBuildings")
+end
+
+function Communism2Dict(iMode, Index)
+	--Index: 1 = Holy, 2 = Campus, 3 = Encampment, 4 = Harbor, 5 = Commercial, 6 = Theater, 7 = Industrial
+	--iMode: 0 = Modifiers, 1 = BuildingId's
+	Debug("Started", "Communism2Dict")
+	print(iMode, Index)
+	local mResult
+	local tTable = tCommBuild2Dictionary[iMode]
+	if tTable == nil then 
+		return print("Invalid iMode => Exit")
+	end
+	mResult = tTable[Index]
+	if mResult == nil then
+		return print("Invalid iIndex => Exit")
+	end
+	return mResult
+end
+
+function PopulatCommunismBuilding2Dictionary()
+	Debug("Called","PopulatCommunismBuilding2Dictionary")
+	local tMod = {}
+	tMod[1] = "MODIFIER_COMMUNISM_HOLY"
+	tMod[2] = "MODIFIER_COMMUNISM_CAMP"
+	tMod[3] = "MODIFIER_COMMUNISM_ENCA"
+	tMod[4] = "MODIFIER_COMMUNISM_HARB"
+	tMod[5] = "MODIFIER_COMMUNISM_COMM"
+	tMod[6] = "MODIFIER_COMMUNISM_THEA"
+	tMod[7] = "MODIFIER_COMMUNISM_INDU"
+	local tBuild = {}
+	tBuild[1] = GameInfo.Buildings["BUILDING_HOLY_COMM"].Index
+	tBuild[1] = GameInfo.Buildings["BUILDING_CAMP_COMM"].Index
+	tBuild[1] = GameInfo.Buildings["BUILDING_ENCA_COMM"].Index
+	tBuild[1] = GameInfo.Buildings["BUILDING_HARB_COMM"].Index
+	tBuild[1] = GameInfo.Buildings["BUILDING_COMM_COMM"].Index
+	tBuild[1] = GameInfo.Buildings["BUILDING_THEA_COMM"].Index
+	tBuild[1] = GameInfo.Buildings["BUILDING_INDU_COMM"].Index
+	tCommBuild2Dictionary[0] = tMod
+	tCommBuild2Dictionary[1] = tBuild
+end
+
+--/-----------------------------------
 --Amani
+--/-----------------------------------
 --function OnUISetAmaniProperty(iGovernorOwnerID, tAmani)
 	--print("OnUISetAmaniProperty called")
 	--GameEvents.GameplaySetAmaniProperty.Call(iGovernorOwnerID, tAmani)
@@ -3524,6 +3634,9 @@ function Initialize()
 	if GameConfiguration.GetValue("BBGTS_F_WONDER_FIX") then
 		PopulateBugWonders()
 	end
+	if GameConfiguration.GetValue("BBGTS_COMMUNISM_BUILD") then
+		PopulatCommunismBuilding2Dictionary()
+	end
 	print("BBG - relevant Bug wonders populated")
 	-- turn checked effects:
 	GameEvents.OnGameTurnStarted.Add(OnGameTurnStarted);
@@ -3560,8 +3673,17 @@ function Initialize()
 		GameEvents.PolicyChanged.Add(OnPolicyChanged)
 		--LuaEvents.UIBBGGovChanged.Add(OnUIBBGGovChanged)
 		GameEvents.GameplayBBGGovChanged.Add(OnGameplayBBGGovChanged)
-		print("BBG Communism Hooks Added")
+		print("BBG Communism (modifiers) Hooks Added")
 	end
+
+	if GameConfiguration.GetValue("BBGTS_COMMUNISM_BUILD") then
+		GameEvents.GameplayAddCommBuildings.Add(OnGameplayAddCommBuildings)
+		GameEvents.GameplayRemoveCommBuildings.Add(OnGameplayRemoveCommBuildings)
+		GameEvents.GameplayCommDistrictComplete.Add(OnGameplayCommDistrictComplete)
+		GameEvents.PolicyChanged.Add(OnPolicyChanged_Build)
+		print("BBG Communism (buildings) Hooks Added")
+	end
+
 	if GameConfiguration.GetValue("BBGTS_AMANI") then
 		--Amani
 		--LuaEvents.UISetAmaniProperty.Add(OnUISetAmaniProperty)

@@ -4,7 +4,8 @@
 --	PURPOSE: UI to Gameplay script. Raises synchronized GameEvents from Events
 ------------------------------------------------------------------------------
 
-UIEvents = ExposedMembers.LuaEvents
+--UIEvents = ExposedMembers.LuaEvents
+include("bbgts_debug.lua")
 print("BBG UI to Gameplay Script started")
 --- Inca Scrits
 -- Constants: populating the table of features from which we remove inca bug yields
@@ -174,7 +175,208 @@ function OnGovernmentChanged(iPlayerID, iGovID)
 	kParameters["iGovID"] = iGovID 
 	UI.RequestPlayerOperation(iPlayerID, PlayerOperations.EXECUTE_SCRIPT, kParameters);
 end
+--//-------------------------
+-- Communism (build)
+--//-------------------------
+function OnGovernmentChanged_Build(iPlayerID, iGovID)
+	Debug("Called", "OnGameplayBBGGovChanged_Build")
+	local pPlayer = Players[iPlayerID]
+	if pPlayer == nil then
+		return
+	end
+	local pPlayerCities = pPlayer:GetCities()
+	if iGovID == 8 then
+		Debug("Communism Gov Adopted => Refresh Dummy Buildings", "OnGameplayBBGGovChanged_Build")
+		for i, pCity in pPlayerCities:Members() do
+			local iCityID = pCity:GetID()
+			GrantCommunismBuildings(iPlayerID, iCityID)
+		end
+		RefreshCommunismProp(iPlayerID, true)
+	elseif pPlayer:GetProperty("HAS_COMMUNISM") then
+		Debug("Communism Gov Dropped => Remove Dummy Buildings", "OnGameplayBBGGovChanged_Build")
+		for i, pCity in pPlayerCities:Members() do
+			local iCityID = pCity:GetID()
+			DestroyCommunismBuildings(iPlayerID, iCityID)
+		end
+		RefreshCommunismProp(iPlayerID, nil)
+	end
+end
 
+function ExposedMembers.OnPolicyChanged_Build(iPlayerID, iPolicyID, bEnacted)
+	Debug("Called", "ExposedMembers.OnPolicyChanged_Build")
+	local pPlayer = Players[iPlayerID]
+	if pPlayer == nil then
+		return
+	end
+	if iPolicyID == 105 then
+		Debug("Communism Legacy Card Status Changed", "OnPolicyChanged_Build")
+		local pPlayerCities = pPlayer:GetCities()
+		if bEnacted == true then
+			Debug("Card In => Refresh Dummy Buildings", "OnPolicyChanged_Build")
+			for i, pCity in pPlayerCities:Members() do
+				local iCityID = pCity:GetID()
+				GrantCommunismBuildings(iPlayerID, iCityID)
+			end
+			RefreshCommunismProp(pPlayer, true)
+		elseif bEnacted == false then
+			Debug("Card Out => Remove Dummy Buildings", "OnPolicyChanged_Build")
+			for i, pCity in pPlayerCities:Members() do
+				DestroyCommunismBuildings(iPlayerID, iCityID)
+			end
+			RefreshCommunismProp(iPlayerID, nil)
+		end
+	end
+end
+
+function RefreshCommunismProp(iPlayerID, bVal)
+	Debug("Called","RefreshCommunismProp")
+	local kParameters = {}
+	kParameters.OnStart = "OnGameplayRefreshCommunismProp"
+	kParameters["iPlayerID"] = iPlayerID
+	kParameters["bVal"] = bVal
+	UI.RequestPlayerOperation(iPlayerID, PlayerOperations.EXECUTE_SCRIPT, kParameters);
+end
+
+function GrantCommunismBuildings(iPlayerID, iCityID)
+	Debug("Called", "GrantCommunismBuildings")
+	local pCity = CityManager.GetCity(iPlayerID, iCityID)
+	if pCity == nil then
+		return
+	end
+	Debug("iPlayerID, iCityID "..tostring(iPlayerID)..", "..tostring(iCityID), "GrantCommunismBuildings")
+	local pCityDistricts = pCity:GetDistricts()
+	local tCommModifierIndexes = {}
+	for i, pDistrict in pCityDistricts:Members() do
+		local iDistrictType = pDistrict:GetType()
+		Debug("District with id "..tostring(pDistrict).." and type "..tostring(iDistrictType)..tostring(" Detected"), "GrantCommunismBuildings")
+		if (iDistrictType == 1) or (iDistrictType == 17) then
+			table.insert(tCommModifierIndexes, 1)
+			Debug("Holy Inserted", "GrantCommunismBuildings")
+		elseif (iDistrictType == 2) or (iDistrictType == 22) or (iDistrictType == 30) then
+			table.insert(tCommModifierIndexes, 2)
+			Debug("Campus Inserted", "GrantCommunismBuildings")
+		elseif (iDistrictType == 3) or (iDistrictType == 21) or (iDistrictType == 33) then
+			table.insert(tCommModifierIndexes, 3)
+			Debug("Encampment Inserted", "GrantCommunismBuildings")
+		elseif (iDistrictType == 4) or (iDistrictType == 20) or (iDistrictType == 28) then
+			table.insert(tCommModifierIndexes, 4)
+			Debug("Harbor Inserted", "GrantCommunismBuildings")
+		elseif (iDistrictType == 6) or (iDistrictType == 29) then
+			table.insert(tCommModifierIndexes, 5)
+			Debug("Commercial Inserted", "GrantCommunismBuildings")
+		elseif (iDistrictType == 8) or (iDistrictType == 14) then
+			table.insert(tCommModifierIndexes, 6)
+			Debug("Theater Inserted", "GrantCommunismBuildings")
+		elseif (iDistrictType == 9) or (iDistrictType == 16) or (iDistrictType == 32) then
+			table.insert(tCommModifierIndexes, 7)
+			Debug("Industrial Inserted", "GrantCommunismBuildings")
+		end
+	end
+	if #tCommModifierIndexes ~= 0 and tCommModifierIndexes~= {} then
+		Debug("Sending to Gameplay", "GrantCommunismBuildings")
+		local kParameters = {}
+		kParameters.OnStart = "GameplayAddCommBuildings"
+		kParameters["iPlayerID"] = iPlayerID
+		kParameters["iCityID"] = iCityID
+		kParameters["tCommModifierIndexes"] = tCommModifierIndexes
+		UI.RequestPlayerOperation(iPlayerID, PlayerOperations.EXECUTE_SCRIPT, kParameters)
+	end
+end
+
+function DestroyCommunismBuildings(iPlayerID, iCityID)
+	Debug("Called", "DestroyCommunismBuildings")
+	local pCity = CityManager.GetCity(iPlayerID, iCityID)
+	if pCity == nil then
+		return
+	end
+	Debug("iPlayerID, iCityID "..tostring(iPlayerID)..", "..tostring(iCityID), "DestroyCommunismBuildings")
+	local pCityDistricts = pCity:GetDistricts()
+	local tCommModifierIndexes = {}
+	for i, pDistrict in pCityDistricts:Members() do
+		local iDistrictType = pDistrict:GetType()
+		Debug("District with id "..tostring(pDistrict).." and type "..tostring(iDistrictType)..tostring(" Detected"), "DestroyCommunismBuildings")
+		if (iDistrictType == 1) or (iDistrictType == 17) then
+			table.insert(tCommModifierIndexes, 1)
+			Debug("Holy Inserted", "DestroyCommunismBuildings")
+		elseif (iDistrictType == 2) or (iDistrictType == 22) or (iDistrictType == 30) then
+			table.insert(tCommModifierIndexes, 2)
+			Debug("Campus Inserted", "DestroyCommunismBuildings")
+		elseif (iDistrictType == 3) or (iDistrictType == 21) or (iDistrictType == 33) then
+			table.insert(tCommModifierIndexes, 3)
+			Debug("Encampment Inserted", "DestroyCommunismBuildings")
+		elseif (iDistrictType == 4) or (iDistrictType == 20) or (iDistrictType == 28) then
+			table.insert(tCommModifierIndexes, 4)
+			Debug("Harbor Inserted", "DestroyCommunismBuildings")
+		elseif (iDistrictType == 6) or (iDistrictType == 29) then
+			table.insert(tCommModifierIndexes, 5)
+			Debug("Commercial Inserted", "DestroyCommunismBuildings")
+		elseif (iDistrictType == 8) or (iDistrictType == 14) then
+			table.insert(tCommModifierIndexes, 6)
+			Debug("Theater Inserted", "DestroyCommunismBuildings")
+		elseif (iDistrictType == 9) or (iDistrictType == 16) or (iDistrictType == 32) then
+			table.insert(tCommModifierIndexes, 7)
+			Debug("Industrial Inserted", "DestroyCommunismBuildings")
+		end
+	end
+	if #tCommModifierIndexes ~= 0 and tCommModifierIndexes~= {} then
+		Debug("Sending to Gameplay", "DestroyCommunismBuildings")
+		local kParameters = {}
+		kParameters.OnStart = "GameplayRemoveCommBuildings"
+		kParameters["iPlayerID"] = iPlayerID
+		kParameters["iCityID"] = iCityID
+		kParameters["tCommModifierIndexes"] = tCommModifierIndexes
+		UI.RequestPlayerOperation(iPlayerID, PlayerOperations.EXECUTE_SCRIPT, kParameters)
+	end
+end
+
+function OnDistrictProgressChanged(iPlayerID: number, iDistrictID : number, iCityID: number, iX : number, iY : number, iDistrictType:number, hEra: number, unknown, nPercentComplete:number)
+	Debug("Started","OnDistrictProgressChanged")
+	local pPlayer = Players[iPlayerID]
+	if pPlayer == nil then
+		return
+	end
+	local pPlayerCulture = pPlayer:GetCulture()
+	local iGovID = pPlayerCulture:GetCurrentGovernment()
+	print("iGovID", iGovID)
+	if iGovID ~= 8 and (pPlayerCulture:IsPolicyActive(105) == false) then
+		return print("No Trace of Communism => Exit")
+	end
+	if nPercentComplete < 100 then
+		return print("Communism District Incomplete")
+	end
+	local iCommBuildIndex = -1
+	Debug("District with id "..tostring(iDistrictID).." and type "..tostring(iDistrictType)..tostring(" Detected"), "DestroyCommunismBuildings")
+	if (iDistrictType == 1) or (iDistrictType == 17) then
+		iCommBuildIndex = 1
+		Debug("Holy Inserted", "DestroyCommunismBuildings")
+	elseif (iDistrictType == 2) or (iDistrictType == 22) or (iDistrictType == 30) then
+		iCommBuildIndex = 2
+		Debug("Campus Inserted", "DestroyCommunismBuildings")
+	elseif (iDistrictType == 3) or (iDistrictType == 21) or (iDistrictType == 33) then
+		iCommBuildIndex = 3
+		Debug("Encampment Inserted", "DestroyCommunismBuildings")
+	elseif (iDistrictType == 4) or (iDistrictType == 20) or (iDistrictType == 28) then
+		iCommBuildIndex = 4
+		Debug("Harbor Inserted", "DestroyCommunismBuildings")
+	elseif (iDistrictType == 6) or (iDistrictType == 29) then
+		iCommBuildIndex = 5
+		Debug("Commercial Inserted", "DestroyCommunismBuildings")
+	elseif (iDistrictType == 8) or (iDistrictType == 14) then
+		iCommBuildIndex = 6
+		Debug("Theater Inserted", "DestroyCommunismBuildings")
+	elseif (iDistrictType == 9) or (iDistrictType == 16) or (iDistrictType == 32) then
+		iCommBuildIndex = 7
+		Debug("Industrial Inserted", "DestroyCommunismBuildings")
+	else
+		return print("No Relevant District Detected")
+	end
+	local kParameters = {}
+	kParameters.OnStart = "GameplayCommDistrictComplete"
+	kParameters["iPlayerID"] = iPlayerID
+	kParameters["iCityID"] = iCityID
+	kParameters["iCommBuildIndex"] = iCommBuildIndex
+	UI.RequestPlayerOperation(iPlayerID, PlayerOperations.EXECUTE_SCRIPT, kParameters)
+end
 --Amani
 function OnGovernorAssigned(iCityOwnerID, iCityID, iGovernorOwnerID, iGovernorType)
 	print("OnGovernorAssigned")
@@ -518,10 +720,16 @@ function Initialize()
 		Events.UnitUpgraded.Add(OnUnitUpgraded)
 	end
 	if GameConfiguration.GetValue("BBGTS_COMMUNISM_MOD") then
-		--Communism
+		--Communism through modifiers
 		Events.CityWorkerChanged.Add(OnCityWorkerChanged)
 		Events.GovernmentChanged.Add(OnGovernmentChanged)
-		print("Delete Communism UI hooks added")
+		print("Communism (through modifiers) UI hooks added")
+	end
+	if GameConfiguration.GetValue("BBGTS_COMMUNISM_BUILD") then
+		--through internal only buildings (hope for a good display)
+		Events.GovernmentChanged.Add(OnGovernmentChanged_Build)
+		Events.DistrictBuildProgressChanged.Add(OnDistrictProgressChanged)
+		print("Communism (through buildings) UI hooks added")
 	end
 	if GameConfiguration.GetValue("BBGTS_AMANI") then
 		--Amani
