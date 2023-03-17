@@ -199,9 +199,10 @@ function OnTurnTimerUpdated(elapsedTime :number, maxTurnTime :number)
 	if maxTurnTime <= 0 then
 		return
 	end
-	Debug("Called","OnTurnTimerUpdated")
 	if pPlayer:IsTurnActive()==false then
-		print(elapsedTime, maxTurnTime)
+		if (elapsedTime>maxTurnTime-5) and (elapsedTime<maxTurnTime-4.9) then
+			print("OnTurnTimerUpdated", elapsedTime, maxTurnTime)
+		end
 	end
 end
 
