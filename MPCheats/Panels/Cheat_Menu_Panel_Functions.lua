@@ -200,7 +200,9 @@ function OnTurnTimerUpdated(elapsedTime :number, maxTurnTime :number)
 		return
 	end
 	Debug("Called","OnTurnTimerUpdated")
-	Debug("elapsedTime "..tostring(elapsedTime).." maxTurnTime"..tostring(maxTurnTime))
+	if pPlayer:IsTurnActive()==false then
+		print(elapsedTime, maxTurnTime)
+	end
 end
 
 -- // ----------------------------------------------------------------------------------------------
