@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Context Name="CheatPanelAddon">
+	<AlphaAnim ID="CheatCountdownTimerAnim" Size="1,1" AlphaStart="0" AlphaEnd="0" />	<!-- Animations always tick, even when hidden; use to update countdown timer -->
+
 	<Grid ID="CheatPanel" Offset="0,0" Size="296,25"  Texture="Controls_DropdownPanel" Color="143,122,82,200" Anchor="L,T" ConsumeMouseOver="1" Hidden="0" >
 	  <Box Offset="0,0" Size="parent-5,default" Color="143,122,82,200">
 		<Image Texture="Controls_GradientSmall" Size="parent,20" Color="0,0,0,255" Anchor="L,T"/>
@@ -44,6 +46,28 @@
 					</Stack>
 				</Grid>
 			</Stack>
+			<!-- Ready Button Like -->
+			<AlphaAnim		ID="FadeAnim"						Anchor="R,C"		 AnchorSide="O"						Size="parent,parent"	AlphaBegin="0" AlphaEnd="1" Cycle="Once" Speed=".5" Stopped="0" Pause="1" Function="Root">
+				<Container ID="CheatReadyContainer"						Anchor="C,B" Offset="0,-5"	Size="300,130" Hidden="1">
+					<Image															Anchor="C,B" Offset="0,35"	Size="130,23"	Texture="Diplomacy_PortraitBacking" />
+					<Image															Anchor="C,B" Offset="0,0" Size="305,58" Texture="Controls_BannerBlueSmall">
+						<Label		ID="CheatStartLabel"					Anchor="C,C" Offset="0,6" Align="Center" String="{LOC_START:upper}" Style="BannerHeaderText" />
+					</Image>
+
+					<Container  ID="CheatReadyButtonContainer" Size="300,130" Hidden="1">
+						<!--<Image ID="CheatTurnTimerHotseatBG"		Anchor="C,C" Offset="0,-17"		Size="91,92"	Texture="Shell_BeginButtonBacking"/>-->
+						<Image ID="CheatTurnTimerBG"						Anchor="C,C" Offset="0,-17"		Size="109,110"	Texture="Shell_CountdownTimerBacking"/>
+						<Meter ID="CheatTurnTimerMeter" Anchor="C,C" Offset="0,-19"	Size="93,94" Texture="Shell_CountdownTimerFill" Speed="0"/>
+						<!-- Making this into a grid button so that I can set the size of the font - can't do that with a normal button right now-->
+						<GridButton	ID="CheatReadyButton"				SliceCorner="40,40" SliceTextureSize="80,80" Anchor="C,C" Offset="0,-16"	Size="80,80"	Texture="Shell_BeginButton" StateOffsetIncrement="0,80" FontSize="40"/>
+					</Container>
+
+					<Container  ID="CheatReadyCheckContainer" Size="300,130" Hidden="1">
+						<Button	ID="CheatReadyCheck"		Anchor="C,C" Offset="-1,-13"	Size="80,80"	Texture="Shell_ReadyCheckboxLarge" StateOffsetIncrement="0,80"/>
+					</Container>
+
+				</Container>
+			</AlphaAnim>
 		</Container>
 		</Box>
 		<Box ID="ButtonSep2 "Color="143,122,82,200" Anchor="L,T" Size="parent+5,2"Offset="0,23" Hidden="0" >

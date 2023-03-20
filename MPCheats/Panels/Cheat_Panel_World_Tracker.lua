@@ -5,7 +5,13 @@
 include("cheat_menu_panel_functions");
 include("bbgts_debug.lua")
 local m_CheatPanelState:number		= 0;
-
+--turn processing
+local bNoCheats = false
+local myTime = -1
+local nTimerPhase = -1 -- -1: EmptyCircle, 0 - TimerTicks, 1 Check
+local nChachedPercent = 0
+local nCachedDisplay = 3
+local nBeeperPhase = 3
 function AttachPanelToWorldTracker()
 	if (m_IsLoading) then
 		return;
@@ -72,6 +78,8 @@ function OnPanelTitleClicked_Base()
     if(m_CheatPanelState == 0) then
 		UI.PlaySound("Tech_Tray_Slide_Open");
 		Controls.CheatPanel:SetSizeY(110);
+		Controls.CheatReadyContainer:SetHide(false)
+		DisplayCircle(nTimerPhase)
 		Controls.ButtonStackMIN:SetHide(false);
 		Controls.ButtonSep:SetHide(false);
 		Controls.CheatButtonDiplo:SetDisabled(true); --keep
@@ -82,6 +90,7 @@ function OnPanelTitleClicked_Base()
 	else
 		UI.PlaySound("Tech_Tray_Slide_Closed");
 		Controls.CheatPanel:SetSizeY(25);
+		Controls.CheatReadyContainer:SetHide(true)
 		Controls.ButtonStackMIN:SetHide(true);
 		Controls.ButtonSep:SetHide(true);
 		Controls.Diplo:SetHide(true);--keep
@@ -92,6 +101,8 @@ function OnPanelTitleClicked_Expansion1()
     if(m_CheatPanelState == 0) then
 		UI.PlaySound("Tech_Tray_Slide_Open");
 		Controls.CheatPanel:SetSizeY(110);
+		Controls.CheatReadyContainer:SetHide(false)
+		DisplayCircle(nTimerPhase)
 		Controls.ButtonStackMIN:SetHide(false);
 		Controls.ButtonSep:SetHide(false);
 		Controls.CheatButtonDiplo:SetDisabled(true); --keep
@@ -100,6 +111,7 @@ function OnPanelTitleClicked_Expansion1()
 	else
 		UI.PlaySound("Tech_Tray_Slide_Closed");
 		Controls.CheatPanel:SetSizeY(25);
+		Controls.CheatReadyContainer:SetHide(true)
 		Controls.ButtonStackMIN:SetHide(true);
 		Controls.ButtonSep:SetHide(true);
 		Controls.Diplo:SetHide(true); --keep
@@ -110,6 +122,8 @@ function OnPanelTitleClicked_Expansion2()
     if(m_CheatPanelState == 0) then
 		UI.PlaySound("Tech_Tray_Slide_Open");
 		Controls.CheatPanel:SetSizeY(110);
+		Controls.CheatReadyContainer:SetHide(false)
+		DisplayCircle(nTimerPhase)
 		Controls.ButtonStackMIN:SetHide(false);
 		Controls.ButtonSep:SetHide(false);
 		m_CheatPanelState = 1;
@@ -117,6 +131,7 @@ function OnPanelTitleClicked_Expansion2()
 	else
 		UI.PlaySound("Tech_Tray_Slide_Closed");
 		Controls.CheatPanel:SetSizeY(25);
+		Controls.CheatReadyContainer:SetHide(true)
 		Controls.ButtonStackMIN:SetHide(true);
 		Controls.ButtonSep:SetHide(true);
 		m_CheatPanelState = 0;
@@ -160,6 +175,134 @@ local function InitializeControls()
 	Controls.ToggleCheatPanel:RegisterCheckHandler(function() UpdateCheatPanel(not m_hideCheatPanel); end);
 	Controls.ToggleCheatPanel:SetCheck(true);
 	UpdateCheatPanel(true);
+end
+
+--turn processing
+function DisplayCircle(nControl)
+	if nControl == -1 then
+		Controls.CheatReadyCheckContainer:SetHide(false)
+		Controls.CheatReadyCheck:SetSelected(false)
+		Controls.CheatTurnTimerBG:SetHide(true)
+		Controls.CheatTurnTimerMeter:SetHide(true)
+		Controls.CheatReadyButtonContainer:SetHide(true)
+	elseif nControl == 0 then
+		Controls.CheatReadyCheckContainer:SetHide(true)
+		Controls.CheatReadyCheck:SetSelected(false)
+		Controls.CheatReadyButtonContainer:SetHide(false)
+		Controls.CheatTurnTimerBG:SetHide(false)
+		Controls.CheatTurnTimerMeter:SetHide(false)
+		Controls.CheatTurnTimerMeter:SetPercent(nChachedPercent)
+		Controls.CheatReadyButton:LocalizeAndSetText(nCachedDisplay);
+		Controls.CheatReadyButton:LocalizeAndSetToolTip( "" );
+	elseif nControl == 1 then
+		Controls.CheatReadyCheckContainer:SetHide(false)
+		Controls.CheatReadyCheck:SetSelected(true)
+		Controls.CheatTurnTimerBG:SetHide(true)
+		Controls.CheatTurnTimerMeter:SetHide(true)
+		Controls.CheatReadyButtonContainer:SetHide(true)
+	end
+end
+
+function TimerTick(elapsedTime, nStartTime, nEndTime, bMode)
+	
+		if elapsedTime < nStartTime + 0.1 and (nTimerPhase == -1) and (bMode == false) then
+			nTimerPhase = 0
+			--hide default off grey circle, keep consume mouse hover, display timer
+			if m_CheatPanelState == 1 then
+				DisplayCircle(nControl)
+			end
+		elseif (elapsedTime > nEndTime-0.1) and (elapsedTime<nEndTime) and (bMode == false) then
+			nTimerPhase = 1
+			-- remove consume mouse, remove timer, display OK
+			if m_CheatPanelState == 1 then
+				DisplayCircle(nControl)
+			end
+		elseif elapsedTime < nStartTime + 0.1 and (nTimerPhase == 1) and (bMode == true) then
+			nTimerPhase = 0
+			--hide ok, keep consume mouse, show timer
+			if m_CheatPanelState == 1 then
+				DisplayCircle(nControl)
+			end
+		elseif (elapsedTime > nEndTime-0.1) and (elapsedTime<nEndTime) and (bMode == true) then
+			nTimerPhase = -1
+			--hide timer, display default circle, consume mouse
+			if m_CheatPanelState == 1 then
+				DisplayCircle(nControl)
+			end
+		elseif nBeeperPhase == -1 then
+			nChachedPercent = 0
+			nCachedDisplay = 3
+			nBeeperPhase = 3
+		end
+
+	if nTimerPhase = 0 then
+		local nTimeDelta = 3 - (elapsedTime - nStartTime)
+		local nPercent = 1 - nTimeDelta/3
+		if nPercent > nChachedPercent + 0.02 then
+			nChachedPercent = nPercent
+			nCachedDisplay  = math.floor(nTimeDelta*10)/10
+		end
+		if m_CheatPanelState == 1 then
+			Controls.CheatTurnTimerMeter:SetPercent(nChachedPercent)
+			Controls.CheatReadyButton:LocalizeAndSetText(nCachedDisplay);
+			Controls.CheatReadyButton:LocalizeAndSetToolTip( "" );
+			if math.abs(nTimeDelta-nBeeperPhase) < 0.05 then
+				UI.PlaySound("Play_MP_Game_Launch_Timer_Beep");
+				nBeeperPhase = nBeeperPhase - 1
+			end
+		end
+	end
+	
+end 
+
+function OnTurnTimerUpdated(elapsedTime :number, maxTurnTime :number)
+	if maxTurnTime <= 0 then
+		return
+	elseif myTime == -1 then
+		myTime = elapsedTime
+		if myTime>maxTurnTime-6 then
+			bNoCheats = true
+		end
+		return
+	elseif elapsedTime < myTime+3 and (not bNoCheats) then
+		TimerTick(elapsedTime, myTime, myTime + 3, false)
+	--elseif (elapsedTime>=myTime+3) and (elapsedTime<=maxTurnTime + delta -5) and (not bNoCheats) then
+		--TimerTick(elapsedTime, myTime + 3, maxTurnTime + delta - 5)
+	elseif (elapsedTime> maxTurnTime - 5) and (elapsedTime<maxTurnTime - 2) and (not bNoCheats) then
+		TimerTick(elapsedTime, maxTurnTime-5, myTime+3, true)
+	end
+	if (not bNoCheats) then
+		if (elapsedTime>=myTime+3) and (not bFirstTick) then
+			bFirstTick = true
+			local kParameters = {}
+			kParameters.OnStart = "GameplaySwitchOnHumanLoaded"
+			kParameters["iPlayerID"] = iPlayerID
+			UI.RequestPlayerOperation(iPlayerID, PlayerOperations.EXECUTE_SCRIPT, kParameters)	
+		end
+
+		--Ticking in the end before disable
+		if (elapsedTime> maxTurnTime-2.05) and (bFirstOut) and (not bEndTimerSet) then
+			bEndTimerSet = true
+			local kParameters = {}
+			kParameters.OnStart = "GameplayEndTimer"
+			UI.RequestPlayerOperation(iPlayerID, PlayerOperations.EXECUTE_SCRIPT, kParameters)
+		end
+	end
+end
+
+function ExposedMembers.ActivateLocalTurnerEvent()
+	Debug("Called: Attaching Turner Event", "ExposedMembers.ActivateLocalTurnerEvent")
+	Events.TurnTimerUpdated.Add(OnTurnTimerUpdated)
+end
+
+function ExposedMembers.DeactivateTesterPanel()
+	Debug("Called: Resetting all Control", "ExposedMembers.DeactivateTesterPanel")
+	bCheatsActive = false
+	myTime = -1
+	bFirstTick = false
+	bFirstOut = false
+	bEndTimerSet = false
+	Events.TurnTimerUpdated.Remove(OnTurnTimerUpdated)
 end
 
 -- // ----------------------------------------------------------------------------------------------

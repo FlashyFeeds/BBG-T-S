@@ -3941,6 +3941,13 @@ function Initialize()
 			GameEvents.OnPillage.Add(OnGilgaPillage)
 			GameEvents.OnCombatOccurred.Add(OnGilgaCombatOccurred)
 			print("BBG Gilga Hooks Added")
+			if PlayerConfigurations[iPlayerID]:GetCivilizationTypeName() == "CIVILIZATION_SUMERIA" then
+				if currentTurn == startTurn then
+					ApplySumeriaTrait()
+					--InitBarbData()
+				end
+				print("Sumeria Warcart Added")
+			end
 		elseif PlayerConfigurations[iPlayerID]:GetCivilizationTypeName() == "CIVILIZATION_SUMERIA" then
 			if currentTurn == startTurn then
 				ApplySumeriaTrait()

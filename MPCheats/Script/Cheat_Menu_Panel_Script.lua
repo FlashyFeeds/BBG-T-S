@@ -7,7 +7,16 @@ include("bbgts_debug.lua")
 --local iLocPlayerID;
 --local iLocCityID;
 local tAlivePlayers = {}
-
+--Members: tAlivePlayers.AlivePlayers - alive player [i] - returns iAliveID, .Count returns total alive count for faster loops
+--Associated Game Property: "ALIVE_PLAYERS"
+local tHumanPlayers = {}
+local g_nStartTurn = Game.GetStartTurn()
+--tHumanPlayers.AliveHumans -- alive humans. [i] - returns individual data: 
+	--["iPlayerID"] the ID
+	-- .Loaded has 3 values: -1 not Loaded, 0 Local Player Turn Active, 1 -- Timer Dependent Interractions Active
+--tHumanPlayer.Count -- returns count
+--Associated Game Property "ALIVE_HUMANS"
+--Members 
 -- // ----------------------------------------------------------------------------------------------
 -- // Event Handlers
 -- // ----------------------------------------------------------------------------------------------
@@ -257,8 +266,34 @@ function OnGameplayLocalTurnBegin(iPlayerID, kParameters)
 	Debug("Called", "OnGameplayLocalTurnBegin")
 	local iPlayerID = kParameters["iPlayerID"]
 	local pPlayer = Players[iPlayerID]
-	if pPlayer:GetProperty("VISIBILITY_END_TURN")==nil then return end
 
+	--update human turn processing scripts controll
+	local tHumanPlayers = Game.GetProperty("ALIVE_HUMANS")
+	if tHumanPlayers == nil then
+		return print("Error Occured while populating/retrieving human player data")
+	end
+	local nHumanCount = tHumanPlayers.Count
+	local tHumanData = tHumanPlayers.AliveHumans
+	local nLoadedCount = 0
+	for i = 1, nHumanCount do
+		local iAliveID = tHumanData[i]["iPlayerID"]
+		if iPlayerID == iAliveID then
+			tHumanData[i].Loaded = 0
+		end
+		if tHumanData[i].Loaded == 0 then
+			nLoadedCount = nLoadedCount + 1
+		end
+	end
+	if nLoadedCount == 1 and g_nStartTurn < Game.GetCurrentGameTurn() then
+		Debug("Setting First Player Out", "OnGameplayLocalTurnBegin")
+		ExposedMembers.SetFirstOut()
+	end
+	if nLoadedCount == nHumanCount and g_nStartTurn < Game.GetCurrentGameTurn() then --we want to exclude turn 1 cheats
+		Debug("Begining to Countdown for Panel Enable", "OnGameplayLocalTurnBegin")
+		ExposedMembers.ActivateLocalTurnerEvent()
+	end
+	--remove the revealed visibility script
+	if pPlayer:GetProperty("VISIBILITY_END_TURN")==nil then return end
 	local tAlivePlayers = Game.GetProperty("ALIVE_PLAYERS")
 	if tAlivePlayers == nil then
 		return print("Error Occured while populating/retrieving alive players")
@@ -278,15 +313,26 @@ function OnGameplayLocalTurnBegin(iPlayerID, kParameters)
 	Debug("All Players and City-States visibility removed for playerID "..tostring(playerID), "OnGameplayLocalTurnBegin")
 end
 --alive table (will probably migrate to bbg script)
-function PopulateAliveTable()
+function PopulateAliveTable(nLoaded)
+	nLoaded = nLoaded or -1
 	local tPlayerIDs = {}
 	local nAlivePlayerCount = 0
+	local tHumanData = {}
+	local nAliveHumanCount = 0
 	for i=0, 60 do
 		local pTmpPlayer = Players[i]
 		if pTmpPlayer~=nil then
 			if pTmpPlayer:IsAlive() then
 				table.insert(tPlayerIDs, i)
 				nAlivePlayerCount = nAlivePlayerCount+1
+				if pTmpPlayer:IsHuman() then
+					nAliveHumanCount = nAliveHumanCount + 1
+					local row = {}
+					row["iPlayerID"] = i
+					row.Loaded = nLoaded
+					table.insert(tHumanData, row)
+					Debug("Human player with ID "..tostring(i).." Added. nAliveHumanCount: "..tostring(nAliveHumanCount), "PopulateAliveTable")
+				end  
 			end
 		end
 	end
@@ -295,39 +341,109 @@ function PopulateAliveTable()
 	Game.SetProperty("ALIVE_PLAYERS", tAlivePlayers)
 	Debug("ALIVE_PLAYERS populated with data:", "PopulateAliveTable")
 	civ6tostring(tAlivePlayers)
+	tHumanPlayers.AliveHumans = tHumanData
+	tHumanPlayers.Count = nAliveHumanCount
+	Game.SetProperty("ALIVE_HUMANS", tHumanPlayers)
+	Debug("ALIVE_HUMANS populated with data:", "PopulateAliveTable")
+	civ6tostring(tHumanPlayers)
 end
 --player defeated
-function OnUIPlayerDefeat(iPlayerID)
-	Debug("Called", "OnUIPlayerDefeat")
-	GameEvents.GameplayPlayerDefeat.Call(iPlayerID)
-end
+--function OnUIPlayerDefeat(iPlayerID)
+	--Debug("Called", "OnUIPlayerDefeat")
+	--GameEvents.GameplayPlayerDefeat.Call(iPlayerID)
+--end
 
-function OnGameplayPlayerDefeat(iPlayerID)
+function OnGameplayPlayerDefeat(iPlayerID, kParameters)
+	--General Defeat
+	local iPlayerID = kParameters["iPlayerID"]
 	Debug("Called", "OnGameplayPlayerDefeat")
 	local tGAlivePlayers = Game.GetProperty("ALIVE_PLAYERS")
 	local tPlayerIDs = tGAlivePlayers.AlivePlayers
 	local nCount = tGAlivePlayers.Count
 	local iPos = IDToPos(tPlayerIDs, iPlayerID)
-	table.remove(tPlayerIDs, iPos)
-	nCount = nCount - 1
-	tGAlivePlayers.AlivePlayers = tPlayerIDs
-	tGAlivePlayers.Count = nCount
-	tAlivePlayers = tGAlivePlayers
-	Game.SetProperty("ALIVE_PLAYERS", tGAlivePlayers)
-	Debug("ALIVE_PLAYERS populated with data:", "OnGameplayPlayerDefeat")
-	civ6tostring(tAlivePlayers)
+	if iPos~=false then
+		table.remove(tPlayerIDs, iPos)
+		nCount = nCount - 1
+		tGAlivePlayers.AlivePlayers = tPlayerIDs
+		tGAlivePlayers.Count = nCount
+		tAlivePlayers = tGAlivePlayers
+		Game.SetProperty("ALIVE_PLAYERS", tGAlivePlayers)
+		Debug("ALIVE_PLAYERS populated with data:", "OnGameplayPlayerDefeat")
+		civ6tostring(tAlivePlayers)
+	end
+	--Human Defeat
+	local tGHumanPlayers = Game.GetProperty("ALIVE_HUMANS")
+	local tHumanData = tGHumanPlayers.AliveHumans
+	local nHumanCount = tGHumanPlayers.Count
+	local iHumanPos = IDToPos(tHumanData, iPlayerID, "iPlayerID")
+	if iHumanPos~=false then
+		table.remove(tHumanData, iHumanPos)
+		nHumanCount = nHumanCount - 1
+		tGHumanPlayers.AliveHumans = tHumanData
+		tGHumanPlayers.Count = nHumanCount
+		tHumanPlayers = tGHumanPlayers
+		Game.SetProperty("ALIVE_HUMANS", tGHumanPlayers)
+		Debug("ALIVE_HUMANS populated with data:", "OnGameplayPlayerDefeat")
+		civ6tostring(tHumanPlayers)
+	end
 end
 --player revived
-function OnUIPlayerRevived()
-	Debug("Called", "OnUIPlayerRevived")
-	GameEvents.GameplayPlayerRevived.Call()
-end
+--function OnUIPlayerRevived(iPlayerID, kParameters)
+	--Debug("Called", "OnUIPlayerRevived")
+	--GameEvents.GameplayPlayerRevived.Call()
+--end
 
-function OnGameplayPlayerRevived()
+function OnGameplayPlayerRevived(iPlayerID, kParameters)
 	Debug("Called", "OnGameplayPlayerRevived")
-	PopulateAliveTable()
+	local bLoaded = Game.GetProperty("TURN_DEPENDENT_ENABLED")
+	local nLoaded = -1
+	if bLoaded then
+		nLoaded = 1
+	end
+	PopulateAliveTable(nLoaded)
 end
 
+function OnGameplaySwitchOnHumanLoaded(iPlayerID, kParameters)
+	Debug("Called", "OnGameplaySwitchOnHumanLoaded")
+	local tGHumanPlayers = Game.GetProperty("ALIVE_HUMANS")
+	if tGHumanPlayers == nil then
+		return print("Error: tHumanPlayers was incorrectly populated")
+	end
+	local iPlayerID = kParameters["iPlayerID"]
+	local tHumanData = tGHumanPlayers.AliveHumans
+	local iHumanPos = IDToPos(tHumanData, iPlayerID, "iPlayerID")
+	if iHumanPos == false then
+		return print("Error: passing the iPlayerID was done wrong")
+	end
+	tHumanData[iHumanPos].Loaded = 1
+	tGHumanPlayers.AliveHumans = tHumanData
+	tHumanPlayers = tGHumanPlayers
+	Game.SetProperty("ALIVE_HUMANS", tGHumanPlayers)
+	Debug("ALIVE_HUMANS was updated. Current Values", "OnGameplaySwitchOnHumanLoaded")
+	civ6tostring(tHumanPlayers)
+	Debug("Activating Tester Panel on Local Machine", "OnGameplaySwitchOnHumanLoaded")
+	ExposedMembers.ActivateTesterPanel()
+end
+
+function OnGameplayEndTimer(iPlayerID, kParameters)
+	Debug("Called", "OnGameplayEndTimer")
+	local tGHumanPlayers = Game.GetProperty("ALIVE_HUMANS")
+	if tGHumanPlayers == nil then
+		return print("Error: tHumanPlayers was incorrectly populated")
+	end
+	local tHumanData = tGHumanPlayers.AliveHumans
+	local nHumanCount = tGHumanPlayers.Count
+	for i=1, iHumanCount do
+		tHumanData[i].Loaded = -1
+	end
+	tGHumanPlayers.AliveHumans = tHumanData
+	tHumanPlayers = tGHumanPlayers
+	Game.SetProperty("ALIVE_HUMANS", tGHumanPlayers)
+	Debug("ALIVE_HUMANS was updated. Current Values", "OnGameplayEndTimer")
+	civ6tostring(tHumanPlayers)
+	Debug("Deactivating Tester Panel on Local Machine", "OnGameplayEndTimer")
+	ExposedMembers.DeactivateTesterPanel()
+end
 -- // ----------------------------------------------------------------------------------------------
 -- // Support Functions
 -- // ----------------------------------------------------------------------------------------------
@@ -383,7 +499,7 @@ function Initialize()
 	Debug("Cheat Menu Initialization Started", "Initialize");
 	--if ( not ExposedMembers.MOD_CheatMenu) then ExposedMembers.MOD_CheatMenu = {}; end
 	--set local alive values (probably migrate to bbg script)
-	PopulateAliveTable()
+	PopulateAliveTable(nLoaded)
 	--InitPlayerSelection()
 	--update city selection
 	--LuaEvents.UIPlayerCityUpdt.Add(OnUIPlayerCityUpdt)
@@ -420,8 +536,11 @@ function Initialize()
 	--Reveal CS and Players
 	--LuaEvents.UIRevealAll.Add(OnUIRevealAll);
 	GameEvents.GameplayRevealAll.Add(OnGameplayRevealAll)
-	LuaEvents.UILocalPlayerTurnBegin.Add(OnUILocalPlayerTurnBegin)
-	GameEvents.GameplayLocalTurnBegin.Add(OnGameplayLocalTurnBegin)	
+	--LuaEvents.UILocalPlayerTurnBegin.Add(OnUILocalPlayerTurnBegin)
+	--turn processing events
+	GameEvents.GameplayLocalTurnBegin.Add(OnGameplayLocalTurnBegin)
+	GameEvents.GameplaySwitchOnHumanLoaded.Add(OnGameplaySwitchOnHumanLoaded)
+	GameEvents.GameplayStartEndTimer.Add(OnGameplayStartEndTimer)	
 	--ExposedMembers.MOD_CheatMenu_Initialized = true;
 	Debug("Cheat Menu Initialization Finished", "Initialize");
 end

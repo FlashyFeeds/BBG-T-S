@@ -15,6 +15,7 @@ include("bbgts_debug.lua")
 
 local iPlayerID 					= Game.GetLocalPlayer();
 local iLocCityID                    = -1
+local iLocUnitID                    = -1
 local pPlayer 						= Players[iPlayerID];
 local pTreasury 					= pPlayer:GetTreasury();
 local pReligion 					= pPlayer:GetReligion();
@@ -29,7 +30,11 @@ local m_hideCheatPanel				= false;
 local m_IsLoading:boolean			= false;
 local m_IsAttached:boolean			= false;
 local tPlayerSelections             = {}
-
+--turn processing local variables
+bFirstTick = false
+bFirstOut = false
+bEndTimerSet = false
+bCheatsActive = false
 -- // ----------------------------------------------------------------------------------------------
 -- // MENU BUTTON FUNCTIONS
 -- // ----------------------------------------------------------------------------------------------
@@ -174,6 +179,12 @@ function OnCitySelectionChanged(iPlayerID, iCityID)
 	--civ6tostring(tPlayerSelections)
 end
 
+function OnUnitSelectionChanged(iPlayerID, iUnitID)
+	Debug("Called", "OnUnitSelectionChanged")
+	iLocUnitID = iUnitID
+	Debug("iPlayerID, iLocUnitID values "..tostring(iPlayerID)..", "..tostring(iLocUnitID), "OnCitySelectionChanged")
+end
+
 --ui hook to remove granted visibility next turn
 function OnLocalPlayerTurnBegin()
 	Debug("Called", "OnLocalPlayerTurnBegin")
@@ -187,23 +198,29 @@ end
 --ui hook to remove a defeated player from the list
 function OnPlayerDefeat(iPlayerID, iDefeatType, iEventID)
 	Debug("Called", "OnPlayerDefeat")
-	UICheatEvents.UIPlayerDefeat(iPlayerID)
+	local kParameters = {}
+	kParameters.OnStart = "GameplayPlayerDefeat"
+	kParameters["iPlayerID"] = iPlayerID
+	UI.RequestPlayerOperation(iPlayerID, PlayerOperations.EXECUTE_SCRIPT, kParameters)
+	--UICheatEvents.UIPlayerDefeat(iPlayerID)
 end
 --ui hook when the player gets revived
 function OnPlayerRevived()
 	Debug("Called", "OnPlayerRevived")
-	UICheatEvents.UIPlayerRevived()
+	local kParameters = {}
+	kParameters.OnStart = "GameplayPlayerRevived" 
+	UI.RequestPlayerOperation(iPlayerID, PlayerOperations.EXECUTE_SCRIPT, kParameters)
+	--UICheatEvents.UIPlayerRevived()
 end
 
-function OnTurnTimerUpdated(elapsedTime :number, maxTurnTime :number)
-	if maxTurnTime <= 0 then
-		return
-	end
-	if pPlayer:IsTurnActive()==false then
-		if (elapsedTime>maxTurnTime-5) and (elapsedTime<maxTurnTime-4.9) then
-			print("OnTurnTimerUpdated", elapsedTime, maxTurnTime)
-		end
-	end
+function ExposedMembers.SetFirstOut()
+	Debug("Called: Setting bFirstOut","ExposedMembers.SetFirstOut")
+	bFirstOut = true
+end
+
+function ExposedMembers.ActivateTesterPanel()
+	Debug("Called: Setting bCheatsActive", "ExposedMembers.ActivateTesterPanel")
+	bCheatsActive = true
 end
 
 -- // ----------------------------------------------------------------------------------------------
@@ -242,8 +259,8 @@ end
 
 --====Events and Init====--
 Events.CitySelectionChanged.Add(OnCitySelectionChanged) -- populates player/city table on change 
+Events.UnitSelectionChanged.Add(OnUnitSelectionChanged) -- populates player/unit table on change
 Events.LocalPlayerTurnBegin.Add(OnLocalPlayerTurnBegin) -- needed to remove visibility (probably migrate)
 Events.PlayerDefeat.Add(OnPlayerDefeat) --needed to repopulate alive table for visibility cheat (probably migrate)
 Events.PlayerRevived.Add(OnPlayerRevived)
-Events.TurnTimerUpdated.Add(OnTurnTimerUpdated)
 
