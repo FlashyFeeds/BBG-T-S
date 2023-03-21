@@ -30,16 +30,16 @@ local m_hideCheatPanel				= false;
 local m_IsLoading:boolean			= false;
 local m_IsAttached:boolean			= false;
 local tPlayerSelections             = {}
---turn processing local variables
-bFirstTick = false
-bFirstOut = false
-bEndTimerSet = false
+--turn processing variables
 bCheatsActive = false
 -- // ----------------------------------------------------------------------------------------------
 -- // MENU BUTTON FUNCTIONS
 -- // ----------------------------------------------------------------------------------------------
 
 function ChangeGold()
+	if bCheatsActive == false or GameConfiguration.IsPaused() then
+		return
+	end
 	local pNewGold = 10000
 	if pPlayer:IsHuman() then
 		Debug("Called", "ChangeGold")
@@ -52,6 +52,9 @@ function ChangeGold()
     end
 end
 function CompleteProduction()
+	if bCheatsActive == false or GameConfiguration.IsPaused() then
+		return
+	end
 	if pPlayer:IsHuman() then
 		Debug("Called", "CompleteProduction")
 		local kParameters = {}
@@ -63,6 +66,9 @@ function CompleteProduction()
 	end
 end
 function CompleteResearch()
+	if bCheatsActive == false or GameConfiguration.IsPaused() then
+		return
+	end
 	Debug("Called", "CompleteResearch")
  	local pTechs = pPlayer:GetTechs()
 	local pRTech = pTechs:GetResearchingTech()	
@@ -81,6 +87,9 @@ function CompleteResearch()
 	end
 end
 function CompleteCivic()
+	if bCheatsActive == false or GameConfiguration.IsPaused() then
+		return
+	end
 	Debug("Called", "CompleteCivic")
  	local pCivics = pPlayer:GetCulture()
 	local pRCivic = pCivics:GetProgressingCivic()
@@ -99,6 +108,9 @@ function CompleteCivic()
 	end	
 end
 function ChangeFaith()
+	if bCheatsActive == false or GameConfiguration.IsPaused() then
+		return
+	end
 	Debug("Called", "ChangeFaith")
 	if pPlayer:IsHuman() then
 		local kParameters = {}
@@ -110,6 +122,9 @@ function ChangeFaith()
     end
 end
 function ChangeEnvoy()
+	if bCheatsActive == false or GameConfiguration.IsPaused() then
+		return
+	end
 	Debug("Called", "ChangeEnvoy")
 	if pPlayer:IsHuman() then
 		local kParameters = {}
@@ -121,6 +136,9 @@ function ChangeEnvoy()
     end
 end
 function ChangeDiplomaticFavor()
+	if bCheatsActive == false or GameConfiguration.IsPaused() then
+		return
+	end
 	Debug("Called", "ChangeDiplomaticFavor")
 	if pPlayer:IsHuman() then
 		local kParameters = {}
@@ -132,6 +150,9 @@ function ChangeDiplomaticFavor()
     end
 end
 function ChangeGovPoints()
+	if bCheatsActive == false or GameConfiguration.IsPaused() then
+		return
+	end
 	Debug("Called", "ChangeGovPoints")
 	if pPlayer:IsHuman() then
 		local kParameters = {}
@@ -143,6 +164,9 @@ function ChangeGovPoints()
     end
 end
 function RevealAll()
+	if bCheatsActive == false or GameConfiguration.IsPaused() then
+		return
+	end
 	Debug("Called", "RevealAll")
 	if pPlayer:IsHuman() then
 		local kParameters = {}
@@ -213,16 +237,51 @@ function OnPlayerRevived()
 	--UICheatEvents.UIPlayerRevived()
 end
 
-function ExposedMembers.SetFirstOut()
-	Debug("Called: Setting bFirstOut","ExposedMembers.SetFirstOut")
-	bFirstOut = true
-end
-
 function ExposedMembers.ActivateTesterPanel()
 	Debug("Called: Setting bCheatsActive", "ExposedMembers.ActivateTesterPanel")
 	bCheatsActive = true
+	Debug("bCheatsActive = "..tostring(bCheatsActive), "ExposedMembers.ActivateTesterPanel")
 end
 
+function ExposedMembers.DeactivateTesterPanelFun()
+	Debug("Called: Setting bCheatsActive", "ExposedMembers.DeactivateTesterPanelFun")
+	bCheatsActive = false
+	Debug("bCheatsActive = "..tostring(bCheatsActive), "ExposedMembers.DeactivateTesterPanelFun")
+end
+
+function SwitchOnHumanLoaded(tPassParams)
+	Debug("Called", "SwitchOnHumanLoaded")
+	print(BuildRecursiveDataString(tPassParams))
+	local kParameters = {}
+	kParameters.OnStart = "GameplaySwitchOnHumanLoaded"
+	kParameters["iPlayerID"] = iPlayerID
+	UI.RequestPlayerOperation(iPlayerID, PlayerOperations.EXECUTE_SCRIPT, kParameters)	
+end
+
+function EndTimer(tPassParams)
+	Debug("Called", "EndTimer")
+	print(BuildRecursiveDataString(tPassParams))
+	local kParameters = {}
+	kParameters.OnStart = "GameplayEndTimer"
+	UI.RequestPlayerOperation(iPlayerID, PlayerOperations.EXECUTE_SCRIPT, kParameters)
+end
+
+--testing shift enters
+function OnPlayerTurnActivated(iPlayerID)
+	Debug("Called: Turn Activated for "..tostring(iPlayerID), "OnPlayerTurnActivated")
+end
+function OnPlayerTurnDeactivated(iPlayerID)
+	Debug("Called: Turn Deactivated for "..tostring(iPlayerID), "OnPlayerTurnDeactivated")
+end
+function OnTurnEnd()
+	Debug("Called:", "OnTurnEnd")
+end
+function OnLocalPlayerTurnEnd()
+	Debug("Calld for "..tostring(iPlayerID), "OnLocalPlayerTurnEnd")
+end
+function OnLocalPlayerTurnUnready()
+	Debug("Calld for "..tostring(iPlayerID), "OnLocalPlayerTurnUnready")
+end
 -- // ----------------------------------------------------------------------------------------------
 -- // HOTKEYS (need to make an overlay and disable functions unless all players have time on the timer/loaded in)
 -- // ----------------------------------------------------------------------------------------------
@@ -260,7 +319,11 @@ end
 --====Events and Init====--
 Events.CitySelectionChanged.Add(OnCitySelectionChanged) -- populates player/city table on change 
 Events.UnitSelectionChanged.Add(OnUnitSelectionChanged) -- populates player/unit table on change
-Events.LocalPlayerTurnBegin.Add(OnLocalPlayerTurnBegin) -- needed to remove visibility (probably migrate)
+Events.LocalPlayerTurnBegin.Add(OnLocalPlayerTurnBegin) -- needed to remove visibility and turner functions (probably migrate)
+Events.PlayerTurnActivated.Add(OnPlayerTurnActivated)
+Events.PlayerTurnDeactivated.Add(OnPlayerTurnDeactivated) -- check the event loop here
 Events.PlayerDefeat.Add(OnPlayerDefeat) --needed to repopulate alive table for visibility cheat (probably migrate)
 Events.PlayerRevived.Add(OnPlayerRevived)
-
+Events.TurnEnd.Add(OnTurnEnd)
+Events.LocalPlayerTurnEnd.Add(OnLocalPlayerTurnEnd)
+Events.LocalPlayerTurnUnready.Add(OnLocalPlayerTurnUnready)

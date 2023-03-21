@@ -19,23 +19,28 @@ end
 
 function BuildRecursiveDataString(data: table)
 	local str: string = ""
+	--local tNonTable = {}
 	for k,v in pairs(data) do
 		if type(v)=="table" then
 			--print("BuildRecursiveDataString: Table Detected")
 			local deeper_data = v
 			local new_string = BuildRecursiveDataString(deeper_data)
 			--print("NewString ="..new_string)
-			str = "table: "..new_string.."; "
+			str = str.."[["..tostring(k).."=table: "..new_string.."]]; "
 		else
-			str = str..tostring(k)..": "..tostring(v).." "
+			str = str..tostring(k)..": "..tostring(v)..", "
+			--table.insert(tNonTable, k)
 		end
 	end
+	--for i, key in ipairs(tNonTable) do
+		--str = str..tostring(key)..": "..tostring(data[key])..", "
+	--end
 	return str
 end
 
 function civ6tostring(arg)
 	if type(arg)=="table" then
-		return tostring(BuildRecursiveDataString(arg))
+		return print(BuildRecursiveDataString(arg))
 	else
 		return tostring(arg)
 	end

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Mod id="d6b111c4-be33-4878-b1fc-8741b1cd6af7" version="1011">
+<Mod id="d6b111c4-be33-4878-b1fc-8741b1cd6af7" version="1012">
 	<Properties>
 		<Name>LOC_BBGTS_TITLE</Name>
 		<Description>LOC_BBGTS_DESCRIPTION</Description>
@@ -11,8 +11,8 @@
 	</Properties>
 	<LocalizedText>
 		<Text id="LOC_BBGTS_TITLE">
-			<en_US>BBGTS 1.0.11</en_US>
-			<fr_FR>BBGTS 1.0.11</fr_FR>
+			<en_US>BBGTS 1.0.12</en_US>
+			<fr_FR>BBGTS 1.0.12</fr_FR>
 		</Text>
 		
 		<Text id="LOC_BBGTS_TEASER">
@@ -212,6 +212,7 @@
 		</ImportFiles>
 		<!-- MP Cheats Keybinds -->
 		<UpdateDatabase id="bbgts_mp_cheats_config">
+			<!--<Criteria>bbgts_mp_cheats</Criteria>-->
 			<File>MPCheats/Text/input_config.xml</File>
 		</UpdateDatabase>
 	</FrontEndActions>

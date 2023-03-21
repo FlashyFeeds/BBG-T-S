@@ -10,7 +10,7 @@ local tAlivePlayers = {}
 --Members: tAlivePlayers.AlivePlayers - alive player [i] - returns iAliveID, .Count returns total alive count for faster loops
 --Associated Game Property: "ALIVE_PLAYERS"
 local tHumanPlayers = {}
-local g_nStartTurn = Game.GetStartTurn()
+local g_nStartTurn = 0
 --tHumanPlayers.AliveHumans -- alive humans. [i] - returns individual data: 
 	--["iPlayerID"] the ID
 	-- .Loaded has 3 values: -1 not Loaded, 0 Local Player Turn Active, 1 -- Timer Dependent Interractions Active
@@ -340,12 +340,12 @@ function PopulateAliveTable(nLoaded)
 	tAlivePlayers.Count = nAlivePlayerCount
 	Game.SetProperty("ALIVE_PLAYERS", tAlivePlayers)
 	Debug("ALIVE_PLAYERS populated with data:", "PopulateAliveTable")
-	civ6tostring(tAlivePlayers)
+	print(BuildRecursiveDataString(tAlivePlayers))
 	tHumanPlayers.AliveHumans = tHumanData
 	tHumanPlayers.Count = nAliveHumanCount
 	Game.SetProperty("ALIVE_HUMANS", tHumanPlayers)
 	Debug("ALIVE_HUMANS populated with data:", "PopulateAliveTable")
-	civ6tostring(tHumanPlayers)
+	print(BuildRecursiveDataString(tHumanPlayers))
 end
 --player defeated
 --function OnUIPlayerDefeat(iPlayerID)
@@ -433,7 +433,7 @@ function OnGameplayEndTimer(iPlayerID, kParameters)
 	end
 	local tHumanData = tGHumanPlayers.AliveHumans
 	local nHumanCount = tGHumanPlayers.Count
-	for i=1, iHumanCount do
+	for i=1, nHumanCount do
 		tHumanData[i].Loaded = -1
 	end
 	tGHumanPlayers.AliveHumans = tHumanData
@@ -442,7 +442,8 @@ function OnGameplayEndTimer(iPlayerID, kParameters)
 	Debug("ALIVE_HUMANS was updated. Current Values", "OnGameplayEndTimer")
 	civ6tostring(tHumanPlayers)
 	Debug("Deactivating Tester Panel on Local Machine", "OnGameplayEndTimer")
-	ExposedMembers.DeactivateTesterPanel()
+	ExposedMembers.DeactivateTesterPanelWT()
+	ExposedMembers.DeactivateTesterPanelFun()
 end
 -- // ----------------------------------------------------------------------------------------------
 -- // Support Functions
@@ -500,14 +501,16 @@ function Initialize()
 	--if ( not ExposedMembers.MOD_CheatMenu) then ExposedMembers.MOD_CheatMenu = {}; end
 	--set local alive values (probably migrate to bbg script)
 	PopulateAliveTable(nLoaded)
+	g_nStartTurn = GameConfiguration.GetStartTurn()
 	--InitPlayerSelection()
 	--update city selection
 	--LuaEvents.UIPlayerCityUpdt.Add(OnUIPlayerCityUpdt)
 	--GameEvents.GameplayPlayerCityUpdt.Add(OnGameplayPlayerCityUpdt)
 	--repopulate alive values (probably migrate to bbg script)
-	LuaEvents.UIPlayerDefeat.Add(OnUIPlayerDefeat)
-	LuaEvents.UIPlayerRevived.Add(OnUIPlayerRevived)
+	--LuaEvents.UIPlayerDefeat.Add(OnUIPlayerDefeat)
+	--LuaEvents.UIPlayerRevived.Add(OnUIPlayerRevived)
 	GameEvents.GameplayPlayerDefeat.Add(OnGameplayPlayerDefeat)
+	GameEvents.GameplayPlayerRevived.Add(OnGameplayPlayerRevived)
 	--gold
 	--LuaEvents.UIChangeGold.Add(OnUIChangeGold);
 	GameEvents.GameplayChangeGold.Add(OnGameplayChangeGold)
@@ -540,7 +543,7 @@ function Initialize()
 	--turn processing events
 	GameEvents.GameplayLocalTurnBegin.Add(OnGameplayLocalTurnBegin)
 	GameEvents.GameplaySwitchOnHumanLoaded.Add(OnGameplaySwitchOnHumanLoaded)
-	GameEvents.GameplayStartEndTimer.Add(OnGameplayStartEndTimer)	
+	GameEvents.GameplayEndTimer.Add(OnGameplayEndTimer)	
 	--ExposedMembers.MOD_CheatMenu_Initialized = true;
 	Debug("Cheat Menu Initialization Finished", "Initialize");
 end
