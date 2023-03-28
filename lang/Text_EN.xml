@@ -199,5 +199,11 @@
         <Row Tag="LOC_PROJECT_MP_CHEAT_3_POPULATION_DESCRIPTION" language="en">
             <Text>Grants this city extra 3 [ICON_CITIZEN] Populations</Text>
         </Row>
+        <Row Tag="LOC_HUD_CHEAT_RESOURCE_LENS" language="en">
+            <Text>Display Strategic Resources</Text>
+        </Row>
+        <Row Tag="LOC_HUD_CHEAT_RESOURCE_LENS_TOOLTIP" language="en">
+            <Text>Tester Panel: Allows seeing all strategic resources on the map, including unrevealed</Text>
+        </Row>
     </LocalizedText>
 </GameData>

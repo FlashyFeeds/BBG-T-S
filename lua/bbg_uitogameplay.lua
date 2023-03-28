@@ -3,7 +3,6 @@
 --	AUTHOR:  FlashyFeeds
 --	PURPOSE: UI to Gameplay script. Raises synchronized GameEvents from Events
 ------------------------------------------------------------------------------
-
 --UIEvents = ExposedMembers.LuaEvents
 include("bbgts_debug.lua")
 print("BBG UI to Gameplay Script (BBGTS) started")
@@ -14,6 +13,36 @@ if GameConfiguration.GetValue("BBGTS_INCA_WONDERS") then
 	local qQuery = "SELECT WonderType FROM WonderTerrainFeature_BBG WHERE TerrainClassType<>'TERRAIN_CLASS_MOUNTAIN' OR TerrainClassType IS NULL"
 	tRemoveIncaYieldsFromFeatures=DB.Query(qQuery)
 end
+
+--map support
+local tMapResources = {}
+local tMapWonders = {}
+
+function OnResourceAddedToMap(iX, iY, iResourceID)
+	Debug("Called", "OnResourceAddedToMap")
+	Debug("iX, iX, iResourceID "..tostring(iX)..", "..tostring(iY)..", "..tostring(iResourceID), "OnResourceAddedToMap")
+	local iPlotID = Map.GetPlotIndex(iX, iY)
+	if tMapResources[iResourceID] == nil then
+		tMapResources[iResourceID] = {}
+	end
+	table.insert(tMapResources[iResourceID], iPlotID)
+	Debug("iResourceID "..tostring(iResourceID).." detected at iPlotID "..tostring(iPlotID),"OnResourceAddedToMap")
+end
+
+function OnFeatureAddedToMap(iX, iY, arg)
+	Debug("Called", "OnFeatureAddedToMap")
+	Debug("iX, iX, arg "..tostring(iX)..", "..tostring(iY)..", "..tostring(arg), "OnResourceAddedToMap")
+	local pPlot = Map.GetPlot(iX, iY)
+	if pPlot == nil then
+		return
+	end
+	local iFeatureID = pPlot:GetFeatureType()
+	if GameInfo.Features[iFeatureId].NaturalWonder then
+		local row = {}
+	end
+end
+
+
 --for i, row in ipairs(tRemoveIncaYieldsFromFeatures) do
 	--print(i, row.WonderType)
 --end
@@ -699,7 +728,7 @@ function BuildRecursiveDataString(data: table)
 			local deeper_data = v
 			local new_string = BuildRecursiveDataString(deeper_data)
 			--print("NewString ="..new_string)
-			str = "table: "..new_string.."; "
+			str = str.."table: "..new_string.."; "
 		else
 			str = str..tostring(k)..": "..tostring(v).." "
 		end
@@ -707,9 +736,72 @@ function BuildRecursiveDataString(data: table)
 	return str
 end
 
+function ReflectDirection(iDirID)
+	local tDir = {}
+	tDir[0] = 3
+	tDir[1] = 4
+	tDir[2] = 5
+	tDir[3] = 0
+	tDir[4] = 1
+	tDir[5] = 2
+	return tDir[iDirID]
+end
+
+function fmod_map(x, base)
+	local tmp_x = math.fmod(x,base)
+	if tmp_x >= 0 then
+		return tmp_x
+	else
+		return base + tmp_X
+	end
+end
+
+function FindMapConnectedComponent(tSearchFuns, pStartPlot, tDirs)
+	tDirs = tDirs or nil
+	local fInitFilter = tSearchFuns.InitFilter --initial filter that is used for itteration
+	if fInitFilter == nil then
+		return print("FindMapConnectedComponent: Error: No Initial Filter => Exit")
+	elseif type(fInitFilter)~= "function" then
+		return print("FindMapConnectedComponent: Error: Initial Filter is NOT a function => Exit")
+	end
+	local tComponent = {}
+	
+	local tMarkers:table
+	local fMarkSpecial = tSearchFuns.Marker -- marker for special points
+	if fMarkSpecial == nil then tMarkers = nil end
+	local tExtra : table
+	local fExtra = tSearchFuns.Extra -- extra component generator, based on the marked points
+	if fExtra == nil then tExtra = nil end
+	if tDirs == nil
+	
+end
+
+function send(value)
+	coroutine.yield(value)
+end
+
+function receive(prod, ...)
+	local status, value = coroutine.resume(prod, ...)
+    return value
+end
+
 --=========Events=========--
 
 function Initialize()
+	--Easy Resource and Nat Wonder Access (will probably have to broadcast from host because all the map stuff should match host)
+	--allows to not rely on presence or absence of BBS
+	if (Game.GetCurrentGameTurn() == Game.GetStartTurn()) then
+		local bIsMP = Game.IsNetworkMultiplayer()
+		local bIsHost = false
+		if bIsMP then
+			bIsHost = (Game.GetLocalPlayer() == Game.GetGameHostPlayerID())
+		end
+		if bIsMP == false or bIsHost then 
+			Events.ResourceAddedToMap.Add(OnResourceAddedToMap)
+			Events.FeatureAddedToMap.Add(OnFeatureAddedToMap)
+		end
+	end
+
 	--Exp bug
 	if GameConfiguration.GetValue("BBGTS_EXP_FIX") then
 		Events.UnitPromoted.Add(OnPromotionFixExp);

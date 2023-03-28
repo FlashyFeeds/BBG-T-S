@@ -11,7 +11,8 @@ local bFirstOut = false
 local bEndTimerSet = false
 local bNoCheats = false
 --timer
-local myTime = -1
+local nMyTime = -1
+local nMyTurnEnd = -1
 local nTimerPhase = -1 -- -1: EmptyCircle, 0 - TimerTicks, 1 Check
 local nChachedPercent = 0
 local nCachedDisplay = 3
@@ -218,6 +219,24 @@ function DisplayCircle(nControl, bMode)
 	end
 end
 
+function TesterPanel_SetDefault()
+	Controls.CheatReadyCheckContainer:SetHide(false)
+	Controls.CheatReadyCheck:SetSelected(false)
+	Controls.CheatTurnTimerBG:SetHide(true)
+	Controls.CheatTurnTimerMeter:SetHide(true)
+	Controls.CheatReadyButtonContainer:SetHide(true)
+	Controls.CheatInputShield:SetHide(false)
+end
+
+function TesterPanel_SetActive()
+	Controls.CheatReadyCheckContainer:SetHide(false)
+	Controls.CheatReadyCheck:SetSelected(true)
+	Controls.CheatTurnTimerBG:SetHide(true)
+	Controls.CheatTurnTimerMeter:SetHide(true)
+	Controls.CheatReadyButtonContainer:SetHide(true)
+	Controls.CheatInputShield:SetHide(true)
+end
+
 function TimerTick(elapsedTime, nStartTime, nEndTime, bMode)
 	
 	if elapsedTime < nStartTime + 0.1 and (nTimerPhase == -1) and (bMode == false) then
@@ -275,22 +294,28 @@ end
 function OnTurnTimerUpdated(elapsedTime :number, maxTurnTime :number)
 	if maxTurnTime <= 0 then
 		return
-	elseif myTime == -1 then
-		myTime = elapsedTime
-		if myTime>maxTurnTime-6 then
-			bNoCheats = true
-		end
+	elseif nMyTime == -1 then
+		nMyTime = elapsedTime
+		if bFirstOut == true then
+			if nMyTime>maxTurnTime-6 then
+				bNoCheats = true
+				EndTimer()
+			else
+				nMyTurnEnd = maxTurnTime
+				local nTimeDelta_Broadcast = maxTurnTime - nMyTime
+				BroadcastTimeDelta(nTimeDelta_Broadcast)
+			end
 		return
-	elseif elapsedTime < myTime+3.1 and (not bNoCheats) then
-		TimerTick(elapsedTime, myTime, myTime + 3, false)
-	--elseif (elapsedTime>=myTime+3) and (elapsedTime<=maxTurnTime + delta -5) and (not bNoCheats) then
-		--TimerTick(elapsedTime, myTime + 3, maxTurnTime + delta - 5)
+	elseif elapsedTime < nMyTime+3.1 and (not bNoCheats) then
+		TimerTick(elapsedTime, nMyTime, nMyTime + 3, false)
+	--elseif (elapsedTime>=nMyTime+3) and (elapsedTime<=maxTurnTime + delta -5) and (not bNoCheats) then
+		--TimerTick(elapsedTime, nMyTime + 3, maxTurnTime + delta - 5)
 	elseif (elapsedTime> maxTurnTime - 5.1) and (elapsedTime<maxTurnTime - 1.9) and (not bNoCheats) then
-		TimerTick(elapsedTime, maxTurnTime-5, maxTurnTime-2, true)
+		TimerTick(elapsedTime, nMyTurnEnd-5, nMyTurnEnd-2, true)
 	end
 	if (not bNoCheats) then
 		--Debug("bFirstTick "..tostring(bFirstTick), "OnTurnTimerUpdated")
-		if (elapsedTime>=myTime+3) and (not bFirstTick) then
+		if (elapsedTime>=nMyTime+3) and (not bFirstTick) then
 			Debug("Forwarding All Players Loaded to Gameplay","OnTurnTimerUpdated")
 			bFirstTick = true
 			--extended debug
@@ -299,7 +324,8 @@ function OnTurnTimerUpdated(elapsedTime :number, maxTurnTime :number)
 			tPassParams["bFirstOut"] = bFirstOut
 			tPassParams["bEndTimerSet"] = bEndTimerSet
 			tPassParams["bNoCheats"] = bNoCheats
-			tPassParams["myTime"] = myTime
+			tPassParams["nMyTime"] = nMyTime
+			tPassParams["nMyTurnEnd"] = nMyTurnEnd
 			tPassParams["nTimerPhase"] = nTimerPhase
 			tPassParams["nChachedPercent"] = nChachedPercent
 			tPassParams["nCachedDisplay"] = nCachedDisplay
@@ -317,7 +343,8 @@ function OnTurnTimerUpdated(elapsedTime :number, maxTurnTime :number)
 			tPassParams["bFirstOut"] = bFirstOut
 			tPassParams["bEndTimerSet"] = bEndTimerSet
 			tPassParams["bNoCheats"] = bNoCheats
-			tPassParams["myTime"] = myTime
+			tPassParams["nMyTime"] = nMyTime
+			tPassParams["nMyTurnEnd"] = nMyTurnEnd
 			tPassParams["nTimerPhase"] = nTimerPhase
 			tPassParams["nChachedPercent"] = nChachedPercent
 			tPassParams["nCachedDisplay"] = nCachedDisplay
@@ -329,21 +356,36 @@ end
 
 function ExposedMembers.ActivateLocalTurnerEvent()
 	Debug("Called: Attaching Turner Event", "ExposedMembers.ActivateLocalTurnerEvent")
-	Events.TurnTimerUpdated.Add(OnTurnTimerUpdated)
+	if bTurnProcessing == true then
+		Events.TurnTimerUpdated.Add(OnTurnTimerUpdated)
+	else
+		TesterPanel_SetActive()
+	end
 end
 
 function ExposedMembers.DeactivateTesterPanelWT()
 	Debug("Called: Resetting all Control", "ExposedMembers.DeactivateTesterPanel")
-	myTime = -1
+	nMyTime = -1
+	nMyTurnEnd = -1
 	bFirstTick = false
 	bFirstOut = false 
-	bEndTimerSet = false 
+	bEndTimerSet = false
+	bNoCheats = false
 	Events.TurnTimerUpdated.Remove(OnTurnTimerUpdated)
+	TesterPanel_SetDefault()
 end
 
 function ExposedMembers.SetFirstOut()
 	Debug("Called: Setting bFirstOut","ExposedMembers.SetFirstOut")
 	bFirstOut = true
+end
+
+function ExposedMembers.SetTurnEnd(nTimeDelta)
+	Debug("Called", "ExposedMembers.SetTurnEnd")
+	if nMyTurnEnd == -1 then
+		nMyTurnEnd = nMyTime + nTimeDelta
+	end
+	Debug("nMyTime = "..tostring(nMyTime).." and nMyTurnEnd = "..tostring(nMyTurnEnd), "ExposedMembers.SetTurnEnd")
 end
 
 -- // ----------------------------------------------------------------------------------------------

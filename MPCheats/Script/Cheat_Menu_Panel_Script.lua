@@ -10,13 +10,20 @@ local tAlivePlayers = {}
 --Members: tAlivePlayers.AlivePlayers - alive player [i] - returns iAliveID, .Count returns total alive count for faster loops
 --Associated Game Property: "ALIVE_PLAYERS"
 local tHumanPlayers = {}
-local g_nStartTurn = 0
+--Members
 --tHumanPlayers.AliveHumans -- alive humans. [i] - returns individual data: 
 	--["iPlayerID"] the ID
 	-- .Loaded has 3 values: -1 not Loaded, 0 Local Player Turn Active, 1 -- Timer Dependent Interractions Active
 --tHumanPlayer.Count -- returns count
+--.LoadedCount currently loaded
 --Associated Game Property "ALIVE_HUMANS"
---Members 
+
+--other vars
+local g_nStartTurn = 0
+local bTurnProcessing = true
+
+
+
 -- // ----------------------------------------------------------------------------------------------
 -- // Event Handlers
 -- // ----------------------------------------------------------------------------------------------
@@ -274,22 +281,28 @@ function OnGameplayLocalTurnBegin(iPlayerID, kParameters)
 	end
 	local nHumanCount = tHumanPlayers.Count
 	local tHumanData = tHumanPlayers.AliveHumans
-	local nLoadedCount = 0
+	local nLoadedCount = tHumanPlayers.LoadedCount
 	for i = 1, nHumanCount do
 		local iAliveID = tHumanData[i]["iPlayerID"]
 		if iPlayerID == iAliveID then
 			tHumanData[i].Loaded = 0
 		end
-		if tHumanData[i].Loaded == 0 then
+		if tHumanData[i].Loaded ~= -1 then
 			nLoadedCount = nLoadedCount + 1
 		end
 	end
-	if nLoadedCount == 1 and g_nStartTurn < Game.GetCurrentGameTurn() then
-		Debug("Setting First Player Out", "OnGameplayLocalTurnBegin")
-		ExposedMembers.SetFirstOut()
-	end
-	if nLoadedCount == nHumanCount and g_nStartTurn < Game.GetCurrentGameTurn() then --we want to exclude turn 1 cheats
-		Debug("Begining to Countdown for Panel Enable", "OnGameplayLocalTurnBegin")
+	if bTurnProcessing then
+		if nLoadedCount == 1 and g_nStartTurn < Game.GetCurrentGameTurn() then
+			Debug("Setting First Player Out", "OnGameplayLocalTurnBegin")
+			ExposedMembers.SetFirstOut()
+		end
+		if nLoadedCount == nHumanCount and g_nStartTurn < Game.GetCurrentGameTurn() then --we want to exclude turn 1 cheats
+			Debug("Begining to Countdown for Panel Enable", "OnGameplayLocalTurnBegin")
+			Game.SetProperty("TURN_DEPENDENT_ENABLED", 1)
+			ExposedMembers.ActivateLocalTurnerEvent()
+		end
+	else
+		ExposedMembers.ActivateTesterPanel()
 		ExposedMembers.ActivateLocalTurnerEvent()
 	end
 	--remove the revealed visibility script
@@ -319,6 +332,7 @@ function PopulateAliveTable(nLoaded)
 	local nAlivePlayerCount = 0
 	local tHumanData = {}
 	local nAliveHumanCount = 0
+	local nLoadedCount = 0
 	for i=0, 60 do
 		local pTmpPlayer = Players[i]
 		if pTmpPlayer~=nil then
@@ -332,6 +346,9 @@ function PopulateAliveTable(nLoaded)
 					row.Loaded = nLoaded
 					table.insert(tHumanData, row)
 					Debug("Human player with ID "..tostring(i).." Added. nAliveHumanCount: "..tostring(nAliveHumanCount), "PopulateAliveTable")
+					if nLoaded ~= -1 then
+						nLoadedCount = nLoadedCount + 1
+					end
 				end  
 			end
 		end
@@ -343,6 +360,7 @@ function PopulateAliveTable(nLoaded)
 	print(BuildRecursiveDataString(tAlivePlayers))
 	tHumanPlayers.AliveHumans = tHumanData
 	tHumanPlayers.Count = nAliveHumanCount
+	tHumanPlayers.LoadedCount = nLoadedCount
 	Game.SetProperty("ALIVE_HUMANS", tHumanPlayers)
 	Debug("ALIVE_HUMANS populated with data:", "PopulateAliveTable")
 	print(BuildRecursiveDataString(tHumanPlayers))
@@ -375,12 +393,15 @@ function OnGameplayPlayerDefeat(iPlayerID, kParameters)
 	local tGHumanPlayers = Game.GetProperty("ALIVE_HUMANS")
 	local tHumanData = tGHumanPlayers.AliveHumans
 	local nHumanCount = tGHumanPlayers.Count
+	local nLoadedCount = tGHumanPlayers.LoadedCount
 	local iHumanPos = IDToPos(tHumanData, iPlayerID, "iPlayerID")
 	if iHumanPos~=false then
 		table.remove(tHumanData, iHumanPos)
 		nHumanCount = nHumanCount - 1
+		nLoadedCount = nLoadedCount - 1
 		tGHumanPlayers.AliveHumans = tHumanData
 		tGHumanPlayers.Count = nHumanCount
+		tGHumanPlayers.LoadedCount = nLoadedCount
 		tHumanPlayers = tGHumanPlayers
 		Game.SetProperty("ALIVE_HUMANS", tGHumanPlayers)
 		Debug("ALIVE_HUMANS populated with data:", "OnGameplayPlayerDefeat")
@@ -395,10 +416,9 @@ end
 
 function OnGameplayPlayerRevived(iPlayerID, kParameters)
 	Debug("Called", "OnGameplayPlayerRevived")
-	local bLoaded = Game.GetProperty("TURN_DEPENDENT_ENABLED")
-	local nLoaded = -1
-	if bLoaded then
-		nLoaded = 1
+	local nLoaded = Game.GetProperty("TURN_DEPENDENT_ENABLED")
+	if nLoaded==nil then
+		nLoaded = -1
 	end
 	PopulateAliveTable(nLoaded)
 end
@@ -445,9 +465,69 @@ function OnGameplayEndTimer(iPlayerID, kParameters)
 	ExposedMembers.DeactivateTesterPanelWT()
 	ExposedMembers.DeactivateTesterPanelFun()
 end
+
+function OnGameplaySetTurnEnd(iPlayerID, kParameters)
+	Debug("Called", "OnGameplaySetTurnEnd")
+	ExposedMembers.SetTurnEnd(kParameters.Delta)
+end
+
+function OnGameplayPlayerTurnDeactivated(iPlayerID, kParameters)
+	Debug("Called", "OnGameplayPlayerTurnDeactivated")
+	local iPlayerID = kParameters["iPlayerID"]
+	local tGHumanPlayers = Game.GetProperty("ALIVE_HUMANS")
+	if tGHumanPlayers == nil then
+		return print("Error: tHumanPlayers was incorrectly populated")
+	end
+	local iPlayerID = kParameters["iPlayerID"]
+	local tHumanData = tGHumanPlayers.AliveHumans
+	local nLoadedCount = tGHumanPlayers.LoadedCount
+	local iHumanPos = IDToPos(tHumanData, iPlayerID, "iPlayerID")
+	if iHumanPos == false then
+		return print("Error: passing the iPlayerID was done wrong")
+	end
+	tHumanData[iHumanPos].Loaded = -1
+	tGHumanPlayers.AliveHumans = tHumanData
+	nLoadedCount = nLoadedCount - 1
+	tHumanPlayers = tGHumanPlayers
+	Game.SetProperty("ALIVE_HUMANS", tGHumanPlayers)
+	Debug("ALIVE_HUMANS was updated. Current Values", "OnGameplayPlayerTurnDeactivated")
+	civ6tostring(tHumanPlayers)
+	if bTurnProcessing then
+		if nLoadedCount == 0 then
+			Debug("Deactivating Tester Panel on Local Machine", "OnGameplayPlayerTurnDeactivated")
+			ExposedMembers.DeactivateTesterPanelWT()
+			ExposedMembers.DeactivateTesterPanelFun()
+		end
+	else
+		ExposedMembers.DeactivateTesterPanelWT()
+		ExposedMembers.DeactivateTesterPanelFun()
+	end
+end
 -- // ----------------------------------------------------------------------------------------------
 -- // Support Functions
 -- // ----------------------------------------------------------------------------------------------
+function IsTurnProcessing()
+	local bReturnVal = true
+	if Game.IsNetworkMultiplayer() == false then
+		print("Not MP")
+		bReturnVal = false
+	end
+	if Game.IsPlayByCloud() == true then
+		print("Is PBC")
+		bReturnVal = false
+	end
+	if GameConfiguration.GetValue("TURN_PHASE_TYPE") ~= DB.MakeHash("TURNPHASE_SIMULTANEOUS") then
+		print("Result Hash"..tostring(GameConfiguration.GetValue("TURN_PHASE_TYPE")), "Not Simultaneous")
+		bReturnVal = false
+	end
+	if GameConfiguration.GetValue("TURN_TIMER_TYPE") ~= DB.MakeHash("TURNTIMER_NONE") then
+		print("Result Hash"..tostring(GameConfiguration.GetValue("TURN_TIMER_TYPE")), "No Timer")
+		bReturnVal = false
+	end
+	ExposedMembers.SetTurnProcessing(bReturnVal)
+	return bReturnVal
+end
+
 function IDToPos(List, SearchItem, key, multi)
 	Debug("Search Item "..tostring(SearchItem), "IDToPos")
 	multi = multi or false
@@ -498,6 +578,8 @@ end
 -- // ----------------------------------------------------------------------------------------------
 function Initialize()
 	Debug("Cheat Menu Initialization Started", "Initialize");
+	bTurnProcessing = IsTurnProcessing()
+	Game.SetProperty("TURN_PROCESSING", bTurnProcessing)
 	--if ( not ExposedMembers.MOD_CheatMenu) then ExposedMembers.MOD_CheatMenu = {}; end
 	--set local alive values (probably migrate to bbg script)
 	PopulateAliveTable(nLoaded)
@@ -543,7 +625,9 @@ function Initialize()
 	--turn processing events
 	GameEvents.GameplayLocalTurnBegin.Add(OnGameplayLocalTurnBegin)
 	GameEvents.GameplaySwitchOnHumanLoaded.Add(OnGameplaySwitchOnHumanLoaded)
-	GameEvents.GameplayEndTimer.Add(OnGameplayEndTimer)	
+	GameEvents.GameplayEndTimer.Add(OnGameplayEndTimer)
+	GameEvents.GameplaySetTurnEnd.Add(OnGameplaySetTurnEnd)
+	GameEvents.GameplayPlayerTurnDeactivated.Add(OnGameplayPlayerTurnDeactivated)
 	--ExposedMembers.MOD_CheatMenu_Initialized = true;
 	Debug("Cheat Menu Initialization Finished", "Initialize");
 end

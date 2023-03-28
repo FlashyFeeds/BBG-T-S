@@ -14,6 +14,7 @@ include( "CitySupport" );
 include("bbgts_debug.lua")
 
 local iPlayerID 					= Game.GetLocalPlayer();
+local bSpec                         = (PlayerConfigurations[iPlayer]:GetLeaderTypeName() == "LEADER_SPECTATOR")
 local iLocCityID                    = -1
 local iLocUnitID                    = -1
 local pPlayer 						= Players[iPlayerID];
@@ -32,12 +33,13 @@ local m_IsAttached:boolean			= false;
 local tPlayerSelections             = {}
 --turn processing variables
 bCheatsActive = false
+bTurnProcessing = true
 -- // ----------------------------------------------------------------------------------------------
 -- // MENU BUTTON FUNCTIONS
 -- // ----------------------------------------------------------------------------------------------
 
 function ChangeGold()
-	if bCheatsActive == false or GameConfiguration.IsPaused() then
+	if bCheatsActive == false or GameConfiguration.IsPaused() or bSpec then
 		return
 	end
 	local pNewGold = 10000
@@ -52,7 +54,7 @@ function ChangeGold()
     end
 end
 function CompleteProduction()
-	if bCheatsActive == false or GameConfiguration.IsPaused() then
+	if bCheatsActive == false or GameConfiguration.IsPaused() or bSpec then
 		return
 	end
 	if pPlayer:IsHuman() then
@@ -66,7 +68,7 @@ function CompleteProduction()
 	end
 end
 function CompleteResearch()
-	if bCheatsActive == false or GameConfiguration.IsPaused() then
+	if bCheatsActive == false or GameConfiguration.IsPaused() or bSpec then
 		return
 	end
 	Debug("Called", "CompleteResearch")
@@ -87,7 +89,7 @@ function CompleteResearch()
 	end
 end
 function CompleteCivic()
-	if bCheatsActive == false or GameConfiguration.IsPaused() then
+	if bCheatsActive == false or GameConfiguration.IsPaused() or bSpec then
 		return
 	end
 	Debug("Called", "CompleteCivic")
@@ -108,7 +110,7 @@ function CompleteCivic()
 	end	
 end
 function ChangeFaith()
-	if bCheatsActive == false or GameConfiguration.IsPaused() then
+	if bCheatsActive == false or GameConfiguration.IsPaused() or bSpec then
 		return
 	end
 	Debug("Called", "ChangeFaith")
@@ -122,7 +124,7 @@ function ChangeFaith()
     end
 end
 function ChangeEnvoy()
-	if bCheatsActive == false or GameConfiguration.IsPaused() then
+	if bCheatsActive == false or GameConfiguration.IsPaused() or bSpec then
 		return
 	end
 	Debug("Called", "ChangeEnvoy")
@@ -136,7 +138,7 @@ function ChangeEnvoy()
     end
 end
 function ChangeDiplomaticFavor()
-	if bCheatsActive == false or GameConfiguration.IsPaused() then
+	if bCheatsActive == false or GameConfiguration.IsPaused() or bSpec then
 		return
 	end
 	Debug("Called", "ChangeDiplomaticFavor")
@@ -150,7 +152,7 @@ function ChangeDiplomaticFavor()
     end
 end
 function ChangeGovPoints()
-	if bCheatsActive == false or GameConfiguration.IsPaused() then
+	if bCheatsActive == false or GameConfiguration.IsPaused() or bSpec then
 		return
 	end
 	Debug("Called", "ChangeGovPoints")
@@ -164,7 +166,7 @@ function ChangeGovPoints()
     end
 end
 function RevealAll()
-	if bCheatsActive == false or GameConfiguration.IsPaused() then
+	if bCheatsActive == false or GameConfiguration.IsPaused() or bSpec then
 		return
 	end
 	Debug("Called", "RevealAll")
@@ -266,12 +268,31 @@ function EndTimer(tPassParams)
 	UI.RequestPlayerOperation(iPlayerID, PlayerOperations.EXECUTE_SCRIPT, kParameters)
 end
 
+function BroadcastTimeDelta(nTimeDelta_Broadcast)
+	Debug("Called", "BroadcastTimeDelta")
+	local kParameters = {}
+	kParameters.OnStart = "GameplaySetTurnEnd"
+	kParameters.Delta = nTimeDelta_Broadcast
+	UI.RequestPlayerOperation(iPlayerID, PlayerOperations.EXECUTE_SCRIPT, kParameters)
+end
+
+function ExposedMembers.SetTurnProcessing(bReturnVal)
+	Debug("Called", "ExposedMembers.SetTurnProcessing")
+	bTurnProcessing = bReturnVal
+	Debug("bReturnVal is set to "..tostring(bTurnProcessing), "ExposedMembers.SetTurnProcessing")
+end
+
 --testing shift enters
 function OnPlayerTurnActivated(iPlayerID)
 	Debug("Called: Turn Activated for "..tostring(iPlayerID), "OnPlayerTurnActivated")
 end
+
 function OnPlayerTurnDeactivated(iPlayerID)
 	Debug("Called: Turn Deactivated for "..tostring(iPlayerID), "OnPlayerTurnDeactivated")
+	local kParameters = {}
+	kParameters.OnStart = "GameplayPlayerTurnDeactivated"
+	kParameters["iPlayerID"] = iPlayerID
+	UI.RequestPlayerOperation(iPlayerID, PlayerOperations.EXECUTE_SCRIPT, kParameters)
 end
 function OnTurnEnd()
 	Debug("Called:", "OnTurnEnd")
