@@ -756,32 +756,92 @@ function fmod_map(x, base)
 	end
 end
 
-function FindMapConnectedComponent(tSearchFuns, pStartPlot, tDirs)
-	tDirs = tDirs or nil
-	local fInitFilter = tSearchFuns.InitFilter --initial filter that is used for itteration
-	if fInitFilter == nil then
-		return print("FindMapConnectedComponent: Error: No Initial Filter => Exit")
-	elseif type(fInitFilter)~= "function" then
-		return print("FindMapConnectedComponent: Error: Initial Filter is NOT a function => Exit")
-	end
-	local tComponent = {}
-	
-	local tMarkers:table
-	local fMarkSpecial = tSearchFuns.Marker -- marker for special points
-	if fMarkSpecial == nil then tMarkers = nil end
-	local tExtra : table
-	local fExtra = tSearchFuns.Extra -- extra component generator, based on the marked points
-	if fExtra == nil then tExtra = nil end
-	if tDirs == nil
-	
+function FindMapConnectedComponent_Producer(tSearchFuns, iStartPlotID, iDir) --coroutine
+	return coroutine.create(
+		function(tSearchFuns, iStartPlotID, iDir)
+			--presetup
+			iDir = iDir or nil
+			local fInitFilter = tSearchFuns.InitFilter --initial filter that is used for itteration
+			if fInitFilter == nil then
+				return print("FindMapConnectedComponent_Producer: Error: No Initial Filter => Exit")
+			elseif type(fInitFilter)~= "function" then
+				return print("FindMapConnectedComponent_Producer: Error: Initial Filter is NOT a function => Exit")
+			end
+			--local tComponent = {}
+			--basic functionality
+			local pPlot = Map.GetPlotByIndex(iStartPlotID)
+			local iX = pPlot:GetX()
+			local iY = pPlot:GetY()
+			--extended functionality
+			local bMarked = false
+			local fMarkSpecial = tSearchFuns.Marker -- marker for special points
+			if fMarkSpecial ~= nil then bMarked = fMarkSpecial(pPlot) end
+			--local tExtra : table
+			local fExtra = tSearchFuns.Extra -- extra component generator, based on the marked points
+			if iDir ~= nil and (not bMarked) then
+				for i, val in ipairs({-1,0,1}) do
+					--map Search fInitFilter as a function of fmod_map(iDir + val, 6)
+					local iInvDir = fmod_map(iDir + val, 6)
+					local pInvPlot = Map.GetAdjacentPlot(iX, iY, iInvDir)
+					if fInitFilter(pInvPlot) = true then
+						local iInvPlotID = Map.GetPlotIndex(pInvPlot)
+						--table.insert(tComponent, iInvPlotID)
+						send(iInvPlotID, nil, iInvDir)
+					end
+				end 
+			elseif iDir ~= nil and bMarked then
+				for i, val in ipairs({-1,0,1}) do
+					--map Search fInitFilter and fExtra as a function of fmod_map(iDir + val, 6)
+					local iInvDir = fmod_map(iDir + val, 6)
+					local pInvPlot = Map.GetAdjacentPlot(iX, iY, iInvDir)
+					local bInitFilter = fInitFilter(pInvPlot)
+					local bExtra = fExtra(pInvPlot)
+					if bInitFilter and bExtra then
+						local iInvPlotID = Map.GetPlotIndex(pInvPlot)
+						--table.insert(tComponent, iInvPlotID)
+						--table.insert(tExtra, iInvPlotID)
+						send(iInvPlotID, iInvPlotID, iInvDir)
+					elseif bInitFilter and (not bExtra) then
+						local iInvPlotID = Map.GetPlotIndex(pInvPlot)
+						--table.insert(tComponent, iInvPlotID)
+						send(iInvPlotID, nil, iInvDir)
+					elseif (not bInitFilter) and bExtra then
+						local iInvPlotID = Map.GetPlotIndex(pInvPlot)
+						--table.insert(tExtra, iInvPlotID)
+						send(nil, iInvPlotID, nil)
+					end
+				end
+				for i, val in ipairs({2,3,4}) do
+					--map search fExtra as a function of fmod_map(iDir + val, 6)
+					local iInvDir = fmod_map(iDir + val, 6)
+					local pInvPlot = Map.GetAdjacentPlot(iX, iY, iInvDir)
+					if fExtra(pInvPlot) then
+						local iInvPlotID = Map.GetPlotIndex(pInvPlot)
+						--table.insert(tExtra, iInvPlotID)
+						send(nil, iInvPlotID, nil)
+					end
+				end
+			else
+				for i = 0,5 do
+					--map Search fInitFilter
+					local iInvDir = fmod_map(iDir + val, 6)
+					local pInvPlot = Map.GetAdjacentPlot(iX, iY, iInvDir)
+					if fInitFilter(pInvPlot) = true then
+						local iInvPlotID = Map.GetPlotIndex(pInvPlot)
+						--table.insert(tComponent, iInvPlotID)
+						send(iInvPlotID, nil, iInvDir)
+					end
+				end
+			end
+		end)
 end
 
 function send(value)
 	coroutine.yield(value)
 end
 
-function receive(prod, ...)
-	local status, value = coroutine.resume(prod, ...)
+function receive(prod)
+	local status, value = coroutine.resume(prod)
     return value
 end
 
