@@ -671,7 +671,7 @@ function IDToPos(List, SearchItem, key, multi)
 	key = key or nil
 	--print(key)
 	local results = {}
-	if List == {} then
+	if List == {} or #List==0 or List==nil then
 		return false
 	end
     if SearchItem==nil then
@@ -756,9 +756,9 @@ function fmod_map(x, base)
 	end
 end
 
-function FindMapConnectedComponent_Producer(tSearchFuns, iStartPlotID, iDir) --coroutine
+function Component_Producer(tSearchFuns, iStartPlotID, iDir) --coroutine
 	return coroutine.create(
-		function(tSearchFuns, iStartPlotID, iDir)
+		function()
 			--presetup
 			iDir = iDir or nil
 			local fInitFilter = tSearchFuns.InitFilter --initial filter that is used for itteration
@@ -775,7 +775,10 @@ function FindMapConnectedComponent_Producer(tSearchFuns, iStartPlotID, iDir) --c
 			--extended functionality
 			local bMarked = false
 			local fMarkSpecial = tSearchFuns.Marker -- marker for special points
-			if fMarkSpecial ~= nil then bMarked = fMarkSpecial(pPlot) end
+			if fMarkSpecial ~= nil then 
+				bMarked = fMarkSpecial(pPlot)
+				send(bMarked) 
+			end
 			--local tExtra : table
 			local fExtra = tSearchFuns.Extra -- extra component generator, based on the marked points
 			if iDir ~= nil and (not bMarked) then
@@ -836,13 +839,137 @@ function FindMapConnectedComponent_Producer(tSearchFuns, iStartPlotID, iDir) --c
 		end)
 end
 
-function send(value)
-	coroutine.yield(value)
+function Component_Director(tSearchFuns, iStartPlotID)
+	return coroutine.create(
+		function()
+			--mandatory
+			local tGeneration = {}
+			local row = {}
+			row["iPlotID"] = iStartPlotID
+			row["iDir"] = nil
+			table.insert(tGeneration, row)
+			local bStarted = false
+			--optional
+			local tMarkedGeneration = {}
+			local fMarker = tSearchFuns.Marker
+			local tExtraGeneration = {}
+			local fExtra = tSearchFuns.Extra
+			if fMarker == nil then
+				tMarkedGeneration = nil
+			elseif fExtra == nil then
+				tExtraGeneration = nil
+			end
+			while (not bStarted) and #tGeneration>0 do
+				--mandatory			
+				local tNextGeneration = {}
+				--optional
+				local tNextMarkedGeneration = {}
+				local tNextExtraGeneration = {}
+				if fMarker == nil then
+					tNextMarkedGeneration = nil
+				elseif fExtra == nil then
+					tNextExtraGeneration = nil
+				end
+
+				for i, tEntry in ipairs(tGeneration) do
+					local bStatus = true
+					local iPlotID = tEntry["iPlotID"]
+					local iDir = tEntry["iDir"]
+					local coroProd = Component_Producer(tSearchFuns, iPlotID, iDir)
+					if tSearchFuns.Marker ~= nil then
+						bMarked = receive(coroProd, true)
+						if bMarked == true then
+							table.insert(tNextMarkedGeneration, iPlotID)
+							send(1, iPlotID)
+						end
+					end
+					while bStatus do
+						local bNewStatus, iNewPlotID, iNewExtraID, iNewDir = receive(coroProd)
+						if bNewStatus then
+							if iNewPlotID ~=nil then
+								vPos1 = IDToPos(tNextGeneration, iNewPlotID, "iPlotID")
+								vPos2 = IDToPos(tGeneration, iNewPlotID, "iPlotID")
+								if (vPos1 == false) and (vPos2 == false) then
+									local row = {}
+									row["iPlotID"] = iNewPlotID
+									row["iDir"] = iDir
+									table.insert(tNextGeneration, row)
+									send(0, iPlotID)
+								end
+							end
+							if iNewExtraID~=nil and tNextExtraGeneration~=nil then
+								vPos1 = IDToPos(tNextGeneration, iNewPlotID, "iPlotID")
+								vPos2 = IDToPos(tGeneration, iNewPlotID, "iPlotID")
+								if (vPos1 == false) and (vPos2 == false) then
+									local row = {}
+									row["iPlotID"] = iNewExtraID
+									row["iDir"] = iDir
+									table.insert(tNextExtraGeneration, row)
+									send(2, iPlotID)
+								end
+							end
+						end
+						bStatus = bNewStatus
+					end
+				end
+				tGeneration = tNextGeneration
+				tMarkedGeneration = tNextMarkedGeneration
+				tExtraGeneration = tNextExtraGeneration
+			end
+		end)
 end
 
-function receive(prod)
-	local status, value = coroutine.resume(prod)
-    return value
+function FindConnectedComponent(tSearchFuns, iStartPlotID)
+	Debug("Started", "FindConnectedComponent")
+	local tComponent = {iStartPlotID}
+	local tMarked = {}
+	local tExtra = {}
+	local bStatus = true
+	local coroDirector = Component_Director(tSearchFuns, iStartPlotID)
+	Debug("Director Coroutine Initialized", "FindConnectedComponent")
+	while bStatus do
+		local bNewStatus, iMode, iPlotID = receive(coroDirector)
+		Debug("Received values from director: bNewStatus = "..tostring(bNewStatus).." , iMode = "..tostring(iMode).." , iPlotID = "..tostring(iPlotID), "FindConnectedComponent")
+		if bNewStatus then
+			if iMode == 0 then -- write to tComponent
+				table.insert(tComponent, iPlotID)
+				Debug("Added to tComponent", "FindConnectedComponent")
+			elseif iMode == 1 then -- write to tMarked
+				table.insert(tMarked, iPlotID)
+				Debug("Added to tMarked", "FindConnectedComponent")
+			elseif iMode == 2 then -- write to tExtra
+				table.insert(tExtra, iPlotID)
+				Debug("Added to tExtra", "FindConnectedComponent")
+			end
+		end
+		bStatus = bNewStatus
+	end
+	if #tMarked == 0 then
+		tMarked = nil
+	end
+	if #tExtra == 0 then
+		tExtra = nil
+	end
+	if tSearchFuns.InitFilter == nil then
+		return print("FindConnectedComponent: Error: No Initial Filter => Exit")
+	elseif tSearchFuns.Marker == nil then
+		return tComponent
+	elseif tSearchFuns.Extra == nil then
+		return tComponent, tMarked
+	end
+	return tComponent, tMarked, tExtra
+end
+
+function send(...)
+	coroutine.yield(...)
+end
+
+function receive(prod, bSwitch)
+	bSwitch = bSwitch or false
+	if not bSwitch then
+		return coroutine.resume(prod)
+	end 
+    return coroutine.resume(prod)[1]
 end
 
 --=========Events=========--

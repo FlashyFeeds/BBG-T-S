@@ -2635,7 +2635,7 @@ function IDToPos(List, SearchItem, key, multi)
 	key = key or nil
 	--print(key)
 	local results = {}
-	if List == {} then
+	if List == {} or List == nil or #List == 0 then
 		return false
 	end
     if SearchItem==nil then
