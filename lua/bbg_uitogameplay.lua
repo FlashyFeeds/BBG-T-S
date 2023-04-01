@@ -14,7 +14,7 @@ if GameConfiguration.GetValue("BBGTS_INCA_WONDERS") then
 	tRemoveIncaYieldsFromFeatures=DB.Query(qQuery)
 end
 
---map support
+--map support enables fast custom lenses and so on
 local tMapResources = {}
 local tMapWonders = {}
 
@@ -37,11 +37,44 @@ function OnFeatureAddedToMap(iX, iY, arg)
 		return
 	end
 	local iFeatureID = pPlot:GetFeatureType()
-	if GameInfo.Features[iFeatureId].NaturalWonder then
-		local row = {}
+	if GameInfo.Features[iFeatureID].NaturalWonder then
+		local iPlotID = Map.GetPlotIndex(pPlot)
+		local tSearchFuns = {}
+		tSearchFuns.InitFilter = function(pPlot)
+			if pPlot~=nil then
+				if pPlot:GetFeatureType() == iFeatureID then
+					return true
+				end
+			else
+				return false
+			end
+		end
+		local tComponent = FindConnectedComponent(tSearchFuns, iPlotID)[1]
+		if #tComponent>0 then
+			Debug("Wonder with index iFeatureID = "..tostring(iFeatureID).." and type "..tostring(GameInfo.Features[iFeatureID].FeatureType).." Has Plots:","OnFeatureAddedToMap")
+			tMapWonders[iFeatureID] = tComponent
+			print(BuildRecursiveDataString(tComponent))
+		end
 	end
 end
 
+function OnLocalHostMapBroadcast()
+	Debug("Called", "OnLocalHostMapBroadcast")
+	local iPlayerID = Game.GetLocalPlayer()
+	local kParameters = {}
+	kParameters = "GameplayHostBroadcastMapElements"
+	kParameters["tMapResources"] = tMapResources
+	kParameters["tMapWonders"] = tMapWonders
+	UI.RequestPlayerOperation(iPlayerID, PlayerOperations.EXECUTE_SCRIPT, kParameters)
+end
+
+function ExposedMembers.RemoveHostPreloadPopulate()
+	Debug("Called", "ExposedMembers.RemoveHostPreloadPopulate")
+	Events.ResourceAddedToMap.Remove(OnResourceAddedToMap)
+	Events.FeatureAddedToMap.Remove(OnFeatureAddedToMap)
+	Events.LocalPlayerTurnBegin.Remove(OnLocalHostMapBroadcast)
+	Debug("Events Removed", "ExposedMembers.RemoveHostPreloadPopulate")
+end
 
 --for i, row in ipairs(tRemoveIncaYieldsFromFeatures) do
 	--print(i, row.WonderType)
@@ -986,6 +1019,7 @@ function Initialize()
 		if bIsMP == false or bIsHost then 
 			Events.ResourceAddedToMap.Add(OnResourceAddedToMap)
 			Events.FeatureAddedToMap.Add(OnFeatureAddedToMap)
+			Events.LocalPlayerTurnBegin.Add(OnLocalHostMapBroadcast)
 		end
 	end
 

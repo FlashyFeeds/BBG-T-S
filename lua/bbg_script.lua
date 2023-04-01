@@ -153,6 +153,17 @@ function PopulateBugWonders()
 		end
 	end
 end
+
+function OnGameplayHostBroadcastMapElements(iPlayerID, kParameters)
+	Debug("Called", "OnGameplayHostBroadcastMapElements")
+	Game.SetProperty("MAP_RESOURCES", kParameters["tMapResources"])
+	Game.SetProperty("MAP_WONDERS", kParameters["tMapWonders"])
+	Debug("Respective Game Properties Set", "OnGameplayHostBroadcastMapElements")
+	if Game.GetLocalPlayer() == iPlayerID then
+		Debug("Host Detected: Removing Resource and Wonder preload populate events", "OnGameplayHostBroadcastMapElements")
+		ExposedMembers.RemoveHostPreloadPopulate()
+	end
+end
 -- ==========================================================================
 -- Setting Up data to easily deal with communism(legacy) workers
 -- ==========================================================================
@@ -3871,6 +3882,8 @@ function Initialize()
 	end
 	print("BBG - relevant Bug wonders populated")
 	-- turn checked effects:
+	GameEvents.GameplayHostBroadcastMapElements.Add(OnGameplayHostBroadcastMapElements)
+	print("BBG - hostbroadcast map elements listener added")
 	GameEvents.OnGameTurnStarted.Add(OnGameTurnStarted);
 	print("BBG Barb Hooks Added")
 	print("BBG Domination Victory Hook Added")
