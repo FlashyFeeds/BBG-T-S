@@ -3929,14 +3929,14 @@ function Initialize()
 		print("BBG Communism (buildings) Hooks Added")
 	end
 
-	if GameConfiguration.GetValue("BBGTS_AMANI") then
+	--if GameConfiguration.GetValue("BBGTS_AMANI") then
 		--Amani
 		--LuaEvents.UISetAmaniProperty.Add(OnUISetAmaniProperty)
 		GameEvents.GameplaySetAmaniProperty.Add(OnGameplaySetAmaniProperty)
 		--LuaEvents.UISetCSTrader.Add(OnUISetCSTrader)
 		GameEvents.GameplaySetCSTrader.Add(OnGameplaySetCSTrader)
 		print("BBG Amani Gameplay hooks added")
-	end
+	--end
 	if GameConfiguration.GetValue("BBGTS_UNIFIER") then
 		--Delete Suntzu for not-Unifier
 		--LuaEvents.UINotUnifierDeleteSunTzu.Add(OnUINotUnifierDeleteSunTzu)

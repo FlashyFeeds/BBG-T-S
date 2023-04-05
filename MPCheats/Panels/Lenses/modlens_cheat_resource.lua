@@ -2,26 +2,38 @@ local LENS_NAME = "ML_CHEAT_RESOURCE"
 local ML_LENS_LAYER = UILens.CreateLensLayerHash("Hex_Coloring_Appeal_Level")
 
 -- ===========================================================================
--- Scout Lens Support
+-- Event Functions
 -- ===========================================================================
 
-local function plotHasGoodyHut(plot)
-    local improvementInfo = GameInfo.Improvements[plot:GetImprovementType()]
-    if improvementInfo ~= nil and improvementInfo.ImprovementType == "IMPROVEMENT_GOODY_HUT" then
-        return true
+local function OnLocalPlayerVisibilityChanged(iX, iY, hVisType)
+    local iPlotID:number = GetPlotIndex(x, y);
+    if iPlotID == -1 then
+        return;
     end
-    return false
+    local pPlot = Map.GetPlot(iX, iY)
+    local nResourceType = pPlot:GetResourceType()
+    if iResourceType == -1 then
+        return
+    end
+    local iResourceClassType = GameConfiguration.Resources[iResourceType].ResourceClassType
+    if iResourceClassType ~= "RESOURCECLASS_STRATEGIC" then
+        return
+    end
+    local kParameters = {}
+    kParameters.OnStart = ""
 end
 
 -- ===========================================================================
--- Exported functions
+-- Lense Function
 -- ===========================================================================
 
 local function OnGetColorPlotTable()
-    -- print("Show scout lens")
-    local mapWidth, mapHeight = Map.GetGridSize()
-    local localPlayer   :number = Game.GetLocalPlayer()
-    local localPlayerVis:table = PlayersVisibility[localPlayer]
+    print("Show Cheat Ressource Lens")
+    local iLocPlayerID   :number = Game.GetLocalPlayer()
+    local tColorPlot = PlayerConfigurations[iLocPlayerID]:GetValue("ML_CHEAT_RESOURCE_TABLE")
+    if tColorPlot == nil then
+        return print("Error Occured Populating Cheat Ressource Lens")
+    end
 
     local nHorsesColor   :number = UI.GetColorValue("COLORS_CHEAT_LENSE_HORSES")
     local nIronColor: number = UI.GetColorValue("COLORS_CHEAT_LENSE_IRON")
@@ -30,44 +42,44 @@ local function OnGetColorPlotTable()
     local nOilColor   :number = UI.GetColorValue("COLORS_CHEAT_LENSE_OIL")
     local nAluminumColor: number = UI.GetColorValue("COLORS_CHEAT_LENSE_ALUMINUM")
     local nUraniumColor: number = UI.GetColorValue("COLORS_CHEAT_LENSE_URANIUM")
-    local colorPlot = {}
-    colorPlot[GoodyHutColor] = {}
 
-    for i = 0, (mapWidth * mapHeight) - 1, 1 do
-        local pPlot:table = Map.GetPlotByIndex(i)
-        if localPlayerVis:IsRevealed(pPlot:GetX(), pPlot:GetY()) then
-            if plotHasGoodyHut(pPlot) then
-                table.insert(colorPlot[GoodyHutColor], i)
-            end
-        end
+    local tLenseHorses = tColorPlot[nHorsesColor]
+    local tLenseIron = tColorPlot[nIronColor]
+    local tLenseNiter = tColorPlot[nNiterColor]
+    local tLenseCoal = tColorPlot[nCoalColor]
+    local tLenseOil = tColorPlot[nOilColor]
+    local tLenseAluminum = tColorPlot[nAluminumColor]
+    local tLenseUranium = tColorPlot[nUraniumColor]
+
+    if table.count(tLenseHorses) > 0 then
+        UILens.SetLayerHexesColoredArea( ML_LENS_LAYER, localPlayer, tLenseHorses, nHorsesColor )
     end
-
+    if table.count(tLenseIron) > 0 then
+        UILens.SetLayerHexesColoredArea( ML_LENS_LAYER, localPlayer, tLenseIron, nIronColor )
+    end
+    if table.count(tLenseNiter) > 0 then
+        UILens.SetLayerHexesColoredArea( ML_LENS_LAYER, localPlayer, tLenseNiter, nNiterColor )
+    end
+    if table.count(tLenseCoal) > 0 then
+        UILens.SetLayerHexesColoredArea( ML_LENS_LAYER, localPlayer, tLenseCoal, nCoalColor )
+    end
+    if table.count(tLenseOil) > 0 then
+        UILens.SetLayerHexesColoredArea( ML_LENS_LAYER, localPlayer, tLenseOil, nOilColor )
+    end
+    if table.count(tLenseAluminum) > 0 then
+        UILens.SetLayerHexesColoredArea( ML_LENS_LAYER, localPlayer, tLenseAluminum, nAluminumColor )
+    end
+    if table.count(tLenseUranium) > 0 then
+        UILens.SetLayerHexesColoredArea( ML_LENS_LAYER, localPlayer, tLenseUranium, nUraniumColor )
+    end
+    
     return colorPlot
 end
 
--- Called when a scout is selected
-local function ShowScoutLens()
-    LuaEvents.MinimapPanel_SetActiveModLens(LENS_NAME)
-    UILens.ToggleLayerOn(ML_LENS_LAYER)
-end
-
-local function ClearScoutLens()
-    if UILens.IsLayerOn(ML_LENS_LAYER) then
-        UILens.ToggleLayerOff(ML_LENS_LAYER)
-    end
-    LuaEvents.MinimapPanel_SetActiveModLens("NONE")
-end
-
-local function RefreshScoutLens()
-    ClearScoutLens()
-    ShowScoutLens()
-end
+function 
 
 local function OnInitialize()
-    Events.UnitSelectionChanged.Add( OnUnitSelectionChanged )
-    Events.UnitRemovedFromMap.Add( OnUnitRemovedFromMap )
-    Events.UnitMoveComplete.Add( OnUnitMoveComplete )
-    Events.GoodyHutReward.Add( OnGoodyHutReward )
+    Events.PlotVisibilityChanged.Add(OnLocalPlayerVisibilityChanged)
 end
 
 local CheatResourceLensEntry = {

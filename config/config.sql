@@ -29,7 +29,7 @@ INSERT INTO Parameters(ParameterId, Name, Description, Domain, DefaultValue, Con
 */
 --Insert your Suggestions Here, sort order 30000+
 INSERT INTO Parameters(ParameterId, Name, Description, Domain, DefaultValue, ConfigurationGroup, ConfigurationId, GroupId, Visible, SupportsSinglePlayer, SortIndex) VALUES
-    ('BBGTS_Amani', 'LOC_BBGTS_AMANI_NAME', 'LOC_BBGTS_AMANI_DESC', 'bool', '0', 'Game', 'BBGTS_AMANI', 'AdvancedOptions', '1', '1', '30000'),
+    --('BBGTS_Amani', 'LOC_BBGTS_AMANI_NAME', 'LOC_BBGTS_AMANI_DESC', 'bool', '0', 'Game', 'BBGTS_AMANI', 'AdvancedOptions', '1', '1', '30000'),
     ('BBGTS_Communism_Mod', 'LOC_BBGTS_COMMUNISM_MOD_NAME', 'LOC_BBGTS_COMMUNISM_MOD_DESC', 'bool', '0', 'Game', 'BBGTS_COMMUNISM_MOD', 'AdvancedOptions', '1', '1', '30010'),
     --('BBGTS_Communism_Build', 'LOC_BBGTS_COMMUNISM_BUILD_NAME', 'LOC_BBGTS_COMMUNISM_BUILD_DESC', 'bool', '0', 'Game', 'BBGTS_COMMUNISM_BUILD', 'AdvancedOptions', '1', '1', '30020'),
     ('BBGTS_Unifier', 'LOC_BBGTS_UNIFIER_NAME', 'LOC_BBGTS_UNIFIER_DESC', 'bool', '0', 'Game', 'BBGTS_UNIFIER', 'AdvancedOptions', '1', '1', '30030'),
@@ -50,7 +50,7 @@ INSERT INTO Parameters(ParameterId, Name, Description, Domain, DefaultValue, Con
 INSERT INTO ParameterCriteria(ParameterId, ConfigurationGroup, ConfigurationId, Operator, ConfigurationValue) VALUES
     ('BBGTS_DebugLua', 'Game', 'BBGTS_GAMEMODE', 'Equals', '1'),
     ('BBGTS_MP_CHEATS', 'Game', 'BBGTS_GAMEMODE', 'Equals', '1'),
-    ('BBGTS_Amani', 'Game', 'BBGTS_GAMEMODE', 'Equals', '1'),
+    --('BBGTS_Amani', 'Game', 'BBGTS_GAMEMODE', 'Equals', '1'),
     ('BBGTS_Communism_Mod', 'Game', 'BBGTS_GAMEMODE', 'Equals', '1'),
     --('BBGTS_Communism_Build', 'Game', 'BBGTS_GAMEMODE', 'Equals', '1'),
     ('BBGTS_Unifier', 'Game', 'BBGTS_GAMEMODE', 'Equals', '1'),

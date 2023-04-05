@@ -1044,13 +1044,13 @@ function Initialize()
 		Events.DistrictBuildProgressChanged.Add(OnDistrictProgressChanged)
 		print("Communism (through buildings) UI hooks added")
 	end
-	if GameConfiguration.GetValue("BBGTS_AMANI") then
+	--if GameConfiguration.GetValue("BBGTS_AMANI") then
 		--Amani
 		Events.GovernorAssigned.Add(OnGovernorAssigned)
 		Events.GovernorChanged.Add(OnGovernorChanged)
 		Events.TradeRouteActivityChanged.Add(OnTradeRouteActivityChanged)
 		print("Delete Amani UI hooks added")
-	end
+	--end
 	if GameConfiguration.GetValue("BBGTS_UNIFIER") then
 		--delete suntzu after use for non-unifier
 		Events.UnitGreatPersonActivated.Add(OnUnitGreatPersonActivatedNotQinUnifier)
