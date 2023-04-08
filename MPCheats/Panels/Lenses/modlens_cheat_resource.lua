@@ -76,6 +76,8 @@ local function OnGetColorPlotTable()
     return colorPlot
 end
 
+
+--defn
 local function OnInitialize()
     Events.PlotVisibilityChanged.Add(OnLocalPlayerVisibilityChanged)
 end
