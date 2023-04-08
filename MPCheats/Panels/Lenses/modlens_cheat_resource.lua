@@ -5,7 +5,7 @@ local ML_LENS_LAYER = UILens.CreateLensLayerHash("Hex_Coloring_Appeal_Level")
 -- Event Functions
 -- ===========================================================================
 
-local function OnLocalPlayerVisibilityChanged(iX, iY, hVisType)
+function OnLocalPlayerVisibilityChanged(iX, iY, hVisType)
     local iPlotID:number = GetPlotIndex(x, y);
     if iPlotID == -1 then
         return;
@@ -75,8 +75,6 @@ local function OnGetColorPlotTable()
     
     return colorPlot
 end
-
-function 
 
 local function OnInitialize()
     Events.PlotVisibilityChanged.Add(OnLocalPlayerVisibilityChanged)
