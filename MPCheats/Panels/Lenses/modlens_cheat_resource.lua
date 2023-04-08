@@ -6,12 +6,16 @@ local ML_LENS_LAYER = UILens.CreateLensLayerHash("Hex_Coloring_Appeal_Level")
 -- ===========================================================================
 
 function OnLocalPlayerVisibilityChanged(iX, iY, hVisType)
+    print("OnLocalPlayerVisibilityChanged: Called", iX, iY, hVisType)
     local iPlotID:number = GetPlotIndex(x, y);
     if iPlotID == -1 then
         return;
     end
+    if hVisType == RevealedState.HIDDEN then
+        return
+    end
     local pPlot = Map.GetPlot(iX, iY)
-    local nResourceType = pPlot:GetResourceType()
+    local iResourceType = pPlot:GetResourceType()
     if iResourceType == -1 then
         return
     end
@@ -20,7 +24,11 @@ function OnLocalPlayerVisibilityChanged(iX, iY, hVisType)
         return
     end
     local kParameters = {}
-    kParameters.OnStart = ""
+    kParameters.OnStart = "GameplayUpdatePlayerResources"
+    kParameters.ResourceType = iResourceType
+    kParameters["iPlotID"] = iPlotID
+    print("OnLocalPlayerVisibilityChanged: Raising Gameplay Event")
+    UI.RequestPlayerOperation(Game.GetLocalPlayer(), PlayerOperations.EXECUTE_SCRIPT, kParameters)
 end
 
 -- ===========================================================================
@@ -28,12 +36,10 @@ end
 -- ===========================================================================
 
 local function OnGetColorPlotTable()
-    print("Show Cheat Ressource Lens")
+    print("OnGetColorPlotTable: Show Cheat Ressource Lens")
     local iLocPlayerID   :number = Game.GetLocalPlayer()
-    local tColorPlot = PlayerConfigurations[iLocPlayerID]:GetValue("ML_CHEAT_RESOURCE_TABLE")
-    if tColorPlot == nil then
-        return print("Error Occured Populating Cheat Ressource Lens")
-    end
+    local pLocConfig = PlayerConfigurations[iLocPlayerID]
+    local tColorPlot = {}
 
     local nHorsesColor   :number = UI.GetColorValue("COLORS_CHEAT_LENSE_HORSES")
     local nIronColor: number = UI.GetColorValue("COLORS_CHEAT_LENSE_IRON")
@@ -43,37 +49,37 @@ local function OnGetColorPlotTable()
     local nAluminumColor: number = UI.GetColorValue("COLORS_CHEAT_LENSE_ALUMINUM")
     local nUraniumColor: number = UI.GetColorValue("COLORS_CHEAT_LENSE_URANIUM")
 
-    local tLenseHorses = tColorPlot[nHorsesColor]
-    local tLenseIron = tColorPlot[nIronColor]
-    local tLenseNiter = tColorPlot[nNiterColor]
-    local tLenseCoal = tColorPlot[nCoalColor]
-    local tLenseOil = tColorPlot[nOilColor]
-    local tLenseAluminum = tColorPlot[nAluminumColor]
-    local tLenseUranium = tColorPlot[nUraniumColor]
+    local tLenseHorses = pLocConfig:GetValue("T_CHEAT_RESOURCE_LENSE_HORSES")
+    local tLenseIron = pLocConfig:GetValue("T_CHEAT_RESOURCE_LENSE_IRON")
+    local tLenseNiter = pLocConfig:GetValue("T_CHEAT_RESOURCE_LENSE_NITER")
+    local tLenseCoal = pLocConfig:GetValue("T_CHEAT_RESOURCE_LENSE_COAL")
+    local tLenseOil = pLocConfig:GetValue("T_CHEAT_RESOURCE_LENSE_OIL")
+    local tLenseAluminum = pLocConfig:GetValue("T_CHEAT_RESOURCE_LENSE_ALUMINUM")
+    local tLenseUranium = pLocConfig:GetValue("T_CHEAT_RESOURCE_LENSE_URANIUM")
 
     if table.count(tLenseHorses) > 0 then
-        UILens.SetLayerHexesColoredArea( ML_LENS_LAYER, localPlayer, tLenseHorses, nHorsesColor )
+        tColorPlot[nHorsesColor] = tLenseHorses
     end
     if table.count(tLenseIron) > 0 then
-        UILens.SetLayerHexesColoredArea( ML_LENS_LAYER, localPlayer, tLenseIron, nIronColor )
+        tColorPlot[nIronColor] = tLenseIron
     end
     if table.count(tLenseNiter) > 0 then
-        UILens.SetLayerHexesColoredArea( ML_LENS_LAYER, localPlayer, tLenseNiter, nNiterColor )
+        tColorPlot[nNiterColor] = tLenseNiter
     end
     if table.count(tLenseCoal) > 0 then
-        UILens.SetLayerHexesColoredArea( ML_LENS_LAYER, localPlayer, tLenseCoal, nCoalColor )
+        tColorPlot[nCoalColor] = tLenseCoal
     end
     if table.count(tLenseOil) > 0 then
-        UILens.SetLayerHexesColoredArea( ML_LENS_LAYER, localPlayer, tLenseOil, nOilColor )
+        tColorPlot[nOilColor] = tLenseOil
     end
     if table.count(tLenseAluminum) > 0 then
-        UILens.SetLayerHexesColoredArea( ML_LENS_LAYER, localPlayer, tLenseAluminum, nAluminumColor )
+        tColorPlot[nAluminumColor] = tLenseAluminum
     end
     if table.count(tLenseUranium) > 0 then
-        UILens.SetLayerHexesColoredArea( ML_LENS_LAYER, localPlayer, tLenseUranium, nUraniumColor )
+        tColorPlot[nUraniumColor] = tLenseUranium
     end
     
-    return colorPlot
+    return tColorPlot
 end
 
 

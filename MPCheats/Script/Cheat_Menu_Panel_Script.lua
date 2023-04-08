@@ -503,6 +503,100 @@ function OnGameplayPlayerTurnDeactivated(iPlayerID, kParameters)
 		ExposedMembers.DeactivateTesterPanelFun()
 	end
 end
+
+-- // ----------------------------------------------------------------------------------------------
+-- // Lense
+-- // ----------------------------------------------------------------------------------------------
+function OnGameplayUpdatePlayerResources(iPlayerID, kParameters)
+	Debug("Called", "OnGameplayUpdatePlayerResources")
+	local iResourceType = kParameters.ResourceType
+	local iPlotID = kParameters["iPlotID"]
+	
+	--horses
+	if GameInfo.Resources[iResourceType].ResourceType == "RESOURCE_HORSES" then
+		Debug("RESOURCE_HORSES","OnGameplayUpdatePlayerResources")
+		local tLenseHorses = pLocConfig:GetValue("T_CHEAT_RESOURCE_LENSE_HORSES")
+		if tLenseHorses == nil then tLenseHorses = {} end
+		local iSearchPos = IDToPos(tLenseHorses, iPlotID)
+		if iSearchPos == false then
+			table.insert(tLenseHorses,iPlotID)
+			PlayerConfigurations[iPlayerID]:SetValue("T_CHEAT_RESOURCE_LENSE_HORSES", tLenseHorses)
+			Debug("HORSES CONFIG Updated for iPlayerID "..tostring(iPlayerID), "OnGameplayUpdatePlayerResources")
+		end
+	
+	--iron
+	elseif GameInfo.Resources[iResourceType].ResourceType == "RESOURCE_IRON" then
+		Debug("RESOURCE_IRON","OnGameplayUpdatePlayerResources")
+		local tLenseIron = pLocConfig:GetValue("T_CHEAT_RESOURCE_LENSE_IRON")
+		if tLenseIron == nil then tLenseIron = {} end
+		local iSearchPos = IDToPos(tLenseIron, iPlotID)
+		if iSearchPos == false then
+			table.insert(tLenseIron,iPlotID)
+			PlayerConfigurations[iPlayerID]:SetValue("T_CHEAT_RESOURCE_LENSE_IRON", tLenseIron)
+			Debug("IRON CONFIG Updated for iPlayerID "..tostring(iPlayerID), "OnGameplayUpdatePlayerResources")
+		end
+	
+	--niter
+	elseif GameInfo.Resources[iResourceType].ResourceType == "RESOURCE_NITER" then
+		Debug("RESOURCE_NITER","OnGameplayUpdatePlayerResources")
+		local tLenseNiter = pLocConfig:GetValue("T_CHEAT_RESOURCE_LENSE_NITER")
+		if tLenseNiter == nil then tLenseNiter = {} end
+		local iSearchPos = IDToPos(tLenseNiter, iPlotID)
+		if iSearchPos == false then
+			table.insert(tLenseNiter,iPlotID)
+			PlayerConfigurations[iPlayerID]:SetValue("T_CHEAT_RESOURCE_LENSE_NITER", tLenseNiter)
+			Debug("NITER CONFIG Updated for iPlayerID "..tostring(iPlayerID), "OnGameplayUpdatePlayerResources")
+		end
+	
+	--coal
+	elseif GameInfo.Resources[iResourceType].ResourceType == "RESOURCE_COAL" then
+		Debug("RESOURCE_COAL","OnGameplayUpdatePlayerResources")
+		local tLenseCoal = pLocConfig:GetValue("T_CHEAT_RESOURCE_LENSE_COAL")
+		if tLenseCoal == nil then tLenseCoal = {} end
+		local iSearchPos = IDToPos(tLenseCoal, iPlotID)
+		if iSearchPos == false then
+			table.insert(tLenseCoal,iPlotID)
+			PlayerConfigurations[iPlayerID]:SetValue("T_CHEAT_RESOURCE_LENSE_COAL", tLenseCoal)
+			Debug("COAL CONFIG Updated for iPlayerID "..tostring(iPlayerID), "OnGameplayUpdatePlayerResources")
+		end
+	
+	--oil
+	elseif GameInfo.Resources[iResourceType].ResourceType == "RESOURCE_OIL" then
+		Debug("RESOURCE_OIL","OnGameplayUpdatePlayerResources")
+		local tLenseOil = pLocConfig:GetValue("T_CHEAT_RESOURCE_LENSE_OIL")
+		if tLenseOil == nil then tLenseOil = {} end
+		local iSearchPos = IDToPos(tLenseOil, iPlotID)
+		if iSearchPos == false then
+			table.insert(tLenseOil,iPlotID)
+			PlayerConfigurations[iPlayerID]:SetValue("T_CHEAT_RESOURCE_LENSE_OIL", tLenseOil)
+			Debug("OIL CONFIG Updated for iPlayerID "..tostring(iPlayerID), "OnGameplayUpdatePlayerResources")
+		end
+	
+	--aluminum
+	elseif GameInfo.Resources[iResourceType].ResourceType == "RESOURCE_ALUMINUM" then
+		Debug("RESOURCE_ALUMINUM","OnGameplayUpdatePlayerResources")
+		local tLenseAluminum = pLocConfig:GetValue("T_CHEAT_RESOURCE_LENSE_ALUMINUM")
+		if tLenseAluminum == nil then tLenseAluminum = {} end
+		local iSearchPos = IDToPos(tLenseAluminum, iPlotID)
+		if iSearchPos == false then
+			table.insert(tLenseAluminum,iPlotID)
+			PlayerConfigurations[iPlayerID]:SetValue("T_CHEAT_RESOURCE_LENSE_ALUMINUM", tLenseAluminum)
+			Debug("ALUMINUM CONFIG Updated for iPlayerID "..tostring(iPlayerID), "OnGameplayUpdatePlayerResources")
+		end
+	
+	--uranium
+	elseif GameInfo.Resources[iResourceType].ResourceType == "RESOURCE_URANIUM" then
+		Debug("RESOURCE_URANIUM","OnGameplayUpdatePlayerResources")
+		local tLenseUranium = pLocConfig:GetValue("T_CHEAT_RESOURCE_LENSE_URANIUM")
+		if tLenseUranium == nil then tLenseUranium = {} end
+		local iSearchPos = IDToPos(tLenseUranium, iPlotID)
+		if iSearchPos == false then
+			table.insert(tLenseUranium,iPlotID)
+			PlayerConfigurations[iPlayerID]:SetValue("T_CHEAT_RESOURCE_LENSE_URANIUM", tLenseUranium)
+			Debug("URANIUM CONFIG Updated for iPlayerID "..tostring(iPlayerID), "OnGameplayUpdatePlayerResources")
+		end
+	end
+end
 -- // ----------------------------------------------------------------------------------------------
 -- // Support Functions
 -- // ----------------------------------------------------------------------------------------------
@@ -629,6 +723,9 @@ function Initialize()
 	GameEvents.GameplaySetTurnEnd.Add(OnGameplaySetTurnEnd)
 	GameEvents.GameplayPlayerTurnDeactivated.Add(OnGameplayPlayerTurnDeactivated)
 	--ExposedMembers.MOD_CheatMenu_Initialized = true;
+	--Lense support:
+	GameEvents.GameplayUpdatePlayerResources.Add(OnGameplayUpdatePlayerResources)
+
 	Debug("Cheat Menu Initialization Finished", "Initialize");
 end
 
