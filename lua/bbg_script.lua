@@ -3978,6 +3978,10 @@ function Initialize()
 			GameEvents.CityBuilt.Add(OnCityBuilt);
 			GameEvents.CityConquered.Add(OnCityConquered)
 			print("BBG Caesar Hooks Added")
+		elseif PlayerConfigurations[iPlayerID]:GetLeaderTypeName()=="LEADER_LUDWIG" then
+			GameEvents.GameplayLudwigWonderPlaced.Add(OnGameplayLudwigWonderAddedToMap)
+			GameEvents.GameplayLudwigWonderRemoved.Add(OnGameplayLudwigWonderRemoved)
+			GameEvents.GameplayLudwigWonderCompleted.Add(OnGameplayLudwigWonderCompleted)
 		elseif PlayerConfigurations[iPlayerID]:GetCivilizationTypeName() == "CIVILIZATION_MACEDON" and GameConfiguration.GetValue("BBGTS_MACEDON_FIX") then
 			--Macedon 20%
 			GameEvents.CityConquered.Add(OnMacedonConqueredACity)
