@@ -1086,11 +1086,11 @@ end
 function Initialize()
 	--Easy Resource and Nat Wonder Access (will probably have to broadcast from host because all the map stuff should match host)
 	--allows to not rely on presence or absence of BBS
-	if (Game.GetCurrentGameTurn() == Game.GetStartTurn()) then
-		local bIsMP = Game.IsNetworkMultiplayer()
+	if (Game.GetCurrentGameTurn() == GameConfiguration.GetStartTurn()) then
+		local bIsMP = GameConfiguration.IsNetworkMultiplayer()
 		local bIsHost = false
 		if bIsMP then
-			bIsHost = (Game.GetLocalPlayer() == Game.GetGameHostPlayerID())
+			bIsHost = (Game.GetLocalPlayer() == Network.GetGameHostPlayerID())
 		end
 		if bIsMP == false or bIsHost then 
 			--Events.ResourceAddedToMap.Add(OnResourceAddedToMap)

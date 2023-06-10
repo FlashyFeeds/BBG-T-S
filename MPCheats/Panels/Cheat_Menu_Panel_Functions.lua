@@ -14,7 +14,7 @@ include( "CitySupport" );
 include("bbgts_debug.lua")
 
 local iPlayerID 					= Game.GetLocalPlayer();
-local bSpec                         = (PlayerConfigurations[iPlayer]:GetLeaderTypeName() == "LEADER_SPECTATOR")
+local bSpec                         = (PlayerConfigurations[iPlayerID]:GetLeaderTypeName() == "LEADER_SPECTATOR")
 local iLocCityID                    = -1
 local iLocUnitID                    = -1
 local pPlayer 						= Players[iPlayerID];
