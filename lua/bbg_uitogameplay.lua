@@ -895,7 +895,7 @@ function Component_Producer(tSearchFuns, iStartPlotID, iDir) --coroutine
 					--map Search fInitFilter as a function of fmod_map(iDir + val, 6)
 					local iInvDir = fmod_map(iDir + val, 6)
 					local pInvPlot = Map.GetAdjacentPlot(iX, iY, iInvDir)
-					if fInitFilter(pInvPlot) = true then
+					if fInitFilter(pInvPlot) == true then
 						local iInvPlotID = Map.GetPlotIndex(pInvPlot)
 						--table.insert(tComponent, iInvPlotID)
 						send(iInvPlotID, nil, iInvDir)
@@ -938,7 +938,7 @@ function Component_Producer(tSearchFuns, iStartPlotID, iDir) --coroutine
 					--map Search fInitFilter
 					local iInvDir = fmod_map(iDir + val, 6)
 					local pInvPlot = Map.GetAdjacentPlot(iX, iY, iInvDir)
-					if fInitFilter(pInvPlot) = true then
+					if fInitFilter(pInvPlot) == true then
 						local iInvPlotID = Map.GetPlotIndex(pInvPlot)
 						--table.insert(tComponent, iInvPlotID)
 						send(iInvPlotID, nil, iInvDir)
@@ -1093,9 +1093,9 @@ function Initialize()
 			bIsHost = (Game.GetLocalPlayer() == Game.GetGameHostPlayerID())
 		end
 		if bIsMP == false or bIsHost then 
-			Events.ResourceAddedToMap.Add(OnResourceAddedToMap)
-			Events.FeatureAddedToMap.Add(OnFeatureAddedToMap)
-			Events.LocalPlayerTurnBegin.Add(OnLocalHostMapBroadcast)
+			--Events.ResourceAddedToMap.Add(OnResourceAddedToMap)
+			--Events.FeatureAddedToMap.Add(OnFeatureAddedToMap)
+			--Events.LocalPlayerTurnBegin.Add(OnLocalHostMapBroadcast)
 		end
 	end
 

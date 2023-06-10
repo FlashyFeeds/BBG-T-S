@@ -305,7 +305,8 @@ function OnTurnTimerUpdated(elapsedTime :number, maxTurnTime :number)
 				local nTimeDelta_Broadcast = maxTurnTime - nMyTime
 				BroadcastTimeDelta(nTimeDelta_Broadcast)
 			end
-		return
+			return
+		end
 	elseif elapsedTime < nMyTime+3.1 and (not bNoCheats) then
 		TimerTick(elapsedTime, nMyTime, nMyTime + 3, false)
 	--elseif (elapsedTime>=nMyTime+3) and (elapsedTime<=maxTurnTime + delta -5) and (not bNoCheats) then
