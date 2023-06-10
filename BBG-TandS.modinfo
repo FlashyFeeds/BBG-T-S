@@ -32,7 +32,7 @@
 	-->
 	<Dependencies>
 		<!--<Mod id="4873eb62-8ccc-4574-b784-dda455e74e68" title="Expansion: Gathering Storm" />-->
-		<Mod id="cb84075d-5007-4207-b662-c35a5f7be254" title="Better Balanced Game 5.2.12 Beta" version="50212"/>
+		<Mod id="cb84075d-5007-4207-b662-c35a5f7be260"/> <!--BBG Live Dependency-->
 	</Dependencies>
 	<ActionCriteria>
 		<!-- Firaxis Content Criteria -->
@@ -246,7 +246,54 @@
 			<Criteria>bbgts_mp_cheats</Criteria>
 			<File>MPCheats/sql/mp_cheats.sql</File>
 		</UpdateDatabase>
-		
+		<!--Resource Lense-->
+		<!--colors-->
+		<UpdateDatabase id="bbgts_lense_colors">
+		  <Properties>
+	        <LoadOrder>0</LoadOrder>
+	      </Properties>
+	      <Criteria>bbgts_mp_cheats</Criteria>
+	      <Items>
+	        <File>MPCheats/sql/lense_colors.sql</File>	      
+	      </Items>
+	    </UpdateDatabase>
+	    <ImportFiles id="bbgts_lense_script">
+	      <Properties>
+	        <LoadOrder>1</LoadOrder>
+	        <Context>InGame</Context>
+	      </Properties>
+	      <Criteria>bbgts_mp_cheats</Criteria>
+	      <Items>
+			<File>MPCheats/Panels/lenssupport.lua</File>
+			<File>MPCheats/Panels/Lenses/modlens_cheat_resource.lua</File>
+			<File>MPCheats/Panels/base/ui/panels/modallenspanel.lua</File>
+			<File>MPCheats/Panels/base/ui/panels/modallenspanel.xml</File>
+			<File>MPCheats/Panels/base/ui/minimappanel.lua</File>
+			<File>MPCheats/Panels/base/ui/minimappanel.xml</File>
+	      </Items>
+	    </ImportFiles>
+	    <ImportFiles id="bbgts_lense_xp1">
+	      <Properties>
+	        <LoadOrder>2</LoadOrder>
+	        <Context>InGame</Context>
+	      </Properties>
+	      <Criteria>bbgts_mp_cheats</Criteria>
+	      <Criteria>XP1</Criteria>
+	      <Items>
+	      	<File>MPCheats/Panels/dlc/xp1/ui/replacements/minimappanel.xml</File>
+	      </Items>
+	    </ImportFiles>
+	   	<ImportFiles id="bbgts_lense_xp2">
+	      <Properties>
+	        <LoadOrder>3</LoadOrder>
+	        <Context>InGame</Context>
+	      </Properties>
+	      <Criteria>bbgts_mp_cheats</Criteria>
+	      <Criteria>XP2</Criteria>
+	      <Items>
+			<File>MPCheats/Panels/dlc/xp2/ui/replacements/minimappanel.xml</File>
+	      </Items>
+	    </ImportFiles>	    
 		<UpdateText id="bbgts_mpcheats_gameplaytext">
 			<File>lang/text_en.xml</File>
 		</UpdateText>
@@ -420,6 +467,16 @@
 		<File>MPCheats/UI/Text/localisation.sql</File>
 		<File>MPCheats/Text/input_config.xml</File>
 		<File>MPCheats/Text/options_text.xml</File>
+		<!--Resource Lense-->
+		<File>MPCheats/Panels/base/ui/panels/modallenspanel.lua</File>
+		<File>MPCheats/Panels/base/ui/panels/modallenspanel.xml</File>
+		<File>MPCheats/Panels/base/ui/minimappanel.lua</File>
+		<File>MPCheats/Panels/base/ui/minimappanel.xml</File>
+		<File>MPCheats/Panels/dlc/xp1/ui/replacements/minimappanel.xml</File>
+		<File>MPCheats/Panels/dlc/xp2/ui/replacements/minimappanel.xml</File>
+		<File>MPCheats/Panels/Lenses/modlens_cheat_resource.lua</File>
+		<File>MPCheats/Panels/lenssupport.lua</File>
+		<File>MPCheats/sql/lense_colors.sql</File>
 		<!--bbg scripts extension -->
 		<File>lua/bbg_script.lua</File>
 		<File>lua/bbg_uitogameplay.xml</File>
