@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Mod id="d6b111c4-be33-4878-b1fc-8741b1cd6af7" version="1013">
+<Mod id="d6b111c4-be33-4878-b1fc-8741b1cd6af7" version="1014">
 	<Properties>
 		<Name>LOC_BBGTS_TITLE</Name>
 		<Description>LOC_BBGTS_DESCRIPTION</Description>
 		<Created>1657375165</Created>
 		<Teaser>LOC_BBGTS_TEASER</Teaser>
     		<Authors>FlashyFeeds</Authors>
-    		<SpecialThanks>BBG community, ZhenjaMax, D./JackTheNarrator </SpecialThanks>
+    		<SpecialThanks>BBG Community, ZhenjaMax, CPL Community, [Sparrow], Astog, D./JackTheNarrator </SpecialThanks>
 		<CompatibleVersions>1.2,2.0</CompatibleVersions>
 	</Properties>
 	<LocalizedText>
 		<Text id="LOC_BBGTS_TITLE">
-			<en_US>BBGTS 1.0.13</en_US>
-			<fr_FR>BBGTS 1.0.13</fr_FR>
+			<en_US>BBGTS 1.0.14</en_US>
+			<fr_FR>BBGTS 1.0.14</fr_FR>
 		</Text>
 		
 		<Text id="LOC_BBGTS_TEASER">
