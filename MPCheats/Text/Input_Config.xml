@@ -17,7 +17,8 @@
 		<Row ActionId="ToggleEnvoy" Name="LOC_OPTIONS_ENVOY" Description="LOC_OPTIONS_ENVOY" CategoryId="CHEATMENU" ContextId="World" />
 		<Row ActionId="ToggleObs" Name="LOC_OPTIONS_OBS" Description="LOC_OPTIONS_OBS" CategoryId="CHEATMENU" ContextId="World" />
 		<Row ActionId="ToggleGovernorpoints" Name="LOC_OPTIONS_GOVPOINTS" Description="LOC_OPTIONS_GOVPOINTS" CategoryId="CHEATMENU" ContextId="World" />		
-		<Row ActionId="ToggleDiplomaticFavor" Name="LOC_OPTIONS_DIPLOMATIC_FAVOR" Description="LOC_OPTIONS_DIPLOMATIC_FAVOR" CategoryId="CHEATMENU" ContextId="World" />	
+		<Row ActionId="ToggleDiplomaticFavor" Name="LOC_OPTIONS_DIPLOMATIC_FAVOR" Description="LOC_OPTIONS_DIPLOMATIC_FAVOR" CategoryId="CHEATMENU" ContextId="World" />
+		<Row ActionId="ToggleGiveMS" Name="LOC_OPTIONS_MS" Description="LOC_OPTIONS_MS" CategoryId="CHEATMENU" ContextId="World" />	
 	</InputActions>
 	
 	<InputActionDefaultGestures>
@@ -31,5 +32,6 @@
 		<Row ActionId="ToggleGovernorpoints" Index="0" GestureType="KBMouse" GestureData="NONE"/>	
 		<Row ActionId="ToggleObs" Index="0" GestureType="KBMouse" GestureData="NONE"/>
 		<Row ActionId="ToggleDiplomaticFavor" Index="0" GestureType="KBMouse" GestureData="NONE"/>
+		<Row ActionId="ToggleGiveMS" Index="0" GestureType="KBMouse" GestureData="NONE"/>
 	</InputActionDefaultGestures>
 </GameInfo>

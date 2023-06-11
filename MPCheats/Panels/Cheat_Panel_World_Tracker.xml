@@ -48,6 +48,9 @@
 						<Button 		ID="CheatButtonObs" Offset="0,15" Texture="LaunchBar_Hook_ButtonSmall.dds" Style="ButtonDisabledText" Size="40,40" Anchor="C,C" ToolTip="LOC_CHEAT_MENU_OBVS">
 							<Image 		ID="Obs" Icon="ICON_CIVILOPEDIA_CIVILIZATIONS" Size="27,27" Anchor="C,C" Offset="-1,-1" ToolTip="LOC_CHEAT_MENU_OBVS" />
 						</Button>
+						<Button 		ID="CheatButtonMS" Offset="0,15" Texture="LaunchBar_Hook_ButtonSmall.dds" Style="ButtonDisabledText" Size="40,40" Anchor="C,C" ToolTip="LOC_CHEAT_MENU_MS">
+							<Image 		ID="MS" Icon="ICON_UNITOPERATION_MOVE_TO" Size="23,23" Anchor="C,C" Offset="-1,-1"/>
+						</Button>
 					</Stack>
 				</Grid>
 			</Stack>

@@ -180,6 +180,21 @@ function RevealAll()
 	end		
 end
 
+function ChangeMS()
+	if bCheatsActive == false or GameConfiguration.IsPaused() or bSpec then
+		return
+	end
+	Debug("Called", "GiveMS")
+	if pPlayer:IsHuman() then
+		local kParameters = {}
+		kParameters.OnStart = "GameplayGiveMS"
+		kParameters["iPlayerID"] = iPlayerID
+		kParameters["iUnitID"] = iLocUnitID
+		UI.RequestPlayerOperation(iPlayerID, PlayerOperations.EXECUTE_SCRIPT, kParameters);
+		--UICheatEvents.UIChangeGovPoints(iPlayerID, pNewGP);
+    end
+end
+
 function RefreshActionPanel()
 	if pPlayer:IsHuman() then
 		local UPContextPtr :table = ContextPtr:LookUpControl("/InGame/ActionPanel");
@@ -341,6 +356,9 @@ function OnInputActionTriggered( actionId )
 	end
 	if ( actionId == Input.GetActionId("ToggleDiplomaticFavor") ) then
 		ChangeDiplomaticFavor();
+	end
+	if ( actionId == Input.GetActionId("ToggleGiveMS") ) then
+		ChangeMS();
 	end
 end
 --========support functions========--

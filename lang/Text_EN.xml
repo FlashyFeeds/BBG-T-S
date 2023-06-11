@@ -180,6 +180,12 @@
         <Row Tag="LOC_CHEAT_MENU_OBVS" language="en">
             <Text>Reveals All Players and All City States for one turn</Text>
         </Row>
+        <Row Tag="LOC_OPTIONS_MS" language="en">
+            <Text>Grant 5 Movement</Text>
+        </Row>
+        <Row Tag="LOC_CHEAT_MENU_MS" language="en">
+            <Text>Grant 5 Movement</Text>
+        </Row>
         <!--MP Cheats Projects -->
         <Row Tag="LOC_PROJECT_MP_CHEAT_20_SPY_NAME" language="en">
             <Text>Tester's Spy Project</Text>

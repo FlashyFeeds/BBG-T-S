@@ -264,6 +264,17 @@ function OnRevealAll(iPlayerID)
 	Debug("All Players and City-States revealed for playerID "..tostring(playerID), "OnRevealAll")
 end
 
+function OnGameplayGiveMS(iPlayerID, kParameters)
+	Debug("Called", "OnGameplayGiveMS")
+	local iPlayerID = kParameters["iPlayerID"]
+	local iUnitID = kParameters["iUnitID"]
+	local pUnit = UnitManager.GetUnit(iPlayerID,iUnitID)
+	if pUnit == nil then return end
+	UnitManager.ChangeMovesRemaining(pUnit, 5);
+	UnitManager.RestoreUnitAttacks(pUnit);
+	Debug("5 Movement added to iUnitID "..tostring(iUnitID).." , pUnit Object "..tostring(pUnit), "OnGameplayGiveMS")
+end	
+
 function OnUILocalPlayerTurnBegin(iPlayerID)
 	Debug("Called", "OnUILocalPlayerTurnBegin")
 	GameEvents.GameplayLocalTurnBegin.Call(iPlayerID)
@@ -746,6 +757,7 @@ function Initialize()
 	--LuaEvents.UIRevealAll.Add(OnUIRevealAll);
 	GameEvents.GameplayRevealAll.Add(OnGameplayRevealAll)
 	--LuaEvents.UILocalPlayerTurnBegin.Add(OnUILocalPlayerTurnBegin)
+	GameEvents.GameplayGiveMS.Add(OnGameplayGiveMS)
 	--turn processing events
 	GameEvents.GameplayLocalTurnBegin.Add(OnGameplayLocalTurnBegin)
 	GameEvents.GameplaySwitchOnHumanLoaded.Add(OnGameplaySwitchOnHumanLoaded)
