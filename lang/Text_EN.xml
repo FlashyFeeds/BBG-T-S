@@ -193,14 +193,14 @@
             <Text>Grant Promotion</Text>
         </Row>
         <!--MP Cheats Projects -->
-        <Row Tag="LOC_PROJECT_MP_CHEAT_20_SPY_NAME" language="en">
+        <Row Tag="LOC_PROJECT_MP_CHEAT_5_SPY_NAME" language="en">
             <Text>Tester's Spy Project</Text>
         </Row>
-        <Row Tag="LOC_PROJECT_MP_CHEAT_20_SPY_SHORT_NAME" language="en">
+        <Row Tag="LOC_PROJECT_MP_CHEAT_5_SPY_SHORT_NAME" language="en">
             <Text>Spy Project</Text>
         </Row>
-        <Row Tag="LOC_PROJECT_MP_CHEAT_20_SPY_DESCRIPTION" language="en">
-            <Text>Grants you +20 Spy Capacity</Text>
+        <Row Tag="LOC_PROJECT_MP_CHEAT_5_SPY_DESCRIPTION" language="en">
+            <Text>Grants you +5 Spy Capacity</Text>
         </Row>
         <Row Tag="LOC_PROJECT_MP_CHEAT_3_POPULATION_NAME" language="en">
             <Text>Tester's Population Project</Text>

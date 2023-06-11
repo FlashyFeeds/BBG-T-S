@@ -20,7 +20,7 @@ local tHumanPlayers = {}
 
 --other vars
 local g_nStartTurn = 0
-local bTurnProcessing = true
+local bTurnProcessing = false
 
 
 
@@ -675,10 +675,10 @@ function IsTurnProcessing()
 end
 
 function BroadCastTurnProcessing(turn)
-	if turn ~= GameConfiguration.GetStartTurn() then
-		return
-	end
-	ExposedMembers.SetTurnProcessing(Game.GetProperty("TURN_PROCESSING"))
+	local bResult = IsTurnProcessing()
+	Game:SetProperty("TURN_PROCESSING", IsTurnProcessing())
+	Debug("Turn Processing"..tostring(bResult, "BroadCastTurnProcessing"))
+	ExposedMembers.SetTurnProcessing(bResult)
 end
 
 function IDToPos(List, SearchItem, key, multi)
@@ -784,7 +784,7 @@ function Initialize()
 	GameEvents.GameplayEndTimer.Add(OnGameplayEndTimer)
 	GameEvents.GameplaySetTurnEnd.Add(OnGameplaySetTurnEnd)
 	GameEvents.GameplayPlayerTurnDeactivated.Add(OnGameplayPlayerTurnDeactivated)
-	--GameEvents.OnGameTurnStarted.Add(BroadCastTurnProcessing)
+	GameEvents.OnGameTurnStarted.Add(BroadCastTurnProcessing)
 	--ExposedMembers.MOD_CheatMenu_Initialized = true;
 	--Lense support:
 	GameEvents.GameplayUpdatePlayerResources.Add(OnGameplayUpdatePlayerResources)

@@ -134,6 +134,13 @@
 				<Value>1</Value>
 			</ConfigurationValueMatches>
 		</Criteria>
+		<Criteria id="bbgts_mp_test_spy">
+			<ConfigurationValueMatches>
+				<Group>Game</Group>
+				<ConfigurationId>BBGTS_TEST_SPY</ConfigurationId>
+				<Value>1</Value>
+			</ConfigurationValueMatches>
+		</Criteria>
 		<!-- content bbgts criteria -->
 		<Criteria id="bbgts_amani_c">
 			<ConfigurationValueMatches>

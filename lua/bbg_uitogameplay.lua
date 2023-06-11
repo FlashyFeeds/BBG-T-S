@@ -1081,6 +1081,45 @@ function receive(prod, bSwitch)
     return coroutine.resume(prod)[1]
 end
 
+--Spy test function--
+function OnSpyAdded(iPlayerID, iUnitID)
+	Debug("Called", "OnSpyAdded")
+	local kParameters = {}
+	kParameters.OnStart = "GameplaySpyAdded"
+	kParameters["iPlayerID"] = iPlayerID
+	kParameters["iUnitID"] = iUnitID
+	UI.RequestPlayerOperation(Game.GetLocalPlayer(), PlayerOperations.EXECUTE_SCRIPT, kParameters)
+end
+
+function OnSpyMissionCompleted(iPlayerID, iMissionID)
+	Debug("Called", "OnSpyMissionCompleted")
+	local kParameters = {}
+	kParameters.OnStart = "GameplaySpyMissionCompleted"
+	kParameters["iPlayerID"] = iPlayerID
+	kParameters["iMissionID"] = iMissionID
+	UI.RequestPlayerOperation(Game.GetLocalPlayer(), PlayerOperations.EXECUTE_SCRIPT, kParameters)
+end
+
+function OnSpyRemoved(iSpyPlayerID, iCounterSpyPlayerID)
+	Debug("Called", "OnSpyRemoved")
+	local kParameters = {}
+	kParameters.OnStart = "GameplaySpyRemoved"
+	kParameters["iSpyPlayerID"] = iSpyPlayerID
+	kParameters["iCounterSpyPlayerID"] = iCounterSpyPlayerID
+	UI.RequestPlayerOperation(Game.GetLocalPlayer(), PlayerOperations.EXECUTE_SCRIPT, kParameters)
+end
+
+function OnUnitCaptured(iCurrUnitPlayerID, iUnitID, iOwnerID, iCapturerID)
+	Debug("Called", "OnUnitCaptured")
+	local kParameters = {}
+	kParameters.OnStart = "GameplayUnitCaptured"
+	kParameters["iCurrUnitPlayerID"] = iCurrUnitPlayerID
+	kParameters["iUnitID"] = iUnitID
+	kParameters["iOwnerID"] = iOwnerID
+	kParameters["iCapturerID"] = iCapturerID
+	UI.RequestPlayerOperation(Game.GetLocalPlayer(), PlayerOperations.EXECUTE_SCRIPT, kParameters)
+end
+
 --=========Events=========--
 
 function Initialize()
@@ -1131,6 +1170,13 @@ function Initialize()
 		--delete suntzu after use for non-unifier
 		Events.UnitGreatPersonActivated.Add(OnUnitGreatPersonActivatedNotQinUnifier)
 		print("Delete Suntzu UI Hook added")
+	end
+
+	if GameConfiguration.GetValue("BBGTS_TEST_SPY") then
+		Events.SpyAdded.Add(OnSpyAdded) 
+		Events.SpyMissionCompleted.Add(OnSpyMissionCompleted)
+		Events.SpyRemoved.Add(OnSpyRemoved)
+		Events.UnitCaptured.Add(OnUnitCaptured)
 	end
 	local tMajorIDs = PlayerManager.GetAliveMajorIDs()
 	for i, iPlayerID in ipairs(tMajorIDs) do

@@ -3908,8 +3908,45 @@ local count = 0
 end
 
 
+-- ===========================================================================
+-- Spy GameEvents
+-- ===========================================================================
+function OnGameplaySpyAdded(iPlayerID, kParameters)
+	Debug("Called", "OnGameplaySpyAdded")
+	local iPlayerID = kParameters["iPlayerID"]
+	local iUnitID = kParameters["iUnitID"]	
+	local pUnit = UnitManager.GetUnit(iPlayerID, iUnitID)
+	Debug("Unit is "..tostring(GameInfo.Units[pUnit:GetType()].UnitType).." with ID "..tostring(iUnitID).." belongs to iPlayerID "..tostring(iPlayerID), "OnSpyAdded")
+end
 
+function OnGameplaySpyMissionCompleted(iPlayerID, kParameters)
+	Debug("Called", "OnGameplaySpyMissionCompleted")
+	local iPlayerID = kParameters["iPlayerID"]
+	local iMinorID = kParameters["iMinorID"]
+	Debug("iPlayerID, iMissionID "..tostring(iPlayerID).." , "..tostring(iMissionID),"OnGameplaySpyMissionCompleted")
+end
 
+function OnGameplaySpyRemoved(iPlayerID, kParameters)
+	Debug("Called","OnGameplaySpyRemoved")
+	local iSpyPlayerID = kParameters["iSpyPlayerID"]
+	local iCounterSpyPlayerID = kParameters["iCounterSpyPlayerID"]
+	Debug("iSpyPlayerID, iCounterSpyPlayerID "..tostring(iSpyPlayerID).." , "..tostring(iCounterSpyPlayerID), "OnGameplaySpyRemoved")
+end
+
+function OnGameplayUnitCaptured(iPlayerID,kParameters)
+	Debug("Called", "OnGameplayUnitCaptured")
+	local iCurrUnitPlayerID = kParameters["iCurrUnitPlayerID"]
+	local iUnitID = kParameters["iUnitID"]
+	local iOwnerID = kParameters["iOwnerID"]
+	local iCapturerID = kParameters["iCapturerID"]
+	Debug("iCurrUnitPlayerID, iUnitID, iOwnerId, iCapturerID "..tostring(iCurrUnitPlayerID).." , "..tostring(iUnitID).." , "..tostring(iOwnerID).." , "..tostring(iCapturerID), "OnUnitCaptured")
+	local pUnit1 = UnitManager.GetUnit(iCurrUnitPlayerID, iUnitID)
+	Debug(pUnit1:GetType(), "OnUnitCaptured")
+	local pUnit2 = UnitManager.GetUnit(iOwnerID, iUnitID)
+	Debug(pUnit2:GetType(), "OnUnitCaptured")
+	local pUnit3 = UnitManager.GetUnit(iCapturerID, iUnitID)
+	Debug(pUnit3:GetType(), "OnUnitCaptured")
+end
 
 -- ===========================================================================
 --	Initialize
@@ -3993,6 +4030,13 @@ function Initialize()
 		--LuaEvents.UINotUnifierDeleteSunTzu.Add(OnUINotUnifierDeleteSunTzu)
 		GameEvents.GameplayNotUnifierDeleteSunTzu.Add(OnGameplayNotUnifierDeleteSunTzu)
 		print("BBG Suntzu Gameplay Deletion hooks added")
+	end
+
+	if GameConfiguration.GetValue("BBGTS_TEST_SPY") then
+		GameEvents.GameplaySpyAdded.Add(OnGameplaySpyAdded)
+		GameEvents.GameplaySpyMissionCompleted.Add(OnGameplaySpyMissionCompleted)
+		GameEvents.GameplaySpyRemoved.Add(OnGameplaySpyRemoved)
+		GameEvents.GameplayUnitCaptured.Add(OnGameplayUnitCaptured)
 	end
 	local tMajorIDs = PlayerManager.GetAliveMajorIDs()
 	for i, iPlayerID in ipairs(tMajorIDs) do
