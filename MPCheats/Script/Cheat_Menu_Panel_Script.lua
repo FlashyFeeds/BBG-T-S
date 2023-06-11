@@ -291,7 +291,7 @@ function OnGameplayLocalTurnBegin(iPlayerID, kParameters)
 			nLoadedCount = nLoadedCount + 1
 		end
 	end
-	if bTurnProcessing then
+	if Game.GetProperty("TURN_PROCESSING") then
 		if nLoadedCount == 1 and g_nStartTurn < Game.GetCurrentGameTurn() then
 			Debug("Setting First Player Out", "OnGameplayLocalTurnBegin")
 			ExposedMembers.SetFirstOut()
@@ -492,7 +492,7 @@ function OnGameplayPlayerTurnDeactivated(iPlayerID, kParameters)
 	Game.SetProperty("ALIVE_HUMANS", tGHumanPlayers)
 	Debug("ALIVE_HUMANS was updated. Current Values", "OnGameplayPlayerTurnDeactivated")
 	civ6tostring(tHumanPlayers)
-	if bTurnProcessing then
+	if Game.GetProperty("TURN_PROCESSING") then
 		if nLoadedCount == 0 then
 			Debug("Deactivating Tester Panel on Local Machine", "OnGameplayPlayerTurnDeactivated")
 			ExposedMembers.DeactivateTesterPanelWT()
@@ -636,13 +636,15 @@ function IsTurnProcessing()
 		--print("Is PBC")
 		--bReturnVal = false
 	else
+		print("phase type", GameConfiguration.GetValue("TURN_PHASE_TYPE"), "turn timer type", GameConfiguration.GetValue("TURN_TIMER_TYPE"))
 		if GameConfiguration.GetValue("TURN_PHASE_TYPE") ~= DB.MakeHash("TURNPHASE_SIMULTANEOUS") then
-			print("Result Hash"..tostring(GameConfiguration.GetValue("TURN_PHASE_TYPE")), "Not Simultaneous")
+			print("Result Hash", GameConfiguration.GetValue("TURN_PHASE_TYPE"), "Not Simultaneous")
 			bReturnVal = false
-		end
-		if GameConfiguration.GetValue("TURN_TIMER_TYPE") ~= DB.MakeHash("TURNTIMER_NONE") then
-			print("Result Hash"..tostring(GameConfiguration.GetValue("TURN_TIMER_TYPE")), "No Timer")
+		elseif GameConfiguration.GetValue("TURN_TIMER_TYPE") == DB.MakeHash("TURNTIMER_NONE") then
+			print("Result Hash", GameConfiguration.GetValue("TURN_TIMER_TYPE"), "No Timer")
 			bReturnVal = false
+		else
+			print("Simultaneous Turns => Enable Turn Processing")
 		end
 	end
 	ExposedMembers.SetTurnProcessing(bReturnVal)
@@ -701,6 +703,7 @@ function Initialize()
 	Debug("Cheat Menu Initialization Started", "Initialize");
 	bTurnProcessing = IsTurnProcessing()
 	Game.SetProperty("TURN_PROCESSING", bTurnProcessing)
+	print("Turn Processing", Game.GetProperty("TURN_PROCESSING"))
 	--if ( not ExposedMembers.MOD_CheatMenu) then ExposedMembers.MOD_CheatMenu = {}; end
 	--set local alive values (probably migrate to bbg script)
 	PopulateAliveTable(nLoaded)

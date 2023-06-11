@@ -1,5 +1,5 @@
 g_Debug = GameConfiguration.GetValue('BBGTS_DEBUG_LUA')
-
+print("Debug Loaded")
 function Debug(statement: string, context)
 	if g_Debug == false then
 		return

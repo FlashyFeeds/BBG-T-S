@@ -285,9 +285,9 @@ function BroadcastTimeDelta(nTimeDelta_Broadcast)
 end
 
 function ExposedMembers.SetTurnProcessing(bReturnVal)
-	--Debug("Called", "ExposedMembers.SetTurnProcessing")
+	--print("SetTurnProcessing: Called")
 	bTurnProcessing = bReturnVal
-	--Debug("bReturnVal is set to "..tostring(bTurnProcessing), "ExposedMembers.SetTurnProcessing")
+	--print("SetTurnProcessing: bReturnVal is set to "..tostring(bTurnProcessing))
 end
 
 --testing shift enters
