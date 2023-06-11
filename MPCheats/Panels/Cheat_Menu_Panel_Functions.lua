@@ -33,7 +33,7 @@ local m_IsAttached:boolean			= false;
 local tPlayerSelections             = {}
 --turn processing variables
 bCheatsActive = false
-bTurnProcessing = true
+bTurnProcessing = Game:GetProperty("TURN_PROCESSING")
 -- // ----------------------------------------------------------------------------------------------
 -- // MENU BUTTON FUNCTIONS
 -- // ----------------------------------------------------------------------------------------------
@@ -300,9 +300,9 @@ function BroadcastTimeDelta(nTimeDelta_Broadcast)
 end
 
 function ExposedMembers.SetTurnProcessing(bReturnVal)
-	--print("SetTurnProcessing: Called")
+	Debug("Called", "ExposedMembers.SetTurnProcessing")
 	bTurnProcessing = bReturnVal
-	--print("SetTurnProcessing: bReturnVal is set to "..tostring(bTurnProcessing))
+	Debug("bReturnVal is set to "..tostring(bTurnProcessing), "ExposedMembers.SetTurnProcessing")
 end
 
 --testing shift enters

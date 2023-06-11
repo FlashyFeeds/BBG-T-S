@@ -658,8 +658,14 @@ function IsTurnProcessing()
 			print("Simultaneous Turns => Enable Turn Processing")
 		end
 	end
-	ExposedMembers.SetTurnProcessing(bReturnVal)
 	return bReturnVal
+end
+
+function BroadCastTurnProcessing(turn)
+	if turn ~= GameConfiguration.GetStartTurn() then
+		return
+	end
+	ExposedMembers.SetTurnProcessing(Game.GetProperty("TURN_PROCESSING"))
 end
 
 function IDToPos(List, SearchItem, key, multi)
@@ -764,6 +770,7 @@ function Initialize()
 	GameEvents.GameplayEndTimer.Add(OnGameplayEndTimer)
 	GameEvents.GameplaySetTurnEnd.Add(OnGameplaySetTurnEnd)
 	GameEvents.GameplayPlayerTurnDeactivated.Add(OnGameplayPlayerTurnDeactivated)
+	--GameEvents.OnGameTurnStarted.Add(BroadCastTurnProcessing)
 	--ExposedMembers.MOD_CheatMenu_Initialized = true;
 	--Lense support:
 	GameEvents.GameplayUpdatePlayerResources.Add(OnGameplayUpdatePlayerResources)
