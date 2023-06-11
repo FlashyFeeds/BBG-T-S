@@ -195,6 +195,21 @@ function ChangeMS()
     end
 end
 
+function UnitPromote()
+	if bCheatsActive == false or GameConfiguration.IsPaused() or bSpec then
+		return
+	end
+	Debug("Called", "UnitPromote")
+	if pPlayer:IsHuman() then
+		local kParameters = {}
+		kParameters.OnStart = "GameplayUnitPromote"
+		kParameters["iPlayerID"] = iPlayerID
+		kParameters["iUnitID"] = iLocUnitID
+		UI.RequestPlayerOperation(iPlayerID, PlayerOperations.EXECUTE_SCRIPT, kParameters);
+		--UICheatEvents.UIChangeGovPoints(iPlayerID, pNewGP);
+    end
+end	
+
 function RefreshActionPanel()
 	if pPlayer:IsHuman() then
 		local UPContextPtr :table = ContextPtr:LookUpControl("/InGame/ActionPanel");
@@ -359,6 +374,9 @@ function OnInputActionTriggered( actionId )
 	end
 	if ( actionId == Input.GetActionId("ToggleGiveMS") ) then
 		ChangeMS();
+	end
+	if ( actionId == Input.GetActionId("ToggleUnitPromote") ) then
+		UnitPromote();
 	end
 end
 --========support functions========--

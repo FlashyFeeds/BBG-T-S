@@ -18,7 +18,8 @@
 		<Row ActionId="ToggleObs" Name="LOC_OPTIONS_OBS" Description="LOC_OPTIONS_OBS" CategoryId="CHEATMENU" ContextId="World" />
 		<Row ActionId="ToggleGovernorpoints" Name="LOC_OPTIONS_GOVPOINTS" Description="LOC_OPTIONS_GOVPOINTS" CategoryId="CHEATMENU" ContextId="World" />		
 		<Row ActionId="ToggleDiplomaticFavor" Name="LOC_OPTIONS_DIPLOMATIC_FAVOR" Description="LOC_OPTIONS_DIPLOMATIC_FAVOR" CategoryId="CHEATMENU" ContextId="World" />
-		<Row ActionId="ToggleGiveMS" Name="LOC_OPTIONS_MS" Description="LOC_OPTIONS_MS" CategoryId="CHEATMENU" ContextId="World" />	
+		<Row ActionId="ToggleGiveMS" Name="LOC_OPTIONS_MS" Description="LOC_OPTIONS_MS" CategoryId="CHEATMENU" ContextId="World" />
+		<Row ActionId="ToggleUnitPromote" Name="LOC_OPTIONS_XP" Description="LOC_OPTIONS_XP" CategoryId="CHEATMENU" ContextId="World" />
 	</InputActions>
 	
 	<InputActionDefaultGestures>
@@ -33,5 +34,7 @@
 		<Row ActionId="ToggleObs" Index="0" GestureType="KBMouse" GestureData="NONE"/>
 		<Row ActionId="ToggleDiplomaticFavor" Index="0" GestureType="KBMouse" GestureData="NONE"/>
 		<Row ActionId="ToggleGiveMS" Index="0" GestureType="KBMouse" GestureData="NONE"/>
+		<Row ActionId="ToggleUnitPromote" Index="0" GestureType="KBMouse" GestureData="NONE"/>
+
 	</InputActionDefaultGestures>
 </GameInfo>

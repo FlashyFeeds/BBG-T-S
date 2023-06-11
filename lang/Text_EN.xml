@@ -186,6 +186,12 @@
         <Row Tag="LOC_CHEAT_MENU_MS" language="en">
             <Text>Grant 5 Movement</Text>
         </Row>
+        <Row Tag="LOC_CHEAT_MENU_XP" language="en">
+            <Text>Grant Promotion</Text>
+        </Row>
+        <Row Tag="LOC_OPTIONS_XP" language="en">
+            <Text>Grant Promotion</Text>
+        </Row>
         <!--MP Cheats Projects -->
         <Row Tag="LOC_PROJECT_MP_CHEAT_20_SPY_NAME" language="en">
             <Text>Tester's Spy Project</Text>

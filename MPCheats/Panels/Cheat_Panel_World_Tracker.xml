@@ -51,6 +51,9 @@
 						<Button 		ID="CheatButtonMS" Offset="0,15" Texture="LaunchBar_Hook_ButtonSmall.dds" Style="ButtonDisabledText" Size="40,40" Anchor="C,C" ToolTip="LOC_CHEAT_MENU_MS">
 							<Image 		ID="MS" Icon="ICON_UNITOPERATION_MOVE_TO" Size="23,23" Anchor="C,C" Offset="-1,-1"/>
 						</Button>
+						<Button 		ID="CheatButtonPromote" Offset="0,15" Texture="LaunchBar_Hook_ButtonSmall.dds" Style="ButtonDisabledText" Size="40,40" Anchor="C,C" ToolTip="LOC_CHEAT_MENU_XP">
+							<Image 		ID="UnitXP" Icon="ICON_UNITCOMMAND_PROMOTE" Size="23,23" Anchor="C,C" Offset="-1,-1"/>
+						</Button>
 					</Stack>
 				</Grid>
 			</Stack>

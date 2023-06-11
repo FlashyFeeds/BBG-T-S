@@ -275,6 +275,19 @@ function OnGameplayGiveMS(iPlayerID, kParameters)
 	Debug("5 Movement added to iUnitID "..tostring(iUnitID).." , pUnit Object "..tostring(pUnit), "OnGameplayGiveMS")
 end	
 
+function OnGameplayUnitPromote(iPlayerID, kParameters)
+	Debug("Called", "OnGameplayUnitPromote")
+	local iPlayerID = kParameters["iPlayerID"]
+	local iUnitID = kParameters["iUnitID"]
+	local pUnit = UnitManager.GetUnit(iPlayerID,iUnitID)
+	if pUnit == nil then return end
+	local nUnitExp = pUnit:GetExperience():GetExperienceForNextLevel();
+	if nUnitExp > 0 then
+		pUnit:GetExperience():ChangeExperience(nUnitExp);
+	end
+	Debug(tostring(nUnitExp).." Exp added to iUnitID "..tostring(iUnitID).." , pUnit Object "..tostring(pUnit), "OnGameplayUnitPromote")
+end
+
 function OnUILocalPlayerTurnBegin(iPlayerID)
 	Debug("Called", "OnUILocalPlayerTurnBegin")
 	GameEvents.GameplayLocalTurnBegin.Call(iPlayerID)
@@ -764,6 +777,7 @@ function Initialize()
 	GameEvents.GameplayRevealAll.Add(OnGameplayRevealAll)
 	--LuaEvents.UILocalPlayerTurnBegin.Add(OnUILocalPlayerTurnBegin)
 	GameEvents.GameplayGiveMS.Add(OnGameplayGiveMS)
+	GameEvents.GameplayUnitPromote.Add(OnGameplayUnitPromote)
 	--turn processing events
 	GameEvents.GameplayLocalTurnBegin.Add(OnGameplayLocalTurnBegin)
 	GameEvents.GameplaySwitchOnHumanLoaded.Add(OnGameplaySwitchOnHumanLoaded)

@@ -172,6 +172,7 @@ local function InitializeControls()
 	Controls.CheatButtonObs:RegisterCallback(Mouse.eLClick, RevealAll);	 --keep		
 	Controls.CheatButtonDiplo:RegisterCallback(Mouse.eLClick, ChangeDiplomaticFavor); --keep
 	Controls.CheatButtonMS:RegisterCallback(Mouse.eLClick, ChangeMS); --keep
+	Controls.CheatButtonPromote:RegisterCallback(Mouse.eLClick, UnitPromote);
 	Controls.CheatButtonGold:RegisterCallback( Mouse.eMouseEnter, function() UI.PlaySound("Main_Menu_Mouse_Over") end); --keep
 	Controls.CheatButtonProduction:RegisterCallback( Mouse.eMouseEnter, function() UI.PlaySound("Main_Menu_Mouse_Over") end); --keep
 	Controls.CheatButtonScience:RegisterCallback( Mouse.eMouseEnter, function() UI.PlaySound("Main_Menu_Mouse_Over") end); --keep
@@ -182,6 +183,7 @@ local function InitializeControls()
 	Controls.CheatButtonGov:RegisterCallback( Mouse.eMouseEnter, function() UI.PlaySound("Main_Menu_Mouse_Over"); end); --keep
 	Controls.CheatButtonDiplo:RegisterCallback( Mouse.eMouseEnter, function() UI.PlaySound("Main_Menu_Mouse_Over"); end); --keep
 	Controls.CheatButtonMS:RegisterCallback( Mouse.eMouseEnter, function() UI.PlaySound("Main_Menu_Mouse_Over"); end); --keep
+	Controls.CheatButtonPromote:RegisterCallback( Mouse.eMouseEnter, function() UI.PlaySound("Main_Menu_Mouse_Over") end);
 	Controls.ToggleCheatPanel:RegisterCheckHandler(function() UpdateCheatPanel(not m_hideCheatPanel); end);
 	Controls.ToggleCheatPanel:SetCheck(true);
 	UpdateCheatPanel(true);
