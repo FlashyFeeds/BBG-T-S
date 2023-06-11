@@ -8,7 +8,7 @@ include("GameCapabilities");
 -- ===========================================================================
 
 g_ModLensModalPanel = {} -- Populated by ModLens_*.lua scripts
-include( "ModLens_", true )
+include( "modlens_", true )
 
 -- ===========================================================================
 -- Members

@@ -216,6 +216,11 @@ function OnLocalPlayerTurnBegin()
 	Debug("Called", "OnLocalPlayerTurnBegin")
 	local iPlayerID = Game.GetLocalPlayer()
 	local kParameters = {}
+	if Game.GetCurrentGameTurn() == GameConfiguration.GetStartTurn() then
+		kParameters.OnStart = "GameplayInitResource"
+		kParameters["iPlayerID"] = iPlayerID
+		UI.RequestPlayerOperation(iPlayerID, PlayerOperations.EXECUTE_SCRIPT, kParameters)
+	end
 	kParameters.OnStart = "GameplayLocalTurnBegin"
 	kParameters["iPlayerID"] = iPlayerID
 	UI.RequestPlayerOperation(iPlayerID, PlayerOperations.EXECUTE_SCRIPT, kParameters);
@@ -262,7 +267,10 @@ end
 
 function EndTimer(tPassParams)
 	Debug("Called", "EndTimer")
-	print(BuildRecursiveDataString(tPassParams))
+	tPassParams = tPassParams or nil
+	if tPassParams ~= nil then
+		print(BuildRecursiveDataString(tPassParams))
+	end
 	local kParameters = {}
 	kParameters.OnStart = "GameplayEndTimer"
 	UI.RequestPlayerOperation(iPlayerID, PlayerOperations.EXECUTE_SCRIPT, kParameters)
@@ -277,9 +285,9 @@ function BroadcastTimeDelta(nTimeDelta_Broadcast)
 end
 
 function ExposedMembers.SetTurnProcessing(bReturnVal)
-	Debug("Called", "ExposedMembers.SetTurnProcessing")
+	--Debug("Called", "ExposedMembers.SetTurnProcessing")
 	bTurnProcessing = bReturnVal
-	Debug("bReturnVal is set to "..tostring(bTurnProcessing), "ExposedMembers.SetTurnProcessing")
+	--Debug("bReturnVal is set to "..tostring(bTurnProcessing), "ExposedMembers.SetTurnProcessing")
 end
 
 --testing shift enters
@@ -337,6 +345,7 @@ function OnInputActionTriggered( actionId )
 end
 --========support functions========--
 
+
 --====Events and Init====--
 Events.CitySelectionChanged.Add(OnCitySelectionChanged) -- populates player/city table on change 
 Events.UnitSelectionChanged.Add(OnUnitSelectionChanged) -- populates player/unit table on change
@@ -348,3 +357,4 @@ Events.PlayerRevived.Add(OnPlayerRevived)
 Events.TurnEnd.Add(OnTurnEnd)
 Events.LocalPlayerTurnEnd.Add(OnLocalPlayerTurnEnd)
 Events.LocalPlayerTurnUnready.Add(OnLocalPlayerTurnUnready)
+--Events.PlotVisibilityChanged.Add(OnLocalPlayerVisibilityChanged) -- for Lenses

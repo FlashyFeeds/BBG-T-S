@@ -737,7 +737,7 @@ function OnLudwigWonderCompleted(iX, iY, iBuildingID, iPlayerID, iCityID, nPerce
 		return print("OnLudwigWonderPlaced: Not a Wonder")
 	end
 	local kParameters = {}
-	kParameters.OnStart = "GameplayLudwigWonderPlaced"
+	kParameters.OnStart = "GameplayLudwigWonderCompleted"
 	kParameters["iPlayerID"] = iPlayerID
 	kParameters["iBuildingID"] = iBuildingID
 	kParameters["iCityID"] = iCityID
@@ -1144,7 +1144,7 @@ function Initialize()
 			Events.PlotYieldChanged.Add(OnIncaPlotYieldChanged)
 		elseif PlayerConfigurations[iPlayerID]:GetLeaderTypeName()=="LEADER_LUDWIG" then
 			Events.BuildingAddedToMap.Add(OnLudwigWonderPlaced)
-			Events.BuildingRemovedFromMap.Add(OnWonderRemoved)
+			Events.BuildingRemovedFromMap.Add(OnLudwigWonderRemoved)
 			Events.WonderCompleted.Add(OnLudwigWonderCompleted)
 		end
 	end

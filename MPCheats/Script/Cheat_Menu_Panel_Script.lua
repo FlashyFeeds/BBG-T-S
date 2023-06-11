@@ -511,112 +511,139 @@ function OnGameplayUpdatePlayerResources(iPlayerID, kParameters)
 	Debug("Called", "OnGameplayUpdatePlayerResources")
 	local iResourceType = kParameters.ResourceType
 	local iPlotID = kParameters["iPlotID"]
-	
+	local pPlayer = Players[iPlayerID]
 	--horses
 	if GameInfo.Resources[iResourceType].ResourceType == "RESOURCE_HORSES" then
 		Debug("RESOURCE_HORSES","OnGameplayUpdatePlayerResources")
-		local tLenseHorses = pLocConfig:GetValue("T_CHEAT_RESOURCE_LENSE_HORSES")
+		local tLenseHorses = pPlayer:GetProperty("T_CHEAT_RESOURCE_LENSE_HORSES")
 		if tLenseHorses == nil then tLenseHorses = {} end
 		local iSearchPos = IDToPos(tLenseHorses, iPlotID)
 		if iSearchPos == false then
 			table.insert(tLenseHorses,iPlotID)
-			PlayerConfigurations[iPlayerID]:SetValue("T_CHEAT_RESOURCE_LENSE_HORSES", tLenseHorses)
+			pPlayer:SetProperty("T_CHEAT_RESOURCE_LENSE_HORSES", tLenseHorses)
 			Debug("HORSES CONFIG Updated for iPlayerID "..tostring(iPlayerID), "OnGameplayUpdatePlayerResources")
 		end
 	
 	--iron
 	elseif GameInfo.Resources[iResourceType].ResourceType == "RESOURCE_IRON" then
 		Debug("RESOURCE_IRON","OnGameplayUpdatePlayerResources")
-		local tLenseIron = pLocConfig:GetValue("T_CHEAT_RESOURCE_LENSE_IRON")
+		local tLenseIron = pPlayer:GetProperty("T_CHEAT_RESOURCE_LENSE_IRON")
 		if tLenseIron == nil then tLenseIron = {} end
 		local iSearchPos = IDToPos(tLenseIron, iPlotID)
 		if iSearchPos == false then
 			table.insert(tLenseIron,iPlotID)
-			PlayerConfigurations[iPlayerID]:SetValue("T_CHEAT_RESOURCE_LENSE_IRON", tLenseIron)
+			pPlayer:SetProperty("T_CHEAT_RESOURCE_LENSE_IRON", tLenseIron)
 			Debug("IRON CONFIG Updated for iPlayerID "..tostring(iPlayerID), "OnGameplayUpdatePlayerResources")
 		end
 	
 	--niter
 	elseif GameInfo.Resources[iResourceType].ResourceType == "RESOURCE_NITER" then
 		Debug("RESOURCE_NITER","OnGameplayUpdatePlayerResources")
-		local tLenseNiter = pLocConfig:GetValue("T_CHEAT_RESOURCE_LENSE_NITER")
+		local tLenseNiter = pPlayer:GetProperty("T_CHEAT_RESOURCE_LENSE_NITER")
 		if tLenseNiter == nil then tLenseNiter = {} end
 		local iSearchPos = IDToPos(tLenseNiter, iPlotID)
 		if iSearchPos == false then
 			table.insert(tLenseNiter,iPlotID)
-			PlayerConfigurations[iPlayerID]:SetValue("T_CHEAT_RESOURCE_LENSE_NITER", tLenseNiter)
+			pPlayer:SetProperty("T_CHEAT_RESOURCE_LENSE_NITER", tLenseNiter)
 			Debug("NITER CONFIG Updated for iPlayerID "..tostring(iPlayerID), "OnGameplayUpdatePlayerResources")
 		end
 	
 	--coal
 	elseif GameInfo.Resources[iResourceType].ResourceType == "RESOURCE_COAL" then
 		Debug("RESOURCE_COAL","OnGameplayUpdatePlayerResources")
-		local tLenseCoal = pLocConfig:GetValue("T_CHEAT_RESOURCE_LENSE_COAL")
+		local tLenseCoal = pPlayer:GetProperty("T_CHEAT_RESOURCE_LENSE_COAL")
 		if tLenseCoal == nil then tLenseCoal = {} end
 		local iSearchPos = IDToPos(tLenseCoal, iPlotID)
 		if iSearchPos == false then
 			table.insert(tLenseCoal,iPlotID)
-			PlayerConfigurations[iPlayerID]:SetValue("T_CHEAT_RESOURCE_LENSE_COAL", tLenseCoal)
+			pPlayer:SetProperty("T_CHEAT_RESOURCE_LENSE_COAL", tLenseCoal)
 			Debug("COAL CONFIG Updated for iPlayerID "..tostring(iPlayerID), "OnGameplayUpdatePlayerResources")
 		end
 	
 	--oil
 	elseif GameInfo.Resources[iResourceType].ResourceType == "RESOURCE_OIL" then
 		Debug("RESOURCE_OIL","OnGameplayUpdatePlayerResources")
-		local tLenseOil = pLocConfig:GetValue("T_CHEAT_RESOURCE_LENSE_OIL")
+		local tLenseOil = pPlayer:GetProperty("T_CHEAT_RESOURCE_LENSE_OIL")
 		if tLenseOil == nil then tLenseOil = {} end
 		local iSearchPos = IDToPos(tLenseOil, iPlotID)
 		if iSearchPos == false then
 			table.insert(tLenseOil,iPlotID)
-			PlayerConfigurations[iPlayerID]:SetValue("T_CHEAT_RESOURCE_LENSE_OIL", tLenseOil)
+			pPlayer:SetProperty("T_CHEAT_RESOURCE_LENSE_OIL", tLenseOil)
 			Debug("OIL CONFIG Updated for iPlayerID "..tostring(iPlayerID), "OnGameplayUpdatePlayerResources")
 		end
 	
 	--aluminum
 	elseif GameInfo.Resources[iResourceType].ResourceType == "RESOURCE_ALUMINUM" then
 		Debug("RESOURCE_ALUMINUM","OnGameplayUpdatePlayerResources")
-		local tLenseAluminum = pLocConfig:GetValue("T_CHEAT_RESOURCE_LENSE_ALUMINUM")
+		local tLenseAluminum = pPlayer:GetProperty("T_CHEAT_RESOURCE_LENSE_ALUMINUM")
 		if tLenseAluminum == nil then tLenseAluminum = {} end
 		local iSearchPos = IDToPos(tLenseAluminum, iPlotID)
 		if iSearchPos == false then
 			table.insert(tLenseAluminum,iPlotID)
-			PlayerConfigurations[iPlayerID]:SetValue("T_CHEAT_RESOURCE_LENSE_ALUMINUM", tLenseAluminum)
+			pPlayer:SetProperty("T_CHEAT_RESOURCE_LENSE_ALUMINUM", tLenseAluminum)
 			Debug("ALUMINUM CONFIG Updated for iPlayerID "..tostring(iPlayerID), "OnGameplayUpdatePlayerResources")
 		end
 	
 	--uranium
 	elseif GameInfo.Resources[iResourceType].ResourceType == "RESOURCE_URANIUM" then
 		Debug("RESOURCE_URANIUM","OnGameplayUpdatePlayerResources")
-		local tLenseUranium = pLocConfig:GetValue("T_CHEAT_RESOURCE_LENSE_URANIUM")
+		local tLenseUranium = pPlayer:GetProperty("T_CHEAT_RESOURCE_LENSE_URANIUM")
 		if tLenseUranium == nil then tLenseUranium = {} end
 		local iSearchPos = IDToPos(tLenseUranium, iPlotID)
 		if iSearchPos == false then
 			table.insert(tLenseUranium,iPlotID)
-			PlayerConfigurations[iPlayerID]:SetValue("T_CHEAT_RESOURCE_LENSE_URANIUM", tLenseUranium)
+			pPlayer:SetProperty("T_CHEAT_RESOURCE_LENSE_URANIUM", tLenseUranium)
 			Debug("URANIUM CONFIG Updated for iPlayerID "..tostring(iPlayerID), "OnGameplayUpdatePlayerResources")
 		end
 	end
 end
+
+function OnGameplayInitResource(iPlayerID, kParameters)
+	Debug("Called", "OnGameplayInitResource")
+	local iPlayerID = kParameters["iPlayerID"]
+	local mapWidth, mapHeight = Map.GetGridSize()
+	local pVis = PlayersVisibility[iPlayerID]
+	for i = 0, (mapWidth*mapHeight)-1 do
+		local pPlot = Map.GetPlotByIndex(i) 
+		local iX = pPlot:GetX()
+		local iY = pPlot:GetY()
+		if pVis:IsRevealed(iX,iY) then
+			local iResourceType = pPlot:GetResourceType()
+		    if iResourceType ~= -1 then
+		        print("Has Resource")
+		        local iResourceClassType = GameInfo.Resources[iResourceType].ResourceClassType
+			    if iResourceClassType == "RESOURCECLASS_STRATEGIC" then
+			        print("Resource is Strategic")
+			        local kParameters = {}
+			    	kParameters.OnStart = "GameplayUpdatePlayerResources"
+			    	kParameters.ResourceType = iResourceType
+			    	kParameters["iPlotID"] = i
+			    	OnGameplayUpdatePlayerResources(iPlayerID, kParameters)
+			    end
+		    end
+		end
+	end
+end 
 -- // ----------------------------------------------------------------------------------------------
 -- // Support Functions
 -- // ----------------------------------------------------------------------------------------------
 function IsTurnProcessing()
 	local bReturnVal = true
-	if Game.IsNetworkMultiplayer() == false then
+	if GameConfiguration.IsNetworkMultiplayer() == false then
 		print("Not MP")
 		bReturnVal = false
-	end
-	if Game.IsPlayByCloud() == true then
-		print("Is PBC")
-		bReturnVal = false
-	end
-	if GameConfiguration.GetValue("TURN_PHASE_TYPE") ~= DB.MakeHash("TURNPHASE_SIMULTANEOUS") then
-		print("Result Hash"..tostring(GameConfiguration.GetValue("TURN_PHASE_TYPE")), "Not Simultaneous")
-		bReturnVal = false
-	end
-	if GameConfiguration.GetValue("TURN_TIMER_TYPE") ~= DB.MakeHash("TURNTIMER_NONE") then
-		print("Result Hash"..tostring(GameConfiguration.GetValue("TURN_TIMER_TYPE")), "No Timer")
-		bReturnVal = false
+	--elseif GameConfiguration.IsPlayByCloud() == true then
+		--print("Is PBC")
+		--bReturnVal = false
+	else
+		if GameConfiguration.GetValue("TURN_PHASE_TYPE") ~= DB.MakeHash("TURNPHASE_SIMULTANEOUS") then
+			print("Result Hash"..tostring(GameConfiguration.GetValue("TURN_PHASE_TYPE")), "Not Simultaneous")
+			bReturnVal = false
+		end
+		if GameConfiguration.GetValue("TURN_TIMER_TYPE") ~= DB.MakeHash("TURNTIMER_NONE") then
+			print("Result Hash"..tostring(GameConfiguration.GetValue("TURN_TIMER_TYPE")), "No Timer")
+			bReturnVal = false
+		end
 	end
 	ExposedMembers.SetTurnProcessing(bReturnVal)
 	return bReturnVal
@@ -725,6 +752,7 @@ function Initialize()
 	--ExposedMembers.MOD_CheatMenu_Initialized = true;
 	--Lense support:
 	GameEvents.GameplayUpdatePlayerResources.Add(OnGameplayUpdatePlayerResources)
+	GameEvents.GameplayInitResource.Add(OnGameplayInitResource)
 
 	Debug("Cheat Menu Initialization Finished", "Initialize");
 end

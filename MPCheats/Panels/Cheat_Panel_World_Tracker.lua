@@ -297,8 +297,9 @@ function OnTurnTimerUpdated(elapsedTime :number, maxTurnTime :number)
 	elseif nMyTime == -1 then
 		nMyTime = elapsedTime
 		if bFirstOut == true then
-			if nMyTime>maxTurnTime-6 then
+			if (nMyTime>maxTurnTime-6) then
 				bNoCheats = true
+				print("Ending Timer at ", elapsedTime)
 				EndTimer()
 			else
 				nMyTurnEnd = maxTurnTime

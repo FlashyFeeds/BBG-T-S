@@ -200,10 +200,31 @@
             <Text>Grants this city extra 3 [ICON_CITIZEN] Populations</Text>
         </Row>
         <Row Tag="LOC_HUD_CHEAT_RESOURCE_LENS" language="en">
-            <Text>Display Strategic Resources</Text>
+            <Text>Strategics</Text>
         </Row>
         <Row Tag="LOC_HUD_CHEAT_RESOURCE_LENS_TOOLTIP" language="en">
             <Text>Tester Panel: Allows seeing all strategic resources on the map, including unrevealed</Text>
+        </Row>
+        <Row Tag="LOC_TOOLTIP_CHEAT_LENS_HORSES" language="en">
+            <Text>Horses</Text>
+        </Row>
+        <Row Tag="LOC_TOOLTIP_CHEAT_LENS_IRON" language="en">
+            <Text>Iron</Text>
+        </Row>
+        <Row Tag="LOC_TOOLTIP_CHEAT_LENS_NITER" language="en">
+            <Text>Niter</Text>
+        </Row>
+        <Row Tag="LOC_TOOLTIP_CHEAT_LENS_COAL" language="en">
+            <Text>Coal</Text>
+        </Row>
+        <Row Tag="LOC_TOOLTIP_CHEAT_LENS_OIL" language="en">
+            <Text>Oil</Text>
+        </Row>
+        <Row Tag="LOC_TOOLTIP_CHEAT_LENS_ALUMINUM" language="en">
+            <Text>Aluminum</Text>
+        </Row>
+        <Row Tag="LOC_TOOLTIP_CHEAT_LENS_URANIUM" language="en">
+            <Text>Uranium</Text>
         </Row>
     </LocalizedText>
 </GameData>

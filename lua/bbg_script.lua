@@ -724,8 +724,8 @@ function OnCitySettledAdjustYields(iPlayerID, iCityID, iX, iY)
 		if pAdjPlot ~= nil then
 			local iFeatureType = pAdjPlot:GetFeatureType()
 			if iFeatureType~=-1 and iFeatureType ~= nil then
-				print("Evaluating: "..GameInfo.Features[iFeatureType].FeatureType.." With result")
-				print(RelevantBugWonders[iFeatureType])
+				--print("Evaluating: "..GameInfo.Features[iFeatureType].FeatureType.." With result")
+				--print(RelevantBugWonders[iFeatureType])
 			end
 			if RelevantBugWonders[iFeatureType] == true then
 				bControl = true
@@ -736,28 +736,28 @@ function OnCitySettledAdjustYields(iPlayerID, iCityID, iX, iY)
 	local tBasePlotYields = CalculateBaseYield(pPlot)
 	if bControl then
 		for i =0,1 do
-			print("Base bug: Evaluating Yield: "..tostring(GameInfo.Yields[i].YieldType))
+			--print("Base bug: Evaluating Yield: "..tostring(GameInfo.Yields[i].YieldType))
 			local nAddedYieldDiff = tBaseGuaranteedYields[i] - tBasePlotYields[i]
 			if nAddedYieldDiff>0 then
-				print("Base bug: Firaxis city center added diff "..tostring(nAddedYieldDiff))
+				--print("Base bug: Firaxis city center added diff "..tostring(nAddedYieldDiff))
 				local nBaseFullTileYield = pPlot:GetYield(i)+nAddedYieldDiff
-				print("Base bug: Firaxis city center nBaseFullTileYield"..tostring(nBaseFullTileYield))
+				--print("Base bug: Firaxis city center nBaseFullTileYield"..tostring(nBaseFullTileYield))
 				--sets the property
 				pPlot:SetProperty(FiraxisYieldPropertyDictionary(i), nBaseFullTileYield)
 				local nTrueYield = math.max(pPlot:GetYield(i), tBaseGuaranteedYields[i])
-				print("Base bug: Firaxis city center nTrueYield "..tostring(nTrueYield))
+				--print("Base bug: Firaxis city center nTrueYield "..tostring(nTrueYield))
 				local nExtraYield = nBaseFullTileYield - nTrueYield
 				if nExtraYield > 0 then
 					--set plot property for req
 					pPlot:SetProperty(ExtraYieldPropertyDictionary(i), nExtraYield)
-					print("BugWonder: Plot with iX,iY: "..tostring(iX)..","..tostring(iY).." Property set: "..tostring(ExtraYieldPropertyDictionary(i)).." amount: "..tostring(nYieldDiff))
+					--print("BugWonder: Plot with iX,iY: "..tostring(iX)..","..tostring(iY).." Property set: "..tostring(ExtraYieldPropertyDictionary(i)).." amount: "..tostring(nExtraYield))
 					--attach modifiers to the city
 					for j=1, nExtraYield do
 						local sModifierStringID = "MODIFIER_CITY_REMOVE_"..tostring(j).."_"..ExtraYieldPropertyDictionary(i).."_BBG"
 						pCity:AttachModifierByID(sModifierStringID)
-						print("Wonder Bug-Fix Modifier Attached", sModifierStringID)
+						--print("Wonder Bug-Fix Modifier Attached", sModifierStringID)
 					end
-					print("Base bug: Firaxis city center nExtraYield"..tostring(nExtraYield))
+					--print("Base bug: Firaxis city center nExtraYield"..tostring(nExtraYield))
 				end
 				--BCY so this doesn't happen on any version
 				local bDoBCYCheck = false
@@ -767,7 +767,8 @@ function OnCitySettledAdjustYields(iPlayerID, iCityID, iX, iY)
 					bDoBCYCheck = true
 				end
 				if bDoBCYCheck == true and nExtraYield>0 then
-					print("Wonder Bug-Fix BCY detected")
+					--print("Wonder Bug-Fix BCY detected")
+					local iTerrain = pPlot:GetTerrainType()
 					local sControllString = ""
 					if iTerrain==0 or iTerrain==3 or iTerrain==6 or iTerrain==9 or iTerrain==12 then --flats
 						sControllString = "Flat_CutOffYieldValues"
@@ -777,24 +778,24 @@ function OnCitySettledAdjustYields(iPlayerID, iCityID, iX, iY)
 						return
 					end
 					local nPreWDFiraxisYield = math.max(tBasePlotYields[i], tBaseGuaranteedYields[i])
-					print("Pre Wonder/Disaster Firaxis CC yield"..tostring(nPreWDFiraxisYield))
+					--print("Pre Wonder/Disaster Firaxis CC yield"..tostring(nPreWDFiraxisYield))
 					local nExtraBCYYield = math.max(GameInfo[sControllString][i].Amount, nPreWDFiraxisYield) - nPreWDFiraxisYield
 					pPlot:SetProperty(ExtraYieldPropertyDictionary(i), nExtraYield+nExtraBCYYield)
-					print("BugWonder: Plot with iX,iY: "..tostring(iX)..","..tostring(iY).." Property set: "..tostring(ExtraYieldPropertyDictionary(i)).." amount: "..tostring(nExtraYield+nExtraBCYYield))
+					--print("BugWonder: Plot with iX,iY: "..tostring(iX)..","..tostring(iY).." Property set: "..tostring(ExtraYieldPropertyDictionary(i)).." amount: "..tostring(nExtraYield+nExtraBCYYield))
 					--attaching modifiers
-					for j=1, nExtraBCYYield do
-						local sModifierStringID = "MODIFIER_CITY_REMOVE_"..tostring(nExtraYield+j).."_"..ExtraYieldPropertyDictionary(i).."_BBG"
+					for j=nExtraYield+1, nExtraYield+nExtraBCYYield do
+						local sModifierStringID = "MODIFIER_CITY_REMOVE_"..tostring(j).."_"..ExtraYieldPropertyDictionary(i).."_BBG"
 						pCity:AttachModifierByID(sModifierStringID)
-						print("Wonder Bug-Fix Modifier Attached", sModifierStringID)
+						--print("Wonder Bug-Fix Modifier Attached", sModifierStringID)
 					end
-					print("Extra Yield set to "..tostring(nExtraYield+nExtraBCYYield))
+					--print("Extra Yield set to "..tostring(nExtraYield+nExtraBCYYield))
 				end
 			end
 		end
 	end
 	--BCY settled cities (inside this function to controll execution order)
-	if GameConfiguration.GetValue("BBCC_SETTING_YIELD") == 1 then
-		print("OnCityBuiltBCY started")
+	if BBCC_YIELDS == 1 then
+		--print("OnCityBuiltBCY started")
 		BCY_RecalculateMapYield(iX, iY)
 	end
 end
@@ -813,7 +814,6 @@ end
 --		end
 --	end
 --end
-
 -- ===========================================================================
 -- BCY City Settlements
 -- ===========================================================================
@@ -825,7 +825,7 @@ function OnBCYCityBuiltLegacy(iPlayerID, iCityID, iX, iY)
 		return print("Error: pCity is nil")
 	end
 	if BBCC_MODE == 1 and (Players[iPlayerID]:GetCities():GetCount() > 1) then
-		return print("BCY Capital Only: This City isn't a Capital => Exit")
+		return --print("BCY Capital Only: This City isn't a Capital => Exit")
 	end
 	local pPlot = Map.GetPlot(iX, iY)
 	if pPlot == nil then
@@ -842,57 +842,57 @@ function OnBCYCityBuiltLegacy(iPlayerID, iCityID, iX, iY)
 	else
 		return
 	end
-	print("sControllString", sControllString)
+	--print("sControllString", sControllString)
 	local bStratControl = false
 	if iResource~= -1 and iResource ~=nil then 
 		bStratControl = (GameInfo.Resources[iResource].ResourceClassType == "RESOURCECLASS_STRATEGIC")
 	end
-	print("bStratControl", bStratControl)
+	--print("bStratControl", bStratControl)
 	if iResource ~= -1 and iResource ~= nil then
-		print("BCY Legacy Resource Loop Started")	
+		--print("BCY Legacy Resource Loop Started")	
 		for i=0,1 do
-			print("BCY evaluating yield: ", GameInfo.Yields[i].YieldType)
+			--print("BCY evaluating yield: ", GameInfo.Yields[i].YieldType)
 			tBasePlotYields_Fin[i] = tBasePlotYields_Init[i] + GetYield("RESOURCE", iResource, i)
-			print("tBasePlotYields_Init", tBasePlotYields_Init[i])
-			print("tBasePlotYields_Fin", tBasePlotYields_Fin[i])
+			--print("tBasePlotYields_Init", tBasePlotYields_Init[i])
+			--print("tBasePlotYields_Fin", tBasePlotYields_Fin[i])
 			local nBCYGuaranteedYield = GameInfo[sControllString][i].Amount
 			local nFiraxisYield_Fin = math.max(tBaseGuaranteedYields[i], tBasePlotYields_Fin[i])
 			local nControl_NC = 0 --unconditional additions
 			local nControl_C  = 0 --addition of conditional modifiers 
 			if nBCYGuaranteedYield > nFiraxisYield_Fin then
-				print("BCY Yield > Firaxis Yield: Standard")
+				--print("BCY Yield > Firaxis Yield: Standard")
 				nControl_NC = nBCYGuaranteedYield - nFiraxisYield_Fin
-				print("nControl_NC", nControl_NC)
+				--print("nControl_NC", nControl_NC)
 				if nControl_NC > 0 then
 					for j = 1, nControl_NC do
 						pCity:AttachModifierByID("MODIFIER_CITY_GRANT_1_"..GameInfo.Yields[i].YieldType.."_BBCC")
-						print("Modifier Attached: ", "MODIFIER_CITY_GRANT_1_"..GameInfo.Yields[i].YieldType.."_BBCC")
+						--print("Modifier Attached: ", "MODIFIER_CITY_GRANT_1_"..GameInfo.Yields[i].YieldType.."_BBCC")
 					end
 				end
 				if bStratControl then
-					print("BCY Yield > Firaxis Yield: Strategic")
+					--print("BCY Yield > Firaxis Yield: Strategic")
 					local nFiraxisYield_Init = math.max(tBaseGuaranteedYields[i], tBasePlotYields_Init[i])
 					nControl_C = nFiraxisYield_Fin - nFiraxisYield_Init
-					print("nControl_C", nControl_C)
+					--print("nControl_C", nControl_C)
 					if nControl_C > 0 then
 						for k = 1, nControl_C do
 							pCity:AttachModifierByID("MODIFIER_CITY_GRANT_1_"..GameInfo.Yields[i].YieldType.."_NS_"..GameInfo.Resources[iResource].ResourceType.."_BBCC")
-							print("Modifier Attached: ", "MODIFIER_CITY_GRANT_1_"..GameInfo.Yields[i].YieldType.."_NS_"..GameInfo.Resources[iResource].ResourceType.."_BBCC")
+							--print("Modifier Attached: ", "MODIFIER_CITY_GRANT_1_"..GameInfo.Yields[i].YieldType.."_NS_"..GameInfo.Resources[iResource].ResourceType.."_BBCC")
 						end
 					end
 				end
 			else
-				print("BCY Yield <= Firaxis Yield")
+				--print("BCY Yield <= Firaxis Yield")
 				if bStratControl then
-					print("BCY strategic control")
+					--print("BCY strategic control")
 					local nFiraxisYield_Init = math.max(tBaseGuaranteedYields[i], tBasePlotYields_Init[i])
 					if (nFiraxisYield_Init < nBCYGuaranteedYield) then
 						nControl_C = nBCYGuaranteedYield - nFiraxisYield_Init
-						print("nControl_C", nControl_C)
+						--print("nControl_C", nControl_C)
 						if nControl_C > 0 then
 							for k = 1, nControl_C do
 								pCity:AttachModifierByID("MODIFIER_CITY_GRANT_1_"..GameInfo.Yields[i].YieldType.."_NS_"..GameInfo.Resources[iResource].ResourceType.."_BBCC")
-								print("Modifier Attached: ", "MODIFIER_CITY_GRANT_1_"..GameInfo.Yields[i].YieldType.."_NS_"..GameInfo.Resources[iResource].ResourceType.."_BBCC")
+								--print("Modifier Attached: ", "MODIFIER_CITY_GRANT_1_"..GameInfo.Yields[i].YieldType.."_NS_"..GameInfo.Resources[iResource].ResourceType.."_BBCC")
 							end
 						end
 					end
@@ -900,7 +900,7 @@ function OnBCYCityBuiltLegacy(iPlayerID, iCityID, iX, iY)
 			end
 		end
 	else
-		print("BCY Legacy No - Resource Loop Started")
+		--print("BCY Legacy No - Resource Loop Started")
 		for i = 0,1 do
 			local nFiraxisYield_Init = math.max(tBaseGuaranteedYields[i], tBasePlotYields_Init[i])
 			local nBCYGuaranteedYield = GameInfo[sControllString][i].Amount
@@ -908,11 +908,11 @@ function OnBCYCityBuiltLegacy(iPlayerID, iCityID, iX, iY)
 			if nBCYGuaranteedYield > nFiraxisYield_Init then
 				nControl_NC = nBCYGuaranteedYield - nFiraxisYield_Init
 			end
-			print("nControl_NC", nControl_NC)
+			--print("nControl_NC", nControl_NC)
 			if nControl_NC > 0 then
 				for j = 1, nControl_NC do
 					pCity:AttachModifierByID("MODIFIER_CITY_GRANT_1_"..GameInfo.Yields[i].YieldType.."_BBCC")
-					print("Modifier Attached: ", "MODIFIER_CITY_GRANT_1_"..GameInfo.Yields[i].YieldType.."_BBCC")
+					--print("Modifier Attached: ", "MODIFIER_CITY_GRANT_1_"..GameInfo.Yields[i].YieldType.."_BBCC")
 				end
 			end
 		end
@@ -926,23 +926,23 @@ function OnBCYCityBuiltStandard(iPlayerID, iCityID, iX, iY)
 		return print("Error: pCity is nil")
 	end
 	if BBCC_MODE == 1 and (Players[iPlayerID]:GetCities():GetCount() > 1) then
-		return print("BCY Capital Only: This City isn't a Capital => Exit")
+		return --print("BCY Capital Only: This City isn't a Capital => Exit")
 	end
 	local pPlot = Map.GetPlot(iX, iY)
 	if pPlot == nil then
 		return print("Error: pPlot is nil")
 	end
 	local sCivTypeName = PlayerConfigurations[iPlayerID]:GetCivilizationTypeName()
-	if (sCivTypeName == "CIVILIZATION_RUSSIA") or (sCivTypeName == "CIVILIZATION_MALI") or (sCivTypeName == "CIVILIZATION_CANADA") then
-		return print("BCY Standard: No City Rebalancing for Russia, Mali or Canada")
-	end
+	--if (sCivTypeName == "CIVILIZATION_RUSSIA") or (sCivTypeName == "CIVILIZATION_MALI") or (sCivTypeName == "CIVILIZATION_CANADA") then
+		--return print("BCY Standard: No City Rebalancing for Russia, Mali or Canada")
+	--end
 	local tBasePlotYields_Init, iResource = CalculateBaseYield(pPlot, nil, true)
 	local tBasePlotYields_Fin = {}
 	local iTerrain = pPlot:GetTerrainType()
 	local sControllString = ""
-	if iTerrain==0 or iTerrain==3 or iTerrain==6 or iTerrain==9 or iTerrain==12 then --flats
-		sControllString = "Flat_CutOffYieldValues"
-	elseif iTerrain==1 or iTerrain==4 or iTerrain==7 or iTerrain==10 or iTerrain==13 then --hills
+	if iTerrain==0 or iTerrain==3 then --flats
+		sControllString = "Hill_CutOffYieldValues"
+	elseif iTerrain==1 or iTerrain==4 then --hills
 		sControllString = "Hill_CutOffYieldValues"
 	else
 		return
@@ -951,9 +951,9 @@ function OnBCYCityBuiltStandard(iPlayerID, iCityID, iX, iY)
 	if iResource~= -1 and iResource ~=nil then 
 		bStratControl = (GameInfo.Resources[iResource].ResourceClassType == "RESOURCECLASS_STRATEGIC")
 	end
-	print("BCY Std: bStratControl", bStratControl)
+	--print("BCY Std: bStratControl", bStratControl)
 	local bPreRevealRebalance = true
-	local bPostRevealRebalance = true
+	local bPostRevealRebalance = false
 	for i = 0,5 do
 		local nBCYGuaranteedYield = GameInfo[sControllString][i].Amount	
 		tBasePlotYields_Fin[i] = tBasePlotYields_Init[i] + GetYield("RESOURCE", iResource, i)
@@ -961,82 +961,85 @@ function OnBCYCityBuiltStandard(iPlayerID, iCityID, iX, iY)
 			bPreRevealRebalance = false
 			bPostRevealRebalance = false
 			break
+		elseif nBCYGuaranteedYield >= tBasePlotYields_Fin[i] then
+			bPostRevealRebalance = true
 		elseif nBCYGuaranteedYield < tBasePlotYields_Fin[i] then
 			bPostRevealRebalance = false
+			break
 		end
 	end
-	print("BCY Std: bPreRevealRebalance", bPreRevealRebalance)
-	print("BCY Std: bPostRevealRebalance", bPostRevealRebalance)
+	--print("BCY Std: bPreRevealRebalance", bPreRevealRebalance)
+	--print("BCY Std: bPostRevealRebalance", bPostRevealRebalance)
 	if iResource ~= -1 and iResource ~= nil then
 		if bPostRevealRebalance then
-			print("BCY Std: Rebalancing post Reveal of Resource")	
+			--print("BCY Std: Rebalancing post Reveal of Resource")	
 			for i=0,1 do
-				print("BCY Std: Evaluating Yield", GameInfo.Yields[i].YieldType)
+				--print("BCY Std: Evaluating Yield", GameInfo.Yields[i].YieldType)
 				local nBCYGuaranteedYield = GameInfo[sControllString][i].Amount
-				print("BCY Std: nBCYGuaranteedYield", nBCYGuaranteedYield)
+				--print("BCY Std: nBCYGuaranteedYield", nBCYGuaranteedYield)
 				local nFiraxisYield_Fin = math.max(tBaseGuaranteedYields[i], tBasePlotYields_Fin[i])
-				print("BCY Std: nFiraxisYield_Fin", nFiraxisYield_Fin)
+				--print("BCY Std: nFiraxisYield_Fin", nFiraxisYield_Fin)
 				local nControl_NC = 0 --unconditional additions
 				local nControl_C  = 0 --addition of conditional modifiers 
 				if nBCYGuaranteedYield > nFiraxisYield_Fin then
 					nControl_NC = nBCYGuaranteedYield - nFiraxisYield_Fin
-					print("BCY Std: nControl_NC", nControl_NC)
+					--print("BCY Std: nControl_NC", nControl_NC)
 					if nControl_NC > 0 then
 						for j = 1, nControl_NC do
 							pCity:AttachModifierByID("MODIFIER_CITY_GRANT_1_"..GameInfo.Yields[i].YieldType.."_BBCC")
-							print("BCY Std: Modifier Attached", "MODIFIER_CITY_GRANT_1_"..GameInfo.Yields[i].YieldType.."_BBCC")
+							--print("BCY Std: Modifier Attached", "MODIFIER_CITY_GRANT_1_"..GameInfo.Yields[i].YieldType.."_BBCC")
 						end
 					end
 					if bStratControl then
 						local nFiraxisYield_Init = math.max(tBaseGuaranteedYields[i], tBasePlotYields_Init[i])
 						nControl_C = nFiraxisYield_Fin - nFiraxisYield_Init
-						print("BCY Std: nControl_C", nControl_C)
+						--print("BCY Std: nControl_C", nControl_C)
 						if nControl_C > 0 then
 							for k = 1, nControl_C do
 								pCity:AttachModifierByID("MODIFIER_CITY_GRANT_1_"..GameInfo.Yields[i].YieldType.."_NS_"..GameInfo.Resources[iResource].ResourceType.."_BBCC")
-								print("BCY Std: Modifier Attached", "MODIFIER_CITY_GRANT_1_"..GameInfo.Yields[i].YieldType.."_NS_"..GameInfo.Resources[iResource].ResourceType.."_BBCC")
+								--print("BCY Std: Modifier Attached", "MODIFIER_CITY_GRANT_1_"..GameInfo.Yields[i].YieldType.."_NS_"..GameInfo.Resources[iResource].ResourceType.."_BBCC")
 							end
 						end
 					end
 				end
 			end
 		elseif bPreRevealRebalance and bStratControl and (not bPostRevealRebalance) then
-			print("BCY Std: Evaluating Pre-Reveal yields")
+			--print("BCY Std: Evaluating Pre-Reveal yields")
 			for i=0,1 do
 				local nBCYGuaranteedYield = GameInfo[sControllString][i].Amount
-				print("BCY Std: pre-reveal: nBCYGuaranteedYield", nBCYGuaranteedYield)
+				--print("BCY Std: pre-reveal: nBCYGuaranteedYield", nBCYGuaranteedYield)
 				local nControl_C  = 0 --addition of conditional modifiers		
 				local nFiraxisYield_Init = math.max(tBaseGuaranteedYields[i], tBasePlotYields_Init[i])
-				print("BCY Std: pre-reveal: nFiraxisYield_Init", nFiraxisYield_Init)
+				--print("BCY Std: pre-reveal: nFiraxisYield_Init", nFiraxisYield_Init)
 				if (nFiraxisYield_Init < nBCYGuaranteedYield) then
 					nControl_C = nBCYGuaranteedYield - nFiraxisYield_Init
-					print("BCY Std: pre-reveal: nControl_C", nControl_C)
+					--print("BCY Std: pre-reveal: nControl_C", nControl_C)
 					for k = 1, nControl_C do
 						pCity:AttachModifierByID("MODIFIER_CITY_GRANT_1_"..GameInfo.Yields[i].YieldType.."_NS_"..GameInfo.Resources[iResource].ResourceType.."_BBCC")
-						print("BCY Std: pre-reveal: Modifier Attached", "MODIFIER_CITY_GRANT_1_"..GameInfo.Yields[i].YieldType.."_NS_"..GameInfo.Resources[iResource].ResourceType.."_BBCC")
+						--print("BCY Std: pre-reveal: Modifier Attached", "MODIFIER_CITY_GRANT_1_"..GameInfo.Yields[i].YieldType.."_NS_"..GameInfo.Resources[iResource].ResourceType.."_BBCC")
 					end
 				end
 			end
 		end 			
 	else
 		if bPostRevealRebalance == false then
-			return print("No Rebalance")
+			return --print("No Rebalance")
 		end
-		print("BCY Std: Rebalance of non-strategic and non resource settles")
+		--print("BCY Std: Rebalance of non-strategic and non resource settles")
 		for i = 0,1 do
 			local nFiraxisYield_Init = math.max(tBaseGuaranteedYields[i], tBasePlotYields_Init[i])
-			print("BCY Std: non-strat: nFiraxisYield_Init", nFiraxisYield_Init)
+			--print("BCY Std: non-strat: nFiraxisYield_Init", nFiraxisYield_Init)
 			local nBCYGuaranteedYield = GameInfo[sControllString][i].Amount
-			print("BCY Std: non-strat: nBCYGuaranteedYield", nBCYGuaranteedYield)
+			--print("BCY Std: non-strat: nBCYGuaranteedYield", nBCYGuaranteedYield)
 			local nControl_NC = 0
 			if nBCYGuaranteedYield > nFiraxisYield_Init then
 				nControl_NC = nBCYGuaranteedYield - nFiraxisYield_Init
 			end
-			print("BCY Std: non-strat: nControl_NC", nControl_NC)
+			--print("BCY Std: non-strat: nControl_NC", nControl_NC)
 			if nControl_NC > 0 then
 				for j = 1, nControl_NC do
 					pCity:AttachModifierByID("MODIFIER_CITY_GRANT_1_"..GameInfo.Yields[i].YieldType.."_BBCC")
-					print("BCY Std: non-strat: Modifier Attached", "MODIFIER_CITY_GRANT_1_"..GameInfo.Yields[i].YieldType.."_BBCC")
+					--print("BCY Std: non-strat: Modifier Attached", "MODIFIER_CITY_GRANT_1_"..GameInfo.Yields[i].YieldType.."_BBCC")
 				end
 			end
 		end
@@ -2548,6 +2551,54 @@ function OnGameplayUnifierSamePlayerUniqueEffect(iPlayerID, kParameters)
 	end
 end
 
+--//--------------------------------------------------------------------------
+--//Ludwig (Germany)-------------------------------------------------------------------------
+--//--------------------------------------------------------------------------
+function OnGameplayLudwigWonderPlaced(iPlayerID, kParameters)
+	print("OnGameplayLudwigWonderPlaced: Started")
+	local iPlayerID = kParameters["iPlayerID"]
+	local iBuildingID = kParameters["iBuildingID"]
+	local iCityID = kParameters["iCityID"]
+	local iX = kParameters["iX"]
+	local iY = kParameters["iY"]
+	local nPercentComplete = kParameters["nPercentComplete"]
+	print("OnGameplayLudwigWonderPlaced: Vars: ", iPlayerID, iBuildingID, iCityID, iX, iY, nPercentComplete)
+	local pPlot = Map.GetPlot(iX, iY)
+	if pPlot == nil then
+		return
+	end
+	pPlot:SetProperty("DISTRICT_INCOMPLETE_WONDER", 1)
+	print("Plot Property Set for", iX,iY, "Wonder", iBuildingID)
+end
+
+function OnGameplayLudwigWonderRemoved(iPlayerID, kParameters)
+	local iPlayerID = kParameters["iPlayerID"]
+	local iX = kParameters["iX"]
+	local iY = kParameters["iY"]
+	local pPlot = Map.GetPlot(iX,iY)
+	if pPlot == nil then 
+		return
+	end
+	pPlot:SetProperty("DISTRICT_INCOMPLETE_WONDER", nil)
+end
+
+function OnGameplayLudwigWonderCompleted(iPlayerID, kParameters)
+	print("OnGameplayLudwigWonderCompleted: Started")
+	local iPlayerID = kParameters["iPlayerID"]
+	local iBuildingID = kParameters["iBuildingID"]
+	local iCityID = kParameters["iCityID"]
+	local iX = kParameters["iX"]
+	local iY = kParameters["iY"]
+	local nPercentComplete = kParameters["nPercentComplete"]
+	print("OnGameplayLudwigWonderCompleted: Vars: ", iPlayerID, iBuildingID, iCityID, iX, iY, nPercentComplete)
+	local pPlot = Map.GetPlot(iX, iY)
+	if pPlot == nil then
+		return
+	end
+	pPlot:SetProperty("DISTRICT_INCOMPLETE_WONDER", nil)
+	print("Plot Property Set for", iX,iY, "Wonder", iBuildingID)
+end
+
 -- BCY
 --function OnUIBCYAdjustCityYield(playerID, kParameters)
 	--print("BCY script called from UI event")
@@ -3979,7 +4030,7 @@ function Initialize()
 			GameEvents.CityConquered.Add(OnCityConquered)
 			print("BBG Caesar Hooks Added")
 		elseif PlayerConfigurations[iPlayerID]:GetLeaderTypeName()=="LEADER_LUDWIG" then
-			GameEvents.GameplayLudwigWonderPlaced.Add(OnGameplayLudwigWonderAddedToMap)
+			GameEvents.GameplayLudwigWonderPlaced.Add(OnGameplayLudwigWonderPlaced)
 			GameEvents.GameplayLudwigWonderRemoved.Add(OnGameplayLudwigWonderRemoved)
 			GameEvents.GameplayLudwigWonderCompleted.Add(OnGameplayLudwigWonderCompleted)
 		elseif PlayerConfigurations[iPlayerID]:GetCivilizationTypeName() == "CIVILIZATION_MACEDON" and GameConfiguration.GetValue("BBGTS_MACEDON_FIX") then
