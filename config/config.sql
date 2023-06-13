@@ -10,7 +10,7 @@ INSERT INTO Parameters(ParameterId, Name, Description, Domain, DefaultValue, Con
     ('BBGTS_GameMode', 'LOC_BBGTS_GAMEMODE_NAME', 'LOC_BBGTS_GAMEMODE_DESCRIPTION', 'bool', '1', 'Game', 'BBGTS_GAMEMODE', 'GameModes', '1', '1', '-10'),
     ('BBGTS_DebugLua', 'LOC_BBGTS_DEBUG_LUA_NAME', 'LOC_BBGTS_DEBUG_LUA_DESC', 'bool', '1', 'Game', 'BBGTS_DEBUG_LUA', 'AdvancedOptions','1', '1', '20010'),
     ('BBGTS_MP_CHEATS', 'LOC_BBGTS_MP_CHEAT_NAME', 'LOC_BBGTS_MP_CHEAT_DESC', 'bool', '0', 'Game', 'BBGTS_MP_CHEATS', 'AdvancedOptions','1', '1', '20020'),
-    ('BBGTS_MPTestSpy', 'LOC_BBGTS_MP_CHEAT_NAME', 'LOC_BBGTS_MP_CHEAT_DESC', 'bool', '0', 'Game', 'BBGTS_TEST_SPY', 'AdvancedOptions','1', '1', '20030');
+    ('BBGTS_MPTestSpy', 'LOC_BBGTS_TEST_SPY_NAME', 'LOC_BBGTS_TEST_SPY_DESC', 'bool', '0', 'Game', 'BBGTS_TEST_SPY', 'AdvancedOptions','1', '1', '20030');
     --('BBGTS_ProductionPanel_BBG', 'LOC_BBGTS_PRODUCTION_PANEL_NAME', 'LOC_BBGTS_BBGTS_PRODUCTION_PANEL_DESC', 'bool', '1', 'Game', 'BBGTS_PRODUCTION_PANEL_UTIL', 'AdvancedOptions','1', '1', '20020');--
 
 --Insert your Bug Fixes Here, sort order between 20020 and 30000

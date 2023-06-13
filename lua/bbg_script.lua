@@ -3916,7 +3916,14 @@ function OnGameplaySpyAdded(iPlayerID, kParameters)
 	local iPlayerID = kParameters["iPlayerID"]
 	local iUnitID = kParameters["iUnitID"]	
 	local pUnit = UnitManager.GetUnit(iPlayerID, iUnitID)
-	Debug("Unit is "..tostring(GameInfo.Units[pUnit:GetType()].UnitType).." with ID "..tostring(iUnitID).." belongs to iPlayerID "..tostring(iPlayerID), "OnSpyAdded")
+	local iUnitType = pUnit:GetType()
+	local sUnitStr = ""
+	if iUnitType == -1 or iUnitType == nil then
+		sUnitStr = "None Type"
+	else
+		sUnitStr = GameInfo.Units[pUnit:GetType()].UnitType
+	end
+	Debug("Unit is "..tostring(sUnitStr).." with ID "..tostring(iUnitID).." belongs to iPlayerID "..tostring(iPlayerID), "OnGameplaySpyAdded")
 end
 
 function OnGameplaySpyMissionCompleted(iPlayerID, kParameters)
@@ -3939,7 +3946,7 @@ function OnGameplayUnitCaptured(iPlayerID,kParameters)
 	local iUnitID = kParameters["iUnitID"]
 	local iOwnerID = kParameters["iOwnerID"]
 	local iCapturerID = kParameters["iCapturerID"]
-	Debug("iCurrUnitPlayerID, iUnitID, iOwnerId, iCapturerID "..tostring(iCurrUnitPlayerID).." , "..tostring(iUnitID).." , "..tostring(iOwnerID).." , "..tostring(iCapturerID), "OnUnitCaptured")
+	Debug("iCurrUnitPlayerID, iUnitID, iOwnerId, iCapturerID "..tostring(iCurrUnitPlayerID).." , "..tostring(iUnitID).." , "..tostring(iOwnerID).." , "..tostring(iCapturerID), "OnGameplayUnitCaptured")
 	local pUnit1 = UnitManager.GetUnit(iCurrUnitPlayerID, iUnitID)
 	Debug(pUnit1:GetType(), "OnUnitCaptured")
 	local pUnit2 = UnitManager.GetUnit(iOwnerID, iUnitID)
@@ -3948,6 +3955,35 @@ function OnGameplayUnitCaptured(iPlayerID,kParameters)
 	Debug(pUnit3:GetType(), "OnUnitCaptured")
 end
 
+function OnGameplayUnitRemovedFromMap(iPlayerID, kParameters)
+	Debug("Called", "OnGameplayUnitRemovedFromMap")
+	local iPlayerID = kParameters["iPlayerID"]
+	local iUnitID = kParameters["iUnitID"]	
+	local pUnit = UnitManager.GetUnit(iPlayerID, iUnitID)
+	local iUnitType = pUnit:GetType()
+	local sUnitStr = ""
+	if iUnitType == -1 or iUnitType == nil then
+		sUnitStr = "None Type"
+	else
+		sUnitStr = GameInfo.Units[pUnit:GetType()].UnitType
+	end
+	Debug("Unit is "..tostring(sUnitStr).." with ID "..tostring(iUnitID).." belongs to iPlayerID "..tostring(iPlayerID), "OnGameplayUnitRemovedFromMap")
+end
+
+function OnGameplayUnitAddedToMap(iPlayerID, kParameters)
+	Debug("Called", "OnGameplayUnitAddedToMap")
+	local iPlayerID = kParameters["iPlayerID"]
+	local iUnitID = kParameters["iUnitID"]	
+	local pUnit = UnitManager.GetUnit(iPlayerID, iUnitID)
+	local iUnitType = pUnit:GetType()
+	local sUnitStr = ""
+	if iUnitType == -1 or iUnitType == nil then
+		sUnitStr = "None Type"
+	else
+		sUnitStr = GameInfo.Units[pUnit:GetType()].UnitType
+	end
+	Debug("Unit is "..tostring(sUnitStr).." with ID "..tostring(iUnitID).." belongs to iPlayerID "..tostring(iPlayerID), "OnGameplayUnitAddedToMap")
+end
 -- ===========================================================================
 --	Initialize
 -- ===========================================================================
@@ -4037,6 +4073,8 @@ function Initialize()
 		GameEvents.GameplaySpyMissionCompleted.Add(OnGameplaySpyMissionCompleted)
 		GameEvents.GameplaySpyRemoved.Add(OnGameplaySpyRemoved)
 		GameEvents.GameplayUnitCaptured.Add(OnGameplayUnitCaptured)
+		GameEvents.GameplayUnitRemovedFromMap.Add(OnGameplayUnitRemovedFromMap)
+		GameEvents.GameplayUnitAddedToMap.Add(OnGameplayUnitAddedToMap)
 	end
 	local tMajorIDs = PlayerManager.GetAliveMajorIDs()
 	for i, iPlayerID in ipairs(tMajorIDs) do

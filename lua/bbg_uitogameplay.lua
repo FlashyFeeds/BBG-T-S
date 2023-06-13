@@ -1120,6 +1120,23 @@ function OnUnitCaptured(iCurrUnitPlayerID, iUnitID, iOwnerID, iCapturerID)
 	UI.RequestPlayerOperation(Game.GetLocalPlayer(), PlayerOperations.EXECUTE_SCRIPT, kParameters)
 end
 
+function OnUnitRemovedFromMap(iPlayerID, iUnitID)
+	Debug("Called", "OnUnitRemovedFromMap")
+	local kParameters = {}
+	kParameters.OnStart = "GameplayUnitRemovedFromMap"
+	kParameters["iPlayerID"] = iPlayerID
+	kParameters["iUnitID"] = iUnitID
+	UI.RequestPlayerOperation(Game.GetLocalPlayer(), PlayerOperations.EXECUTE_SCRIPT, kParameters)
+end
+
+function OnUnitAddedToMap(iPlayerID, iUnitID)
+	Debug("Called", "OnUnitAddedToMap")
+	local kParameters = {}
+	kParameters.OnStart = "GameplayUnitAddedToMap"
+	kParameters["iPlayerID"] = iPlayerID
+	kParameters["iUnitID"] = iUnitID
+	UI.RequestPlayerOperation(Game.GetLocalPlayer(), PlayerOperations.EXECUTE_SCRIPT, kParameters)
+end
 --=========Events=========--
 
 function Initialize()
@@ -1177,6 +1194,7 @@ function Initialize()
 		Events.SpyMissionCompleted.Add(OnSpyMissionCompleted)
 		Events.SpyRemoved.Add(OnSpyRemoved)
 		Events.UnitCaptured.Add(OnUnitCaptured)
+		Events.UnitRemovedFromMap.Add(OnUnitRemovedFromMap)
 	end
 	local tMajorIDs = PlayerManager.GetAliveMajorIDs()
 	for i, iPlayerID in ipairs(tMajorIDs) do

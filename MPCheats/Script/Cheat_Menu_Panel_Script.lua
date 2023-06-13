@@ -664,7 +664,7 @@ function IsTurnProcessing()
 		if GameConfiguration.GetValue("TURN_PHASE_TYPE") ~= DB.MakeHash("TURNPHASE_SIMULTANEOUS") then
 			print("Result Hash", GameConfiguration.GetValue("TURN_PHASE_TYPE"), "Not Simultaneous")
 			bReturnVal = false
-		elseif GameConfiguration.GetValue("TURN_TIMER_TYPE") == DB.MakeHash("TURNTIMER_NONE") then
+		elseif GameConfiguration.GetValue("TURN_TIMER_TYPE") == DB.MakeHash("TURNTIMER_NONE") and (GameConfiguration.GetValue("CPL_SMARTTIMER")==1 or GameConfiguration.GetValue("CPL_SMARTTIMER") == nil) then
 			print("Result Hash", GameConfiguration.GetValue("TURN_TIMER_TYPE"), "No Timer")
 			bReturnVal = false
 		else
@@ -675,9 +675,12 @@ function IsTurnProcessing()
 end
 
 function BroadCastTurnProcessing(turn)
+	if turn ~= GameConfiguration.GetStartTurn()+1 then
+		return
+	end 
 	local bResult = IsTurnProcessing()
 	Game:SetProperty("TURN_PROCESSING", IsTurnProcessing())
-	Debug("Turn Processing"..tostring(bResult, "BroadCastTurnProcessing"))
+	Debug("Turn Processing"..tostring(bResult), "BroadCastTurnProcessing")
 	ExposedMembers.SetTurnProcessing(bResult)
 end
 

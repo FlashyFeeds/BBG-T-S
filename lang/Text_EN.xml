@@ -27,6 +27,12 @@
         <Replace Tag="LOC_BBGTS_MP_CHEAT_DESC" language="en">
             <Text>Enables In-Game Multiplayer Tester Panel and Several City Projects to Accelerate the Game for Testing Purposes. A Multiplayer adaptation of [Sparrow]'s Cheat Panel</Text>
         </Replace>
+        <Row Tag="LOC_BBGTS_TEST_SPY_NAME" language="en">
+            <Text>[COLOR_Civ6Red]Test Spy[ENDCOLOR]</Text>>
+        </Row>
+        <Row Tag="LOC_BBGTS_TEST_SPY_DESC" language="en">
+            <Text>Enables Logging Spy Events Using Firaxis Methods</Text>>
+        </Row>
         <!--
         <Replace Tag="LOC_BBGTS_BUGFIX1_NAME" language="en">
             <Text> BugFix1</Text>>
