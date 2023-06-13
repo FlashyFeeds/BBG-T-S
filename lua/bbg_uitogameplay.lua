@@ -1195,6 +1195,7 @@ function Initialize()
 		Events.SpyRemoved.Add(OnSpyRemoved)
 		Events.UnitCaptured.Add(OnUnitCaptured)
 		Events.UnitRemovedFromMap.Add(OnUnitRemovedFromMap)
+		Events.UnitAddedToMap.Add(OnUnitAddedToMap)
 	end
 	local tMajorIDs = PlayerManager.GetAliveMajorIDs()
 	for i, iPlayerID in ipairs(tMajorIDs) do
