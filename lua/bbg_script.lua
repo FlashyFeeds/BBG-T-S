@@ -3931,6 +3931,11 @@ function OnGameplaySpyMissionCompleted(iPlayerID, kParameters)
 	local iPlayerID = kParameters["iPlayerID"]
 	local iMinorID = kParameters["iMinorID"]
 	Debug("iPlayerID, iMissionID "..tostring(iPlayerID).." , "..tostring(iMissionID),"OnGameplaySpyMissionCompleted")
+	if kParameters.Captured then
+		local pPlayer = Players[iPlayerID]
+		pPlayer:AttachModifierByID("MODIFIER_CAPTURED_ADD_SPY_CAPACITY_BBG")
+		Debug("Spy Capacity added to iPlayerID "..tostring(iPlayerID), "OnGameplaySpyMissionCompleted")
+	end
 end
 
 function OnGameplaySpyRemoved(iPlayerID, kParameters)
@@ -3948,11 +3953,17 @@ function OnGameplayUnitCaptured(iPlayerID,kParameters)
 	local iCapturerID = kParameters["iCapturerID"]
 	Debug("iCurrUnitPlayerID, iUnitID, iOwnerId, iCapturerID "..tostring(iCurrUnitPlayerID).." , "..tostring(iUnitID).." , "..tostring(iOwnerID).." , "..tostring(iCapturerID), "OnGameplayUnitCaptured")
 	local pUnit1 = UnitManager.GetUnit(iCurrUnitPlayerID, iUnitID)
-	Debug(pUnit1:GetType(), "OnUnitCaptured")
+	local iType1 = pUnit1:GetType()
+	if iType1 == -1 or iType1 == nil  then iType1 = "" end
+	Debug(iType1, "OnUnitCaptured")
 	local pUnit2 = UnitManager.GetUnit(iOwnerID, iUnitID)
-	Debug(pUnit2:GetType(), "OnUnitCaptured")
+	local iType2 = pUnit2:GetType()
+	if iType2 == -1 or iType2 == nil  then iType2 = "" end
+	Debug(iType2, "OnUnitCaptured")
 	local pUnit3 = UnitManager.GetUnit(iCapturerID, iUnitID)
-	Debug(pUnit3:GetType(), "OnUnitCaptured")
+	local iType3 = pUnit3:GetType()
+	if iType3 == -1 or iType3 == nil  then iType3 = "" end
+	Debug(iType3, "OnUnitCaptured")
 end
 
 function OnGameplayUnitRemovedFromMap(iPlayerID, kParameters)

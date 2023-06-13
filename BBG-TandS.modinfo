@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Mod id="d6b111c4-be33-4878-b1fc-8741b1cd6af7" version="1014">
+<Mod id="d6b111c4-be33-4878-b1fc-8741b1cd6af7" version="1016">
 	<Properties>
 		<Name>LOC_BBGTS_TITLE</Name>
 		<Description>LOC_BBGTS_DESCRIPTION</Description>
@@ -11,8 +11,8 @@
 	</Properties>
 	<LocalizedText>
 		<Text id="LOC_BBGTS_TITLE">
-			<en_US>BBGTS 1.0.14</en_US>
-			<fr_FR>BBGTS 1.0.14</fr_FR>
+			<en_US>BBGTS 1.0.16</en_US>
+			<fr_FR>BBGTS 1.0.16</fr_FR>
 		</Text>
 		
 		<Text id="LOC_BBGTS_TEASER">
@@ -452,7 +452,15 @@
     		<Criteria>XP2</Criteria>
     		<Criteria>RulersChina</Criteria>
 			<File>content/unifier/unifier_xp2.sql</File>
-        </UpdateDatabase>				
+        </UpdateDatabase>	
+
+        <UpdateDatabase id="bbgts_spy_data">
+        	<Properties>
+        		<LoadOrder>11700</LoadOrder>
+        	</Properties>
+        	<Criteria>bbgts_mp_test_spy</Criteria>
+        	<File>content/spy/spy.sql</File>
+        </UpdateDatabase>			
 	</InGameActions>		
 	<Files>
 		<!--Basic stuff-->
@@ -497,6 +505,7 @@
 		<File>content/macedon/macedon.sql</File>
 		<File>content/unifier/unifier_base.sql</File>
 		<File>content/unifier/unifier_xp1.sql</File>
-		<File>content/unifier/unifier_xp2.sql</File>	
+		<File>content/unifier/unifier_xp2.sql</File>
+		<File>content/spy/spy.sql</File>
 	</Files>
 </Mod>

@@ -1092,8 +1092,23 @@ function OnSpyAdded(iPlayerID, iUnitID)
 end
 
 function OnSpyMissionCompleted(iPlayerID, iMissionID)
-	Debug("Called", "OnSpyMissionCompleted")
+	Debug("Called", "iPlayerID")
+	local tMission:table = nil;
+	local pPlayer:table = Players[iPlayerID];
+	if pPlayer then
+		local pPlayerDiplomacy:table = pPlayer:GetDiplomacy();
+		if pPlayerDiplomacy then
+			tMission = pPlayerDiplomacy:GetMission(iPlayerID, iMissionID);
+			if tMission == nil then
+				UI.DataError("Unable to show misison completed popup for mission ID: " .. tostring(iMissionID));
+				return
+			end
+		end
+	end
 	local kParameters = {}
+	if tMission.InitialResult == EspionageResultTypes.CAPTURED or tMission.EscapeResult == EspionageResultTypes.CAPTURED then
+		kParameters.Captured = true
+	end
 	kParameters.OnStart = "GameplaySpyMissionCompleted"
 	kParameters["iPlayerID"] = iPlayerID
 	kParameters["iMissionID"] = iMissionID
