@@ -315,6 +315,7 @@ function OnGameplayLocalTurnBegin(iPlayerID, kParameters)
 			nLoadedCount = nLoadedCount + 1
 		end
 	end
+	Game.SetProperty("ALIVE_HUMANS", tHumanPlayers)
 	if Game.GetProperty("TURN_PROCESSING") then
 		if nLoadedCount == 1 and g_nStartTurn < Game.GetCurrentGameTurn() then
 			Debug("Setting First Player Out", "OnGameplayLocalTurnBegin")
