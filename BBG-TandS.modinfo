@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Mod id="d6b111c4-be33-4878-b1fc-8741b1cd6af7" version="1016">
+<Mod id="d6b111c4-be33-4878-b1fc-8741b1cd6af7" version="1017">
 	<Properties>
 		<Name>LOC_BBGTS_TITLE</Name>
 		<Description>LOC_BBGTS_DESCRIPTION</Description>
@@ -11,8 +11,8 @@
 	</Properties>
 	<LocalizedText>
 		<Text id="LOC_BBGTS_TITLE">
-			<en_US>BBGTS 1.0.16</en_US>
-			<fr_FR>BBGTS 1.0.16</fr_FR>
+			<en_US>BBGTS 1.0.17</en_US>
+			<fr_FR>BBGTS 1.0.17</fr_FR>
 		</Text>
 		
 		<Text id="LOC_BBGTS_TEASER">
@@ -141,6 +141,13 @@
 				<Value>1</Value>
 			</ConfigurationValueMatches>
 		</Criteria>
+		<Criteria id="bbgts_strategics">
+			<ConfigurationValueMatches>
+				<Group>Game</Group>
+				<ConfigurationId>BBGTS_STRATEGICS</ConfigurationId>
+				<Value>1</Value>
+			</ConfigurationValueMatches>
+		</Criteria>
 		<!-- content bbgts criteria -->
 		<Criteria id="bbgts_amani_c">
 			<ConfigurationValueMatches>
@@ -260,6 +267,7 @@
 	        <LoadOrder>0</LoadOrder>
 	      </Properties>
 	      <Criteria>bbgts_mp_cheats</Criteria>
+	      <Criteria>bbgts_strategics</Criteria>
 	      <Items>
 	        <File>MPCheats/sql/lense_colors.sql</File>	      
 	      </Items>
@@ -270,6 +278,7 @@
 	        <Context>InGame</Context>
 	      </Properties>
 	      <Criteria>bbgts_mp_cheats</Criteria>
+	      <Criteria>bbgts_strategics</Criteria>
 	      <Items>
 			<File>MPCheats/Panels/lenssupport.lua</File>
 			<File>MPCheats/Panels/Lenses/modlens_cheat_resource.lua</File>
@@ -285,6 +294,7 @@
 	        <Context>InGame</Context>
 	      </Properties>
 	      <Criteria>bbgts_mp_cheats</Criteria>
+	      <Criteria>bbgts_strategics</Criteria>
 	      <Criteria>XP1</Criteria>
 	      <Items>
 	      	<File>MPCheats/Panels/dlc/xp1/ui/replacements/minimappanel.xml</File>
@@ -296,6 +306,7 @@
 	        <Context>InGame</Context>
 	      </Properties>
 	      <Criteria>bbgts_mp_cheats</Criteria>
+	      <Criteria>bbgts_strategics</Criteria>
 	      <Criteria>XP2</Criteria>
 	      <Items>
 			<File>MPCheats/Panels/dlc/xp2/ui/replacements/minimappanel.xml</File>

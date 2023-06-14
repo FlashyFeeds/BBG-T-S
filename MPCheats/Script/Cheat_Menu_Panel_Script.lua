@@ -791,9 +791,10 @@ function Initialize()
 	GameEvents.OnGameTurnStarted.Add(BroadCastTurnProcessing)
 	--ExposedMembers.MOD_CheatMenu_Initialized = true;
 	--Lense support:
-	GameEvents.GameplayUpdatePlayerResources.Add(OnGameplayUpdatePlayerResources)
-	GameEvents.GameplayInitResource.Add(OnGameplayInitResource)
-
+	if GameConfiguration.GetValue("BBGTS_STRATEGICS") then
+		GameEvents.GameplayUpdatePlayerResources.Add(OnGameplayUpdatePlayerResources)
+		GameEvents.GameplayInitResource.Add(OnGameplayInitResource)
+	end
 	Debug("Cheat Menu Initialization Finished", "Initialize");
 end
 

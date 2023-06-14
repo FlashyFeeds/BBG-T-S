@@ -33,6 +33,12 @@
         <Row Tag="LOC_BBGTS_TEST_SPY_DESC" language="en">
             <Text>Enables Logging Spy Events Using Firaxis Methods</Text>>
         </Row>
+        <Row Tag="LOC_BBGTS_STRATEGICS_NAME" language="en">
+            <Text>[COLOR_Civ6Red]Strategics Lense[ENDCOLOR]</Text>>
+        </Row>
+        <Row Tag="LOC_BBGTS_STRATEGICS_DESC" language="en">
+            <Text>Unlocks a Lense that allows seeing strategic resources</Text>>
+        </Row>
         <!--
         <Replace Tag="LOC_BBGTS_BUGFIX1_NAME" language="en">
             <Text> BugFix1</Text>>
