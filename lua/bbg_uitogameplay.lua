@@ -1094,6 +1094,8 @@ end
 function OnSpyMissionCompleted(iPlayerID, iMissionID)
 	Debug("Called", "iPlayerID")
 	local tMission:table = nil;
+	if iPlayerID ~= Game.GetLocalPlayer() then
+		return print("Mission Completed Raised not on Owner")
 	local pPlayer:table = Players[iPlayerID];
 	if pPlayer then
 		local pPlayerDiplomacy:table = pPlayer:GetDiplomacy();
