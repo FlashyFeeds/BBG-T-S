@@ -1092,10 +1092,11 @@ function OnSpyAdded(iPlayerID, iUnitID)
 end
 
 function OnSpyMissionCompleted(iPlayerID, iMissionID)
-	Debug("Called", "iPlayerID")
+	Debug("Called  "..tostring(iPlayerID), "OnSpyMissionCompleted")
 	local tMission:table = nil;
 	if iPlayerID ~= Game.GetLocalPlayer() then
 		return print("Mission Completed Raised not on Owner")
+	end
 	local pPlayer:table = Players[iPlayerID];
 	if pPlayer then
 		local pPlayerDiplomacy:table = pPlayer:GetDiplomacy();
@@ -1108,9 +1109,10 @@ function OnSpyMissionCompleted(iPlayerID, iMissionID)
 		end
 	end
 	local kParameters = {}
-	if tMission.InitialResult == EspionageResultTypes.CAPTURED or tMission.EscapeResult == EspionageResultTypes.CAPTURED then
-		kParameters.Captured = true
+	if tMission.InitialResult ~= EspionageResultTypes.CAPTURED and tMission.EscapeResult ~= EspionageResultTypes.CAPTURED then
+		return print("Spy not Captured")
 	end
+	kParameters.Captured = true
 	kParameters.OnStart = "GameplaySpyMissionCompleted"
 	kParameters["iPlayerID"] = iPlayerID
 	kParameters["iMissionID"] = iMissionID

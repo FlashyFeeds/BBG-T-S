@@ -39,6 +39,13 @@
         <Row Tag="LOC_BBGTS_STRATEGICS_DESC" language="en">
             <Text>Unlocks a Lense that allows seeing strategic resources</Text>>
         </Row>
+        
+        <Row Tag="LOC_BBGTS_TURN_PROCESSING_NAME" language="en">
+            <Text>[COLOR_Civ6Red]Turn Processing[ENDCOLOR]</Text>>
+        </Row>
+        <Row Tag="LOC_BBGTS_TURN_PROCESSING_DESC" language="en">
+            <Text>Experimental Turn Processing</Text>>
+        </Row>
         <!--
         <Replace Tag="LOC_BBGTS_BUGFIX1_NAME" language="en">
             <Text> BugFix1</Text>>

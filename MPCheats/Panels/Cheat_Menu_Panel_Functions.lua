@@ -246,7 +246,7 @@ function OnLocalPlayerTurnBegin()
 	Debug("Called", "OnLocalPlayerTurnBegin")
 	local iPlayerID = Game.GetLocalPlayer()
 	local kParameters = {}
-	if Game.GetCurrentGameTurn() == GameConfiguration.GetStartTurn() then
+	if Game.GetCurrentGameTurn() == GameConfiguration.GetStartTurn() and GameConfiguration.GetValue("BBGTS_STRATEGICS") then
 		kParameters.OnStart = "GameplayInitResource"
 		kParameters["iPlayerID"] = iPlayerID
 		UI.RequestPlayerOperation(iPlayerID, PlayerOperations.EXECUTE_SCRIPT, kParameters)

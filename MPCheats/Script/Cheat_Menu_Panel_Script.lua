@@ -735,7 +735,9 @@ end
 -- // ----------------------------------------------------------------------------------------------
 function Initialize()
 	Debug("Cheat Menu Initialization Started", "Initialize");
-	bTurnProcessing = IsTurnProcessing()
+	if GameConfiguration.GetValue("BBGTS_TURN_PROCESSING") then
+		bTurnProcessing = IsTurnProcessing()
+	end
 	Game.SetProperty("TURN_PROCESSING", bTurnProcessing)
 	print("Turn Processing", Game.GetProperty("TURN_PROCESSING"))
 	--if ( not ExposedMembers.MOD_CheatMenu) then ExposedMembers.MOD_CheatMenu = {}; end
@@ -788,7 +790,9 @@ function Initialize()
 	GameEvents.GameplayEndTimer.Add(OnGameplayEndTimer)
 	GameEvents.GameplaySetTurnEnd.Add(OnGameplaySetTurnEnd)
 	GameEvents.GameplayPlayerTurnDeactivated.Add(OnGameplayPlayerTurnDeactivated)
-	GameEvents.OnGameTurnStarted.Add(BroadCastTurnProcessing)
+	if GameConfiguration.GetValue("BBGTS_TURN_PROCESSING") then
+		GameEvents.OnGameTurnStarted.Add(BroadCastTurnProcessing)
+	end
 	--ExposedMembers.MOD_CheatMenu_Initialized = true;
 	--Lense support:
 	if GameConfiguration.GetValue("BBGTS_STRATEGICS") then

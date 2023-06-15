@@ -11,7 +11,8 @@ INSERT INTO Parameters(ParameterId, Name, Description, Domain, DefaultValue, Con
     ('BBGTS_DebugLua', 'LOC_BBGTS_DEBUG_LUA_NAME', 'LOC_BBGTS_DEBUG_LUA_DESC', 'bool', '1', 'Game', 'BBGTS_DEBUG_LUA', 'AdvancedOptions','1', '1', '20010'),
     ('BBGTS_MP_CHEATS', 'LOC_BBGTS_MP_CHEAT_NAME', 'LOC_BBGTS_MP_CHEAT_DESC', 'bool', '0', 'Game', 'BBGTS_MP_CHEATS', 'AdvancedOptions','1', '1', '20020'),
     ('BBGTS_MPTestSpy', 'LOC_BBGTS_TEST_SPY_NAME', 'LOC_BBGTS_TEST_SPY_DESC', 'bool', '0', 'Game', 'BBGTS_TEST_SPY', 'AdvancedOptions','1', '1', '20030'),
-    ('BBGTS_STRATEGICS', 'LOC_BBGTS_STRATEGICS_NAME', 'LOC_BBGTS_STRATEGICS_DESC', 'bool', '0', 'Game', 'BBGTS_STRATEGICS', 'AdvancedOptions','1', '1', '20040');
+    ('BBGTS_STRATEGICS', 'LOC_BBGTS_STRATEGICS_NAME', 'LOC_BBGTS_STRATEGICS_DESC', 'bool', '0', 'Game', 'BBGTS_STRATEGICS', 'AdvancedOptions','1', '1', '20040'),
+    ("BBGTS_TURN_PROCESSING", 'LOC_BBGTS_TURN_PROCESSING_NAME', 'LOC_BBGTS_TURN_PROCESSING_DESC', 'bool', '0', 'Game', 'BBGTS_TURN_PROCESSING', 'AdvancedOptions','1', '1', '20040');
     --('BBGTS_ProductionPanel_BBG', 'LOC_BBGTS_PRODUCTION_PANEL_NAME', 'LOC_BBGTS_BBGTS_PRODUCTION_PANEL_DESC', 'bool', '1', 'Game', 'BBGTS_PRODUCTION_PANEL_UTIL', 'AdvancedOptions','1', '1', '20020');--
 
 --Insert your Bug Fixes Here, sort order between 20020 and 30000
@@ -38,7 +39,7 @@ INSERT INTO Parameters(ParameterId, Name, Description, Domain, DefaultValue, Con
     ('BBGTS_IncaWonders', 'LOC_BBGTS_INCA_WONDERS_NAME', 'LOC_BBGTS_INCA_WONDERS_DESC', 'bool', '0', 'Game', 'BBGTS_INCA_WONDERS', 'AdvancedOptions', '1', '1', '30040'),
     ('BBGTS_MacedonBugFix', 'LOC_BBGTS_MACEDON_FIX_NAME', 'LOC_BBGTS_MACEDON_FIX_DESC', 'bool', '0', 'Game', 'BBGTS_MACEDON_FIX', 'AdvancedOptions', '1', '1', '30050'),
     ('BBGTS_ExpBugFix', 'LOC_BBGTS_EXP_FIX_NAME', 'LOC_BBGTS_EXP_FIX_DESC', 'bool', '0', 'Game', 'BBGTS_EXP_FIX', 'AdvancedOptions', '1', '1', '30060'),
-    ('BBGTS_MovementBugFix', 'LOC_BBGTS_MOVE_FIX_NAME', 'LOC_BBGTS_MOVE_FIX_DESC', 'bool', '0', 'Game', 'BBGTS_MOVE_FIX', 'AdvancedOptions', '1', '1', '30070'),
+    ('BBGTS_MovementBugFix', 'LOC_BBGTS_MOVE_FIX_NAME', 'LOC_BBGTS_MOVE_FIX_DESC', 'bool', '0', 'Game', 'BBGTS_MOVE_FIX', 'AdvancedOptions', '1', '1', '3q0070'),
     ('BBGTS_FWondersBugFix', 'LOC_BBGTS_F_WONDER_FIX_NAME', 'LOC_BBGTS_F_WONDER_FIX_DESC', 'bool', '0', 'Game', 'BBGTS_F_WONDER_FIX', 'AdvancedOptions', '1', '1', '30080');
     --('BBGTS_AttachDetachModifier', 'LOC_BBGTS_ATTACH_DETACH_NAME', 'LOC_BBGTS_ATTACH_DETACH_DESC', 'bool', '0', 'Game', 'BBGTS_ATTACH_DETACH_TEST', 'AdvancedOptions', '1', '1', '30020'),
     --('BBGTS_WatermillSuggestion', 'LOC_BBGTS_WATERMILL_SUGGESTION_NAME', 'LOC_BBGTS_WATERMILL_SUGGESTION_DESC', 'bool', '0', 'Game', 'BBGTS_WATERMILL_SUGGESTION', 'AdvancedOptions', '1', '1', '30030'),
