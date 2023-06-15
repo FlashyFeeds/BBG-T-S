@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Mod id="d6b111c4-be33-4878-b1fc-8741b1cd6af7" version="1018">
+<Mod id="d6b111c4-be33-4878-b1fc-8741b1cd6af7" version="1019">
 	<Properties>
 		<Name>LOC_BBGTS_TITLE</Name>
 		<Description>LOC_BBGTS_DESCRIPTION</Description>
@@ -11,8 +11,8 @@
 	</Properties>
 	<LocalizedText>
 		<Text id="LOC_BBGTS_TITLE">
-			<en_US>BBGTS 1.0.18</en_US>
-			<fr_FR>BBGTS 1.0.18</fr_FR>
+			<en_US>BBGTS 1.0.19</en_US>
+			<fr_FR>BBGTS 1.0.19</fr_FR>
 		</Text>
 		
 		<Text id="LOC_BBGTS_TEASER">
