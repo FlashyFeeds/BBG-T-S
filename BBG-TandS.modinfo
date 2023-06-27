@@ -30,10 +30,6 @@
 	Bonus Points: Splitting the SQL statements according to correct expansions and dlc's with a note
 	For easier Commits into BBG branches.
 	-->
-	<Dependencies>
-		<!--<Mod id="4873eb62-8ccc-4574-b784-dda455e74e68" title="Expansion: Gathering Storm" />-->
-		<Mod id="cb84075d-5007-4207-b662-c35a5f7be260"/> <!--BBG Live Dependency-->
-	</Dependencies>
 	<ActionCriteria>
 		<!-- Firaxis Content Criteria -->
 		<Criteria id="XP1">
