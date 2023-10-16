@@ -2672,13 +2672,14 @@ function OnGameplayReligionFounded(iPlayerID, kParameters)
 		--creates table entry for new religion
 		local row = {}
 		row["iReligionID"] = iReligionID
-		row["iPlayerID"] = iPlayerID
+		row.Founders = {}
+		table.insert(row.Founders, iPlayerID)
 		table.insert(tReigion, row)
 	else
 		--handles exceptional case when several people found religion with the same id on the same turn
 		--e.g. 2x islam. Hoping to fix this bug along the way for Founder and Reformer
 		local row = tReigion[mPos]
-		if IDtoPos(row.Founders, iPlayerID) then
+		if IDToPos(row.Founders, iPlayerID)~=false then
 			return print("Error: Same FounderID added several times")
 		end
 		local tFounders = row.Founders
@@ -2721,6 +2722,10 @@ function OnGameplayBeliefAdded(iPlayerID, kParameters)
 		return print("Not Founder or Enhancer Belief => No need to set property => Exit")
 	end
 	UpdatePlayerReligiousProperty(iPlayerID, iBeliefID, true)
+	local iMvembaPlayerID = Game:GetProperty("MVEMVBA_ID")
+	if iMvembaPlayerID ~= nil then
+		RecalculateMvemba(iMvembaPlayerID)
+	end
 end
 
 function OnGameplayCapitalCityChanged(iPlayerID, kParameters)
@@ -2876,7 +2881,8 @@ end
 -- Mvemba
 -- ===========================================================================
 --Legend:
---Game:SetProperty("MVEMBA_RELIGION", iReligionID) 
+--Game:SetProperty("MVEMBA_RELIGION", iReligionID)
+--Game:SetProperty("MVEMBA_ID", iPlayerID) 
 function OnGameplayMvembaCityReligionChanged(iPlayerID, kParameters)
 	local iPlayerID = kParameters["iPlayerID"]
 	RecalculateMvemba(iPlayerID)
@@ -2914,25 +2920,27 @@ function RecalculateMvemba(iPlayerID)
 				UpdatePlayerReligiousProperty(iPlayerID, iBeliefID, false)
 			end
 			print("Old Founder Beliefs Removed")
+			print("Size of Enhancer", #tOldBeliefs[4])
 			if #tOldBeliefs[4] ~= 0 and tOldBeliefs[4] ~= {} and tOldBeliefs[4]~=nil then
-				for i, iBeliefID in ipairs(tOldBeliefs[2]) do
+				for i, iBeliefID in ipairs(tOldBeliefs[4]) do
 					UpdatePlayerReligiousProperty(iPlayerID, iBeliefID, false)
 				end
 				print("Old Enhancer Beliefs Removed")
 			end
 		end
-		if iCurrReligion~= -1 then
-			local tCurrBeliefs = CalculeBeliefs(iCurrReligion)
-			for i, iBeliefID in ipairs(tCurrBeliefs[2]) do
+	end
+	if iCurrReligion~= -1 then
+		local tCurrBeliefs = CalculeBeliefs(iCurrReligion)
+		for i, iBeliefID in ipairs(tCurrBeliefs[2]) do
+			UpdatePlayerReligiousProperty(iPlayerID, iBeliefID, true)
+		end
+		print("Current Founder Beliefs Added")
+		print("Size of Enhancer", #tCurrBeliefs[4])
+		if #tCurrBeliefs[4] ~= 0 and tCurrBeliefs[4] ~= {} and tCurrBeliefs[4]~=nil then
+			for i, iBeliefID in ipairs(tCurrBeliefs[4]) do
 				UpdatePlayerReligiousProperty(iPlayerID, iBeliefID, true)
 			end
-			print("Current Founder Beliefs Added")
-			if #tCurrBeliefs[4] ~= 0 and tCurrBeliefs[4] ~= {} and tCurrBeliefs[4]~=nil then
-				for i, iBeliefID in ipairs(tCurrBeliefs[2]) do
-					UpdatePlayerReligiousProperty(iPlayerID, iBeliefID, true)
-				end
-				print("Current Enhancer Beliefs Added")
-			end
+			print("Current Enhancer Beliefs Added")
 		end
 	end
 	Game:SetProperty("MVEMBA_RELIGION", iCurrReligion)
@@ -2964,8 +2972,6 @@ function CalculeBeliefs(iReligionID)
 	print("CalculeBeliefs: Calculation Finished")
 	return tBeliefs
 end
-
-
 -- ===========================================================================
 --	Tools
 -- ===========================================================================
@@ -4526,6 +4532,7 @@ function Initialize()
 			GameEvents.GameplayUnifierTrackRelevantGenerals.Add(OnGameplayUnifierTrackRelevantGenerals)
 			print("BBG Unifier Hooks Added")
 		elseif PlayerConfigurations[iPlayerID]:GetLeaderTypeName() == "LEADER_MVEMBA" then
+			Game:SetProperty("MVEMVBA_ID", iPlayerID)
 			GameEvents.GameplayMvembaCityReligionChanged.Add(OnGameplayMvembaCityReligionChanged)
 			GameEvents.GameplayMvembaCityAddedToMap.Add(OnGameplayMvembaCityAddedToMap)
 			GameEvents.GameplayMvembaCityRemovedFromMap.Add(OnGameplayMvembaCityRemovedFromMap)

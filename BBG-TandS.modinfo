@@ -11,8 +11,8 @@
 	</Properties>
 	<LocalizedText>
 		<Text id="LOC_BBGTS_TITLE">
-			<en_US>BBGTS 1.0.20</en_US>
-			<fr_FR>BBGTS 1.0.20</fr_FR>
+			<en_US>BBGTS 1.0.21</en_US>
+			<fr_FR>BBGTS 1.0.21</fr_FR>
 		</Text>
 		
 		<Text id="LOC_BBGTS_TEASER">
@@ -312,7 +312,7 @@
 			<File>lang/text_en.xml</File>
 		</UpdateText>
 		<!--import of bbg script extensions -->
-		
+		<!--
 		<AddGameplayScripts id="BBG_CoreScript">
 			<File>lua/bbg_script.lua</File>
 		</AddGameplayScripts>
@@ -326,6 +326,7 @@
 		<ImportFiles id="bbg_uitogameplay_lua">
 			<File>lua/bbg_uitogameplay.lua</File>
 		</ImportFiles>
+	-->
 		<!-- content ingameactions -->
 		<!-- BBG Loadorders Readme
 		=======preload utils:========
