@@ -501,9 +501,11 @@
 		<File>MPCheats/Panels/lenssupport.lua</File>
 		<File>MPCheats/sql/lense_colors.sql</File>
 		<!--bbg scripts extension -->
+		<!--
 		<File>lua/bbg_script.lua</File>
 		<File>lua/bbg_uitogameplay.xml</File>
 		<File>lua/bbg_uitogameplay.lua</File>
+	-->
 		<!--Content -->
 		<File>content/amani/amani_traders.sql</File>
 		<File>content/communism/communism_build/communism_build_xp2.sql</File>
