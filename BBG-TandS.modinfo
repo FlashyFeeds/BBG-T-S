@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- BBG override 
 <Mod id="d6b111c4-be33-4878-b1fc-8741b1cd6af7" version="1021">
+-->
+<!-- No override -->
+<Mod id="5d85da64-eb8c-4aed-8f8b-4c9a3baff9e6" version="1022">
 	<Properties>
 		<Name>LOC_BBGTS_TITLE</Name>
 		<Description>LOC_BBGTS_DESCRIPTION</Description>
@@ -11,8 +15,8 @@
 	</Properties>
 	<LocalizedText>
 		<Text id="LOC_BBGTS_TITLE">
-			<en_US>BBGTS 1.0.21</en_US>
-			<fr_FR>BBGTS 1.0.21</fr_FR>
+			<en_US>BBGTS 1.0.22</en_US>
+			<fr_FR>BBGTS 1.0.22</fr_FR>
 		</Text>
 		
 		<Text id="LOC_BBGTS_TEASER">
